@@ -6126,7 +6126,7 @@
     "/locations": {
       "get": {
         "summary": "Search locations",
-        "description": "Search locations based on the provided filter criteria",
+        "description": "Search locations based on the provided filter criteria.",
         "tags": [
           "Locations"
         ],

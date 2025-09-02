@@ -15,7 +15,7 @@ paths:
   /locations:
     get:
       summary: Search locations
-      description: Search locations based on the provided filter criteria
+      description: Search locations based on the provided filter criteria.
       tags:
         - Locations
       parameters:
@@ -87,7 +87,7 @@ paths:
           required: false
           schema:
             type: string
-            example: 'name,address,map.boundary'
+            example: "name,address,map.boundary"
 
         - name: resultsPerPage
           in: query
@@ -201,28 +201,28 @@ paths:
             type: string
             enum: [typeasc, typedesc]
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemas/PaginationInfo'
+                  - $ref: "#/components/schemas/PaginationInfo"
                   - type: object
                     properties:
                       locations:
                         type: array
                         items:
-                          $ref: '#/components/schemas/Location'
+                          $ref: "#/components/schemas/Location"
 
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
       security:
         - ApiKeyAuth: []
 
@@ -242,7 +242,7 @@ paths:
           schema:
             type: string
             minLength: 3
-            example: 'Sacrame'
+            example: "Sacrame"
 
         - name: type
           in: query
@@ -270,7 +270,7 @@ paths:
           required: false
           schema:
             type: string
-            example: 'name,address.city,address.state'
+            example: "name,address.city,address.state"
 
         - name: map
           in: query
@@ -399,27 +399,27 @@ paths:
             default: false
 
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemas/PaginationInfo'
+                  - $ref: "#/components/schemas/PaginationInfo"
                   - type: object
                     properties:
                       locations:
                         type: array
                         items:
-                          $ref: '#/components/schemas/SuggestedLocation'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+                          $ref: "#/components/schemas/SuggestedLocation"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
       security:
         - ApiKeyAuth: []
 
@@ -479,7 +479,7 @@ components:
           type: string
           description: Human-readable display name for the location
         type:
-          $ref: '#/components/schemas/LocationType'
+          $ref: "#/components/schemas/LocationType"
         map:
           type: object
           properties:
@@ -490,10 +490,10 @@ components:
             boundary:
               type: array
               items:
-                $ref: '#/components/schemas/Coordinate'
+                $ref: "#/components/schemas/Coordinate"
           required: [latitude, longitude]
         address:
-          $ref: '#/components/schemas/LocationAddress'
+          $ref: "#/components/schemas/LocationAddress"
 
     Location:
       type: object
@@ -508,7 +508,7 @@ components:
           type: string
           description: Human-readable display name for the location
         type:
-          $ref: '#/components/schemas/LocationType'
+          $ref: "#/components/schemas/LocationType"
         map:
           type: object
           description: Geographical information including coordinates and boundary data
@@ -522,7 +522,7 @@ components:
             point:
               type: string
               description: WKT (Well-Known Text) representation of the location's center point
-              example: 'POINT (-79.43510859999999 43.71805260000001)'
+              example: "POINT (-79.43510859999999 43.71805260000001)"
             boundary:
               type: array
               description: |
@@ -530,9 +530,9 @@ components:
               items:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Coordinate'
+                  $ref: "#/components/schemas/Coordinate"
         address:
-          $ref: '#/components/schemas/LocationAddress'
+          $ref: "#/components/schemas/LocationAddress"
 
     PaginationInfo:
       type: object
@@ -574,32 +574,32 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: "#/components/schemas/Error"
 
     Unauthorized:
       description: Unauthorized
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: "#/components/schemas/Error"
 
     Forbidden:
       description: Forbidden
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: "#/components/schemas/Error"
 
     BadRequest:
       description: Bad Request
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: "#/components/schemas/Error"
 
     InternalServerError:
       description: Internal Server Error
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: "#/components/schemas/Error"
