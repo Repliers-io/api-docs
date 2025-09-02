@@ -1,0 +1,605 @@
+openapi: 3.0.3
+info:
+  title: Locations API
+  description: |
+    API for searching, filtering, and retrieving location data across multiple geographical hierarchies.
+    Provides endpoints for location querying based on various parameters including geographical boundaries,
+    administrative divisions and location types. Supports filtering, pagination, and custom field selection.
+  version: 1.0.0
+servers:
+  - url: https://api.repliers.io
+    description: Production server
+  - url: https://dev.repliers.io
+    description: Development server
+paths:
+  /locations:
+    get:
+      summary: Search locations
+      description: Search locations based on the provided filter criteria
+      tags:
+        - Locations
+      parameters:
+        - name: type
+          in: query
+          description: |
+            Limits results to specified location types:
+            - area: Represents larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc.
+            - city: Municipal division that can include multiple neighborhoods within its boundaries.
+            - neighborhood: Smallest geographical unit within a city.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum: [area, city, neighborhood]
+
+        - name: area
+          in: query
+          description: |
+            Filters locations by area names. Returns locations within the specified area.
+            Areas represent larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+
+        - name: city
+          in: query
+          description: |
+            Filters locations by city names. Returns locations within the specified city.
+            Cities can include multiple neighborhoods within their boundaries.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+
+        - name: neighborhood
+          in: query
+          description: |
+            Filter results by neighborhood names. Returns specified neighborhoods.
+            Neighborhoods represent the smallest geographical division in the hierarchy.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+
+        - name: locationId
+          in: query
+          description: Filters by location IDs. Location IDs can be obtained from response of [Locations Autocomplete](/locations/autocomplete) endpoint
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+
+        - name: fields
+          in: query
+          description: |
+            Comma-separated list of fields to include in the response.
+            This allows clients to request only the specific data they need, reducing payload size.
+            Examples:
+            - `name,type` - Returns only location names and types
+            - `name,address.city,address.state` - Returns location names and specific address components
+            - `map.boundary` - Returns only geographical boundary data
+          required: false
+          schema:
+            type: string
+            example: 'name,address,map.boundary'
+
+        - name: resultsPerPage
+          in: query
+          description: The amount of locations to return in each page of the results set.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 300
+            default: 100
+
+        - name: pageNum
+          in: query
+          description: If specified indexes a specific page in the results set. For example, if there are 1000 locations and 100 locations per page, if you'd like to view locations 101-200 you'd specify pageNum=2
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+
+        - name: map
+          in: query
+          description: |
+            GeoJSON polygon or multi-polygon boundary for geographical filtering. Limits results to locations within the specified boundaries.
+            For complex polygons or multipolygons that exceed query parameter size limits, use the POST method
+            and include the map data in the request body.
+
+            Format: Array of coordinate arrays, where each coordinate is [longitude, latitude] in WGS 84 format.
+            The polygon must be closed (first and last points must be identical).
+
+            For more information refer to the implementation guide  [Filtering Listings Geo-Spatially Using the "map" Parameter](https://help.repliers.com/en/article/filtering-listings-geo-spatially-using-the-map-parameter-7sorw0/)
+          required: false
+          schema:
+            type: string
+            format: json
+          example:
+            [
+              [
+                [-79.14121, 43.79041],
+                [-79.132627, 43.773059],
+                [-79.188932, 43.886988],
+                [-79.200605, 43.877832],
+                [-79.236654, 43.869665],
+                [-79.265836, 43.860011],
+                [-79.281972, 43.856051],
+                [-79.322828, 43.84689],
+                [-79.368146, 43.839214],
+                [-79.386021, 43.836139],
+                [-79.41486, 43.838616],
+                [-79.423787, 43.836635],
+                [-79.475285, 43.82227],
+                [-79.480092, 43.813352],
+                [-79.480778, 43.803441],
+                [-79.485585, 43.79799],
+                [-79.493825, 43.794025],
+                [-79.556996, 43.779649],
+                [-79.601628, 43.761303],
+                [-79.61611, 43.758572],
+                [-79.629934, 43.750141],
+                [-79.625471, 43.728064],
+                [-79.616888, 43.713177],
+                [-79.606245, 43.695555],
+                [-79.601095, 43.685873],
+                [-79.593885, 43.681156],
+                [-79.590109, 43.672465],
+                [-79.582212, 43.671224],
+                [-79.574659, 43.670975],
+                [-79.535177, 43.58325],
+                [-79.424627, 43.619052],
+                [-79.385488, 43.602645],
+                [-79.315451, 43.612092],
+                [-79.14121, 43.79041],
+              ],
+            ]
+
+        - name: radius
+          in: query
+          description: |
+            Accepts a value for radius in KM. Must be used with `lat` and `long` parameters to return locations within the specified radius of a given latitude and longitude.
+          required: false
+          schema:
+            type: number
+            format: float
+            minimum: 1
+
+        - name: lat
+          in: query
+          description: Accepts a value for latitude. Must be used with radius parameter to return listings within a certain radius of a given latitude and longitude.
+          required: false
+          schema:
+            type: number
+            format: float
+            minimum: -90
+            maximum: 90
+
+        - name: long
+          in: query
+          description: Accepts a value for longitude. Must be used with radius parameter to return listings within a certain radius of a given latitude and longitude.
+          required: false
+          schema:
+            type: number
+            format: float
+            minimum: -180
+            maximum: 180
+
+        - name: sortBy
+          in: query
+          description: Sort results by type
+          required: false
+          schema:
+            type: string
+            enum: [typeasc, typedesc]
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginationInfo'
+                  - type: object
+                    properties:
+                      locations:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Location'
+
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      security:
+        - ApiKeyAuth: []
+
+  /locations/autocomplete:
+    get:
+      summary: Locations autocomplete
+      description: Autocomplete for Locations search. As your user types,
+        you simply pass their input into search param and get locations which match their input.
+        You can use other params to fine-tune the locations which will be returned for a given search.
+      tags:
+        - Locations
+      parameters:
+        - name: search
+          in: query
+          description: Search query string
+          required: true
+          schema:
+            type: string
+            minLength: 3
+            example: 'Sacrame'
+
+        - name: type
+          in: query
+          description: |
+            Limits results to specified location types:
+            - area: Represents larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc.
+            - city: Municipal division that can include multiple neighborhoods within its boundaries.
+            - neighborhood: Smallest geographical unit within a city.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum: [area, city, neighborhood]
+
+        - name: fields
+          in: query
+          description: |
+            Comma-separated list of fields to include in the response.
+            This allows clients to request only the specific data they need, reducing payload size.
+            Examples:
+            - `name,type` - Returns only location names and types
+            - `name,address.city,address.state` - Returns location names and specific address components
+            - `map.boundary` - Returns only geographical boundary data
+          required: false
+          schema:
+            type: string
+            example: 'name,address.city,address.state'
+
+        - name: map
+          in: query
+          description: |
+            GeoJSON polygon or multi-polygon boundary for geographical filtering. Limits results to locations within the specified boundaries.
+            For complex polygons or multipolygons that exceed query parameter size limits, use the POST method
+            and include the map data in the request body.
+
+            Format: Array of coordinate arrays, where each coordinate is [longitude, latitude] in WGS 84 format.
+            The polygon must be closed (first and last points must be identical).
+
+            For more information refer to the implementation guide  [Filtering Listings Geo-Spatially Using the "map" Parameter](https://help.repliers.com/en/article/filtering-listings-geo-spatially-using-the-map-parameter-7sorw0/)
+          required: false
+          schema:
+            type: string
+            format: json
+          example:
+            [
+              [
+                [-79.14121, 43.79041],
+                [-79.132627, 43.773059],
+                [-79.188932, 43.886988],
+                [-79.200605, 43.877832],
+                [-79.236654, 43.869665],
+                [-79.265836, 43.860011],
+                [-79.281972, 43.856051],
+                [-79.322828, 43.84689],
+                [-79.368146, 43.839214],
+                [-79.386021, 43.836139],
+                [-79.41486, 43.838616],
+                [-79.423787, 43.836635],
+                [-79.475285, 43.82227],
+                [-79.480092, 43.813352],
+                [-79.480778, 43.803441],
+                [-79.485585, 43.79799],
+                [-79.493825, 43.794025],
+                [-79.556996, 43.779649],
+                [-79.601628, 43.761303],
+                [-79.61611, 43.758572],
+                [-79.629934, 43.750141],
+                [-79.625471, 43.728064],
+                [-79.616888, 43.713177],
+                [-79.606245, 43.695555],
+                [-79.601095, 43.685873],
+                [-79.593885, 43.681156],
+                [-79.590109, 43.672465],
+                [-79.582212, 43.671224],
+                [-79.574659, 43.670975],
+                [-79.535177, 43.58325],
+                [-79.424627, 43.619052],
+                [-79.385488, 43.602645],
+                [-79.315451, 43.612092],
+                [-79.14121, 43.79041],
+              ],
+            ]
+
+        - name: resultsPerPage
+          in: query
+          description: The amount of locations to return in each page of the results set.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 10
+            default: 10
+
+        - name: radius
+          in: query
+          description: |
+            Accepts a value for radius in KM. Must be used with `lat` and `long` parameters to return locations within the specified radius of a given latitude and longitude.
+          required: false
+          schema:
+            type: number
+            format: float
+            minimum: 1
+
+        - name: lat
+          in: query
+          description: Accepts a value for latitude. Must be used with radius parameter to return listings within a certain radius of a given latitude and longitude.
+          required: false
+          schema:
+            type: number
+            format: float
+            minimum: -90
+            maximum: 90
+
+        - name: long
+          in: query
+          description: Accepts a value for longitude. Must be used with radius parameter to return listings within a certain radius of a given latitude and longitude.
+          required: false
+          schema:
+            type: number
+            format: float
+            minimum: -180
+            maximum: 180
+
+        - name: area
+          in: query
+          description: |
+            Searches for locations only inside specified areas.
+            Areas represent larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+
+        - name: city
+          in: query
+          description: |
+            Searches for locations only inside specified cities.
+            Cities can include multiple neighborhoods within their boundaries.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+
+        - name: boundary
+          in: query
+          description: |
+            Fetches locations with boundary polygons for a small performance penalty of 10-20ms
+          required: false
+          schema:
+            type: boolean
+            default: false
+
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginationInfo'
+                  - type: object
+                    properties:
+                      locations:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/SuggestedLocation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      security:
+        - ApiKeyAuth: []
+
+components:
+  schemas:
+    LocationType:
+      type: string
+      enum: [area, city, neighborhood]
+      description: |
+        Hierarchical classification of the location:
+        - area: Represent larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc.
+        - city: Municipal division that can include multiple neighborhoods within its boundaries.
+        - neighborhood: Smallest geographical unit within a city
+
+    Coordinate:
+      type: array
+      minItems: 2
+      maxItems: 2
+      items:
+        type: number
+        format: double
+      example: [-79.491105, 43.979703]
+      description: |
+        A longitude/latitude coordinate pair in WGS 84 format.
+        Format: [longitude, latitude] where:
+        - Longitude ranges from -180 to +180 degrees (negative for western hemisphere)
+        - Latitude ranges from -90 to +90 degrees (negative for southern hemisphere)
+
+    LocationAddress:
+      type: object
+      description: |
+        Structured representation of a location's address components.
+      properties:
+        country:
+          type: string
+          description: Country name (e.g. "CA", "US")
+        state:
+          type: string
+          description: State or province name (e.g. "ON", "CA")
+        city:
+          type: string
+          description: City name (e.g. "New York", "Vancouver")
+        area:
+          type: string
+          description: County or Region name (e.g. "Orange County", "York")
+        neighborhood:
+          type: string
+          description: Specific neighborhood name (smallest geographical unit)
+
+    SuggestedLocation:
+      type: object
+      properties:
+        locationId:
+          type: string
+          description: Unique identifier for the location
+        name:
+          type: string
+          description: Human-readable display name for the location
+        type:
+          $ref: '#/components/schemas/LocationType'
+        map:
+          type: object
+          properties:
+            latitude:
+              type: string
+            longitude:
+              type: string
+            boundary:
+              type: array
+              items:
+                $ref: '#/components/schemas/Coordinate'
+          required: [latitude, longitude]
+        address:
+          $ref: '#/components/schemas/LocationAddress'
+
+    Location:
+      type: object
+      description: |
+        Complete location information including identifiers, type classification,
+        address components, and geographical coordinates/boundaries.
+      properties:
+        locationId:
+          type: string
+          description: Unique identifier for the location
+        name:
+          type: string
+          description: Human-readable display name for the location
+        type:
+          $ref: '#/components/schemas/LocationType'
+        map:
+          type: object
+          description: Geographical information including coordinates and boundary data
+          properties:
+            latitude:
+              type: string
+              description: Latitude coordinate of the location's center point
+            longitude:
+              type: string
+              description: Longitude coordinate of the location's center point
+            point:
+              type: string
+              description: WKT (Well-Known Text) representation of the location's center point
+              example: 'POINT (-79.43510859999999 43.71805260000001)'
+            boundary:
+              type: array
+              description: |
+                GeoJSON polygon defining the location's geographical boundary.
+              items:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Coordinate'
+        address:
+          $ref: '#/components/schemas/LocationAddress'
+
+    PaginationInfo:
+      type: object
+      properties:
+        page:
+          type: integer
+          description: Current page number
+        numPages:
+          type: integer
+          description: Total number of pages
+        pageSize:
+          type: integer
+          description: Number of results per page
+        count:
+          type: integer
+          description: Total number of results
+
+    Error:
+      type: array
+      items:
+        type: array
+        items:
+          type: object
+          properties:
+            param:
+              type: string
+            msg:
+              type: string
+
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: REPLIERS-API-KEY
+
+  responses:
+    NotFound:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

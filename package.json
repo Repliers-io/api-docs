@@ -1,0 +1,29 @@
+{
+    "name": "realtime-api-docs",
+    "version": "1.0.0",
+    "main": "index.js",
+    "bin": {
+        "realtime-api-docs": "./index.js"
+    },
+    "scripts": {
+        "docs": "node ./index.js",
+        "docs-validate": "npm run docs -- validate ./docs/repliers-openapi.json",
+        "docs-bundle": "npm run docs -- bundle ./docs/repliers-openapi.json --output ./bundled_docs/repliers.json",
+        "docs-upload": "set -a && source .env && set +a && npm run docs-bundle && rdme openapi upload ./bundled_docs/repliers.json --slug=repliers.json --key $README_API_KEY"
+    },
+    "engines": {
+        "node": ">=22"
+    },
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "dependencies": {
+        "@readme/openapi-parser": "^5.0.1",
+        "picocolors": "^1.1.1",
+        "yargs": "^18.0.0"
+    },
+    "type": "module",
+    "devDependencies": {
+        "rdme": "^10.5.0"
+    }
+}
