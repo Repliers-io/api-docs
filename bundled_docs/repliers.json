@@ -6134,7 +6134,7 @@
           {
             "name": "type",
             "in": "query",
-            "description": "Limits results to specified location types:\n- area: Represents larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc.\n- city: Municipal division that can include multiple neighborhoods within its boundaries.\n- neighborhood: Smallest geographical unit within a city.\n",
+            "description": "Limits results to specified location types:\n- `area` - Represents larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc.\n- `city` - Municipal division that can include multiple neighborhoods within its boundaries.\n- `neighborhood` - Smallest geographical unit within a city.\n",
             "required": false,
             "schema": {
               "type": "array",
@@ -6187,7 +6187,7 @@
           {
             "name": "locationId",
             "in": "query",
-            "description": "Filters by location IDs. Location IDs can be obtained from response of [Locations Autocomplete](/locations/autocomplete) endpoint",
+            "description": "Filters by location IDs. Location IDs can be obtained from response of [Locations Autocomplete](/reference/get_locations-autocomplete#/) endpoint",
             "required": false,
             "schema": {
               "type": "array",
@@ -6582,14 +6582,7 @@
             }
           },
           "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/paths/~1locations/get/responses/400/content/application~1json/schema"
-                }
-              }
-            }
+            "description": "Forbidden"
           },
           "500": {
             "description": "Internal Server Error",
@@ -6631,7 +6624,7 @@
           {
             "name": "type",
             "in": "query",
-            "description": "Limits results to specified location types:\n- area: Represents larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc.\n- city: Municipal division that can include multiple neighborhoods within its boundaries.\n- neighborhood: Smallest geographical unit within a city.\n",
+            "description": "Limits results to specified location types:\n- `area` - Represents larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc.\n- `city` - Municipal division that can include multiple neighborhoods within its boundaries.\n- `neighborhood` - Smallest geographical unit within a city.\n",
             "required": false,
             "schema": {
               "type": "array",

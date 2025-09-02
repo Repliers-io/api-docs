@@ -23,9 +23,9 @@ paths:
           in: query
           description: |
             Limits results to specified location types:
-            - area: Represents larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc.
-            - city: Municipal division that can include multiple neighborhoods within its boundaries.
-            - neighborhood: Smallest geographical unit within a city.
+            - `area` - Represents larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc.
+            - `city` - Municipal division that can include multiple neighborhoods within its boundaries.
+            - `neighborhood` - Smallest geographical unit within a city.
           required: false
           schema:
             type: array
@@ -68,7 +68,7 @@ paths:
 
         - name: locationId
           in: query
-          description: Filters by location IDs. Location IDs can be obtained from response of [Locations Autocomplete](/locations/autocomplete) endpoint
+          description: Filters by location IDs. Location IDs can be obtained from response of [Locations Autocomplete](/reference/get_locations-autocomplete#/) endpoint
           required: false
           schema:
             type: array
@@ -248,9 +248,9 @@ paths:
           in: query
           description: |
             Limits results to specified location types:
-            - area: Represents larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc.
-            - city: Municipal division that can include multiple neighborhoods within its boundaries.
-            - neighborhood: Smallest geographical unit within a city.
+            - `area` - Represents larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc.
+            - `city` - Municipal division that can include multiple neighborhoods within its boundaries.
+            - `neighborhood` - Smallest geographical unit within a city.
           required: false
           schema:
             type: array
@@ -571,10 +571,6 @@ components:
   responses:
     NotFound:
       description: Not Found
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/Error"
 
     Unauthorized:
       description: Unauthorized
@@ -585,10 +581,6 @@ components:
 
     Forbidden:
       description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/Error"
 
     BadRequest:
       description: Bad Request
