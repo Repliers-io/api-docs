@@ -1005,7 +1005,7 @@
           {
             "name": "standardStatus",
             "in": "query",
-            "description": "Use this parameter to filter by Standard Status.",
+            "description": "Use this parameter to filter by Standard Status. <br/><br/>Allowed values:<br/><br/><code>Active</code>, <code>Active Under Contract</code>, <code>Closed</code>, <code>Expired</code>, <code>Pending</code>, <code>Canceled</code>, <code>Incomplete</code>",
             "schema": {
               "type": "string"
             }
@@ -6232,7 +6232,7 @@
           {
             "name": "map",
             "in": "query",
-            "description": "GeoJSON polygon or multi-polygon boundary for geographical filtering. Limits results to locations within the specified boundaries.\nFor complex polygons or multipolygons that exceed query parameter size limits, use the POST method\nand include the map data in the request body.\n\nFormat: Array of coordinate arrays, where each coordinate is [longitude, latitude] in WGS 84 format.\nThe polygon must be closed (first and last points must be identical).\n\nFor more information refer to the implementation guide  [Filtering Listings Geo-Spatially Using the \"map\" Parameter](https://help.repliers.com/en/article/filtering-listings-geo-spatially-using-the-map-parameter-7sorw0/)\n",
+            "description": "GeoJSON polygon or multi-polygon boundary for geographical filtering. Limits results to locations within the specified boundaries.\nFor complex polygons or multipolygons that exceed query parameter size limits, use the POST method\nand include the map data in the request body.\n\nFormat: Array of coordinate arrays, where each coordinate is [longitude, latitude] in WGS 84 format.\nThe polygon must be closed (first and last points must be identical).\n\nFor more information refer to the implementation guide [Filtering Listings Geo-Spatially Using the \"map\" Parameter](https://help.repliers.com/en/article/filtering-listings-geo-spatially-using-the-map-parameter-7sorw0/)\n",
             "required": false,
             "schema": {
               "type": "string",
@@ -8782,6 +8782,42 @@
                     "items": {
                       "type": "string"
                     }
+                  },
+                  "minLotSizeSqft": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "The minimum lot size in square feet to be used as a filter for this search."
+                  },
+                  "maxLotSizeSqft": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "The maximum lot size in square feet to be used as a filter for this search."
+                  },
+                  "minOpenHouseDate": {
+                    "description": "Indicates whether the search is for properties that have an Open House on or after the supplied date. Date format: <code>YYYY-MM-DD</code>",
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "maxOpenHouseDate": {
+                    "description": "Indicates whether the search is for properties that have an Open House on or before the supplied date. Date format: <code>YYYY-MM-DD</code>. It's not recommended to use it unless you have a very good reason to set it.",
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "standardStatus": {
+                    "type": "array",
+                    "description": "Indicates what Standard Status of property to search for. <br/><br/>Allowed values:<br/><br/><code>Active</code>, <code>Active Under Contract</code>, <code>Closed</code>, <code>Expired</code>, <code>Pending</code>, <code>Canceled</code>, <code>Incomplete</code>",
+                    "items": {
+                      "type": "string"
+                    },
+                    "enum": [
+                      "Active",
+                      "Active Under Contract",
+                      "Closed",
+                      "Expired",
+                      "Pending",
+                      "Canceled",
+                      "Incomplete"
+                    ]
                   }
                 }
               },
