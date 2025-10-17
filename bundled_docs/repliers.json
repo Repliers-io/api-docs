@@ -9184,6 +9184,12 @@
                     "type": "string",
                     "description": "You can specify a name for the saved search. This is useful in cases where users have multiple saved searches, to help them distinguish between saved searches."
                   },
+                  "amenities": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
                   "areas": {
                     "type": "array",
                     "description": "An array of areas to be used as a filter for this search. Required if a value for map is not provided.",
@@ -9251,6 +9257,10 @@
                     "description": "The maximum amount of bedrooms to be used as a filter for this search.",
                     "format": "int32"
                   },
+                  "maxCoveredSpaces": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
                   "minParkingSpaces": {
                     "type": "integer",
                     "description": "If specified, matches only listings whose parking space count is >= the supplied value.",
@@ -9261,6 +9271,18 @@
                     "description": "The maximum list price to be used as a filter for this search.",
                     "format": "int32"
                   },
+                  "maxSqft": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "maxYearBuilt": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "maxStories": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
                   "minBaths": {
                     "type": "integer",
                     "description": "The minimum amount of bathrooms to be used as a filter for this search.",
@@ -9269,6 +9291,10 @@
                   "minBeds": {
                     "type": "integer",
                     "description": "The minimum amount of bedrooms to be used as a filter for this search.",
+                    "format": "int32"
+                  },
+                  "minCoveredSpaces": {
+                    "type": "integer",
                     "format": "int32"
                   },
                   "minGarageSpaces": {
@@ -9290,6 +9316,21 @@
                     "type": "integer",
                     "description": "The minimum list price to be used as a filter for this search.",
                     "format": "int32"
+                  },
+                  "minSqft": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "minYearBuilt": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "minStories": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "pets": {
+                    "type": "string"
                   },
                   "priceChangeNotifications": {
                     "type": "boolean",
