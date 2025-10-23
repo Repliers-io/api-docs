@@ -11534,8 +11534,8 @@
     },
     "/nlp": {
       "post": {
-        "summary": "Natural Language Processing Endpoint",
-        "description": "Natural Language Processing (NLP) endpoint enables you to collect natural language prompts from your users and seamlessly convert them into search API requests.\n",
+        "summary": "New Prompt",
+        "description": "This endpoint translates natural language search queries into structured API requests for the Repliers listings endpoint. For example, the prompt 'find me properties in new york' would be converted to the equivalent API call: https://api.repliers.io/listings?city=New York\n",
         "tags": [
           "NLP"
         ],
@@ -11650,7 +11650,7 @@
         }
       },
       "get": {
-        "summary": "Filter NLP sessions",
+        "summary": "Filter sessions",
         "description": "This endpoint allows you to retrieve all NLP prompts that are associated with a unique `nlpId` session.\n",
         "tags": [
           "NLP"
