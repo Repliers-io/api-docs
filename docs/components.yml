@@ -1,0 +1,25 @@
+openapi: 3.1.0
+info:
+  title: Shared Components
+  description: |
+    Shared components used across multiple API specifications.
+    This file contains reusable schemas, responses, parameters, and other components.
+  version: 1.0.0
+
+components:
+  schemas:
+    PaginationInfo:
+      type: object
+      properties:
+        page:
+          type: integer
+          description: Current page number
+        numPages:
+          type: integer
+          description: Total number of pages
+        pageSize:
+          type: integer
+          description: Number of results per page
+        count:
+          type: integer
+          description: Total number of results

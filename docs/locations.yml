@@ -207,7 +207,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: "#/components/schemas/PaginationInfo"
+                  - $ref: "components.yml#/components/schemas/PaginationInfo"
                   - type: object
                     properties:
                       locations:
@@ -405,7 +405,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: "#/components/schemas/PaginationInfo"
+                  - $ref: "components.yml#/components/schemas/PaginationInfo"
                   - type: object
                     properties:
                       locations:
@@ -533,22 +533,6 @@ components:
                   $ref: "#/components/schemas/Coordinate"
         address:
           $ref: "#/components/schemas/LocationAddress"
-
-    PaginationInfo:
-      type: object
-      properties:
-        page:
-          type: integer
-          description: Current page number
-        numPages:
-          type: integer
-          description: Total number of pages
-        pageSize:
-          type: integer
-          description: Number of results per page
-        count:
-          type: integer
-          description: Total number of results
 
     Error:
       type: array
