@@ -215,7 +215,16 @@
           {
             "name": "clusterLimit",
             "in": "query",
-            "description": "Use this parameter to limit the amount of clusters returned when \"map\" is specified in aggregates. Values can be between 1 and 200. This parameter can only be used if \"map\" is specified in aggregates.",
+            "description": "Use this parameter to limit the amount of clusters returned when \"cluster\" is set to true. Values can be between 1 and 200. This parameter can only be used if \"cluster\" is set to true.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "clusterListingsThreshold",
+            "in": "query",
+            "description": "Controls the maximum cluster size for which detailed listing information is included in the response. By default, detailed listing data is only included when a cluster contains exactly 1 listing. Setting this parameter to a higher value (e.g., 5) will include a 'listings' array with full property details for any cluster containing that many or fewer listings. This reduces the need for additional API requests when users interact with small clusters. Values can be between 1 and 100. This parameter can only be used if \"cluster\" is set to true.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -224,7 +233,7 @@
           {
             "name": "clusterPrecision",
             "in": "query",
-            "description": "Use this parameter to adjust the granularity of map clusters. A lower value aggregates listings into less clusters, a higher value aggregates listings into more clusters. Values can be between 0 and 29. This parameter can only be used if \"map\" is specified in aggregates.",
+            "description": "Use this parameter to adjust the granularity of map clusters. A lower value aggregates listings into less clusters, a higher value aggregates listings into more clusters. Values can be between 0 and 29. This parameter can only be used if \"cluster\" is set to true.",
             "schema": {
               "type": "integer",
               "format": "int32"
