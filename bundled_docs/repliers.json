@@ -6435,6 +6435,16 @@
                 "typedesc"
               ]
             }
+          },
+          {
+            "name": "hasBoundary",
+            "in": "query",
+            "description": "Only search through locations that have boundary polygons\n",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": null
+            }
           }
         ],
         "responses": {
@@ -6867,7 +6877,17 @@
             "required": false,
             "schema": {
               "type": "boolean",
-              "default": false
+              "default": null
+            }
+          },
+          {
+            "name": "hasBoundary",
+            "in": "query",
+            "description": "Only search through locations that have boundary polygons\n",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": null
             }
           }
         ],

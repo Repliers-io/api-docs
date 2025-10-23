@@ -200,6 +200,16 @@ paths:
           schema:
             type: string
             enum: [typeasc, typedesc]
+
+        - name: hasBoundary
+          in: query
+          description: |
+            Only search through locations that have boundary polygons
+          required: false
+          schema:
+            type: boolean
+            default: null
+
       responses:
         "200":
           description: Successful response
@@ -396,7 +406,16 @@ paths:
           required: false
           schema:
             type: boolean
-            default: false
+            default: null
+
+        - name: hasBoundary
+          in: query
+          description: |
+            Only search through locations that have boundary polygons
+          required: false
+          schema:
+            type: boolean
+            default: null
 
       responses:
         "200":
