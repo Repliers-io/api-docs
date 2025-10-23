@@ -10576,6 +10576,9 @@
                 },
                 "deprecated": false
             }
+        },
+        "/nlp": {
+            "$ref": "nlp.yml#/paths/~1nlp"
         }
     },
     "x-readme": {
