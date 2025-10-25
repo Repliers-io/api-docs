@@ -14,7 +14,7 @@ servers:
 paths:
   /nlp:
     post:
-      summary: New Prompt
+      summary: ✨AI Listings Search
       description: |
         This endpoint translates natural language search queries into structured API requests for the Repliers listings endpoint. For example, the prompt `find me properties in new york`` would be converted to the equivalent API call: https://api.repliers.io/listings?city=New York
       tags:
@@ -63,6 +63,8 @@ paths:
                         $ref: "#/components/schemas/NLPRequest"
         "400":
           description: Bad Request - Invalid input.
+        "406":
+          description: Not accepted - If the input is not relevant to a listings search a 406 response will be returned. For example, "why is the sky blue" would return a 406 response.
         "500":
           description: Internal Server Error - An error occurred while processing the request.
     get:

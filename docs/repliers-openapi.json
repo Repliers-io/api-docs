@@ -26,7 +26,7 @@
     "paths": {
         "/listings": {
             "post": {
-                "summary": "Search listings",
+                "summary": "Listings Search",
                 "description": "Use this endpoint to search listings using various parameters.As your user provides inputs, you simply pass those inputs to this endpoint to retrieve the listings that match their preferences in real-time. <BR/><BR/>For more information refer to <a target=\"_blank\" href=\"https://help.repliers.com/en/article/searching-filtering-and-pagination-guide-1q1n7x0\">The Searching, Filtering and Paginating Listings Guide </a>.<br/><br/>Using this endpoint you can also request market statistics, dynamic map clusters and search images using AI.",
                 "operationId": "getting-started-with-your-api",
                 "parameters": [
