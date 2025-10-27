@@ -33,6 +33,16 @@ paths:
               type: string
               enum: [area, city, neighborhood]
 
+        - name: state
+          in: query
+          description: |
+            Filters locations by 2-letter State/Province/Territory codes. Returns locations within the specified states.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+
         - name: area
           in: query
           description: |
@@ -376,6 +386,16 @@ paths:
             format: float
             minimum: -180
             maximum: 180
+
+        - name: state
+          in: query
+          description: |
+            Filters locations by 2-letter State/Province/Territory codes. Returns locations within the specified states.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
 
         - name: area
           in: query

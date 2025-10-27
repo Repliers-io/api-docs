@@ -6158,6 +6158,18 @@
             }
           },
           {
+            "name": "state",
+            "in": "query",
+            "description": "Filters locations by 2-letter State/Province/Territory codes. Returns locations within the specified states.\n",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
             "name": "area",
             "in": "query",
             "description": "Filters locations by area names. Returns locations within the specified area.\nAreas represent larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc.\n",
@@ -6844,6 +6856,18 @@
               "format": "float",
               "minimum": -180,
               "maximum": 180
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "Filters locations by 2-letter State/Province/Territory codes. Returns locations within the specified states.\n",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           },
           {
