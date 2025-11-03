@@ -109,6 +109,106 @@ paths:
         "500":
           description: Internal Server Error - An error occurred while processing the request.
 
+  /nlp/chats:
+    get:
+      summary: Pulls chat sessions
+      description: |
+        This endpoint allows you to retrieve all NLP prompts grouped into chat sessions.
+      tags:
+        - NLP
+      parameters:
+        - name: nlpId
+          in: query
+          description: Unique identifier for the NLP session.
+          required: false
+          schema:
+            type: string
+
+        - name: clientId
+          in: query
+          description: Filter sessions based on the `clientId` to see all NLP sessions associated with a specific client.
+          required: false
+          schema:
+            type: string
+
+        - name: resultsPerPage
+          in: query
+          description: The amount of chats to return in each page of the results set.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 100
+
+        - name: pageNum
+          in: query
+          description: If specified indexes a specific page in the results set. For example, if there are 1000 chats and 100 chats per page, if you'd like to view chats 101-200 you'd specify pageNum=2
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+
+        - name: prompts
+          in: query
+          description: |
+            Fetch all prompts for each of the chats.
+          required: false
+          schema:
+            type: boolean
+            default: null
+
+      responses:
+        "200":
+          description: Successful response with NLP chats.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "components.yml#/components/schemas/PaginationInfo"
+                  - type: object
+                    properties:
+                      chats:
+                        type: array
+                        description: List of NLP chats
+                        items:
+                          type: object
+                          properties:
+                            nlpId:
+                              type: string
+                              description: Unique session identifier for maintaining context in future NLP requests.
+                              example: "d38a5bfc-3e8f-4a00-b9s7a-49fe545fa72b"
+                            clientId:
+                              type: string
+                              description: The `clientId` of the client that the NLP chat is for.
+                              example: "12345"
+                            title:
+                              type: string
+                              description: The title of the NLP chat made out of last NLP prompt summary.
+                              example: "Searching for properties in Boston with at least 2 bedrooms."
+                            updatedOn:
+                              type: string
+                              format: date-time
+                              description: The date and time when the chat was last updated.
+                              example: "2025-11-03T22:44:24.000Z"
+                            nlpVersion:
+                              type: string
+                              description: The NLP model version used in the chat.
+                              example: "1"
+                            prompts:
+                              type: array
+                              description: List of NLP prompts and their responses
+                              items:
+                                allOf:
+                                  - $ref: "#/components/schemas/NLPResponseObject"
+                                  - type: object
+                                    properties:
+                                      request:
+                                        $ref: "#/components/schemas/NLPRequest"
+        "500":
+          description: Internal Server Error - An error occurred while processing the request.
+
 components:
   schemas:
     NLPResponseObject:
@@ -161,3 +261,8 @@ components:
           type: string
           description: Summary of how the prompt was interpreted by NLP model.
           example: "Searching for a condominium apartment in Toronto with a minimum of 1 bedroom located in the Annex neighborhood. The property must have underground parking."
+        locations:
+          type: array
+          description: List of locations identified in the prompt.
+          items:
+            $ref: "locations.yml#/components/schemas/SuggestedLocation"

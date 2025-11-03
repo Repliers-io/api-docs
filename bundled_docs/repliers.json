@@ -11682,6 +11682,13 @@
                               "type": "string",
                               "description": "Summary of how the prompt was interpreted by NLP model.",
                               "example": "Searching for a condominium apartment in Toronto with a minimum of 1 bedroom located in the Annex neighborhood. The property must have underground parking."
+                            },
+                            "locations": {
+                              "type": "array",
+                              "description": "List of locations identified in the prompt.",
+                              "items": {
+                                "$ref": "#/paths/~1locations~1autocomplete/get/responses/200/content/application~1json/schema/allOf/1/properties/locations/items"
+                              }
                             }
                           }
                         }
