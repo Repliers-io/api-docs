@@ -50,6 +50,14 @@
                         }
                     },
                     {
+                        "name": "aggregatesUnique",
+                        "in": "query",
+                        "description": "Unique aggregates values and counts for specified fields. Should be used specifically for fields containing coma-separated values. Aggregates have many use cases, they're particularly useful for grouping and displaying acceptable values for fields that are used in filters. For more information refer to <a target=\"_blank\" href=\"https://help.repliers.com/en/article/using-aggregates-to-determine-acceptable-values-for-filters-c88csc\">Using Aggregates To Determine Acceptable Values For Filters</a>.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
                         "name": "aggregateStatistics",
                         "in": "query",
                         "description": "If true, when both \"aggregates\" and \"statistics\" parameters are used, the requested statistics will be grouped by the requested aggregates.",
@@ -74,7 +82,11 @@
                         "description": "If set to \"AND\", listings must match all amenities values. If set to \"OR\", listings must match at least 1 amenities value. Default is \"AND\"",
                         "schema": {
                             "type": "string",
-                            "enum": ["AND", "OR", ""],
+                            "enum": [
+                                "AND",
+                                "OR",
+                                ""
+                            ],
                             "default": ""
                         }
                     },
@@ -278,7 +290,10 @@
                         "description": "If not specified, returns both listings whose address may be displayed on the internet (Y) and whose address should not be displayed on the the internet (N)<br/><br/>Allowed values: <code>Y</code>, <code>N</code>",
                         "schema": {
                             "type": "string",
-                            "enum": ["Y", "N"]
+                            "enum": [
+                                "Y",
+                                "N"
+                            ]
                         }
                     },
                     {
@@ -287,7 +302,10 @@
                         "description": "Used to filter listings permitted for display on internet portals. \"Y\" indicates that the listing can be displayed, \"N\" indicates that it can not and may only be used for back office purposes.",
                         "schema": {
                             "type": "string",
-                            "enum": ["Y", "N"]
+                            "enum": [
+                                "Y",
+                                "N"
+                            ]
                         }
                     },
                     {
@@ -296,7 +314,10 @@
                         "description": "If not specified, returns both listings that may be displayed publicly (Y) and those that should be password protected (N)<br/><br/>Allowed values: <code>Y</code>, <code>N</code>",
                         "schema": {
                             "type": "string",
-                            "enum": ["Y", "N"]
+                            "enum": [
+                                "Y",
+                                "N"
+                            ]
                         }
                     },
                     {
@@ -381,7 +402,11 @@
                         "description": "Allows you to find listings that have either increased or decreased in price.",
                         "schema": {
                             "type": "string",
-                            "enum": ["decrease", "increase", ""],
+                            "enum": [
+                                "decrease",
+                                "increase",
+                                ""
+                            ],
                             "default": ""
                         }
                     },
@@ -455,7 +480,11 @@
                         "description": "When a multi-polygon is provided for the \"map\" parameter the default condition is \"OR\", meaning that it will return all listings that fall inside any of the polygons. This can be changed to \"AND\" in which case it will return listings that fall inside all of the polygons.",
                         "schema": {
                             "type": "string",
-                            "enum": ["OR", "AND", ""],
+                            "enum": [
+                                "OR",
+                                "AND",
+                                ""
+                            ],
                             "default": ""
                         }
                     },
@@ -863,7 +892,11 @@
                         "description": "If set to \"AND\", listings must match all supplied parameters. If set to \"OR\", listings must match at least 1 parameter. Default is \"AND\"",
                         "schema": {
                             "type": "string",
-                            "enum": ["AND", "OR", ""],
+                            "enum": [
+                                "AND",
+                                "OR",
+                                ""
+                            ],
                             "default": ""
                         }
                     },
@@ -991,11 +1024,11 @@
                         "in": "query",
                         "description": "Use this parameter to filter by Standard Status. <br/><br/>Allowed values: <code>Active</code>, <code>Active Under Contract</code>, <code>Canceled</code>, <code>Closed</code>, <code>Coming Soon</code>, <code>Delete</code>, <code>Expired</code>, <code>Hold</code>, <code>Incomplete</code>, <code>Pending</code>, <code>Withdrawn</code>",
                         "schema": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
                         }
-                    }
                     },
                     {
                         "name": "status",
@@ -1006,7 +1039,9 @@
                             "items": {
                                 "type": "string"
                             },
-                            "default": ["A"]
+                            "default": [
+                                "A"
+                            ]
                         }
                     },
                     {
@@ -1148,7 +1183,10 @@
                         "description": "If not specified, returns both listings that are waterfront and those that are not. If \"Y\", returns listings that are waterfront, if \"N\" returns listings that are not waterfront or unspecified.",
                         "schema": {
                             "type": "string",
-                            "enum": ["Y", "N"]
+                            "enum": [
+                                "Y",
+                                "N"
+                            ]
                         }
                     },
                     {
@@ -1196,7 +1234,10 @@
                                                 "type": {
                                                     "type": "string",
                                                     "description": "Indicates if the imageSearchItem is an image input or a text input.",
-                                                    "enum": ["Image", "Text"]
+                                                    "enum": [
+                                                        "Image",
+                                                        "Text"
+                                                    ]
                                                 },
                                                 "url": {
                                                     "type": "string",
@@ -1212,7 +1253,9 @@
                                                     "format": "int32"
                                                 }
                                             },
-                                            "required": ["type"],
+                                            "required": [
+                                                "type"
+                                            ],
                                             "type": "object"
                                         }
                                     },
@@ -6038,7 +6081,11 @@
                         "description": "Limits location metadata to areas, cities and neighborhoods whose class matches the supplied valued.",
                         "schema": {
                             "type": "string",
-                            "enum": ["residential", "condo", "commercial"]
+                            "enum": [
+                                "residential",
+                                "condo",
+                                "commercial"
+                            ]
                         }
                     },
                     {
@@ -6209,7 +6256,9 @@
                             "code": "{{baseUrl}}/offices?boardId=91"
                         }
                     ],
-                    "samples-languages": ["text"]
+                    "samples-languages": [
+                        "text"
+                    ]
                 }
             }
         },
@@ -6990,7 +7039,9 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "required": ["newAgentId"],
+                                "required": [
+                                    "newAgentId"
+                                ],
                                 "properties": {
                                     "newAgentId": {
                                         "type": "integer",
@@ -7049,7 +7100,9 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "required": ["agentId"],
+                                "required": [
+                                    "agentId"
+                                ],
                                 "properties": {
                                     "agentId": {
                                         "type": "integer",
@@ -7611,7 +7664,9 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "required": ["label"],
+                                "required": [
+                                    "label"
+                                ],
                                 "properties": {
                                     "label": {
                                         "type": "string",
@@ -7948,7 +8003,9 @@
                                         "priceChangeNotifications": false,
                                         "status": true,
                                         "soldNotifications": false,
-                                        "class": ["residential"],
+                                        "class": [
+                                            "residential"
+                                        ],
                                         "minPrice": 100000,
                                         "maxPrice": 1000000,
                                         "type": "sale",
@@ -9024,15 +9081,24 @@
                                                 "properties": {
                                                     "cableIncl": {
                                                         "type": "string",
-                                                        "enum": ["Y", "N"]
+                                                        "enum": [
+                                                            "Y",
+                                                            "N"
+                                                        ]
                                                     },
                                                     "heatIncl": {
                                                         "type": "string",
-                                                        "enum": ["Y", "N"]
+                                                        "enum": [
+                                                            "Y",
+                                                            "N"
+                                                        ]
                                                     },
                                                     "hydroIncl": {
                                                         "type": "string",
-                                                        "enum": ["Y", "N"]
+                                                        "enum": [
+                                                            "Y",
+                                                            "N"
+                                                        ]
                                                     },
                                                     "maintenance": {
                                                         "type": "integer",
@@ -9040,15 +9106,24 @@
                                                     },
                                                     "parkingIncl": {
                                                         "type": "string",
-                                                        "enum": ["Y", "N"]
+                                                        "enum": [
+                                                            "Y",
+                                                            "N"
+                                                        ]
                                                     },
                                                     "taxesIncl": {
                                                         "type": "string",
-                                                        "enum": ["Y", "N"]
+                                                        "enum": [
+                                                            "Y",
+                                                            "N"
+                                                        ]
                                                     },
                                                     "waterIncl": {
                                                         "type": "string",
-                                                        "enum": ["Y", "N"]
+                                                        "enum": [
+                                                            "Y",
+                                                            "N"
+                                                        ]
                                                     }
                                                 },
                                                 "required": [],
@@ -9185,7 +9260,9 @@
                                                 "format": "int32"
                                             }
                                         },
-                                        "required": ["annualAmount"],
+                                        "required": [
+                                            "annualAmount"
+                                        ],
                                         "type": "object"
                                     },
                                     "clientId": {
@@ -9382,15 +9459,24 @@
                                                 "properties": {
                                                     "cableIncl": {
                                                         "type": "string",
-                                                        "enum": ["Y", "N"]
+                                                        "enum": [
+                                                            "Y",
+                                                            "N"
+                                                        ]
                                                     },
                                                     "heatIncl": {
                                                         "type": "string",
-                                                        "enum": ["Y", "N"]
+                                                        "enum": [
+                                                            "Y",
+                                                            "N"
+                                                        ]
                                                     },
                                                     "hydroIncl": {
                                                         "type": "string",
-                                                        "enum": ["Y", "N"]
+                                                        "enum": [
+                                                            "Y",
+                                                            "N"
+                                                        ]
                                                     },
                                                     "maintenance": {
                                                         "type": "integer",
@@ -9398,15 +9484,24 @@
                                                     },
                                                     "parkingIncl": {
                                                         "type": "string",
-                                                        "enum": ["Y", "N"]
+                                                        "enum": [
+                                                            "Y",
+                                                            "N"
+                                                        ]
                                                     },
                                                     "taxesIncl": {
                                                         "type": "string",
-                                                        "enum": ["Y", "N"]
+                                                        "enum": [
+                                                            "Y",
+                                                            "N"
+                                                        ]
                                                     },
                                                     "waterIncl": {
                                                         "type": "string",
-                                                        "enum": ["Y", "N"]
+                                                        "enum": [
+                                                            "Y",
+                                                            "N"
+                                                        ]
                                                     }
                                                 },
                                                 "required": [],
@@ -9574,7 +9669,9 @@
                                                 "format": "int32"
                                             }
                                         },
-                                        "required": ["annualAmount"],
+                                        "required": [
+                                            "annualAmount"
+                                        ],
                                         "type": "object"
                                     },
                                     "clientId": {
@@ -9685,7 +9782,11 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "required": ["sender", "agentId", "clientId"],
+                                "required": [
+                                    "sender",
+                                    "agentId",
+                                    "clientId"
+                                ],
                                 "properties": {
                                     "sender": {
                                         "type": "string",
@@ -9979,7 +10080,10 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "required": ["clientId", "mlsNumber"],
+                                "required": [
+                                    "clientId",
+                                    "mlsNumber"
+                                ],
                                 "properties": {
                                     "boardId": {
                                         "type": "integer",
@@ -10217,7 +10321,10 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "required": ["target_url", "event"],
+                                "required": [
+                                    "target_url",
+                                    "event"
+                                ],
                                 "properties": {
                                     "target_url": {
                                         "type": "string",
@@ -10243,7 +10350,9 @@
                                             "filters": [
                                                 {
                                                     "field": "address.city",
-                                                    "values": ["Toronto"]
+                                                    "values": [
+                                                        "Toronto"
+                                                    ]
                                                 }
                                             ]
                                         }
@@ -10592,7 +10701,7 @@
         "/nlp": {
             "$ref": "nlp.yml#/paths/~1nlp"
         },
-         "/nlp/chats": {
+        "/nlp/chats": {
             "$ref": "nlp.yml#/paths/~1nlp~1chats"
         }
     },
