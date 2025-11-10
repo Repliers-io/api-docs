@@ -14,7 +14,7 @@ servers:
 paths:
   /nlp:
     post:
-      summary: ✨AI Listings Search
+      summary: New Prompt
       description: |
         This endpoint translates natural language search queries into structured API requests for the Repliers listings endpoint. For example, the prompt `find me properties in new york`` would be converted to the equivalent API call: https://api.repliers.io/listings?city=New York
       tags:
@@ -42,8 +42,12 @@ paths:
                 nlpId:
                   type: string
                   description: |
-                    Unique identifier to maintain context-aware interactions.
-                    When you send a new prompt to the `/nlp` endpoint, the system returns an `nlpId` in the response. This `nlpId` can be included in subsequent prompts to maintain context, allowing the NLP tool to consider both the original and new prompts when generating the API request.
+                              Unique identifier for maintaining context-aware interactions across multiple prompts.
+    
+                              - **If omitted or blank:** A new session is created, and the system processes the prompt independently without any prior context.
+                              - **If provided:** The prompt is added to the existing session associated with the given `nlpId`, allowing the system to consider the conversation history when generating the API request.
+    
+                              When you send a prompt to the `/nlp` endpoint, the system returns an `nlpId` in the response. You can include this `nlpId` in subsequent requests to build upon previous interactions and maintain continuity within the same conversation thread.
                   example: "d38a5bfc-3e8f-4a00-b9s7a-49fe545fa72b"
                 clientId:
                   type: string
@@ -68,9 +72,9 @@ paths:
         "500":
           description: Internal Server Error - An error occurred while processing the request.
     get:
-      summary: Filter sessions
+      summary: Filter prompts
       description: |
-        This endpoint allows you to retrieve all NLP prompts that are associated with a unique `nlpId` session.
+        This endpoint allows you to list and filter prompts across all sessions.
       tags:
         - NLP
       parameters:
@@ -108,12 +112,11 @@ paths:
                                   $ref: "#/components/schemas/NLPRequest"
         "500":
           description: Internal Server Error - An error occurred while processing the request.
-
   /nlp/chats:
     get:
-      summary: Pulls chat sessions
+      summary: Filter sessions
       description: |
-        This endpoint allows you to retrieve all NLP prompts grouped into chat sessions.
+        This endpoint allows you to list and filter all sessions. Each session has a unique nlpId and a session can have many prompts.
       tags:
         - NLP
       parameters:

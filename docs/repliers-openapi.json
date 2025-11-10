@@ -989,10 +989,13 @@
                     {
                         "name": "standardStatus",
                         "in": "query",
-                        "description": "Use this parameter to filter by Standard Status. <br/><br/>Allowed values:<br/><br/><code>Active</code>, <code>Active Under Contract</code>, <code>Closed</code>, <code>Expired</code>, <code>Pending</code>, <code>Canceled</code>, <code>Incomplete</code>",
+                        "description": "Use this parameter to filter by Standard Status. <br/><br/>Allowed values: <code>Active</code>, <code>Active Under Contract</code>, <code>Canceled</code>, <code>Closed</code>, <code>Coming Soon</code>, <code>Delete</code>, <code>Expired</code>, <code>Hold</code>, <code>Incomplete</code>, <code>Pending</code>, <code>Withdrawn</code>",
                         "schema": {
+                        "type": "array",
+                        "items": {
                             "type": "string"
                         }
+                    }
                     },
                     {
                         "name": "status",
@@ -10588,6 +10591,9 @@
         },
         "/nlp": {
             "$ref": "nlp.yml#/paths/~1nlp"
+        },
+         "/nlp/chats": {
+            "$ref": "nlp.yml#/paths/~1nlp~1chats"
         }
     },
     "x-readme": {

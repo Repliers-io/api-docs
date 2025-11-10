@@ -1014,9 +1014,12 @@
           {
             "name": "standardStatus",
             "in": "query",
-            "description": "Use this parameter to filter by Standard Status. <br/><br/>Allowed values:<br/><br/><code>Active</code>, <code>Active Under Contract</code>, <code>Closed</code>, <code>Expired</code>, <code>Pending</code>, <code>Canceled</code>, <code>Incomplete</code>",
+            "description": "Use this parameter to filter by Standard Status. <br/><br/>Allowed values: <code>Active</code>, <code>Active Under Contract</code>, <code>Canceled</code>, <code>Closed</code>, <code>Coming Soon</code>, <code>Delete</code>, <code>Expired</code>, <code>Hold</code>, <code>Incomplete</code>, <code>Pending</code>, <code>Withdrawn</code>",
             "schema": {
-              "type": "string"
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           },
           {
@@ -11560,7 +11563,7 @@
     },
     "/nlp": {
       "post": {
-        "summary": "✨AI Listings Search",
+        "summary": "New Prompt",
         "description": "This endpoint translates natural language search queries into structured API requests for the Repliers listings endpoint. For example, the prompt `find me properties in new york`` would be converted to the equivalent API call: https://api.repliers.io/listings?city=New York\n",
         "tags": [
           "NLP"
@@ -11596,7 +11599,7 @@
                   },
                   "nlpId": {
                     "type": "string",
-                    "description": "Unique identifier to maintain context-aware interactions.\nWhen you send a new prompt to the `/nlp` endpoint, the system returns an `nlpId` in the response. This `nlpId` can be included in subsequent prompts to maintain context, allowing the NLP tool to consider both the original and new prompts when generating the API request.\n",
+                    "description": "Unique identifier for maintaining context-aware interactions across multiple prompts.\n\n- **If omitted or blank:** A new session is created, and the system processes the prompt independently without any prior context.\n- **If provided:** The prompt is added to the existing session associated with the given `nlpId`, allowing the system to consider the conversation history when generating the API request.\n\nWhen you send a prompt to the `/nlp` endpoint, the system returns an `nlpId` in the response. You can include this `nlpId` in subsequent requests to build upon previous interactions and maintain continuity within the same conversation thread.\n",
                     "example": "d38a5bfc-3e8f-4a00-b9s7a-49fe545fa72b"
                   },
                   "clientId": {
@@ -11711,8 +11714,8 @@
         }
       },
       "get": {
-        "summary": "Filter sessions",
-        "description": "This endpoint allows you to retrieve all NLP prompts that are associated with a unique `nlpId` session.\n",
+        "summary": "Filter prompts",
+        "description": "This endpoint allows you to list and filter prompts across all sessions.\n",
         "tags": [
           "NLP"
         ],
@@ -11784,6 +11787,146 @@
                                 }
                               }
                             ]
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - An error occurred while processing the request."
+          }
+        }
+      }
+    },
+    "/nlp/chats": {
+      "get": {
+        "summary": "Filter sessions",
+        "description": "This endpoint allows you to list and filter all sessions. Each session has a unique nlpId and a session can have many prompts.\n",
+        "tags": [
+          "NLP"
+        ],
+        "parameters": [
+          {
+            "name": "nlpId",
+            "in": "query",
+            "description": "Unique identifier for the NLP session.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "clientId",
+            "in": "query",
+            "description": "Filter sessions based on the `clientId` to see all NLP sessions associated with a specific client.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "resultsPerPage",
+            "in": "query",
+            "description": "The amount of chats to return in each page of the results set.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 100
+            }
+          },
+          {
+            "name": "pageNum",
+            "in": "query",
+            "description": "If specified indexes a specific page in the results set. For example, if there are 1000 chats and 100 chats per page, if you'd like to view chats 101-200 you'd specify pageNum=2",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "prompts",
+            "in": "query",
+            "description": "Fetch all prompts for each of the chats.\n",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response with NLP chats.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/paths/~1nlp/get/responses/200/content/application~1json/schema/allOf/0"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "chats": {
+                          "type": "array",
+                          "description": "List of NLP chats",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "nlpId": {
+                                "type": "string",
+                                "description": "Unique session identifier for maintaining context in future NLP requests.",
+                                "example": "d38a5bfc-3e8f-4a00-b9s7a-49fe545fa72b"
+                              },
+                              "clientId": {
+                                "type": "string",
+                                "description": "The `clientId` of the client that the NLP chat is for.",
+                                "example": "12345"
+                              },
+                              "title": {
+                                "type": "string",
+                                "description": "The title of the NLP chat made out of last NLP prompt summary.",
+                                "example": "Searching for properties in Boston with at least 2 bedrooms."
+                              },
+                              "updatedOn": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "The date and time when the chat was last updated.",
+                                "example": "2025-11-03T22:44:24.000Z"
+                              },
+                              "nlpVersion": {
+                                "type": "string",
+                                "description": "The NLP model version used in the chat.",
+                                "example": "1"
+                              },
+                              "prompts": {
+                                "type": "array",
+                                "description": "List of NLP prompts and their responses",
+                                "items": {
+                                  "allOf": [
+                                    {
+                                      "$ref": "#/paths/~1nlp/post/responses/200/content/application~1json/schema/allOf/0"
+                                    },
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "request": {
+                                          "$ref": "#/paths/~1nlp/post/responses/200/content/application~1json/schema/allOf/1/properties/request"
+                                        }
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            }
                           }
                         }
                       }
