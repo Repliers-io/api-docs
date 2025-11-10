@@ -50,6 +50,14 @@
             }
           },
           {
+            "name": "aggregatesUnique",
+            "in": "query",
+            "description": "Unique aggregates values and counts for specified fields. Should be used specifically for fields containing coma-separated values. Aggregates have many use cases, they're particularly useful for grouping and displaying acceptable values for fields that are used in filters. For more information refer to <a target=\"_blank\" href=\"https://help.repliers.com/en/article/using-aggregates-to-determine-acceptable-values-for-filters-c88csc\">Using Aggregates To Determine Acceptable Values For Filters</a>.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "aggregateStatistics",
             "in": "query",
             "description": "If true, when both \"aggregates\" and \"statistics\" parameters are used, the requested statistics will be grouped by the requested aggregates.",
