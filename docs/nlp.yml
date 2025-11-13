@@ -26,7 +26,7 @@ paths:
           required: false
           schema:
             type: string
-            default: "1"
+            default: "3"
             enum: ["1", "2", "3"]
       requestBody:
         required: true
@@ -42,17 +42,27 @@ paths:
                 nlpId:
                   type: string
                   description: |
-                              Unique identifier for maintaining context-aware interactions across multiple prompts.
-    
-                              - **If omitted or blank:** A new session is created, and the system processes the prompt independently without any prior context.
-                              - **If provided:** The prompt is added to the existing session associated with the given `nlpId`, allowing the system to consider the conversation history when generating the API request.
-    
-                              When you send a prompt to the `/nlp` endpoint, the system returns an `nlpId` in the response. You can include this `nlpId` in subsequent requests to build upon previous interactions and maintain continuity within the same conversation thread.
+                    Unique identifier for maintaining context-aware interactions across multiple prompts.
+
+                    - **If omitted or blank:** A new session is created, and the system processes the prompt independently without any prior context.
+                    - **If provided:** The prompt is added to the existing session associated with the given `nlpId`, allowing the system to consider the conversation history when generating the API request.
+
+                    When you send a prompt to the `/nlp` endpoint, the system returns an `nlpId` in the response. You can include this `nlpId` in subsequent requests to build upon previous interactions and maintain continuity within the same conversation thread.
                   example: "d38a5bfc-3e8f-4a00-b9s7a-49fe545fa72b"
                 clientId:
                   type: string
                   description: The `clientId` of the client that the NLP prompt is for.
                   example: "12345"
+                listings:
+                  type: boolean
+                  default: false
+                  description: |
+                    If `true`, the endpoint will return listings according to the generated urlQueryString parameters, the same way as GET /lisitngs endpoint would treat those parameters. Default is `false`.
+                fields:
+                  type: string
+                  description: |
+                    Use if you want to limit the `listings` response object to containing certain fields only. For example: `fields=listPrice,soldPrice` would limit the response to contain `listPrice` and `soldPrice` only. You can also specify the amount of images to return, for example if a listing has 40 images total and you specify `fields=images[5]` it will only return the first 5 images.
+
       responses:
         "200":
           description: Successful response with processed data.

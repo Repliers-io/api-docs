@@ -5816,7 +5816,7 @@
           {
             "name": "fields",
             "in": "query",
-            "description": "Use if you want to limit the response to containing certain fields only. For example: fields?listPrice,soldPrice would limit the response to contain listPrice and soldPrice only. You can also specify the amount of images to return, for example if a listing has 40 images total and you specify fields=images[5] it will only return the first 5 images.",
+            "description": "Use if you want to limit the response to containing certain fields only. For example: `fields=listPrice,soldPrice` would limit the response to contain `listPrice` and `soldPrice` only. You can also specify the amount of images to return, for example if a listing has 40 images total and you specify `fields=images[5]` it will only return the first 5 images.",
             "schema": {
               "type": "string"
             }
@@ -11584,7 +11584,7 @@
             "required": false,
             "schema": {
               "type": "string",
-              "default": "1",
+              "default": "3",
               "enum": [
                 "1",
                 "2",
@@ -11614,6 +11614,15 @@
                     "type": "string",
                     "description": "The `clientId` of the client that the NLP prompt is for.",
                     "example": "12345"
+                  },
+                  "listings": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "If `true`, the endpoint will return listings according to the generated urlQueryString parameters, the same way as GET /lisitngs endpoint would treat those parameters. Default is `false`.\n"
+                  },
+                  "fields": {
+                    "type": "string",
+                    "description": "Use if you want to limit the `listings` response object to containing certain fields only. For example: `fields=listPrice,soldPrice` would limit the response to contain `listPrice` and `soldPrice` only. You can also specify the amount of images to return, for example if a listing has 40 images total and you specify `fields=images[5]` it will only return the first 5 images.\n"
                   }
                 }
               }
