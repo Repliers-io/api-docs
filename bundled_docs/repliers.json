@@ -629,6 +629,15 @@
             }
           },
           {
+            "name": "maxStories",
+            "in": "query",
+            "description": "Filter listings whose stories are <= the supplied value.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
             "name": "maxSqft",
             "in": "query",
             "description": "Filter listings whose square footage is <= the supplied value. Note - excludes listings where the sqft value is not supplied by the MLS.",
@@ -801,6 +810,15 @@
             "description": "Filter listings whose sold price is >= the supplied value.",
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "minStories",
+            "in": "query",
+            "description": "Filter listings whose stories are >= the supplied value.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
             }
           },
           {
