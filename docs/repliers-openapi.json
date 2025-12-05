@@ -6283,13 +6283,21 @@
         "/members": {
             "get": {
                 "summary": "Members",
-                "description": "Use this endpoint to list members (agents) belonging to the MLS.",
+                "description": "Use this endpoint to list and filter members (agents) belonging to the MLS.",
                 "operationId": "members",
                 "parameters": [
                     {
-                        "name": "keywords",
+                        "name": "agentId",
                         "in": "query",
-                        "description": "If supplied, filters offices by the supplied value.",
+                        "description": "If supplied, finds member by agentId using exact match criteria.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "agentName",
+                        "in": "query",
+                        "description": "If supplied, finds member by agent name using exact match criteria.",
                         "schema": {
                             "type": "string"
                         }
@@ -6297,6 +6305,22 @@
                     {
                         "name": "boardId",
                         "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "brokerage",
+                        "in": "query",
+                        "description": "Filters members by brokerage name using partial match criteria.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "keywords",
+                        "in": "query",
+                        "description": "If supplied, searches for members by keyword across multiple fields.",
                         "schema": {
                             "type": "string"
                         }
