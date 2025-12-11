@@ -196,7 +196,7 @@
                     {
                         "name": "class",
                         "in": "query",
-                        "description": "The class of listing to filter the search results by.  Allowed values: <code>condo</code>, <code>residential</code>, <code>commercial</code>",
+                        "description": "The class of listing to filter the search results by.  Allowed values: <code>condo</code>, <code>residential</code>, <code>commercial</code>.  For backward compatibility, the following alias values are also allowed: <code>CondoProperty</code>, <code>ResidentialProperty</code>, <code>CommercialProperty</code>",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -5961,6 +5961,22 @@
                         "in": "query",
                         "description": "The zip code or postal code of the property. Supports partial match, for example if supplied value is \"123\" it will match \"12345\".  Note - a zip is not required if a city is provided.",
                         "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "mlsNumber",
+                        "in": "query",
+                        "description": "If specified, will return the history for the property that can be identified by the given MLS number",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "addressKey",
+                        "in": "query",
+                        "description": "The address key of the property. Please see the address object of a listing to understand how the address key is constructed",
                         "schema": {
                             "type": "string"
                         }
