@@ -18,12 +18,12 @@
     "license": "ISC",
     "description": "",
     "dependencies": {
-        "@readme/openapi-parser": "^5.0.1",
+        "@readme/openapi-parser": "^5.4.0",
         "picocolors": "^1.1.1",
         "yargs": "^18.0.0"
     },
     "type": "module",
     "devDependencies": {
-        "rdme": "^10.5.0"
+        "rdme": "^10.6.0"
     }
 }

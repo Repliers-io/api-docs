@@ -447,6 +447,17 @@
                         }
                     },
                     {
+                        "name": "locationId",
+                        "in": "query",
+                        "description": "Filters listings by one or more values for locationId. For locations that have boundary data, the location boundary will be used to find listings that fall within the boundary. For locations that do not have boundary data, address components will be used to filter listings.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    {
                         "name": "locker",
                         "in": "query",
                         "description": "Filters listings by one or more values for locker.",
