@@ -6663,12 +6663,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "ApiKeyAuth": []
-          }
-        ]
+        }
       }
     },
     "/locations/autocomplete": {
@@ -7057,12 +7052,7 @@
           "500": {
             "$ref": "#/paths/~1locations/get/responses/500"
           }
-        },
-        "security": [
-          {
-            "ApiKeyAuth": []
-          }
-        ]
+        }
       }
     },
     "/brokerages": {
