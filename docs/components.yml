@@ -23,3 +23,44 @@ components:
         count:
           type: integer
           description: Total number of results
+
+    PropertyClass:
+      type: string
+      enum: [condo, residential, commercial]
+      description: Classification of property type
+
+    ListingType:
+      type: string
+      enum: [sale, lease]
+      description: Whether the property is for sale or lease
+
+    YesNo:
+      type: string
+      enum: [yes, no]
+      description: Yes or No value
+
+    BuildingsSortBy:
+      type: string
+      enum: [numUnitsDesc]
+      description: Sort field for buildings results
+
+    GeoJSONPolygon:
+      type: object
+      description: |
+        GeoJSON polygon for geographical filtering. Limits results to buildings within the specified boundaries.
+        Format: Array of coordinate arrays, where each coordinate is [longitude, latitude] in WGS 84 format.
+        The polygon must be closed (first and last points must be identical).
+      properties:
+        type:
+          type: string
+          enum: [Polygon]
+        coordinates:
+          type: array
+          items:
+            type: array
+            items:
+              type: array
+              items:
+                type: number
+              minItems: 2
+              maxItems: 2

@@ -1,0 +1,366 @@
+openapi: 3.1.0
+info:
+  title: Buildings API
+  description: |
+    API for searching and retrieving building information with support for various filtering options.
+    Provides endpoints for querying buildings based on location, price, property characteristics,
+    and geographical boundaries. Supports pagination, sorting, and geographical radius searches.
+  version: 1.0.0
+servers:
+  - url: https://api.repliers.io
+    description: Production server
+  - url: https://dev.repliers.io
+    description: Development server
+
+paths:
+  /buildings:
+    post:
+      summary: Search buildings
+      description: Search buildings based on the provided filter criteria.
+      tags:
+        - Buildings
+      parameters:
+        - name: resultsPerPage
+          in: query
+          description: The amount of buildings to return in each page of the results set.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 300
+            default: 100
+
+        - name: pageNum
+          in: query
+          description: If specified indexes a specific page in the results set. For example, if there are 1000 buildings and 100 buildings per page, if you'd like to view buildings 101-200 you'd specify pageNum=2
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+
+        - name: city
+          in: query
+          description: |
+            Filters buildings by city names. Returns buildings within the specified city.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+
+        - name: neighborhood
+          in: query
+          description: |
+            Filter results by neighborhood names. Returns specified neighborhoods.
+            Neighborhoods represent the smallest geographical division in the hierarchy.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+
+        - name: class
+          in: query
+          description: |
+            Filter by property class. Specifies the classification of the building.
+          required: false
+          schema:
+            type: array
+            items:
+              $ref: "components.yml#/components/schemas/PropertyClass"
+
+        - name: minPrice
+          in: query
+          description: Minimum price filter
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+
+        - name: maxPrice
+          in: query
+          description: Maximum price filter
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+
+        - name: minBedrooms
+          in: query
+          description: Minimum number of bedrooms
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+
+        - name: minBathrooms
+          in: query
+          description: Minimum number of bathrooms
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+
+        - name: propertyType
+          in: query
+          description: |
+            Filter by property type(s). Returns buildings matching the specified property types.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+
+        - name: type
+          in: query
+          description: |
+            Used to filter properties that are for sale or for lease.
+          required: false
+          schema:
+            $ref: "components.yml#/components/schemas/ListingType"
+
+        - name: streetName
+          in: query
+          description: |
+            Filter by street name(s). Returns buildings located on the specified streets.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+
+        - name: streetNumber
+          in: query
+          description: |
+            Filter by street number(s). Returns buildings with the specified street numbers.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+
+        - name: sortBy
+          in: query
+          description: Sort results by specified field
+          required: false
+          schema:
+            $ref: "components.yml#/components/schemas/BuildingsSortBy"
+
+        - name: displayPublic
+          in: query
+          description: Filter by display public status
+          required: false
+          schema:
+            $ref: "components.yml#/components/schemas/YesNo"
+
+        - name: radius
+          in: query
+          description: |
+            Accepts a value for radius in KM. Must be used with `lat` and `long` parameters to return buildings within the specified radius of a given latitude and longitude.
+          required: false
+          schema:
+            type: number
+            format: float
+            minimum: 1
+
+        - name: lat
+          in: query
+          description: Accepts a value for latitude. Must be used with radius parameter to return buildings within a certain radius of a given latitude and longitude.
+          required: false
+          schema:
+            type: number
+            format: float
+            minimum: -90
+            maximum: 90
+
+        - name: long
+          in: query
+          description: Accepts a value for longitude. Must be used with radius parameter to return buildings within a certain radius of a given latitude and longitude.
+          required: false
+          schema:
+            type: number
+            format: float
+            minimum: -180
+            maximum: 180
+
+        - name: minStories
+          in: query
+          description: Minimum number of stories/floors in the building
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+
+        - name: maxStories
+          in: query
+          description: Maximum number of stories/floors in the building
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+
+        - name: map
+          in: query
+          description: |
+            GeoJSON polygon or multi-polygon boundary for geographical filtering. Limits results to buildings within the specified boundaries.
+            For complex polygons or multipolygons that exceed query parameter size limits, use the POST method
+            and include the map data in the request body.
+
+            Format: Array of coordinate arrays, where each coordinate is [longitude, latitude] in WGS 84 format.
+            The polygon must be closed (first and last points must be identical).
+
+            For more information refer to the implementation guide [Filtering Listings Geo-Spatially Using the "map" Parameter](https://help.repliers.com/en/article/filtering-listings-geo-spatially-using-the-map-parameter-7sorw0/)
+          required: false
+          schema:
+            type: string
+            format: json
+
+      requestBody:
+        description: |
+          Optional request body for complex geographical filtering using GeoJSON polygons.
+          Use this for large polygon data that exceeds query parameter size limits.
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                map:
+                  $ref: "components.yml#/components/schemas/GeoJSONPolygon"
+
+      responses:
+        "200":
+          description: Successful response containing list of buildings
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "components.yml#/components/schemas/PaginationInfo"
+                  - type: object
+                    properties:
+                      buildings:
+                        type: array
+                        description: Array of building objects matching the search criteria
+                        items:
+                          $ref: "#/components/schemas/Building"
+
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+components:
+  schemas:
+    Building:
+      type: object
+      description: Building information including location, pricing, and property details
+      properties:
+        address:
+          type: object
+          description: Address components of the building
+          properties:
+            addressKey:
+              type: string
+              description: Unique address identifier key
+            streetNumber:
+              type: string
+              description: Street number
+            streetName:
+              type: string
+              description: Street name
+            streetSuffix:
+              type: string
+              description: Street suffix (e.g., Blvd, St, Ave)
+            streetDirection:
+              type: string
+              description: Street direction (e.g., N, S, E, W)
+            city:
+              type: string
+              description: City name
+            neighborhood:
+              type: string
+              description: Neighborhood name
+            district:
+              type: string
+              description: District or municipal division
+            area:
+              type: string
+              description: Area name
+            state:
+              type: string
+              description: State or province name
+            country:
+              type: string
+              description: Country name
+            zip:
+              type: string
+              description: Postal or ZIP code
+            majorIntersection:
+              type: string
+              description: Major intersection or cross streets
+        nearby:
+          type: object
+          properties:
+            amenities:
+              type: array
+              description: List of nearby amenities
+              items:
+                type: string
+        details:
+          type: object
+          properties:
+            yearBuilt:
+              type: string
+              description: Year the building was built
+            buildingName:
+              type: string
+              description: Name of the building
+            minSqft:
+              type: integer
+              description: Minimum square footage
+            maxSqft:
+              type: integer
+              description: Maximum square footage
+        map:
+          type: object
+          properties:
+            latitude:
+              type: string
+              description: Latitude coordinate
+            longitude:
+              type: string
+              description: Longitude coordinate
+            point:
+              type: string
+              description: WKT (Well-Known Text) representation of the building's center point
+        image:
+          type: string
+          description: Image filename
+        class:
+          type: string
+          description: Property class
+
+  responses:
+    NotFound:
+      description: Not Found
+
+    Unauthorized:
+      description: Unauthorized
+
+    Forbidden:
+      description: Forbidden
+
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: "locations.yml#/components/schemas/Error"
+
+    InternalServerError:
+      description: Internal Server Error
