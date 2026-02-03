@@ -10772,7 +10772,10 @@
         },
         "/nlp/chats": {
             "$ref": "nlp.yml#/paths/~1nlp~1chats"
-        }
+        },
+        "/buildings": {
+            "$ref": "buildings.yml#/paths/~1buildings"
+        },
     },
     "x-readme": {
         "headers": [],
