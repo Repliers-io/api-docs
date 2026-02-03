@@ -535,6 +535,15 @@
                         }
                     },
                     {
+                        "name": "maxClosedDate",
+                        "in": "query",
+                        "description": "Filter listings that have Close Date on or before the supplied value. Date format: <code>YYYY-MM-DD</code>",
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
                         "name": "maxKitchens",
                         "in": "query",
                         "schema": {
@@ -726,6 +735,15 @@
                         "schema": {
                             "type": "integer",
                             "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "minClosedDate",
+                        "in": "query",
+                        "description": "Filter listings that have Close Date on or after the supplied value. Date format: <code>YYYY-MM-DD</code>",
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
                         }
                     },
                     {
