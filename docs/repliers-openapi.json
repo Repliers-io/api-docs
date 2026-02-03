@@ -544,6 +544,15 @@
                         }
                     },
                     {
+                        "name": "maxDaysOnMarket",
+                        "in": "query",
+                        "description": "Filter `status=U` listings that have been on the market for number of days less than or equal to the supplied value.",
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
                         "name": "maxKitchens",
                         "in": "query",
                         "schema": {
@@ -744,6 +753,15 @@
                         "schema": {
                             "type": "string",
                             "format": "date"
+                        }
+                    },
+                    {
+                        "name": "minDaysOnMarket",
+                        "in": "query",
+                        "description": "Filter `status=U` listings that have been on the market for number of days greater than or equal to the supplied value.",
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
                         }
                     },
                     {
@@ -1080,7 +1098,7 @@
                     {
                         "name": "status",
                         "in": "query",
-                        "description": "Set status=A to retrieve active listings. Set status=U to retrieve unavailable listings. Set status=A&status=U to retrieve both active and unavailable listings.",
+                        "description": "Set `status=A` to retrieve active listings. Set `status=U` to retrieve unavailable listings. Set `status=A&status=U` to retrieve both active and unavailable listings.",
                         "schema": {
                             "type": "array",
                             "items": {
