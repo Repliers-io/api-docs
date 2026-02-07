@@ -10014,6 +10014,10 @@
               "schema": {
                 "type": "object",
                 "properties": {
+                  "overallQuality": {
+                    "type": "string",
+                    "description": "An indication of the overall renovation quality of the property. You may use a numeric value between 1.0 and 6.0 or one of these strings: poor, below average, average, above average, excellent. If not specified, defaults to average."
+                  },
                   "address": {
                     "properties": {
                       "city": {
@@ -10296,6 +10300,10 @@
               "schema": {
                 "type": "object",
                 "properties": {
+                  "overallQuality": {
+                    "type": "string",
+                    "description": "An indication of the overall renovation quality of the property. You may use a numeric value between 1.0 and 6.0 or one of these strings: poor, below average, average, above average, excellent. If not specified, defaults to average."
+                  },
                   "address": {
                     "properties": {
                       "city": {
