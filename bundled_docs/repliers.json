@@ -10045,76 +10045,15 @@
                   },
                   "condominium": {
                     "properties": {
-                      "ammenities": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      },
-                      "exposure": {
-                        "type": "string"
-                      },
                       "fees": {
                         "properties": {
-                          "cableIncl": {
-                            "type": "string",
-                            "enum": [
-                              "Y",
-                              "N"
-                            ]
-                          },
-                          "heatIncl": {
-                            "type": "string",
-                            "enum": [
-                              "Y",
-                              "N"
-                            ]
-                          },
-                          "hydroIncl": {
-                            "type": "string",
-                            "enum": [
-                              "Y",
-                              "N"
-                            ]
-                          },
                           "maintenance": {
                             "type": "integer",
                             "format": "int32"
-                          },
-                          "parkingIncl": {
-                            "type": "string",
-                            "enum": [
-                              "Y",
-                              "N"
-                            ]
-                          },
-                          "taxesIncl": {
-                            "type": "string",
-                            "enum": [
-                              "Y",
-                              "N"
-                            ]
-                          },
-                          "waterIncl": {
-                            "type": "string",
-                            "enum": [
-                              "Y",
-                              "N"
-                            ]
                           }
                         },
                         "required": [],
                         "type": "object"
-                      },
-                      "parkingType": {
-                        "type": "string"
-                      },
-                      "pets": {
-                        "type": "string"
-                      },
-                      "stories": {
-                        "type": "integer",
-                        "format": "int32"
                       }
                     },
                     "required": [],
@@ -10128,42 +10067,11 @@
                       "basement2": {
                         "type": "string"
                       },
-                      "driveway": {
-                        "type": "string"
-                      },
-                      "exteriorConstruction1": {
-                        "type": "string"
-                      },
-                      "exteriorConstruction2": {
-                        "type": "string"
-                      },
-                      "extras": {
-                        "type": "string",
-                        "description": "A comma-separated string that itemizes the home's features. For example, \"Hardwood floors throughout, professional landscaping, custom deck, dry sauna, pot lights, smooth ceilings, dual vanity in primary bedroom\""
-                      },
-                      "garage": {
-                        "type": "string"
-                      },
-                      "heating": {
-                        "type": "string"
-                      },
                       "numBathrooms": {
                         "type": "integer",
                         "format": "int32"
                       },
-                      "numBathroomsPlus": {
-                        "type": "integer",
-                        "format": "int32"
-                      },
                       "numBedrooms": {
-                        "type": "integer",
-                        "format": "int32"
-                      },
-                      "numBedroomsPlus": {
-                        "type": "integer",
-                        "format": "int32"
-                      },
-                      "numFireplaces": {
                         "type": "integer",
                         "format": "int32"
                       },
@@ -10185,16 +10093,12 @@
                       "style": {
                         "type": "string"
                       },
-                      "swimmingPool": {
-                        "type": "string"
-                      },
                       "yearBuilt": {
                         "type": "integer",
                         "format": "int32"
                       }
                     },
                     "required": [
-                      "extras",
                       "numBathrooms",
                       "numBedrooms",
                       "propertyType",
@@ -10237,9 +10141,7 @@
                         "format": "int32"
                       }
                     },
-                    "required": [
-                      "annualAmount"
-                    ],
+                    "required": [],
                     "type": "object"
                   },
                   "clientId": {
@@ -10423,76 +10325,15 @@
                   },
                   "condominium": {
                     "properties": {
-                      "ammenities": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      },
-                      "exposure": {
-                        "type": "string"
-                      },
                       "fees": {
                         "properties": {
-                          "cableIncl": {
-                            "type": "string",
-                            "enum": [
-                              "Y",
-                              "N"
-                            ]
-                          },
-                          "heatIncl": {
-                            "type": "string",
-                            "enum": [
-                              "Y",
-                              "N"
-                            ]
-                          },
-                          "hydroIncl": {
-                            "type": "string",
-                            "enum": [
-                              "Y",
-                              "N"
-                            ]
-                          },
                           "maintenance": {
                             "type": "integer",
                             "format": "int32"
-                          },
-                          "parkingIncl": {
-                            "type": "string",
-                            "enum": [
-                              "Y",
-                              "N"
-                            ]
-                          },
-                          "taxesIncl": {
-                            "type": "string",
-                            "enum": [
-                              "Y",
-                              "N"
-                            ]
-                          },
-                          "waterIncl": {
-                            "type": "string",
-                            "enum": [
-                              "Y",
-                              "N"
-                            ]
                           }
                         },
                         "required": [],
                         "type": "object"
-                      },
-                      "parkingType": {
-                        "type": "string"
-                      },
-                      "pets": {
-                        "type": "string"
-                      },
-                      "stories": {
-                        "type": "integer",
-                        "format": "int32"
                       }
                     },
                     "required": [],
@@ -10506,42 +10347,11 @@
                       "basement2": {
                         "type": "string"
                       },
-                      "driveway": {
-                        "type": "string"
-                      },
-                      "exteriorConstruction1": {
-                        "type": "string"
-                      },
-                      "exteriorConstruction2": {
-                        "type": "string"
-                      },
-                      "extras": {
-                        "type": "string",
-                        "description": "A comma-separated string that itemizes the home's features. For example, \"Hardwood floors throughout, professional landscaping, custom deck, dry sauna, pot lights, smooth ceilings, dual vanity in primary bedroom\""
-                      },
-                      "garage": {
-                        "type": "string"
-                      },
-                      "heating": {
-                        "type": "string"
-                      },
                       "numBathrooms": {
                         "type": "integer",
                         "format": "int32"
                       },
-                      "numBathroomsPlus": {
-                        "type": "integer",
-                        "format": "int32"
-                      },
                       "numBedrooms": {
-                        "type": "integer",
-                        "format": "int32"
-                      },
-                      "numBedroomsPlus": {
-                        "type": "integer",
-                        "format": "int32"
-                      },
-                      "numFireplaces": {
                         "type": "integer",
                         "format": "int32"
                       },
@@ -10597,19 +10407,12 @@
                       "style": {
                         "type": "string"
                       },
-                      "swimmingPool": {
-                        "type": "string"
-                      },
                       "yearBuilt": {
                         "type": "integer",
                         "format": "int32"
                       }
                     },
-                    "required": [
-                      "numBathrooms",
-                      "numBedrooms",
-                      "propertyType"
-                    ],
+                    "required": [],
                     "type": "object"
                   },
                   "lot": {
@@ -10646,9 +10449,7 @@
                         "format": "int32"
                       }
                     },
-                    "required": [
-                      "annualAmount"
-                    ],
+                    "required": [],
                     "type": "object"
                   },
                   "clientId": {
