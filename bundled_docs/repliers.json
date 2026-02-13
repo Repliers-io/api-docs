@@ -8787,6 +8787,11 @@
                     "description": "The maximum amount of bathrooms to be used as a filter for this search.",
                     "format": "int32"
                   },
+                  "maxBathroomsHalf": {
+                    "type": "integer",
+                    "description": "The maximum amount of half bathrooms to be used as a filter for this search.",
+                    "format": "int32"
+                  },
                   "maxBeds": {
                     "type": "integer",
                     "description": "The maximum amount of bedrooms to be used as a filter for this search.",
@@ -8794,6 +8799,7 @@
                   },
                   "maxCoveredSpaces": {
                     "type": "integer",
+                    "description": "The maximum amount of covered spaces to be used as a filter for this search.",
                     "format": "int32"
                   },
                   "minParkingSpaces": {
@@ -8823,6 +8829,11 @@
                     "description": "The minimum amount of bathrooms to be used as a filter for this search.",
                     "format": "int32"
                   },
+                  "minBathroomsHalf": {
+                    "type": "integer",
+                    "description": "The minimum amount of half bathrooms to be used as a filter for this search.",
+                    "format": "int32"
+                  },
                   "minBeds": {
                     "type": "integer",
                     "description": "The minimum amount of bedrooms to be used as a filter for this search.",
@@ -8830,6 +8841,7 @@
                   },
                   "minCoveredSpaces": {
                     "type": "integer",
+                    "description": "The minimum amount of covered spaces to be used as a filter for this search.",
                     "format": "int32"
                   },
                   "minGarageSpaces": {
