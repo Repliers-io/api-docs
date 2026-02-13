@@ -31,6 +31,14 @@
                 "operationId": "getting-started-with-your-api",
                 "parameters": [
                     {
+                        "name": "addressKey",
+                        "in": "query",
+                        "description": "The address key of the property. Please see the address object of a listing to understand how the address key is constructed",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
                         "name": "agent",
                         "in": "query",
                         "description": "Filters listings by agent name or agent ID, for example, <code>John Doe</code>. Supports multiple values, for example ?agent=john&agent=mary",
