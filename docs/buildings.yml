@@ -20,24 +20,25 @@ paths:
       tags:
         - Buildings
       parameters:
-        - name: resultsPerPage
+        - name: area
           in: query
-          description: The amount of buildings to return in each page of the results set.
+          description: |
+            Filter buildings by the geographical area (also referred to as region or county).
           required: false
           schema:
-            type: integer
-            minimum: 1
-            maximum: 300
-            default: 100
+            type: array
+            items:
+              type: string
 
-        - name: pageNum
+        - name: buildingName
           in: query
-          description: If specified indexes a specific page in the results set. For example, if there are 1000 buildings and 100 buildings per page, if you'd like to view buildings 101-200 you'd specify pageNum=2
+          description: |
+            Filter buildings by their name. Availability of building names may vary by MLS and is not guaranteed for all buildings.
           required: false
           schema:
-            type: integer
-            minimum: 1
-            default: 1
+            type: array
+            items:
+              type: string
 
         - name: city
           in: query
@@ -49,103 +50,15 @@ paths:
             items:
               type: string
 
-        - name: neighborhood
-          in: query
-          description: |
-            Filter results by neighborhood names. Returns specified neighborhoods.
-            Neighborhoods represent the smallest geographical division in the hierarchy.
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-
         - name: class
           in: query
           description: |
-            Filter by property class. Specifies the classification of the building.
+            Filter by property class.
           required: false
           schema:
             type: array
             items:
               $ref: "components.yml#/components/schemas/PropertyClass"
-
-        - name: minPrice
-          in: query
-          description: Minimum price filter
-          required: false
-          schema:
-            type: integer
-            minimum: 0
-
-        - name: maxPrice
-          in: query
-          description: Maximum price filter
-          required: false
-          schema:
-            type: integer
-            minimum: 0
-
-        - name: minBedrooms
-          in: query
-          description: Minimum number of bedrooms
-          required: false
-          schema:
-            type: integer
-            minimum: 0
-
-        - name: minBathrooms
-          in: query
-          description: Minimum number of bathrooms
-          required: false
-          schema:
-            type: integer
-            minimum: 0
-
-        - name: propertyType
-          in: query
-          description: |
-            Filter by property type(s). Returns buildings matching the specified property types.
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-
-        - name: type
-          in: query
-          description: |
-            Used to filter properties that are for sale or for lease.
-          required: false
-          schema:
-            $ref: "components.yml#/components/schemas/ListingType"
-
-        - name: streetName
-          in: query
-          description: |
-            Filter by street name(s). Returns buildings located on the specified streets.
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-
-        - name: streetNumber
-          in: query
-          description: |
-            Filter by street number(s). Returns buildings with the specified street numbers.
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-
-        - name: sortBy
-          in: query
-          description: Sort results by specified field
-          required: false
-          schema:
-            $ref: "components.yml#/components/schemas/BuildingsSortBy"
 
         - name: displayPublic
           in: query
@@ -153,16 +66,6 @@ paths:
           required: false
           schema:
             $ref: "components.yml#/components/schemas/YesNo"
-
-        - name: radius
-          in: query
-          description: |
-            Accepts a value for radius in KM. Must be used with `lat` and `long` parameters to return buildings within the specified radius of a given latitude and longitude.
-          required: false
-          schema:
-            type: number
-            format: float
-            minimum: 1
 
         - name: lat
           in: query
@@ -184,22 +87,6 @@ paths:
             minimum: -180
             maximum: 180
 
-        - name: minStories
-          in: query
-          description: Minimum number of stories/floors in the building
-          required: false
-          schema:
-            type: integer
-            minimum: 1
-
-        - name: maxStories
-          in: query
-          description: Maximum number of stories/floors in the building
-          required: false
-          schema:
-            type: integer
-            minimum: 1
-
         - name: map
           in: query
           description: |
@@ -215,6 +102,139 @@ paths:
           schema:
             type: string
             format: json
+
+        - name: maxPrice
+          in: query
+          description: Maximum price filter
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+
+        - name: maxStories
+          in: query
+          description: Maximum number of stories/floors in the building
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+
+        - name: minBathrooms
+          in: query
+          description: Minimum number of bathrooms
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+
+        - name: minBedrooms
+          in: query
+          description: Minimum number of bedrooms
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+
+        - name: minPrice
+          in: query
+          description: Minimum price filter
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+
+        - name: minStories
+          in: query
+          description: Minimum number of stories/floors in the building
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+
+        - name: neighborhood
+          in: query
+          description: |
+            Filter results by neighborhood names. Returns specified neighborhoods.
+            Neighborhoods represent the smallest geographical division in the hierarchy.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+
+        - name: pageNum
+          in: query
+          description: If specified indexes a specific page in the results set. For example, if there are 1000 buildings and 100 buildings per page, if you'd like to view buildings 101-200 you'd specify pageNum=2
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+
+        - name: propertyType
+          in: query
+          description: |
+            Filter by property type(s). Returns buildings matching the specified property types.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+
+        - name: radius
+          in: query
+          description: |
+            Accepts a value for radius in KM. Must be used with `lat` and `long` parameters to return buildings within the specified radius of a given latitude and longitude.
+          required: false
+          schema:
+            type: number
+            format: float
+            minimum: 1
+
+        - name: resultsPerPage
+          in: query
+          description: The amount of buildings to return in each page of the results set.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 300
+            default: 100
+
+        - name: sortBy
+          in: query
+          description: Sort results by specified field
+          required: false
+          schema:
+            $ref: "components.yml#/components/schemas/BuildingsSortBy"
+
+        - name: streetName
+          in: query
+          description: |
+            Filter by street name(s). Returns buildings located on the specified streets.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+
+        - name: streetNumber
+          in: query
+          description: |
+            Filter by street number(s). Returns buildings with the specified street numbers.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+
+        - name: type
+          in: query
+          description: |
+            Used to filter properties that are for sale or for lease.
+          required: false
+          schema:
+            $ref: "components.yml#/components/schemas/ListingType"
 
       requestBody:
         description: |
