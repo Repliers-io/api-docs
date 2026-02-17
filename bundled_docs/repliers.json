@@ -516,6 +516,15 @@
             }
           },
           {
+            "name": "maxBathroomsHalf",
+            "in": "query",
+            "description": "The maximum amount of half bathrooms to be used as a filter for this search.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
             "name": "maxBedrooms",
             "in": "query",
             "description": "Filters properties based on the number of bedrooms that were part of the original floorplan, typically located above grade.",
@@ -722,6 +731,15 @@
           {
             "name": "minBaths",
             "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "minBathroomsHalf",
+            "in": "query",
+            "description": "The minimum amount of half bathrooms to be used as a filter for this search.",
             "schema": {
               "type": "integer",
               "format": "int32"
