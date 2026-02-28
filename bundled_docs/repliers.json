@@ -11918,7 +11918,7 @@
     },
     "/buildings": {
       "post": {
-        "summary": "Search buildings",
+        "summary": "Buildings Search",
         "description": "Search buildings based on the provided filter criteria.",
         "tags": [
           "Buildings"
