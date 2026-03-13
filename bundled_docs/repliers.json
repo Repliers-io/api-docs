@@ -6581,6 +6581,68 @@
               "type": "boolean",
               "default": null
             }
+          },
+          {
+            "name": "minSize",
+            "in": "query",
+            "description": "Filters locations by minimum size (in square kilometers).",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "float",
+              "exclusiveMinimum": 0
+            }
+          },
+          {
+            "name": "maxSize",
+            "in": "query",
+            "description": "Filters locations by maximum size (in square kilometers).",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "float",
+              "exclusiveMinimum": 0
+            }
+          },
+          {
+            "name": "source",
+            "in": "query",
+            "description": "Filters locations by source.",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "MSL",
+                  "UserDefined"
+                ]
+              }
+            }
+          },
+          {
+            "name": "classification",
+            "in": "query",
+            "description": "Filters locations by classification.",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "subType",
+            "in": "query",
+            "description": "Filters locations by sub-type.",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
           }
         ],
         "responses": {
@@ -6596,6 +6658,17 @@
                     {
                       "type": "object",
                       "properties": {
+                        "source": {
+                          "type": "array",
+                          "description": "Sources present in the result set.",
+                          "items": {
+                            "type": "string",
+                            "enum": [
+                              "MLS",
+                              "UserDefined"
+                            ]
+                          }
+                        },
                         "locations": {
                           "type": "array",
                           "items": {
@@ -6618,6 +6691,11 @@
                                   "neighborhood"
                                 ],
                                 "description": "Hierarchical classification of the location:\n- area: Represent larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc.\n- city: Municipal division that can include multiple neighborhoods within its boundaries.\n- neighborhood: Smallest geographical unit within a city\n"
+                              },
+                              "size": {
+                                "type": "number",
+                                "format": "float",
+                                "description": "Size of the location in square kilometers"
                               },
                               "map": {
                                 "type": "object",
@@ -7037,6 +7115,52 @@
               "type": "boolean",
               "default": null
             }
+          },
+          {
+            "name": "minSize",
+            "in": "query",
+            "description": "Filters locations by minimum size (in square kilometers).",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "float",
+              "exclusiveMinimum": 0
+            }
+          },
+          {
+            "name": "maxSize",
+            "in": "query",
+            "description": "Filters locations by maximum size (in square kilometers).",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "float",
+              "exclusiveMinimum": 0
+            }
+          },
+          {
+            "name": "classification",
+            "in": "query",
+            "description": "Filters locations by classification.",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "subType",
+            "in": "query",
+            "description": "Filters locations by sub-type.",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
           }
         ],
         "responses": {
@@ -7067,6 +7191,19 @@
                               },
                               "type": {
                                 "$ref": "#/paths/~1locations/get/responses/200/content/application~1json/schema/allOf/1/properties/locations/items/properties/type"
+                              },
+                              "classification": {
+                                "type": "string",
+                                "description": "Classification of the location"
+                              },
+                              "subType": {
+                                "type": "string",
+                                "description": "Sub-type of the location"
+                              },
+                              "size": {
+                                "type": "number",
+                                "format": "float",
+                                "description": "Size of the location in square kilometers"
                               },
                               "map": {
                                 "type": "object",

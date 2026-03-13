@@ -226,6 +226,52 @@ paths:
             type: boolean
             default: null
 
+        - name: minSize
+          in: query
+          description: Filters locations by minimum size (in square kilometers).
+          required: false
+          schema:
+            type: number
+            format: float
+            exclusiveMinimum: 0
+
+        - name: maxSize
+          in: query
+          description: Filters locations by maximum size (in square kilometers).
+          required: false
+          schema:
+            type: number
+            format: float
+            exclusiveMinimum: 0
+
+        - name: source
+          in: query
+          description: Filters locations by source.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum: [MSL, UserDefined]
+
+        - name: classification
+          in: query
+          description: Filters locations by classification.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+
+        - name: subType
+          in: query
+          description: Filters locations by sub-type.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+
       responses:
         "200":
           description: Successful response
@@ -236,6 +282,12 @@ paths:
                   - $ref: "components.yml#/components/schemas/PaginationInfo"
                   - type: object
                     properties:
+                      source:
+                        type: array
+                        description: Sources present in the result set.
+                        items:
+                          type: string
+                          enum: [MLS, UserDefined]
                       locations:
                         type: array
                         items:
@@ -446,6 +498,42 @@ paths:
             type: boolean
             default: null
 
+        - name: minSize
+          in: query
+          description: Filters locations by minimum size (in square kilometers).
+          required: false
+          schema:
+            type: number
+            format: float
+            exclusiveMinimum: 0
+
+        - name: maxSize
+          in: query
+          description: Filters locations by maximum size (in square kilometers).
+          required: false
+          schema:
+            type: number
+            format: float
+            exclusiveMinimum: 0
+
+        - name: classification
+          in: query
+          description: Filters locations by classification.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+
+        - name: subType
+          in: query
+          description: Filters locations by sub-type.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+
       responses:
         "200":
           description: Successful response
@@ -526,6 +614,16 @@ components:
           description: Human-readable display name for the location
         type:
           $ref: "#/components/schemas/LocationType"
+        classification:
+          type: string
+          description: Classification of the location
+        subType:
+          type: string
+          description: Sub-type of the location
+        size:
+          type: number
+          format: float
+          description: Size of the location in square kilometers
         map:
           type: object
           properties:
@@ -555,6 +653,10 @@ components:
           description: Human-readable display name for the location
         type:
           $ref: "#/components/schemas/LocationType"
+        size:
+          type: number
+          format: float
+          description: Size of the location in square kilometers
         map:
           type: object
           description: Geographical information including coordinates and boundary data
