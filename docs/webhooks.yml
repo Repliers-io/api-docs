@@ -1,0 +1,273 @@
+openapi: 3.1.0
+info:
+  title: Webhooks API
+  version: 1.0.0
+servers:
+  - url: https://api.repliers.io
+paths:
+  /webhooks:
+    post:
+      summary: Create a subscription
+      description: Use this endpoint to subscribe to a webhook.
+      operationId: create-a-webhook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - target_url
+                - event
+              properties:
+                target_url:
+                  type: string
+                  description: This value must be unique, you may not specify the same target url for more than one webhook.
+                event:
+                  type: string
+                  description: "Allowed values: <br/><br/> <code>agent.created</code>, <code>agent.updated</code>, <code>agent.deleted</code>, <code>client.created</code>, <code>client.updated</code>, <code>client.deleted</code>, <code>search.created</code>, <code>search.updated</code>, <code>search.deleted</code>, <code>search.match.created</code>, <code>search.match.updated</code>, <code>message.created</code>, <code>message.updated</code>, <code>message.deleted</code>, <code>listing.created</code>, <code>listing.updated</code>, <code>listing.deleted</code>, <code>favorite.created</code>, <code>favorite.deleted</code>"
+                configuration:
+                  type: string
+                  description: Configuration options for the webhook. This object contains webhook-related settings and preferences.
+                  format: json
+            examples:
+              Request Example:
+                value:
+                  event: listing.created
+                  target_url: <target_url>
+                  configuration:
+                    filters:
+                      - field: address.city
+                        values:
+                          - Toronto
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: |-
+                    {
+                      "id": 438,
+                      "target_url": "https://webhook-repliers.com",
+                      "event": "listing.created",
+                      "configuration": {
+                        "filters": [
+                          {
+                            "field": "address.city",
+                            "values": [
+                              "Toronto"
+                            ]
+                          }
+                        ]
+                      }
+                    }
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 438
+                    default: 0
+                  target_url:
+                    type: string
+                    example: https://webhook-repliers.com
+                  event:
+                    type: string
+                    example: listing.created
+                  configuration:
+                    type: object
+                    properties:
+                      filters:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            field:
+                              type: string
+                              example: address.city
+                            values:
+                              type: array
+                              items:
+                                type: string
+                                example: Toronto
+        "400":
+          description: "400"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{}"
+              schema:
+                type: object
+                properties: {}
+      deprecated: false
+    get:
+      summary: List subscriptions
+      description: Use this endpoint to retrieve a list of webhook subscriptions.
+      operationId: list-subscriptions
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{}"
+              schema:
+                type: object
+                properties: {}
+        "400":
+          description: "400"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{}"
+              schema:
+                type: object
+                properties: {}
+      deprecated: false
+  /webhooks/{webhookId}:
+    patch:
+      summary: Update a subscription
+      description: Use this endpoint to update an existing webhook subscription.
+      operationId: update-a-subscription
+      parameters:
+        - name: webhookId
+          in: path
+          schema:
+            type: integer
+            format: int32
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                target_url:
+                  type: string
+                  description: This value must be unique, you may not specify the same target url for more than one webhook.
+                event:
+                  type: string
+                  description: "Allowed values: <br/><br/> <code>agent.created</code>, <code>agent.updated</code>, <code>agent.deleted</code>, <code>client.created</code>, <code>client.updated</code>, <code>client.deleted</code>, <code>search.created</code>, <code>search.updated</code>, <code>search.deleted</code>, <code>search.match.created</code>, <code>search.match.updated</code>, <code>message.created</code>, <code>message.updated</code>, <code>message.deleted</code>, <code>listing.created</code>, <code>listing.updated</code>, <code>listing.deleted</code>, <code>favorite.created</code>, <code>favorite.deleted</code>"
+                configuration:
+                  type: string
+                  description: Configuration options for the webhook. This object contains webhook-related settings and preferences.
+                  format: json
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{}"
+              schema:
+                type: object
+                properties: {}
+        "400":
+          description: "400"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{}"
+              schema:
+                type: object
+                properties: {}
+      deprecated: false
+    delete:
+      summary: Delete a subscription
+      description: Use this endpoint to delete an existing webhook subscription.
+      operationId: delete-a-subscription
+      parameters:
+        - name: webhookId
+          in: path
+          schema:
+            type: integer
+            format: int32
+          required: true
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{}"
+              schema:
+                type: object
+                properties: {}
+        "400":
+          description: "400"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{}"
+              schema:
+                type: object
+                properties: {}
+      deprecated: false
+    get:
+      summary: Get a subscription
+      description: Use this endpoint to get details associated with a specific webhook subscription.
+      operationId: get-a-subscription
+      parameters:
+        - name: webhookId
+          in: path
+          schema:
+            type: integer
+            format: int32
+          required: true
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{}"
+              schema:
+                type: object
+                properties: {}
+        "400":
+          description: "400"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{}"
+              schema:
+                type: object
+                properties: {}
+      deprecated: false
+  /webhooks/events:
+    get:
+      summary: List events
+      description: Use this endpoint to retrieve a list of webhook events that you may subscribe to.
+      operationId: list-events
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{}"
+              schema:
+                type: object
+                properties: {}
+        "400":
+          description: "400"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{}"
+              schema:
+                type: object
+                properties: {}
+      deprecated: false

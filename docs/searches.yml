@@ -1,0 +1,996 @@
+openapi: 3.1.0
+info:
+  title: Searches API
+  version: 1.0.0
+servers:
+  - url: https://api.repliers.io
+paths:
+  /searches:
+    post:
+      summary: Create a saved search
+      description: Use this endpoint to create a saved search for a client.<strong>Important</strong> - When a saved search is updated the filters must be specific enough so that the initial matches do not exceed 100 listings otherwise a 406 (not accepted) response will be received.
+      operationId: create-a-saved-search
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - class
+                - clientId
+                - maxPrice
+                - minPrice
+                - type
+              properties:
+                clientId:
+                  type: integer
+                  description: The clientId of the client that the search is for. This client will receive notifications from the agent that's assigned to them when listings that match the saved search criteria are listed.
+                  format: int32
+                name:
+                  type: string
+                  description: You can specify a name for the saved search. This is useful in cases where users have multiple saved searches, to help them distinguish between saved searches.
+                amenities:
+                  type: array
+                  items:
+                    type: string
+                areas:
+                  type: array
+                  description: An array of areas to be used as a filter for this search. Required if a value for map is not provided.
+                  items:
+                    type: string
+                basement:
+                  type: array
+                  description: If specified, matches only listings whose basement description match all of the supplied values. For a list of supported values, make a GET /listings?listings=false&aggregates=details.basement1,details.basement2 request.
+                  items:
+                    type: string
+                cities:
+                  type: array
+                  description: An array of cities to be used as a filter for this search. Required if a value for map is not provided.
+                  items:
+                    type: string
+                class:
+                  type: array
+                  description: Indicates what class of property to search for.<br/><br/>Allowed values:<br/><br/><code>residential</code>,<code>condo</code>,<code>commercial</code>
+                  items:
+                    type: string
+                heating:
+                  type: array
+                  description: An array of heating values to be used as a filter for this search.
+                  items:
+                    type: string
+                keywords:
+                  type: array
+                  items:
+                    type: string
+                neighborhoods:
+                  type: array
+                  description: An array of neighborhoods to be used as a filter for this search. Required if a value for map is not provided.
+                  items:
+                    type: string
+                notificationFrequency:
+                  type: string
+                  description: Sets the frequency that clients will be notified of listings that match their search criteria.<br/><br/>Allowed values:<br/><br/><code>instant</code>, <code>daily</code>, <code>weekly</code>, <code>monthly</code>
+                  default: instant
+                map:
+                  type: string
+                  description: An array of polygons arrays with arrays of longitude/latitude shapes to be used as a filter for this search. If used, only listings that area geographically located within these shapes will be matched. Required if values for areas, cities and neighborhoods are not provided.
+                  format: json
+                maxBaths:
+                  type: integer
+                  description: The maximum amount of bathrooms to be used as a filter for this search.
+                  format: int32
+                maxBathroomsHalf:
+                  type: integer
+                  description: The maximum amount of half bathrooms to be used as a filter for this search.
+                  format: int32
+                maxBeds:
+                  type: integer
+                  description: The maximum amount of bedrooms to be used as a filter for this search.
+                  format: int32
+                maxCoveredSpaces:
+                  type: integer
+                  description: The maximum amount of covered spaces to be used as a filter for this search.
+                  format: int32
+                minParkingSpaces:
+                  type: integer
+                  description: If specified, matches only listings whose parking space count is >= the supplied value.
+                  format: int32
+                maxPrice:
+                  type: integer
+                  description: The maximum list price to be used as a filter for this search.
+                  format: int32
+                maxStories:
+                  type: integer
+                  format: int32
+                maxSqft:
+                  type: integer
+                  format: int32
+                maxYearBuilt:
+                  type: integer
+                  format: int32
+                minBaths:
+                  type: integer
+                  description: The minimum amount of bathrooms to be used as a filter for this search.
+                  format: int32
+                minBathroomsHalf:
+                  type: integer
+                  description: The minimum amount of half bathrooms to be used as a filter for this search.
+                  format: int32
+                minBeds:
+                  type: integer
+                  description: The minimum amount of bedrooms to be used as a filter for this search.
+                  format: int32
+                minCoveredSpaces:
+                  type: integer
+                  description: The minimum amount of covered spaces to be used as a filter for this search.
+                  format: int32
+                minGarageSpaces:
+                  type: integer
+                  description: If specified, matches only listings whose garage space count is >= the supplied value.
+                  format: int32
+                minKitchens:
+                  type: integer
+                  description: If specified, matches only listings whose kitchen count is >= the supplied value.
+                  format: int32
+                maxMaintenanceFee:
+                  type: integer
+                  description: If supplied limits matches to listings where the maintenance fee is <= the supplied value.
+                  format: int32
+                minPrice:
+                  type: integer
+                  description: The minimum list price to be used as a filter for this search.
+                  format: int32
+                minStories:
+                  type: integer
+                  format: int32
+                minSqft:
+                  type: integer
+                  format: int32
+                minYearBuilt:
+                  type: integer
+                  format: int32
+                pets:
+                  type: string
+                priceChangeNotifications:
+                  type: boolean
+                  description: If set to true, clients will receive price change notifications for listings that have been matched for them.
+                  default: false
+                propertyTypes:
+                  type: array
+                  description: An array of property types to be used as a filter for this search.
+                  items:
+                    type: string
+                sewer:
+                  type: array
+                  description: An array of sewer values to be used as a filter for this search.
+                  items:
+                    type: string
+                status:
+                  type: boolean
+                  description: If set to false, disables this search.
+                  default: true
+                soldNotifications:
+                  type: boolean
+                  description: If set to true, clients will receive sold notifications for listings that have been matched for them.
+                  default: false
+                streetNames:
+                  type: array
+                  description: An array of street names to be used as a filter for this search.
+                  items:
+                    type: string
+                streetNumbers:
+                  type: array
+                  description: An array of street numbers to be used as a filter for this search.
+                  items:
+                    type: string
+                styles:
+                  type: array
+                  description: An array of property styles to be used as a filter for this search.
+                  items:
+                    type: string
+                swimmingPool:
+                  type: array
+                  description: An array of swimming pool values to be used as a filter for this search.
+                  items:
+                    type: string
+                type:
+                  type: string
+                  description: Indicates whether the search is for a property that's for sale or for lease.<br/></br>Allowed values:<br/><br/><code>sale</code>,<code>lease</code>
+                waterSource:
+                  type: array
+                  description: An array of water source values to be used as a filter for this search.
+                  items:
+                    type: string
+                minLotSizeSqft:
+                  type: integer
+                  format: int32
+                  description: The minimum lot size in square feet to be used as a filter for this search.
+                maxLotSizeSqft:
+                  type: integer
+                  format: int32
+                  description: The maximum lot size in square feet to be used as a filter for this search.
+                minOpenHouseDate:
+                  description: "Indicates whether the search is for properties that have an Open House on or after the supplied date. Date format: <code>YYYY-MM-DD</code>"
+                  type: string
+                  format: date
+                maxOpenHouseDate:
+                  description: "Indicates whether the search is for properties that have an Open House on or before the supplied date. Date format: <code>YYYY-MM-DD</code>. It's not recommended to use it unless you have a very good reason to set it."
+                  type: string
+                  format: date
+                standardStatus:
+                  type: array
+                  description: Indicates what Standard Status of property to search for. <br/><br/>Allowed values:<br/><br/><code>Active</code>, <code>Active Under Contract</code>, <code>Closed</code>, <code>Expired</code>, <code>Pending</code>, <code>Canceled</code>, <code>Incomplete</code>
+                  items:
+                    type: string
+                  enum:
+                    - Active
+                    - Active Under Contract
+                    - Closed
+                    - Expired
+                    - Pending
+                    - Canceled
+                    - Incomplete
+            examples:
+              Request Example:
+                value:
+                  notificationFrequency: instant
+                  priceChangeNotifications: false
+                  status: true
+                  soldNotifications: false
+                  class:
+                    - residential
+                  minPrice: 100000
+                  maxPrice: 1000000
+                  type: sale
+                  clientId: 123456
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: |-
+                    {
+                      "searchId": 73030,
+                      "name": null,
+                      "createdOn": "2025-05-22T22:05:01.000Z",
+                      "agentId": 106715,
+                      "minBeds": 2,
+                      "maxBeds": 3,
+                      "minBaths": 2,
+                      "maxBaths": null,
+                      "minPrice": 400000,
+                      "maxPrice": 1000000,
+                      "maxMaintenanceFee": null,
+                      "minGarageSpaces": null,
+                      "minParkingSpaces": null,
+                      "minKitchens": null,
+                      "minSqft": null,
+                      "maxSqft": null,
+                      "minYearBuilt": null,
+                      "maxYearBuilt": null,
+                      "minStories": null,
+                      "maxStories": null,
+                      "maxCoveredSpaces": null,
+                      "minCoveredSpaces": null,
+                      "status": true,
+                      "type": "sale",
+                      "clientId": 147150,
+                      "streetNumbers": [],
+                      "streetNames": [],
+                      "cities": ["<city>"],
+                      "neighborhoods": ["<neighborhood>"],
+                      "propertyTypes": [],
+                      "styles": [],
+                      "areas": ["<area>"],
+                      "map": [],
+                      "class": ["residential"],
+                      "basement": [],
+                      "client": {
+                        "fname": "FirstName",
+                        "lname": "LastName",
+                        "email": "client@example.com",
+                        "phone": "1234567890"
+                      },
+                      "notificationFrequency": "instant",
+                      "soldNotifications": false,
+                      "priceChangeNotifications": false,
+                      "sewer": [],
+                      "waterSource": [],
+                      "heating": [],
+                      "swimmingPool": [],
+                      "amenities": [],
+                      "keywords": [],
+                      "pets": []
+                    }
+              schema:
+                type: object
+                properties:
+                  searchId:
+                    type: integer
+                    example: 73030
+                    default: 0
+                  name: {}
+                  createdOn:
+                    type: string
+                    example: "2025-05-22T22:05:01.000Z"
+                  agentId:
+                    type: integer
+                    example: 106715
+                    default: 0
+                  minBeds:
+                    type: integer
+                    example: 2
+                    default: 0
+                  maxBeds:
+                    type: integer
+                    example: 3
+                    default: 0
+                  minBaths:
+                    type: integer
+                    example: 2
+                    default: 0
+                  maxBaths: {}
+                  minPrice:
+                    type: integer
+                    example: 400000
+                    default: 0
+                  maxPrice:
+                    type: integer
+                    example: 1000000
+                    default: 0
+                  maxMaintenanceFee: {}
+                  minGarageSpaces: {}
+                  minParkingSpaces: {}
+                  minKitchens: {}
+                  minSqft: {}
+                  maxSqft: {}
+                  minYearBuilt: {}
+                  maxYearBuilt: {}
+                  minStories: {}
+                  maxStories: {}
+                  maxCoveredSpaces: {}
+                  minCoveredSpaces: {}
+                  status:
+                    type: boolean
+                    example: true
+                    default: true
+                  type:
+                    type: string
+                    example: sale
+                  clientId:
+                    type: integer
+                    example: 147150
+                    default: 0
+                  streetNumbers:
+                    type: array
+                  streetNames:
+                    type: array
+                  cities:
+                    type: array
+                    items:
+                      type: string
+                      example: <city>
+                  neighborhoods:
+                    type: array
+                    items:
+                      type: string
+                      example: <neighborhood>
+                  propertyTypes:
+                    type: array
+                  styles:
+                    type: array
+                  areas:
+                    type: array
+                    items:
+                      type: string
+                      example: <area>
+                  map:
+                    type: array
+                  class:
+                    type: array
+                    items:
+                      type: string
+                      example: residential
+                  basement:
+                    type: array
+                  client:
+                    type: object
+                    properties:
+                      fname:
+                        type: string
+                        example: FirstName
+                      lname:
+                        type: string
+                        example: LastName
+                      email:
+                        type: string
+                        example: client@example.com
+                      phone:
+                        type: string
+                        example: "1234567890"
+                  notificationFrequency:
+                    type: string
+                    example: instant
+                  soldNotifications:
+                    type: boolean
+                    example: false
+                    default: true
+                  priceChangeNotifications:
+                    type: boolean
+                    example: false
+                    default: true
+                  sewer:
+                    type: array
+                  waterSource:
+                    type: array
+                  heating:
+                    type: array
+                  swimmingPool:
+                    type: array
+                  amenities:
+                    type: array
+                  keywords:
+                    type: array
+                  pets:
+                    type: array
+        "400":
+          description: "400"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{}"
+              schema:
+                type: object
+                properties: {}
+        "406":
+          description: "406"
+          content:
+            text/plain:
+              examples:
+                Result:
+                  value: When a saved search is created the filters must be specific enough so that the initial matches do not exceed 100 listings otherwise a 406 (not accepted) response will be received.
+      deprecated: false
+    get:
+      summary: Filter saved searches
+      description: Use this endpoint to list and filter saved searches that have been created.
+      operationId: filter-searches
+      parameters:
+        - name: agentId
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: clientId
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: pageNum
+          in: query
+          description: If specified, indexes a specific page in the results set. For example, if there are 1000 searches and 100 searches per page, if you'd like to view searches 101-201 you'd specify pageNum=2
+          schema:
+            type: integer
+            format: int32
+            default: 1
+        - name: resultsPerPage
+          in: query
+          description: The amount of searches to return in each page of the results set.
+          schema:
+            type: integer
+            format: int32
+            default: 100
+        - name: searchId
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: status
+          in: query
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{}"
+              schema:
+                type: object
+                properties: {}
+        "400":
+          description: "400"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{}"
+              schema:
+                type: object
+                properties: {}
+      deprecated: false
+  /searches/{searchId}:
+    patch:
+      summary: Update a saved search
+      description: |-
+        Use this endpoint to update a saved search.
+
+        <strong>Important</strong> - When a saved search is updated the filters must be specific enough so that the initial matches do not exceed 100 listings otherwise a 406 (not accepted) response will be received.
+      operationId: update-a-saved-search
+      parameters:
+        - name: searchId
+          in: path
+          schema:
+            type: integer
+            format: int32
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                clientId:
+                  type: integer
+                  description: The clientId of the client that the search is for. This client will receive notifications from the agent that's assigned to them when listings that match the saved search criteria are listed.
+                  format: int32
+                name:
+                  type: string
+                  description: You can specify a name for the saved search. This is useful in cases where users have multiple saved searches, to help them distinguish between saved searches.
+                amenities:
+                  type: array
+                  items:
+                    type: string
+                areas:
+                  type: array
+                  description: An array of areas to be used as a filter for this search. Required if a value for map is not provided.
+                  items:
+                    type: string
+                basement:
+                  type: array
+                  description: If specified, matches only listings whose basement description match all of the supplied values. For a list of supported values, make a GET /listings?listings=false&aggregates=details.basement1,details.basement2 request.
+                  items:
+                    type: string
+                cities:
+                  type: array
+                  description: An array of cities to be used as a filter for this search. Required if a value for map is not provided.
+                  items:
+                    type: string
+                class:
+                  type: array
+                  description: Indicates what class of property to search for.<br/><br/>Allowed values:<br/><br/><code>residential</code>,<code>condo</code>,<code>commercial</code>
+                  items:
+                    type: string
+                heating:
+                  type: array
+                  description: An array of heating values to be used as a filter for this search.
+                  items:
+                    type: string
+                keywords:
+                  type: array
+                  items:
+                    type: string
+                neighborhoods:
+                  type: array
+                  description: An array of neighborhoods to be used as a filter for this search. Required if a value for map is not provided.
+                  items:
+                    type: string
+                notificationFrequency:
+                  type: string
+                  description: Sets the frequency that clients will be notified of listings that match their search criteria.<br/><br/>Allowed values:<br/><br/><code>instant</code>, <code>daily</code>, <code>weekly</code>, <code>monthly</code>
+                map:
+                  type: string
+                  description: An array of polygons arrays with arrays of longitude/latitude shapes to be used as a filter for this search. If used, only listings that area geographically located within these shapes will be matched. Required if values for areas, cities and neighborhoods are not provided.
+                  format: json
+                maxBaths:
+                  type: integer
+                  description: The maximum amount of bathrooms to be used as a filter for this search.
+                  format: int32
+                maxBeds:
+                  type: integer
+                  description: The maximum amount of bedrooms to be used as a filter for this search.
+                  format: int32
+                maxCoveredSpaces:
+                  type: integer
+                  format: int32
+                minParkingSpaces:
+                  type: integer
+                  description: If specified, matches only listings whose parking space count is >= the supplied value.
+                  format: int32
+                maxPrice:
+                  type: integer
+                  description: The maximum list price to be used as a filter for this search.
+                  format: int32
+                maxSqft:
+                  type: integer
+                  format: int32
+                maxYearBuilt:
+                  type: integer
+                  format: int32
+                maxStories:
+                  type: integer
+                  format: int32
+                minBaths:
+                  type: integer
+                  description: The minimum amount of bathrooms to be used as a filter for this search.
+                  format: int32
+                minBeds:
+                  type: integer
+                  description: The minimum amount of bedrooms to be used as a filter for this search.
+                  format: int32
+                minCoveredSpaces:
+                  type: integer
+                  format: int32
+                minGarageSpaces:
+                  type: integer
+                  description: If specified, matches only listings whose garage space count is >= the supplied value.
+                  format: int32
+                minKitchens:
+                  type: integer
+                  description: If specified, matches only listings whose kitchen count is >= the supplied value.
+                  format: int32
+                maxMaintenanceFee:
+                  type: integer
+                  description: If supplied limits matches to listings where the maintenance fee is <= the supplied value.
+                  format: int32
+                minPrice:
+                  type: integer
+                  description: The minimum list price to be used as a filter for this search.
+                  format: int32
+                minSqft:
+                  type: integer
+                  format: int32
+                minYearBuilt:
+                  type: integer
+                  format: int32
+                minStories:
+                  type: integer
+                  format: int32
+                pets:
+                  type: string
+                priceChangeNotifications:
+                  type: boolean
+                  description: If set to true, clients will receive price change notifications for listings that have been matched for them.
+                propertyTypes:
+                  type: array
+                  description: An array of property types to be used as a filter for this search.
+                  items:
+                    type: string
+                sewer:
+                  type: array
+                  description: An array of sewer values to be used as a filter for this search.
+                  items:
+                    type: string
+                status:
+                  type: boolean
+                  description: If set to false, disables this search.
+                  default: true
+                soldNotifications:
+                  type: boolean
+                  description: If set to true, clients will receive sold notifications for listings that have been matched for them.
+                streetNames:
+                  type: array
+                  description: An array of street names to be used as a filter for this search.
+                  items:
+                    type: string
+                streetNumbers:
+                  type: array
+                  description: An array of street numbers to be used as a filter for this search.
+                  items:
+                    type: string
+                styles:
+                  type: array
+                  description: An array of property styles to be used as a filter for this search.
+                  items:
+                    type: string
+                swimmingPool:
+                  type: array
+                  description: An array of swimming pool values to be used as a filter for this search.
+                  items:
+                    type: string
+                type:
+                  type: string
+                  description: Indicates whether the search is for a property that's for sale or for lease.<br/></br>Allowed values:<br/><br/><code>Sale</code>,<code>Lease</code>
+                waterSource:
+                  type: array
+                  description: An array of water source values to be used as a filter for this search.
+                  items:
+                    type: string
+                minLotSizeSqft:
+                  type: integer
+                  format: int32
+                  description: The minimum lot size in square feet to be used as a filter for this search.
+                maxLotSizeSqft:
+                  type: integer
+                  format: int32
+                  description: The maximum lot size in square feet to be used as a filter for this search.
+                minOpenHouseDate:
+                  description: "Indicates whether the search is for properties that have an Open House on or after the supplied date. Date format: <code>YYYY-MM-DD</code>"
+                  type: string
+                  format: date
+                maxOpenHouseDate:
+                  description: "Indicates whether the search is for properties that have an Open House on or before the supplied date. Date format: <code>YYYY-MM-DD</code>. It's not recommended to use it unless you have a very good reason to set it."
+                  type: string
+                  format: date
+                standardStatus:
+                  type: array
+                  description: Indicates what Standard Status of property to search for. <br/><br/>Allowed values:<br/><br/><code>Active</code>, <code>Active Under Contract</code>, <code>Closed</code>, <code>Expired</code>, <code>Pending</code>, <code>Canceled</code>, <code>Incomplete</code>
+                  items:
+                    type: string
+                  enum:
+                    - Active
+                    - Active Under Contract
+                    - Closed
+                    - Expired
+                    - Pending
+                    - Canceled
+                    - Incomplete
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{}"
+              schema:
+                type: object
+                properties: {}
+        "400":
+          description: "400"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{}"
+              schema:
+                type: object
+                properties: {}
+      deprecated: false
+    delete:
+      summary: Delete a saved search
+      description: Use this endpoint to delete a saved search.
+      operationId: delete-a-saved-search
+      parameters:
+        - name: searchId
+          in: path
+          schema:
+            type: integer
+            format: int32
+          required: true
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{}"
+              schema:
+                type: object
+                properties: {}
+        "400":
+          description: "400"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{}"
+              schema:
+                type: object
+                properties: {}
+      deprecated: false
+    get:
+      summary: Get a saved search
+      description: Use this endpoint to lookup the details of a saved search.
+      operationId: get-a-saved-search
+      parameters:
+        - name: searchId
+          in: path
+          schema:
+            type: integer
+            format: int32
+          required: true
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{}"
+              schema:
+                type: object
+                properties: {}
+        "400":
+          description: "400"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{}"
+              schema:
+                type: object
+                properties: {}
+      deprecated: false
+  /searches/{searchId}/matches:
+    get:
+      summary: Filter matches
+      description: Use this endpoint to lookup matches for a saved search. Matches are listings that met the saved search criteria.
+      operationId: filter-matches
+      parameters:
+        - name: pageNum
+          in: query
+          description: If specified, indexes a specific page in the results set. For example, if there are 1000 searches and 100 searches per page, if you'd like to view searches 101-201 you'd specify pageNum=2
+          schema:
+            type: integer
+            format: int32
+            default: 1
+        - name: resultsPerPage
+          in: query
+          description: The amount of searches to return in each page of the results set.
+          schema:
+            type: integer
+            format: int32
+            default: 100
+        - name: searchId
+          in: path
+          schema:
+            type: integer
+            format: int32
+          required: true
+        - name: endDate
+          in: query
+          description: If specified filters matches whose match date is <= the supplied value.
+          schema:
+            type: string
+            format: date
+        - name: startDate
+          in: query
+          description: If specified filters matches whose match date is >= the supplied value.
+          schema:
+            type: string
+            format: date
+        - name: lastStatus
+          in: query
+          description: If specified filters matches whose last status is the supplied value.<br/><br/>Allowed values:<br/><br/><code>Sus</code>, <code>Exp</code>, <code>Sld</code>, <code>Ter</code>, <code>Dft</code>, <code>Lsd</code>, <code>Sc</code>, <code>Lc</code>, <code>Pc</code>, <code>Ext</code>, <code>New</code>
+          schema:
+            type: string
+        - name: liked
+          in: query
+          description: If true filters search matches that were liked, if false filters search matches that were disliked. If not specified, returns all search matches.
+          schema:
+            type: boolean
+        - name: matchId
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: sortBy
+          in: query
+          description: Allowed values:<br/><br/><code>updatedOnDesc</code>,<code>createdOnDesc</code>
+          schema:
+            type: string
+            default: updatedOnDesc
+        - name: status
+          in: query
+          description: If not specified returns both available and unavailable listings. If specified limits results to specified status.<br/><br/>Allowed values:<br/><br/><code>A</code>,<code>U</code>
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{}"
+              schema:
+                type: object
+                properties: {}
+        "400":
+          description: "400"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{}"
+              schema:
+                type: object
+                properties: {}
+      deprecated: false
+  /searches/{searchId}/matches/{matchId}:
+    get:
+      summary: Get a match
+      description: Use this endpoint to lookup details about a specific match for a saved search.
+      operationId: get-a-match
+      parameters:
+        - name: searchId
+          in: path
+          schema:
+            type: integer
+            format: int32
+          required: true
+        - name: matchId
+          in: path
+          schema:
+            type: integer
+            format: int32
+          required: true
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{}"
+              schema:
+                type: object
+                properties: {}
+        "400":
+          description: "400"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{}"
+              schema:
+                type: object
+                properties: {}
+      deprecated: false
+    patch:
+      summary: Update a match
+      description: Use this endpoint to update attributes associated with a specific match for a saved search.
+      operationId: update-a-match
+      parameters:
+        - name: searchId
+          in: path
+          schema:
+            type: integer
+            format: int32
+          required: true
+        - name: matchId
+          in: path
+          schema:
+            type: integer
+            format: int32
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                viewed:
+                  type: boolean
+                  description: If true, indicates that the match was viewed by the client. Useful for keeping track of what matches clients have viewed.
+                liked:
+                  type: boolean
+                  description: If true, indicates that the client liked the match. Useful for keeping track of what matches clients like.
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{}"
+              schema:
+                type: object
+                properties: {}
+        "400":
+          description: "400"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{}"
+              schema:
+                type: object
+                properties: {}
+      deprecated: false

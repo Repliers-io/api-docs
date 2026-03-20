@@ -1,0 +1,85 @@
+openapi: 3.1.0
+info:
+  title: Members API
+  version: 1.0.0
+servers:
+  - url: https://api.repliers.io
+paths:
+  /members:
+    get:
+      summary: Members
+      description: Use this endpoint to list and filter members (agents) belonging to the MLS.
+      operationId: members
+      parameters:
+        - name: agentId
+          in: query
+          description: If supplied, finds member by agentId using exact match criteria.
+          schema:
+            type: string
+        - name: agentName
+          in: query
+          description: If supplied, finds member by agent name using exact match criteria.
+          schema:
+            type: string
+        - name: boardId
+          in: query
+          schema:
+            type: string
+        - name: brokerage
+          in: query
+          description: Filters members by brokerage name using partial match criteria.
+          schema:
+            type: string
+        - name: keywords
+          in: query
+          description: If supplied, searches for members by keyword across multiple fields.
+          schema:
+            type: string
+        - name: officeId
+          in: query
+          description: If supplied, filters members by office ID.
+          schema:
+            type: string
+        - name: pageNum
+          in: query
+          description: If specified loads a specific page in the results set. For example, if there are 1000 members and 100 members per page, if you'd like to view members 101-201 you'd specify pageNum=2
+          schema:
+            type: integer
+            format: int32
+            default: 1
+            maximum: 10000
+        - name: position
+          in: query
+          description: If supplied, filters members by position.
+          schema:
+            type: string
+        - name: resultsPerPage
+          in: query
+          description: The amount of members to return in each page of the results set.
+          schema:
+            type: integer
+            format: int32
+            default: 100
+            maximum: 1000
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{}"
+              schema:
+                type: object
+                properties: {}
+        "400":
+          description: "400"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{}"
+              schema:
+                type: object
+                properties: {}
+      deprecated: false

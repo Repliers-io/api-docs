@@ -1,0 +1,394 @@
+openapi: 3.1.0
+info:
+  title: Estimates API
+  version: 1.0.0
+servers:
+  - url: https://api.repliers.io
+paths:
+  /estimates:
+    post:
+      summary: Create an estimate
+      description: Use this endpoint to estimate a property's value by providing us with the property's attributes. For more information refer to the <a target="_blank" href="https://help.repliers.com/en/article/ai-powered-property-estimates-implementation-guide-6gdbvp/">AI-Powered Property Estimates Implementation Guide</a>.
+      operationId: create-an-estimate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                overallQuality:
+                  type: string
+                  description: "An indication of the overall renovation quality of the property. You may use a numeric value between 1.0 and 6.0 or one of these strings: poor, below average, average, above average, excellent. If not specified, defaults to average."
+                address:
+                  properties:
+                    city:
+                      type: string
+                    streetName:
+                      type: string
+                    streetNumber:
+                      type: string
+                    streetSuffix:
+                      type: string
+                    unitNumber:
+                      type: string
+                    zip:
+                      type: string
+                  required:
+                    - city
+                    - streetName
+                    - streetNumber
+                    - zip
+                  type: object
+                condominium:
+                  properties:
+                    fees:
+                      properties:
+                        maintenance:
+                          type: integer
+                          format: int32
+                      required: []
+                      type: object
+                  required: []
+                  type: object
+                details:
+                  properties:
+                    basement1:
+                      type: string
+                    basement2:
+                      type: string
+                    numBathrooms:
+                      type: integer
+                      format: int32
+                    numBedrooms:
+                      type: integer
+                      format: int32
+                    numGarageSpaces:
+                      type: integer
+                      format: int32
+                    numParkingSpaces:
+                      type: integer
+                      format: int32
+                    propertyType:
+                      type: string
+                    sqft:
+                      type: integer
+                      format: int32
+                    style:
+                      type: string
+                    yearBuilt:
+                      type: integer
+                      format: int32
+                  required:
+                    - numBathrooms
+                    - numBedrooms
+                    - propertyType
+                    - sqft
+                    - style
+                  type: object
+                lot:
+                  properties:
+                    acres:
+                      type: string
+                    depth:
+                      type: integer
+                      format: int32
+                    width:
+                      type: integer
+                      format: int32
+                  required: []
+                  type: object
+                sendEmailNow:
+                  type: boolean
+                  description: If set to true and there's a clientId specified, the client will receive a message immediately with a link that will allow them to access their estimate. Note - your account must have the Repliers messaging addon to use this feature.
+                  default: false
+                sendEmailMonthly:
+                  type: boolean
+                  description: If set to true and there's a clientId specified, the client will receive a message on a monthly basis with a link to a current estimate.  Note - your account must have the Repliers messaging addon to use this feature.
+                  default: false
+                taxes:
+                  properties:
+                    annualAmount:
+                      type: integer
+                      format: int32
+                  required: []
+                  type: object
+                clientId:
+                  type: integer
+                  description: Set this to the clientId that the estimate is for if you wish to store the estimate. If sendEmailNow or sendEmailMonthly is used, messages containing estimates will be sent to this clientId.
+                  format: int32
+                boardId:
+                  type: integer
+                  description: Required when using an API key that has access to multiple boards.
+                  format: int32
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{}"
+              schema:
+                type: object
+                properties: {}
+        "400":
+          description: "400"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{}"
+              schema:
+                type: object
+                properties: {}
+      deprecated: false
+    get:
+      summary: Get Estimates
+      description: Use this endpoint to get estimates
+      operationId: get-estimates
+      parameters:
+        - name: clientId
+          in: query
+          description: If specified, filters estimates by clientId
+          schema:
+            type: integer
+            format: int32
+        - name: estimateId
+          in: query
+          description: If specified, filters estimates by estimateId
+          schema:
+            type: integer
+            format: int32
+        - name: pageNum
+          in: query
+          description: If specified goes to a specific page in the results set. For example, if there are 1000 estimates and 100 estimates per page, if you'd like to view estimates 101-201 you'd specify pageNum=2
+          schema:
+            type: integer
+            format: int32
+        - name: resultsPerPage
+          in: query
+          description: The amount of estimates to return in each page of the results set.
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{}"
+              schema:
+                type: object
+                properties: {}
+        "400":
+          description: "400"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{}"
+              schema:
+                type: object
+                properties: {}
+      deprecated: false
+  /estimates/{estimateId}:
+    patch:
+      summary: Update an estimate
+      description: Use this endpoint to estimate a property's value by providing us with the property's attributes.
+      operationId: create-an-estimate-copy
+      parameters:
+        - name: estimateId
+          in: path
+          schema:
+            type: integer
+            format: int32
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                overallQuality:
+                  type: string
+                  description: "An indication of the overall renovation quality of the property. You may use a numeric value between 1.0 and 6.0 or one of these strings: poor, below average, average, above average, excellent. If not specified, defaults to average."
+                address:
+                  properties:
+                    city:
+                      type: string
+                    streetName:
+                      type: string
+                    streetNumber:
+                      type: string
+                    streetSuffix:
+                      type: string
+                    unitNumber:
+                      type: string
+                    zip:
+                      type: string
+                  required:
+                    - streetName
+                    - streetNumber
+                  type: object
+                condominium:
+                  properties:
+                    fees:
+                      properties:
+                        maintenance:
+                          type: integer
+                          format: int32
+                      required: []
+                      type: object
+                  required: []
+                  type: object
+                details:
+                  properties:
+                    basement1:
+                      type: string
+                    basement2:
+                      type: string
+                    numBathrooms:
+                      type: integer
+                      format: int32
+                    numBedrooms:
+                      type: integer
+                      format: int32
+                    numGarageSpaces:
+                      type: integer
+                      format: int32
+                    numParkingSpaces:
+                      type: integer
+                      format: int32
+                    propertyType:
+                      type: string
+                      enum:
+                        - Att/Row/Twnhouse
+                        - Co-Op Apt
+                        - Co-Ownership Apt
+                        - Comm Element Condo
+                        - Condo Apt
+                        - Condo Townhouse
+                        - Cottage
+                        - Det Condo
+                        - Detached
+                        - Duplex
+                        - Farm
+                        - Fourplex
+                        - Leasehold Condo
+                        - Link
+                        - Locker
+                        - Lower Level
+                        - Mobile/Trailer
+                        - Multiplex
+                        - Other
+                        - Parking Space
+                        - Room
+                        - Rural Resid
+                        - Semi-Det Condo
+                        - Semi-Detached
+                        - Shared Room
+                        - Store W/Apt/Offc
+                        - Store W/Apt/Office
+                        - Time Share
+                        - Triplex
+                        - Upper Level
+                        - Vacant Land
+                        - Vacant Land Condo
+                    sqft:
+                      type: integer
+                      format: int32
+                    style:
+                      type: string
+                    yearBuilt:
+                      type: integer
+                      format: int32
+                  required: []
+                  type: object
+                lot:
+                  properties:
+                    acres:
+                      type: string
+                    depth:
+                      type: integer
+                      format: int32
+                    width:
+                      type: integer
+                      format: int32
+                  required: []
+                  type: object
+                sendEmailNow:
+                  type: boolean
+                  description: If set to true and there's a clientId specified, the client will receive a message immediately with a link that will allow them to access their estimate. Note - your account must have the Repliers messaging addon to use this feature.
+                  default: false
+                sendEmailMonthly:
+                  type: boolean
+                  description: If set to true and there's a clientId specified, the client will receive a message on a monthly basis with a link to a current estimate.  Note - your account must have the Repliers messaging addon to use this feature.
+                  default: false
+                taxes:
+                  properties:
+                    annualAmount:
+                      type: integer
+                      format: int32
+                  required: []
+                  type: object
+                clientId:
+                  type: integer
+                  description: Set this to the clientId that the estimate is for if you wish to store the estimate. If sendEmailNow or sendEmailMonthly is used, messages containing estimates will be sent to this clientId.
+                  format: int32
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{}"
+              schema:
+                type: object
+                properties: {}
+        "400":
+          description: "400"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{}"
+              schema:
+                type: object
+                properties: {}
+      deprecated: false
+    delete:
+      summary: Delete an estimate
+      description: ""
+      operationId: delete-an-estimate
+      parameters:
+        - name: estimateId
+          in: path
+          schema:
+            type: integer
+            format: int32
+          required: true
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{}"
+              schema:
+                type: object
+                properties: {}
+        "400":
+          description: "400"
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{}"
+              schema:
+                type: object
+                properties: {}
+      deprecated: false
