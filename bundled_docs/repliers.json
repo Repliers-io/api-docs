@@ -7422,6 +7422,44 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "officeId",
+            "in": "query",
+            "description": "If supplied, filters members by office ID.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageNum",
+            "in": "query",
+            "description": "If specified loads a specific page in the results set. For example, if there are 1000 members and 100 members per page, if you'd like to view members 101-201 you'd specify pageNum=2",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1,
+              "maximum": 10000
+            }
+          },
+          {
+            "name": "position",
+            "in": "query",
+            "description": "If supplied, filters members by position.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "resultsPerPage",
+            "in": "query",
+            "description": "The amount of members to return in each page of the results set.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100,
+              "maximum": 1000
+            }
           }
         ],
         "responses": {
