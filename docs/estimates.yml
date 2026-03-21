@@ -122,25 +122,9 @@ paths:
                   format: int32
       responses:
         "200":
-          description: "200"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/EmptySuccess
         "400":
-          description: "400"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/BadRequest
       deprecated: false
     get:
       summary: Get Estimates
@@ -173,25 +157,9 @@ paths:
             format: int32
       responses:
         "200":
-          description: "200"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/EmptySuccess
         "400":
-          description: "400"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/BadRequest
       deprecated: false
   /estimates/{estimateId}:
     patch:
@@ -339,25 +307,9 @@ paths:
                   format: int32
       responses:
         "200":
-          description: "200"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/EmptySuccess
         "400":
-          description: "400"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/BadRequest
       deprecated: false
     delete:
       summary: Delete an estimate
@@ -372,23 +324,7 @@ paths:
           required: true
       responses:
         "200":
-          description: "200"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/EmptySuccess
         "400":
-          description: "400"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/BadRequest
       deprecated: false

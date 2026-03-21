@@ -71,25 +71,9 @@ paths:
                   type: object
       responses:
         "200":
-          description: "200"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/EmptySuccess
         "400":
-          description: "400"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/BadRequest
       deprecated: false
     get:
       summary: Filter messages
@@ -157,25 +141,9 @@ paths:
             type: string
       responses:
         "200":
-          description: "200"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/EmptySuccess
         "400":
-          description: "400"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/BadRequest
       deprecated: false
   /messages/{messageId}:
     get:
@@ -191,23 +159,7 @@ paths:
           required: true
       responses:
         "200":
-          description: "200"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/EmptySuccess
         "400":
-          description: "400"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/BadRequest
       deprecated: false

@@ -436,15 +436,7 @@ paths:
                   pets:
                     type: array
         "400":
-          description: "400"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/BadRequest
         "406":
           description: "406"
           content:
@@ -493,25 +485,9 @@ paths:
             type: boolean
       responses:
         "200":
-          description: "200"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/EmptySuccess
         "400":
-          description: "400"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/BadRequest
       deprecated: false
   /searches/{searchId}:
     patch:
@@ -731,25 +707,9 @@ paths:
                     - Incomplete
       responses:
         "200":
-          description: "200"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/EmptySuccess
         "400":
-          description: "400"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/BadRequest
       deprecated: false
     delete:
       summary: Delete a saved search
@@ -764,25 +724,9 @@ paths:
           required: true
       responses:
         "200":
-          description: "200"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/EmptySuccess
         "400":
-          description: "400"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/BadRequest
       deprecated: false
     get:
       summary: Get a saved search
@@ -797,25 +741,9 @@ paths:
           required: true
       responses:
         "200":
-          description: "200"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/EmptySuccess
         "400":
-          description: "400"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/BadRequest
       deprecated: false
   /searches/{searchId}/matches:
     get:
@@ -883,25 +811,9 @@ paths:
             type: string
       responses:
         "200":
-          description: "200"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/EmptySuccess
         "400":
-          description: "400"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/BadRequest
       deprecated: false
   /searches/{searchId}/matches/{matchId}:
     get:
@@ -923,25 +835,9 @@ paths:
           required: true
       responses:
         "200":
-          description: "200"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/EmptySuccess
         "400":
-          description: "400"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/BadRequest
       deprecated: false
     patch:
       summary: Update a match
@@ -974,23 +870,7 @@ paths:
                   description: If true, indicates that the client liked the match. Useful for keeping track of what matches clients like.
       responses:
         "200":
-          description: "200"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/EmptySuccess
         "400":
-          description: "400"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/BadRequest
       deprecated: false

@@ -5942,36 +5942,10 @@
         ],
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -6057,36 +6031,10 @@
         ],
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -6125,36 +6073,10 @@
         ],
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -6162,8 +6084,8 @@
     },
     "/listings/locations": {
       "get": {
-        "summary": "Areas, cities and neighborhoods",
-        "description": "Use this endpoint to list geographical location data such as areas, cities and neighborhoods.",
+        "summary": "Areas, cities and neighborhoods (Deprecated)",
+        "description": "**Deprecated.** Use [GET /locations](/docs/repliers-openapi/get-locations) instead.<br/><br/>Use this endpoint to list geographical location data such as areas, cities and neighborhoods.",
         "operationId": "locations",
         "parameters": [
           {
@@ -6214,39 +6136,13 @@
         ],
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
-        "deprecated": false
+        "deprecated": true
       }
     },
     "/listings/property-types": {},
@@ -6767,21 +6663,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "param": {
-                          "type": "string"
-                        },
-                        "msg": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
+                  "$ref": "#/paths/~1places/get/responses/400/content/application~1json/schema"
                 }
               }
             }
@@ -6791,7 +6673,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/paths/~1locations/get/responses/400/content/application~1json/schema"
+                  "$ref": "#/paths/~1places/get/responses/400/content/application~1json/schema"
                 }
               }
             }
@@ -6804,7 +6686,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/paths/~1locations/get/responses/400/content/application~1json/schema"
+                  "$ref": "#/paths/~1places/get/responses/400/content/application~1json/schema"
                 }
               }
             }
@@ -7272,36 +7154,10 @@
         "operationId": "brokerages",
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -7332,36 +7188,10 @@
         ],
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false,
@@ -7464,36 +7294,10 @@
         ],
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -7501,9 +7305,10 @@
     },
     "/listings/buildings": {
       "get": {
-        "summary": "Buildings",
-        "description": "",
+        "summary": "Buildings (Deprecated)",
+        "description": "**Deprecated.** Use [POST /buildings](/docs/repliers-openapi/post-buildings) instead.",
         "operationId": "buildings",
+        "deprecated": true,
         "parameters": [
           {
             "name": "pageNum",
@@ -7653,39 +7458,12 @@
         ],
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
-        },
-        "deprecated": false
+        }
       }
     },
     "/places": {
@@ -7731,17 +7509,25 @@
             }
           },
           "400": {
-            "description": "400",
+            "description": "Bad Request",
             "content": {
               "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
                 "schema": {
-                  "type": "object",
-                  "properties": {}
+                  "type": "array",
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "param": {
+                          "type": "string"
+                        },
+                        "msg": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -7827,36 +7613,10 @@
         },
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -7943,36 +7703,10 @@
         ],
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -8058,36 +7792,10 @@
         },
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -8109,36 +7817,10 @@
         ],
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -8160,36 +7842,10 @@
         ],
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -8233,36 +7889,10 @@
         },
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -8347,36 +7977,10 @@
         },
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           },
           "409": {
             "description": "409",
@@ -8524,36 +8128,10 @@
         ],
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -8642,36 +8220,10 @@
         },
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -8693,36 +8245,10 @@
         ],
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -8744,36 +8270,10 @@
         ],
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -8786,36 +8286,10 @@
         "operationId": "get-tags",
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -8857,36 +8331,10 @@
         },
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -9394,20 +8842,7 @@
             }
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           },
           "406": {
             "description": "406",
@@ -9483,36 +8918,10 @@
         ],
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -9806,36 +9215,10 @@
         },
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -9857,36 +9240,10 @@
         ],
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -9908,36 +9265,10 @@
         ],
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -10040,36 +9371,10 @@
         ],
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -10102,36 +9407,10 @@
         ],
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -10181,36 +9460,10 @@
         },
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -10378,36 +9631,10 @@
         },
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -10456,36 +9683,10 @@
         ],
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -10685,36 +9886,10 @@
         },
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -10736,36 +9911,10 @@
         ],
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -10851,36 +10000,10 @@
         },
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -10985,36 +10108,10 @@
         ],
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -11038,36 +10135,10 @@
         ],
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -11118,36 +10189,10 @@
         },
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -11226,36 +10271,10 @@
         ],
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -11279,36 +10298,10 @@
         ],
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -11421,20 +10414,7 @@
             }
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -11445,36 +10425,10 @@
         "operationId": "list-subscriptions",
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -11522,36 +10476,10 @@
         },
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -11573,36 +10501,10 @@
         ],
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -11624,36 +10526,10 @@
         ],
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -11666,36 +10542,10 @@
         "operationId": "list-events",
         "responses": {
           "200": {
-            "description": "200",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/200"
           },
           "400": {
-            "description": "400",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Result": {
-                    "value": "{}"
-                  }
-                },
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/paths/~1places/get/responses/400"
           }
         },
         "deprecated": false
@@ -12561,7 +11411,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/paths/~1locations/get/responses/400/content/application~1json/schema"
+                  "$ref": "#/paths/~1places/get/responses/400/content/application~1json/schema"
                 }
               }
             }

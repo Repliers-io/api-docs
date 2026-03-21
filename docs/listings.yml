@@ -12399,25 +12399,9 @@ paths:
             default: updatedOnDesc
       responses:
         "200":
-          description: "200"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/EmptySuccess
         "400":
-          description: "400"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/BadRequest
       deprecated: false
   /listings/history:
     get:
@@ -12474,25 +12458,9 @@ paths:
             type: string
       responses:
         "200":
-          description: "200"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/EmptySuccess
         "400":
-          description: "400"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/BadRequest
       deprecated: false
   /listings/deleted:
     get:
@@ -12517,30 +12485,14 @@ paths:
             format: date
       responses:
         "200":
-          description: "200"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/EmptySuccess
         "400":
-          description: "400"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/BadRequest
       deprecated: false
   /listings/locations:
     get:
-      summary: Areas, cities and neighborhoods
-      description: Use this endpoint to list geographical location data such as areas, cities and neighborhoods.
+      summary: Areas, cities and neighborhoods (Deprecated)
+      description: "**Deprecated.** Use [GET /locations](/docs/repliers-openapi/get-locations) instead.<br/><br/>Use this endpoint to list geographical location data such as areas, cities and neighborhoods."
       operationId: locations
       parameters:
         - name: area
@@ -12574,32 +12526,17 @@ paths:
             type: string
       responses:
         "200":
-          description: "200"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/EmptySuccess
         "400":
-          description: "400"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
-      deprecated: false
+          $ref: components.yml#/components/responses/BadRequest
+      deprecated: true
   /listings/property-types: {}
   /listings/buildings:
     get:
-      summary: Buildings
-      description: ""
+      summary: Buildings (Deprecated)
+      description: "**Deprecated.** Use [POST /buildings](/docs/repliers-openapi/post-buildings) instead."
       operationId: buildings
+      deprecated: true
       parameters:
         - name: pageNum
           in: query
@@ -12696,23 +12633,6 @@ paths:
             type: string
       responses:
         "200":
-          description: "200"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/EmptySuccess
         "400":
-          description: "400"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
-      deprecated: false
+          $ref: components.yml#/components/responses/BadRequest

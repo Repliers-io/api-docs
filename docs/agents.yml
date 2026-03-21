@@ -63,25 +63,9 @@ paths:
                   description: The externalId is intended for storing agent identifiers from external systems (such as CRMs) for reference purposes.
       responses:
         "200":
-          description: "200"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/EmptySuccess
         "400":
-          description: "400"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/BadRequest
       deprecated: false
     get:
       summary: Filter agents
@@ -134,25 +118,9 @@ paths:
             type: string
       responses:
         "200":
-          description: "200"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/EmptySuccess
         "400":
-          description: "400"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/BadRequest
       deprecated: false
   /agents/{agentId}:
     patch:
@@ -212,25 +180,9 @@ paths:
                   description: The externalId is intended for storing agent identifiers from external systems (such as CRMs) for reference purposes.
       responses:
         "200":
-          description: "200"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/EmptySuccess
         "400":
-          description: "400"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/BadRequest
       deprecated: false
     delete:
       summary: Delete an agent
@@ -245,25 +197,9 @@ paths:
           required: true
       responses:
         "200":
-          description: "200"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/EmptySuccess
         "400":
-          description: "400"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/BadRequest
       deprecated: false
     get:
       summary: Get an agent
@@ -278,25 +214,9 @@ paths:
           required: true
       responses:
         "200":
-          description: "200"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/EmptySuccess
         "400":
-          description: "400"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/BadRequest
       deprecated: false
   /agents/{agentId}/transfer:
     post:
@@ -325,23 +245,7 @@ paths:
                   format: int32
       responses:
         "200":
-          description: "200"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/EmptySuccess
         "400":
-          description: "400"
-          content:
-            application/json:
-              examples:
-                Result:
-                  value: "{}"
-              schema:
-                type: object
-                properties: {}
+          $ref: components.yml#/components/responses/BadRequest
       deprecated: false
