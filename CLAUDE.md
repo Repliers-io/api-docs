@@ -10,19 +10,21 @@ OpenAPI documentation for the Repliers Realtime API (a North American real estat
 
 - `npm run docs-validate` — validate the OpenAPI spec
 - `npm run docs-bundle` — bundle into `bundled_docs/repliers.json`
+- `npm run docs-llms` — generate `llms.txt` (compact endpoint index for LLMs)
+- `npm run docs-llms-full` — generate `llms-full.txt` (detailed reference with all parameters, types, and request bodies)
 - `npm run docs-upload` — bundle + upload to ReadMe.io (requires `.env` with API key)
 
 Always run `npm run docs-validate` after making changes to verify the spec is valid.
 
 ## File Structure
 
-- `docs/repliers-openapi.json` — **main entrypoint spec** (OpenAPI 3.1.0). Contains most endpoints inline and uses `$ref` to pull in paths from the YAML files below.
-- `docs/components.yml` — shared schemas (pagination, property classes, GeoJSON, etc.)
-- `docs/buildings.yml` — `/buildings` endpoint (POST)
-- `docs/locations.yml` — `/locations` and `/locations/autocomplete` endpoints (GET)
-- `docs/nlp.yml` — `/nlp` and `/nlp/chats` endpoints (POST)
-- `index.js` — CLI tool wrapping `@readme/openapi-parser` for validate/bundle/upload
+- `docs/repliers-openapi.json` — **main entrypoint spec** (OpenAPI 3.1.0). Thin routing file — all paths are `$ref`s to YAML files.
+- `docs/components.yml` — shared schemas (pagination, property classes, GeoJSON, Error) and shared responses (EmptySuccess, BadRequest)
+- `docs/*.yml` — one YAML file per endpoint group (listings, agents, clients, searches, estimates, messages, favorites, webhooks, members, offices, places, brokerages, buildings, locations, nlp)
+- `index.js` — CLI tool wrapping `@readme/openapi-parser` for validate/bundle/llms/upload
 - `bundled_docs/` — generated output, don't edit manually
+- `llms.txt` — generated compact endpoint index, don't edit manually
+- `llms-full.txt` — generated detailed API reference with all params, don't edit manually
 
 ## Editing Conventions
 

@@ -99,6 +99,191 @@ async function bundleCommand(argv) {
   }
 }
 
+// Strip HTML tags from a string
+function stripHtml(str) {
+  if (!str) return '';
+  return str
+    .replace(/<br\s*\/?>/gi, ' ')
+    .replace(/<[^>]+>/g, '')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&amp;/g, '&')
+    .replace(/&quot;/g, '"')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+// Format a schema type for display (e.g. "array[string]", "integer (int32)")
+function formatType(schema) {
+  if (!schema) return 'any';
+  if (schema.type === 'array') {
+    const itemType = schema.items?.type || 'any';
+    return `array[${itemType}]`;
+  }
+  let t = schema.type || 'any';
+  if (schema.enum) t += ` enum: ${schema.enum.join(', ')}`;
+  if (schema.format) t += ` (${schema.format})`;
+  if (schema.default !== undefined) t += ` default: ${schema.default}`;
+  return t;
+}
+
+// Escape pipe characters in markdown table cells
+function escapeCell(str) {
+  return str.replace(/\|/g, '\\|').replace(/\n/g, ' ');
+}
+
+// Group and order paths from a bundled spec
+function groupPaths(bundled) {
+  const groups = {};
+  for (const [path, pathObj] of Object.entries(bundled.paths || {})) {
+    const prefix = path.split('/')[1] || 'root';
+    if (!groups[prefix]) groups[prefix] = [];
+
+    for (const [method, op] of Object.entries(pathObj)) {
+      if (!op || typeof op !== 'object' || !op.summary) continue;
+      if (op.deprecated) continue;
+
+      const summary = op.summary.replace(/\s*\(Deprecated\)\s*$/i, '').trim();
+      groups[prefix].push({ method: method.toUpperCase(), path, summary, op });
+    }
+  }
+
+  const groupOrder = [
+    'listings', 'locations', 'buildings', 'nlp',
+    'agents', 'clients', 'searches', 'estimates',
+    'messages', 'favorites', 'webhooks',
+    'members', 'offices', 'brokerages', 'places',
+  ];
+  const orderedKeys = [
+    ...groupOrder.filter(k => groups[k]),
+    ...Object.keys(groups).filter(k => !groupOrder.includes(k)),
+  ];
+
+  return { groups, orderedKeys };
+}
+
+// Build the header shared by both llms.txt and llms-full.txt
+function buildHeader(bundled) {
+  const baseUrl = bundled.servers?.[0]?.url || 'https://api.repliers.io';
+  const title = bundled.info?.title || 'API';
+
+  let content = `# ${title}\n\n`;
+  content += `> Real-time real estate data API for North America. Provides listings search, location data, building info, agent/client management, saved searches, market estimates, messaging, favorites, webhooks, and NLP-powered natural language search.\n\n`;
+  content += `Base URL: ${baseUrl}\n`;
+  content += `Auth: API key via \`REPLIERS-API-KEY\` header\n`;
+  return content;
+}
+
+// Generate compact llms.txt
+function generateCompact(bundled) {
+  const { groups, orderedKeys } = groupPaths(bundled);
+  let content = buildHeader(bundled);
+
+  for (const group of orderedKeys) {
+    const endpoints = groups[group];
+    if (!endpoints || endpoints.length === 0) continue;
+
+    const heading = group.charAt(0).toUpperCase() + group.slice(1);
+    content += `\n## ${heading}\n\n`;
+
+    for (const ep of endpoints) {
+      content += `- ${ep.method} ${ep.path}: ${ep.summary}\n`;
+    }
+  }
+  return { content, orderedKeys, groups };
+}
+
+// Generate detailed llms-full.txt
+function generateFull(bundled) {
+  const { groups, orderedKeys } = groupPaths(bundled);
+  let content = buildHeader(bundled);
+  let totalParams = 0;
+
+  for (const group of orderedKeys) {
+    const endpoints = groups[group];
+    if (!endpoints || endpoints.length === 0) continue;
+
+    const heading = group.charAt(0).toUpperCase() + group.slice(1);
+    content += `\n## ${heading}\n`;
+
+    for (const ep of endpoints) {
+      const { op } = ep;
+      content += `\n### ${ep.method} ${ep.path}\n\n`;
+
+      // Description
+      const desc = stripHtml(op.description || op.summary);
+      if (desc) content += `${desc}\n`;
+
+      // Path parameters
+      const pathParams = (op.parameters || []).filter(p => p.in === 'path');
+      if (pathParams.length > 0) {
+        content += `\n**Path Parameters:**\n\n`;
+        content += `| Name | Type | Description |\n|---|---|---|\n`;
+        for (const p of pathParams) {
+          content += `| ${p.name} | ${formatType(p.schema)} | ${escapeCell(stripHtml(p.description))} |\n`;
+          totalParams++;
+        }
+      }
+
+      // Query parameters
+      const queryParams = (op.parameters || []).filter(p => p.in === 'query');
+      if (queryParams.length > 0) {
+        content += `\n**Query Parameters:**\n\n`;
+        content += `| Name | Type | Description |\n|---|---|---|\n`;
+        for (const p of queryParams) {
+          content += `| ${p.name} | ${formatType(p.schema)} | ${escapeCell(stripHtml(p.description))} |\n`;
+          totalParams++;
+        }
+      }
+
+      // Request body
+      const bodySchema = op.requestBody?.content?.['application/json']?.schema;
+      if (bodySchema?.properties) {
+        content += `\n**Request Body:**\n\n`;
+        content += `| Field | Type | Required | Description |\n|---|---|---|---|\n`;
+        const required = new Set(bodySchema.required || []);
+        for (const [name, prop] of Object.entries(bodySchema.properties)) {
+          const req = required.has(name) ? 'yes' : 'no';
+          const propDesc = stripHtml(prop.description || '');
+          content += `| ${name} | ${formatType(prop)} | ${req} | ${escapeCell(propDesc)} |\n`;
+          totalParams++;
+        }
+      }
+
+      content += `\n---\n`;
+    }
+  }
+
+  return { content, orderedKeys, groups, totalParams };
+}
+
+// LLMs.txt command handler
+async function llmsCommand(argv) {
+  const { file, output, full } = argv;
+
+  console.log(pc.blue(`Bundling ${file}...`));
+  try {
+    const bundled = await bundle(file);
+
+    let content, orderedKeys, groups, totalParams;
+    if (full) {
+      ({ content, orderedKeys, groups, totalParams } = generateFull(bundled));
+    } else {
+      ({ content, orderedKeys, groups } = generateCompact(bundled));
+    }
+
+    await ensureDirectoryExists(output);
+    await writeFile(output, content, 'utf8');
+
+    const endpointCount = Object.values(groups).flat().length;
+    const extra = full ? `, ${totalParams} params` : '';
+    console.log(pc.green(`✓ Generated ${output} (${orderedKeys.length} groups, ${endpointCount} endpoints${extra})`));
+  } catch (err) {
+    console.error(pc.red(`Error generating LLMs.txt:`), err.message);
+    process.exit(1);
+  }
+}
+
 // Upload command handler (stubbed)
 async function uploadCommand(argv) {
   const { file } = argv;
@@ -152,6 +337,31 @@ const cli = yargs(hideBin(process.argv))
         });
     },
     bundleCommand
+  )
+  .command(
+    'llms <file>',
+    'Generate LLMs.txt from an OpenAPI specification',
+    (yargs) => {
+      return yargs
+        .usage('$0 llms <file> --output <output_file>')
+        .positional('file', {
+          describe: 'Path to the OpenAPI specification file',
+          type: 'string',
+          demandOption: true,
+        })
+        .option('output', {
+          alias: 'o',
+          describe: 'Output file path for LLMs.txt',
+          type: 'string',
+          default: './llms.txt',
+        })
+        .option('full', {
+          describe: 'Generate detailed version with all parameters and request bodies',
+          type: 'boolean',
+          default: false,
+        });
+    },
+    llmsCommand
   )
   .command(
     'upload <file>',
