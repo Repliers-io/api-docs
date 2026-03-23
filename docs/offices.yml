@@ -1,0 +1,35 @@
+openapi: 3.1.0
+info:
+  title: Offices API
+  version: 1.0.0
+servers:
+  - url: https://api.repliers.io
+paths:
+  /offices:
+    get:
+      summary: Offices
+      description: Use this endpoint to list offices belonging to the MLS. A brokerage may have one or more offices.
+      operationId: offices
+      parameters:
+        - name: keywords
+          in: query
+          description: If supplied, filters offices by the supplied value.
+          schema:
+            type: string
+        - name: boardId
+          in: query
+          description: Find your boardId by visiting https://login.repliers.com/dashboard/data-access
+          schema:
+            type: string
+      responses:
+        "200":
+          $ref: components.yml#/components/responses/EmptySuccess
+        "400":
+          $ref: components.yml#/components/responses/BadRequest
+      deprecated: false
+      x-readme:
+        code-samples:
+          - language: text
+            code: "{{baseUrl}}/offices?boardId=91"
+        samples-languages:
+          - text

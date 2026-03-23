@@ -1,0 +1,31 @@
+openapi: 3.1.0
+info:
+  title: Places API
+  version: 1.0.0
+servers:
+  - url: https://api.repliers.io
+paths:
+  /places:
+    get:
+      summary: Places
+      description: Use this endpoint to retrieve relevant schools, parks, transit stops and safety places for a given latitude and longitude. This endpoint is useful to enrich property and neighborhood views with local places information.
+      operationId: places
+      parameters:
+        - name: lat
+          in: query
+          description: The latitude of the point that you'd like to retrieve places data for.
+          required: true
+          schema:
+            type: string
+        - name: long
+          in: query
+          description: The longitude of the point that you'd like to retrieve places data for.
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          $ref: components.yml#/components/responses/EmptySuccess
+        "400":
+          $ref: components.yml#/components/responses/BadRequest
+      deprecated: false

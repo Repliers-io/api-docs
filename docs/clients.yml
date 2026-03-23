@@ -1,0 +1,304 @@
+openapi: 3.1.0
+info:
+  title: Clients API
+  version: 1.0.0
+servers:
+  - url: https://api.repliers.io
+paths:
+  /clients:
+    post:
+      summary: Create a client
+      description: Use this endpoint to create a client. When creating saved searches, messages or favorites a client needs to be specified.
+      operationId: create-a-client
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - agentId
+              properties:
+                agentId:
+                  type: integer
+                  description: The agentId of the agent that this client is assigned to. Each client must be assigned to an agent.
+                  format: int32
+                fname:
+                  type: string
+                  description: The first name of this client
+                lname:
+                  type: string
+                  description: The last name of this client.
+                phone:
+                  type: string
+                  description: "The mobile phone number of this client (May be used to deliver text messages). Must be 11 digits in length.<br/><br/>Regex pattern: <code>^(1)([0-9]{10})$</code>"
+                email:
+                  type: string
+                  description: "The email address of this client (May be used to send emails).<br/><br/>Regex pattern: <code>^(([^<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))</code>"
+                status:
+                  type: boolean
+                  description: If false, disables all operations for the client.
+                  default: true
+                preferences:
+                  properties:
+                    email:
+                      type: boolean
+                      description: If false, the client will not receive messages via email
+                      default: true
+                    sms:
+                      type: boolean
+                      description: If false, the client will not receive messages via sms (text)
+                      default: true
+                    unsubscribe:
+                      type: boolean
+                      description: If true, unsubscribes the client from all forms of communication.
+                      default: false
+                  required: []
+                  type: object
+                tags:
+                  type: array
+                  description: You may categorize this client using tags. Tags are useful for filtering purposes and building lists of specific clients. For example, if this client is a buyer from Toronto, you may want to create tags for "Buyer" and "Toronto".
+                  items:
+                    type: string
+                externalId:
+                  type: string
+                  description: The externalId is intended for storing client identifiers from external systems (such as CRMs) for reference purposes.
+      responses:
+        "200":
+          $ref: components.yml#/components/responses/EmptySuccess
+        "400":
+          $ref: components.yml#/components/responses/BadRequest
+        "409":
+          description: "409"
+          content:
+            text/plain:
+              examples:
+                Result:
+                  value: " "
+      deprecated: false
+    get:
+      summary: Filter clients
+      description: Use this endpoint to get a list of clients that you've created. You can filter for specific clients using parameters like email address and first name. If you don't use any filters all clients will be returned.
+      operationId: search-clients
+      parameters:
+        - name: agentId
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: clientId
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: email
+          in: query
+          schema:
+            type: string
+        - name: fname
+          in: query
+          schema:
+            type: string
+        - name: keywords
+          in: query
+          description: One or more keywords may be specified to filter the results by. Useful for searching clients. If specified all other params are ignored.
+          schema:
+            type: string
+        - name: lname
+          in: query
+          schema:
+            type: string
+        - name: phone
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: status
+          in: query
+          schema:
+            type: boolean
+        - name: condition
+          in: query
+          description: "Determines the search condition applied to the filters. If EXACT, requires that the given value for one or more params is an exact match of the stored value. If CONTAINS, requires that the given value for one or more params is contained within the stored value. <br/><br/> Allowed values: <br/><br/> <code>EXACT</code>, <code>CONTAINS</code>"
+          schema:
+            type: string
+            default: EXACT
+        - name: operator
+          in: query
+          description: "Determines the search logic applied to the filters. If OR, requires that one or more params contain/equal the given value. If AND, requires that all params contain/equal the given value. <br/><br/> Allowed values: <br/><br/> <code>OR</code>, <code>AND</code>"
+          schema:
+            type: string
+            default: OR
+        - name: pageNum
+          in: query
+          description: If specified indexes a specific page in the results set. For example, if there are 1000 listings and 100 listings per page, if you'd like to view listings 101-201 you'd specify pageNum=2
+          schema:
+            type: integer
+            format: int32
+            default: 1
+        - name: resultsPerPage
+          in: query
+          description: The amount of listings to return in each page of the results set.
+          schema:
+            type: integer
+            format: int32
+            default: 100
+        - name: tags
+          in: query
+          description: One or more comma separated strings that can be used to filter clients.  For example GET /clients?tags=buyer,toronto. The response contains clients that have any of the tags specified.
+          schema:
+            type: string
+        - name: showSavedSearches
+          in: query
+          description: Enables automatic retrieval of Saved Searches for each client in the response. For best performance it's recommended to disable this setting if Saved Searches are not required.
+          schema:
+            type: boolean
+            default: true
+        - name: externalId
+          in: query
+          description: Filter clients by their identifier from an external system (such as a CRM).
+          schema:
+            type: string
+      responses:
+        "200":
+          $ref: components.yml#/components/responses/EmptySuccess
+        "400":
+          $ref: components.yml#/components/responses/BadRequest
+      deprecated: false
+  /clients/{clientId}:
+    patch:
+      summary: Update a client
+      description: Use this endpoint to update a client's information.
+      operationId: update-a-client
+      parameters:
+        - name: clientId
+          in: path
+          schema:
+            type: integer
+            format: int32
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                agentId:
+                  type: integer
+                  description: The agentId of the agent that this client is assigned to. Each client must be assigned to an agent.
+                  format: int32
+                fname:
+                  type: string
+                  description: The first name of this client
+                lname:
+                  type: string
+                  description: The last name of this client.
+                phone:
+                  type: string
+                  description: "The mobile phone number of this client (May be used to deliver text messages). Must be 11 digits in length.<br/><br/>Regex pattern: <code>^(1)([0-9]{10})$</code>"
+                email:
+                  type: string
+                  description: "The email address of this client (May be used to send emails).<br/><br/>Regex pattern: <code>^(([^<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))</code>"
+                status:
+                  type: boolean
+                  description: If false, disables all operations for the client.
+                preferences:
+                  properties:
+                    email:
+                      type: boolean
+                      description: If false, the client will not receive messages via email
+                    sms:
+                      type: boolean
+                      description: If false, the client will not receive messages via sms (text)
+                    unsubscribe:
+                      type: boolean
+                      description: If true, unsubscribes the client from all forms of communication.
+                  required: []
+                  type: object
+                tags:
+                  type: array
+                  description: You may categorize this client using tags. Tags are useful for filtering purposes and building lists of specific clients. For example, if this client is a buyer from Toronto, you may want to create tags for "Buyer" and "Toronto".
+                  items:
+                    type: string
+                externalId:
+                  type: string
+                  description: The externalId is intended for storing client identifiers from external systems (such as CRMs) for reference purposes.
+      responses:
+        "200":
+          $ref: components.yml#/components/responses/EmptySuccess
+        "400":
+          $ref: components.yml#/components/responses/BadRequest
+      deprecated: false
+    delete:
+      summary: Delete a client
+      description: Use this endpoint to delete a client.
+      operationId: delete-a-client
+      parameters:
+        - name: clientId
+          in: path
+          schema:
+            type: integer
+            format: int32
+          required: true
+      responses:
+        "200":
+          $ref: components.yml#/components/responses/EmptySuccess
+        "400":
+          $ref: components.yml#/components/responses/BadRequest
+      deprecated: false
+    get:
+      summary: Get a client
+      description: Use this endpoint to get details about a specific client.
+      operationId: get-a-client
+      parameters:
+        - name: clientId
+          in: path
+          schema:
+            type: integer
+            format: int32
+          required: true
+      responses:
+        "200":
+          $ref: components.yml#/components/responses/EmptySuccess
+        "400":
+          $ref: components.yml#/components/responses/BadRequest
+      deprecated: false
+  /clients/tags:
+    get:
+      summary: Get tags
+      description: Use this endpoint to get a list of all the tags that you've assigned to clients.
+      operationId: get-tags
+      responses:
+        "200":
+          $ref: components.yml#/components/responses/EmptySuccess
+        "400":
+          $ref: components.yml#/components/responses/BadRequest
+      deprecated: false
+  /clients/tags/{tag}:
+    patch:
+      summary: Rename a tag
+      description: Use this endpoint if you'd like to rename a tag. This is useful if you're reorganizing tags and you'd like to combine them with other tags or rename them in a more intuitive way.
+      operationId: rename-a-tag
+      parameters:
+        - name: tag
+          in: path
+          description: The name of the tag that you'd like to rename
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - label
+              properties:
+                label:
+                  type: string
+                  description: The new name that you'd like to give to the tag.
+      responses:
+        "200":
+          $ref: components.yml#/components/responses/EmptySuccess
+        "400":
+          $ref: components.yml#/components/responses/BadRequest
+      deprecated: false

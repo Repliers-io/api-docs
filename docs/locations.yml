@@ -682,18 +682,6 @@ components:
         address:
           $ref: "#/components/schemas/LocationAddress"
 
-    Error:
-      type: array
-      items:
-        type: array
-        items:
-          type: object
-          properties:
-            param:
-              type: string
-            msg:
-              type: string
-
   responses:
     NotFound:
       description: Not Found
@@ -703,7 +691,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/Error"
+            $ref: "components.yml#/components/schemas/Error"
 
     Forbidden:
       description: Forbidden
@@ -713,11 +701,11 @@ components:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/Error"
+            $ref: "components.yml#/components/schemas/Error"
 
     InternalServerError:
       description: Internal Server Error
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/Error"
+            $ref: "components.yml#/components/schemas/Error"

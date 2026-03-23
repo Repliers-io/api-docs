@@ -1,0 +1,103 @@
+# repliers
+
+> Real-time real estate data API for North America. Provides listings search, location data, building info, agent/client management, saved searches, market estimates, messaging, favorites, webhooks, and NLP-powered natural language search.
+
+Base URL: https://api.repliers.io
+Auth: API key via `REPLIERS-API-KEY` header
+
+## Listings
+
+- POST /listings: Listings Search
+- GET /listings/{mlsNumber}: Get a single listing
+- GET /listings/{mlsNumber}/similar: Get similar listings
+- GET /listings/history: Get address history
+- GET /listings/deleted: Get deleted listings
+
+## Locations
+
+- GET /locations: Search locations
+- GET /locations/autocomplete: Locations autocomplete
+
+## Buildings
+
+- POST /buildings: Buildings Search
+
+## Nlp
+
+- POST /nlp: New Prompt
+- GET /nlp: Filter prompts
+- GET /nlp/chats: Filter sessions
+
+## Agents
+
+- POST /agents: Create an agent
+- GET /agents: Filter agents
+- PATCH /agents/{agentId}: Update an agent
+- DELETE /agents/{agentId}: Delete an agent
+- GET /agents/{agentId}: Get an agent
+- POST /agents/{agentId}/transfer: Transfer an agent's clients
+
+## Clients
+
+- POST /clients: Create a client
+- GET /clients: Filter clients
+- PATCH /clients/{clientId}: Update a client
+- DELETE /clients/{clientId}: Delete a client
+- GET /clients/{clientId}: Get a client
+- GET /clients/tags: Get tags
+- PATCH /clients/tags/{tag}: Rename a tag
+
+## Searches
+
+- POST /searches: Create a saved search
+- GET /searches: Filter saved searches
+- PATCH /searches/{searchId}: Update a saved search
+- DELETE /searches/{searchId}: Delete a saved search
+- GET /searches/{searchId}: Get a saved search
+- GET /searches/{searchId}/matches: Filter matches
+- GET /searches/{searchId}/matches/{matchId}: Get a match
+- PATCH /searches/{searchId}/matches/{matchId}: Update a match
+
+## Estimates
+
+- POST /estimates: Create an estimate
+- GET /estimates: Get Estimates
+- PATCH /estimates/{estimateId}: Update an estimate
+- DELETE /estimates/{estimateId}: Delete an estimate
+
+## Messages
+
+- POST /messages: Send a message
+- GET /messages: Filter messages
+- GET /messages/{messageId}: Get a message
+
+## Favorites
+
+- POST /favorites: Add a favorite
+- GET /favorites: Get favorites
+- DELETE /favorites/{favoriteId}: Delete a favorite
+
+## Webhooks
+
+- POST /webhooks: Create a subscription
+- GET /webhooks: List subscriptions
+- PATCH /webhooks/{webhookId}: Update a subscription
+- DELETE /webhooks/{webhookId}: Delete a subscription
+- GET /webhooks/{webhookId}: Get a subscription
+- GET /webhooks/events: List events
+
+## Members
+
+- GET /members: Members
+
+## Offices
+
+- GET /offices: Offices
+
+## Brokerages
+
+- GET /brokerages: Brokerages
+
+## Places
+
+- GET /places: Places

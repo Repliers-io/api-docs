@@ -9,6 +9,8 @@
         "docs": "node ./index.js",
         "docs-validate": "npm run docs -- validate ./docs/repliers-openapi.json",
         "docs-bundle": "npm run docs -- bundle ./docs/repliers-openapi.json --output ./bundled_docs/repliers.json",
+        "docs-llms": "npm run docs -- llms ./docs/repliers-openapi.json --output ./llms.txt",
+        "docs-llms-full": "npm run docs -- llms ./docs/repliers-openapi.json --full --output ./llms-full.txt",
         "docs-upload": "set -a && source .env && set +a && npm run docs-bundle && rdme openapi upload ./bundled_docs/repliers.json --slug=repliers.json --key $README_API_KEY"
     },
     "engines": {
@@ -24,6 +26,7 @@
     },
     "type": "module",
     "devDependencies": {
+        "js-yaml": "^4.1.1",
         "rdme": "^10.6.0"
     }
 }

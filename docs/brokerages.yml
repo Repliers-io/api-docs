@@ -1,0 +1,18 @@
+openapi: 3.1.0
+info:
+  title: Brokerages API
+  version: 1.0.0
+servers:
+  - url: https://api.repliers.io
+paths:
+  /brokerages:
+    get:
+      summary: Brokerages
+      description: Use this endpoint to list brokerages belonging to the MLS.
+      operationId: brokerages
+      responses:
+        "200":
+          $ref: components.yml#/components/responses/EmptySuccess
+        "400":
+          $ref: components.yml#/components/responses/BadRequest
+      deprecated: false

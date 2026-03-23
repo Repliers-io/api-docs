@@ -64,3 +64,33 @@ components:
                 type: number
               minItems: 2
               maxItems: 2
+
+    Error:
+      type: array
+      items:
+        type: array
+        items:
+          type: object
+          properties:
+            param:
+              type: string
+            msg:
+              type: string
+
+  responses:
+    EmptySuccess:
+      description: "200"
+      content:
+        application/json:
+          examples:
+            Result:
+              value: "{}"
+          schema:
+            type: object
+            properties: {}
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"

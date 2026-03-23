@@ -380,7 +380,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: "locations.yml#/components/schemas/Error"
+            $ref: "components.yml#/components/schemas/Error"
 
     InternalServerError:
       description: Internal Server Error

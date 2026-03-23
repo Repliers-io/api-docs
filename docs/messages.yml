@@ -1,0 +1,165 @@
+openapi: 3.1.0
+info:
+  title: Messages API
+  version: 1.0.0
+servers:
+  - url: https://api.repliers.io
+paths:
+  /messages:
+    post:
+      summary: Send a message
+      description: |-
+        Use this endpoint to send a message.
+
+        A message is either sent from an agent to a client, or from a client to an agent.
+
+        Messages can be used to facilitate communication between agents and their clients for marketing automation or general communication.
+
+        Text messaging and email is supported.
+      operationId: send-a-message
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - sender
+                - agentId
+                - clientId
+              properties:
+                sender:
+                  type: string
+                  description: Indicates whether the agent is sending the message or the client.<br/><br/>Allowed values:<br/><br/><code>agent</code>,<code>client</code>
+                agentId:
+                  type: integer
+                  description: The agentId of the agent that's either receiving or sending the message.
+                  format: int32
+                clientId:
+                  type: integer
+                  description: The clientId of the client that's either receiving or sending the message.
+                  format: int32
+                content:
+                  properties:
+                    listings:
+                      type: array
+                      description: An array of listings (mlsNumbers) to send in this message.
+                      items:
+                        type: string
+                    searches:
+                      type: array
+                      description: An array of saved searches (searchIds) to send in this message. Active listings that match filters for each search specified will be sent in this message.
+                      items:
+                        type: integer
+                        format: int32
+                    message:
+                      type: string
+                      description: Content to be sent with this message. For example, "hi, how are you today?"
+                    subject:
+                      type: string
+                      description: If specified, changes the email subject from the default
+                    links:
+                      type: array
+                      description: An array of links (URLs) to be sent in this message.
+                      items:
+                        type: string
+                    pictures:
+                      type: array
+                      description: An array of pictures (URLs) to be sent in this message.
+                      items:
+                        type: string
+                  required: []
+                  type: object
+      responses:
+        "200":
+          $ref: components.yml#/components/responses/EmptySuccess
+        "400":
+          $ref: components.yml#/components/responses/BadRequest
+      deprecated: false
+    get:
+      summary: Filter messages
+      description: Use this endpoint to list and filter sent messages.
+      operationId: filter-messages
+      parameters:
+        - name: agentId
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: clientId
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: endTime
+          in: query
+          description: If specified, filters messages which were sent  on or before the supplied value.
+          schema:
+            type: string
+            format: date
+        - name: startTime
+          in: query
+          description: If specified, filters messages which were sent on or after the supplied value.
+          schema:
+            type: string
+            format: date
+        - name: message
+          in: query
+          schema:
+            type: string
+        - name: messageId
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: pageNum
+          in: query
+          description: If specified indexes a specific page in the results set. For example, if there are 1000 listings and 100 listings per page, if you'd like to view listings 101-201 you'd specify pageNum=2
+          schema:
+            type: integer
+            format: int32
+            default: 1
+        - name: resultsPerPage
+          in: query
+          description: The amount of listings to return in each page of the results set.
+          schema:
+            type: integer
+            format: int32
+            default: 100
+        - name: sender
+          in: query
+          description: Allowed values:<br/><br/><code>agent</code>,<code>client</code>
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: Allowed values:<br/><br/><code>sent</code>,<code>pending</code>
+          schema:
+            type: string
+        - name: token
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          $ref: components.yml#/components/responses/EmptySuccess
+        "400":
+          $ref: components.yml#/components/responses/BadRequest
+      deprecated: false
+  /messages/{messageId}:
+    get:
+      summary: Get a message
+      description: Use this endpoint to get details about a message that was sent.
+      operationId: get-a-message
+      parameters:
+        - name: messageId
+          in: path
+          schema:
+            type: integer
+            format: int32
+          required: true
+      responses:
+        "200":
+          $ref: components.yml#/components/responses/EmptySuccess
+        "400":
+          $ref: components.yml#/components/responses/BadRequest
+      deprecated: false

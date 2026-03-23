@@ -1,0 +1,114 @@
+openapi: 3.1.0
+info:
+  title: Favorites API
+  version: 1.0.0
+servers:
+  - url: https://api.repliers.io
+paths:
+  /favorites:
+    post:
+      summary: Add a favorite
+      description: Use this endpoint to add a new favorite for a client.
+      operationId: add-a-favorite
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - clientId
+                - mlsNumber
+              properties:
+                boardId:
+                  type: integer
+                  description: Required if your account has access to multiple MLSes.
+                  format: int32
+                clientId:
+                  type: integer
+                  format: int32
+                comments:
+                  type: string
+                  description: Comments may be associated with a favorite, for example "I love the view in the backyard".
+                mlsNumber:
+                  type: string
+                tags:
+                  type: array
+                  description: Tags may be added to favorites. This is a useful feature if you want to allow your users to filter their favorites.
+                  items:
+                    type: string
+      responses:
+        "200":
+          $ref: components.yml#/components/responses/EmptySuccess
+        "400":
+          $ref: components.yml#/components/responses/BadRequest
+      deprecated: false
+    get:
+      summary: Get favorites
+      description: Use this endpoint to retrieve a list of properties that a client has favorited.
+      operationId: get-favorites
+      parameters:
+        - name: boardId
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: clientId
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: fields
+          in: query
+          description: "Use if you want to limit the response to containing certain fields only. For example: fields?listPrice,soldPrice would limit the response to contain listPrice and soldPrice only. You can also specify the amount of images to return, for example if a listing has 40 images total and you specify fields=images[5] it will only return the first 5 images."
+          schema:
+            type: string
+        - name: lastStatus
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+        - name: pageNum
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: resultsPerPage
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: status
+          in: query
+          schema:
+            type: string
+        - name: tags
+          in: query
+          description: Allows you to search tags within favorites, accepts a comma-separated string, for example "needs work, turn-key"
+          schema:
+            type: string
+      responses:
+        "200":
+          $ref: components.yml#/components/responses/EmptySuccess
+        "400":
+          $ref: components.yml#/components/responses/BadRequest
+      deprecated: false
+  /favorites/{favoriteId}:
+    delete:
+      summary: Delete a favorite
+      description: Use this endpoint to delete a favorite.
+      operationId: delete-a-favorite
+      parameters:
+        - name: favoriteId
+          in: path
+          schema:
+            type: integer
+            format: int32
+          required: true
+      responses:
+        "200":
+          $ref: components.yml#/components/responses/EmptySuccess
+        "400":
+          $ref: components.yml#/components/responses/BadRequest
+      deprecated: false
