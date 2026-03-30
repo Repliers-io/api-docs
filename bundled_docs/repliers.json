@@ -11277,126 +11277,7 @@
                           "type": "array",
                           "description": "Array of building objects matching the search criteria",
                           "items": {
-                            "type": "object",
-                            "description": "Building information including location, pricing, and property details",
-                            "properties": {
-                              "address": {
-                                "type": "object",
-                                "description": "Address components of the building",
-                                "properties": {
-                                  "addressKey": {
-                                    "type": "string",
-                                    "description": "Unique address identifier key"
-                                  },
-                                  "streetNumber": {
-                                    "type": "string",
-                                    "description": "Street number"
-                                  },
-                                  "streetName": {
-                                    "type": "string",
-                                    "description": "Street name"
-                                  },
-                                  "streetSuffix": {
-                                    "type": "string",
-                                    "description": "Street suffix (e.g., Blvd, St, Ave)"
-                                  },
-                                  "streetDirection": {
-                                    "type": "string",
-                                    "description": "Street direction (e.g., N, S, E, W)"
-                                  },
-                                  "city": {
-                                    "type": "string",
-                                    "description": "City name"
-                                  },
-                                  "neighborhood": {
-                                    "type": "string",
-                                    "description": "Neighborhood name"
-                                  },
-                                  "district": {
-                                    "type": "string",
-                                    "description": "District or municipal division"
-                                  },
-                                  "area": {
-                                    "type": "string",
-                                    "description": "Area name"
-                                  },
-                                  "state": {
-                                    "type": "string",
-                                    "description": "State or province name"
-                                  },
-                                  "country": {
-                                    "type": "string",
-                                    "description": "Country name"
-                                  },
-                                  "zip": {
-                                    "type": "string",
-                                    "description": "Postal or ZIP code"
-                                  },
-                                  "majorIntersection": {
-                                    "type": "string",
-                                    "description": "Major intersection or cross streets"
-                                  }
-                                }
-                              },
-                              "nearby": {
-                                "type": "object",
-                                "properties": {
-                                  "amenities": {
-                                    "type": "array",
-                                    "description": "List of nearby amenities",
-                                    "items": {
-                                      "type": "string"
-                                    }
-                                  }
-                                }
-                              },
-                              "details": {
-                                "type": "object",
-                                "properties": {
-                                  "yearBuilt": {
-                                    "type": "string",
-                                    "description": "Year the building was built"
-                                  },
-                                  "buildingName": {
-                                    "type": "string",
-                                    "description": "Name of the building"
-                                  },
-                                  "minSqft": {
-                                    "type": "integer",
-                                    "description": "Minimum square footage"
-                                  },
-                                  "maxSqft": {
-                                    "type": "integer",
-                                    "description": "Maximum square footage"
-                                  }
-                                }
-                              },
-                              "map": {
-                                "type": "object",
-                                "properties": {
-                                  "latitude": {
-                                    "type": "string",
-                                    "description": "Latitude coordinate"
-                                  },
-                                  "longitude": {
-                                    "type": "string",
-                                    "description": "Longitude coordinate"
-                                  },
-                                  "point": {
-                                    "type": "string",
-                                    "description": "WKT (Well-Known Text) representation of the building's center point"
-                                  }
-                                }
-                              },
-                              "image": {
-                                "type": "string",
-                                "description": "Image filename"
-                              },
-                              "class": {
-                                "type": "string",
-                                "description": "Property class"
-                              }
-                            }
+                            "$ref": "#/paths/~1buildings~1%7BaddressKey%7D/get/responses/200/content/application~1json/schema"
                           }
                         }
                       }
@@ -11424,6 +11305,182 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/buildings/{addressKey}": {
+      "get": {
+        "summary": "Get a single building",
+        "description": "Use this endpoint to get details about a specific building by its address key.\nThe address key can be found in the `address.addressKey` field of building objects returned by the buildings search endpoint.\n",
+        "tags": [
+          "Buildings"
+        ],
+        "parameters": [
+          {
+            "name": "addressKey",
+            "in": "path",
+            "description": "Unique address identifier key for the building. Available from `building.address.addressKey` in search results.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response containing building details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Building information including location, pricing, and property details",
+                  "properties": {
+                    "address": {
+                      "type": "object",
+                      "description": "Address components of the building",
+                      "properties": {
+                        "addressKey": {
+                          "type": "string",
+                          "description": "Unique address identifier key"
+                        },
+                        "streetNumber": {
+                          "type": "string",
+                          "description": "Street number"
+                        },
+                        "streetName": {
+                          "type": "string",
+                          "description": "Street name"
+                        },
+                        "streetSuffix": {
+                          "type": "string",
+                          "description": "Street suffix (e.g., Blvd, St, Ave)"
+                        },
+                        "streetDirection": {
+                          "type": "string",
+                          "description": "Street direction (e.g., N, S, E, W)"
+                        },
+                        "city": {
+                          "type": "string",
+                          "description": "City name"
+                        },
+                        "neighborhood": {
+                          "type": "string",
+                          "description": "Neighborhood name"
+                        },
+                        "district": {
+                          "type": "string",
+                          "description": "District or municipal division"
+                        },
+                        "area": {
+                          "type": "string",
+                          "description": "Area name"
+                        },
+                        "state": {
+                          "type": "string",
+                          "description": "State or province name"
+                        },
+                        "country": {
+                          "type": "string",
+                          "description": "Country name"
+                        },
+                        "zip": {
+                          "type": "string",
+                          "description": "Postal or ZIP code"
+                        },
+                        "majorIntersection": {
+                          "type": "string",
+                          "description": "Major intersection or cross streets"
+                        }
+                      }
+                    },
+                    "nearby": {
+                      "type": "object",
+                      "properties": {
+                        "amenities": {
+                          "type": "array",
+                          "description": "List of nearby amenities",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "details": {
+                      "type": "object",
+                      "properties": {
+                        "yearBuilt": {
+                          "type": "string",
+                          "description": "Year the building was built"
+                        },
+                        "buildingName": {
+                          "type": "string",
+                          "description": "Name of the building"
+                        },
+                        "minSqft": {
+                          "type": "integer",
+                          "description": "Minimum square footage"
+                        },
+                        "maxSqft": {
+                          "type": "integer",
+                          "description": "Maximum square footage"
+                        }
+                      }
+                    },
+                    "map": {
+                      "type": "object",
+                      "properties": {
+                        "latitude": {
+                          "type": "string",
+                          "description": "Latitude coordinate"
+                        },
+                        "longitude": {
+                          "type": "string",
+                          "description": "Longitude coordinate"
+                        },
+                        "point": {
+                          "type": "string",
+                          "description": "WKT (Well-Known Text) representation of the building's center point"
+                        }
+                      }
+                    },
+                    "image": {
+                      "type": "string",
+                      "description": "Image filename"
+                    },
+                    "class": {
+                      "type": "string",
+                      "description": "Property class"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/paths/~1buildings/post/responses/401"
+          },
+          "404": {
+            "description": "Building not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "msg": {
+                        "type": "string",
+                        "description": "Error message"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/paths/~1buildings/post/responses/500"
           }
         }
       }

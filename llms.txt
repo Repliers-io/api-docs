@@ -21,6 +21,7 @@ Auth: API key via `REPLIERS-API-KEY` header
 ## Buildings
 
 - POST /buildings: Buildings Search
+- GET /buildings/{addressKey}: Get a single building
 
 ## Nlp
 

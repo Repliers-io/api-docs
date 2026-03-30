@@ -332,6 +332,18 @@ Search buildings based on the provided filter criteria.
 
 ---
 
+### GET /buildings/{addressKey}
+
+Use this endpoint to get details about a specific building by its address key. The address key can be found in the `address.addressKey` field of building objects returned by the buildings search endpoint.
+
+**Path Parameters:**
+
+| Name | Type | Description |
+|---|---|---|
+| addressKey | string | Unique address identifier key for the building. Available from `building.address.addressKey` in search results. |
+
+---
+
 ## Nlp
 
 ### POST /nlp

@@ -274,6 +274,45 @@ paths:
         "500":
           $ref: "#/components/responses/InternalServerError"
 
+  /buildings/{addressKey}:
+    get:
+      summary: Get a single building
+      description: |
+        Use this endpoint to get details about a specific building by its address key.
+        The address key can be found in the `address.addressKey` field of building objects returned by the buildings search endpoint.
+      tags:
+        - Buildings
+      parameters:
+        - name: addressKey
+          in: path
+          description: Unique address identifier key for the building. Available from `building.address.addressKey` in search results.
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response containing building details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Building"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          description: Building not found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    msg:
+                      type: string
+                      description: Error message
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
 components:
   schemas:
     Building:

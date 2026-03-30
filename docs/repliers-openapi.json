@@ -134,6 +134,9 @@
         },
         "/buildings": {
             "$ref": "buildings.yml#/paths/~1buildings"
+        },
+        "/buildings/{addressKey}": {
+            "$ref": "buildings.yml#/paths/~1buildings~1{addressKey}"
         }
     },
     "x-readme": {
