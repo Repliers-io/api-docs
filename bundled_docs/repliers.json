@@ -10605,6 +10605,11 @@
                   "fields": {
                     "type": "string",
                     "description": "Use if you want to limit the `listings` response object to containing certain fields only. For example: `fields=listPrice,soldPrice` would limit the response to contain `listPrice` and `soldPrice` only. You can also specify the amount of images to return, for example if a listing has 40 images total and you specify `fields=images[5]` it will only return the first 5 images.\n"
+                  },
+                  "useLocationId": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "When set to `true`, any locations identified in the prompt will be returned as `locationId` values instead of being split into separate `area`, `city`, and `neighborhood` parameters.\n"
                   }
                 }
               }
