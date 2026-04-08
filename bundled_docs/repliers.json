@@ -6456,6 +6456,16 @@
             }
           },
           {
+            "name": "pointWithinBoundary",
+            "in": "query",
+            "description": "When set to `true`, returns only locations whose boundaries contain the point specified by `lat` and `long` parameters.\nMust be used together with `lat` and `long`.\n",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
             "name": "sortBy",
             "in": "query",
             "description": "Sort results by type",

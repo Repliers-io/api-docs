@@ -209,6 +209,16 @@ paths:
             minimum: -180
             maximum: 180
 
+        - name: pointWithinBoundary
+          in: query
+          description: |
+            When set to `true`, returns only locations whose boundaries contain the point specified by `lat` and `long` parameters.
+            Must be used together with `lat` and `long`.
+          required: false
+          schema:
+            type: boolean
+            default: false
+
         - name: sortBy
           in: query
           description: Sort results by type
