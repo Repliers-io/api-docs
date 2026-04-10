@@ -11,6 +11,11 @@ paths:
       description: Use this endpoint to list offices belonging to the MLS. A brokerage may have one or more offices.
       operationId: offices
       parameters:
+        - name: officeId
+          in: query
+          description: If supplied, finds office by officeId using exact match criteria.
+          schema:
+            type: string
         - name: keywords
           in: query
           description: If supplied, filters offices by the supplied value.
