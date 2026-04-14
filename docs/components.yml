@@ -65,6 +65,16 @@ components:
               minItems: 2
               maxItems: 2
 
+    LocationType:
+      type: string
+      enum: [area, city, city-alternate, neighborhood, neighborhood-alternate, postalCode, district, schoolDistrict, school]
+      description: Location type classification
+
+    LocationSource:
+      type: string
+      enum: [MSL, UserDefined, LiveBy]
+      description: Location data source
+
     Error:
       type: array
       items:

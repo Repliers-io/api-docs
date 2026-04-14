@@ -2904,6 +2904,32 @@ paths:
           schema:
             type: string
           required: true
+        - name: fields
+          in: query
+          description: If set to `raw`, returns raw fields the way data fields come from MLS.
+          schema:
+            type: string
+            enum:
+              - raw
+        - name: locations
+          in: query
+          description: If set to `true`, fetches locations whose boundary contains this listing's coordinates. Under the hood uses [GET /locations](/reference/get_locations) with `pointWithinBoundary=true`.
+          schema:
+            type: boolean
+        - name: locationsSource
+          in: query
+          description: Filters the locations returned by `locations=true` by source. Same values as the `source` parameter of [GET /locations](/reference/get_locations).
+          schema:
+            type: array
+            items:
+              $ref: "components.yml#/components/schemas/LocationSource"
+        - name: locationsType
+          in: query
+          description: Filters the locations returned by `locations=true` by type. Same values as the `type` parameter of [GET /locations](/reference/get_locations).
+          schema:
+            type: array
+            items:
+              $ref: "components.yml#/components/schemas/LocationType"
       responses:
         "200":
           description: "200"
@@ -12492,7 +12518,7 @@ paths:
   /listings/locations:
     get:
       summary: Areas, cities and neighborhoods (Deprecated)
-      description: "**Deprecated.** Use [GET /locations](/docs/repliers-openapi/get-locations) instead.<br/><br/>Use this endpoint to list geographical location data such as areas, cities and neighborhoods."
+      description: "**Deprecated.** Use [GET /locations](/reference/get_locations) instead.<br/><br/>Use this endpoint to list geographical location data such as areas, cities and neighborhoods."
       operationId: locations
       parameters:
         - name: area
@@ -12534,7 +12560,7 @@ paths:
   /listings/buildings:
     get:
       summary: Buildings (Deprecated)
-      description: "**Deprecated.** Use [POST /buildings](/docs/repliers-openapi/post-buildings) instead."
+      description: "**Deprecated.** Use [POST /buildings](/reference/post_buildings) instead."
       operationId: buildings
       deprecated: true
       parameters:

@@ -36,19 +36,7 @@ paths:
           schema:
             type: array
             items:
-              type: string
-              enum:
-                [
-                  area,
-                  city,
-                  city-alternate,
-                  neighborhood,
-                  neighborhood-alternate,
-                  postalCode,
-                  district,
-                  schoolDistrict,
-                  school,
-                ]
+              $ref: "components.yml#/components/schemas/LocationType"
 
         - name: state
           in: query
@@ -278,8 +266,7 @@ paths:
           schema:
             type: array
             items:
-              type: string
-              enum: [MSL, UserDefined, LiveBy]
+              $ref: "components.yml#/components/schemas/LocationSource"
 
         - name: classification
           in: query
@@ -365,19 +352,7 @@ paths:
           schema:
             type: array
             items:
-              type: string
-              enum:
-                [
-                  area,
-                  city,
-                  city-alternate,
-                  neighborhood,
-                  neighborhood-alternate,
-                  postalCode,
-                  district,
-                  schoolDistrict,
-                  school,
-                ]
+              $ref: "components.yml#/components/schemas/LocationType"
 
         - name: fields
           in: query
@@ -603,14 +578,6 @@ paths:
 
 components:
   schemas:
-    LocationType:
-      type: string
-      enum: [area, city, neighborhood]
-      description: |
-        Hierarchical classification of the location:
-        - area: Represent larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc.
-        - city: Municipal division that can include multiple neighborhoods within its boundaries.
-        - neighborhood: Smallest geographical unit within a city
 
     Coordinate:
       type: array
@@ -657,7 +624,7 @@ components:
           type: string
           description: Human-readable display name for the location
         type:
-          $ref: "#/components/schemas/LocationType"
+          $ref: "components.yml#/components/schemas/LocationType"
         classification:
           type: string
           description: Classification of the location
@@ -696,7 +663,7 @@ components:
           type: string
           description: Human-readable display name for the location
         type:
-          $ref: "#/components/schemas/LocationType"
+          $ref: "components.yml#/components/schemas/LocationType"
         size:
           type: number
           format: float
