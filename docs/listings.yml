@@ -266,7 +266,7 @@ paths:
             default: ""
         - name: lastStatus
           in: query
-          description: "Filters the last status of the listing. Multiple values may be used, ie: lastStatus=sus&lastStatus=sld&laststatus=exp </BR> Allowed values: <code>Sus</code>, <code>Exp</code>, <code>Sld</code>, <code>Ter</code>, <code>Dft</code>, <code>Lsd</code>, <code>Sc</code>, <code>Sce</code>, <code>Lc</code>, <code>Pc</code>, <code>Ext</code>, <code>New</code>.<br/><br/>For more information on lastStatus meanings refer to <a target=\"_blank\" href=\"https://help.repliers.com/en/article/laststatus-definitions-8mokhu\">lastStatus Definitions</a>"
+          description: 'Filters the last status of the listing. Multiple values may be used, ie: lastStatus=sus&lastStatus=sld&laststatus=exp </BR> Allowed values: <code>Sus</code>, <code>Exp</code>, <code>Sld</code>, <code>Ter</code>, <code>Dft</code>, <code>Lsd</code>, <code>Sc</code>, <code>Sce</code>, <code>Lc</code>, <code>Pc</code>, <code>Ext</code>, <code>New</code>.<br/><br/>For more information on lastStatus meanings refer to <a target="_blank" href="https://help.repliers.com/en/article/laststatus-definitions-8mokhu">lastStatus Definitions</a>'
           schema:
             type: array
             items:
@@ -308,7 +308,7 @@ paths:
             type: string
         - name: map
           in: query
-          description: "Filters listings within a geoJSON polygon or multi-polygon boundary.<br/><br/>Example boundary:[[[-79.14121,43.79041],[-79.132627,43.773059],[-79.188932,43.886988],[-79.200605,43.877832],[-79.236654,43.869665],[-79.265836,43.860011],[-79.281972,43.856051],[-79.322828,43.84689],[-79.368146,43.839214],[-79.386021,43.836139],[-79.41486,43.838616],[-79.423787,43.836635],[-79.475285,43.82227],[-79.480092,43.813352],[-79.480778,43.803441],[-79.485585,43.79799],[-79.493825,43.794025],[-79.556996,43.779649],[-79.601628,43.761303],[-79.61611,43.758572],[-79.629934,43.750141],[-79.625471,43.728064],[-79.616888,43.713177],[-79.606245,43.695555],[-79.601095,43.685873],[-79.593885,43.681156],[-79.590109,43.672465],[-79.582212,43.671224],[-79.574659,43.670975],[-79.535177,43.58325],[-79.424627,43.619052],[-79.385488,43.602645],[-79.315451,43.612092],[-79.14121,43.79041]]].<BR/><BR/>For more information refer to the implementation guide: <a target=\"_blank\" href=\"https://help.repliers.com/en/article/filtering-listings-geo-spatially-using-the-map-parameter-7sorw0/\">Filtering Listings Geo-Spatially Using the \"map\" Parameter</a>"
+          description: 'Filters listings within a geoJSON polygon or multi-polygon boundary.<br/><br/>Example boundary:[[[-79.14121,43.79041],[-79.132627,43.773059],[-79.188932,43.886988],[-79.200605,43.877832],[-79.236654,43.869665],[-79.265836,43.860011],[-79.281972,43.856051],[-79.322828,43.84689],[-79.368146,43.839214],[-79.386021,43.836139],[-79.41486,43.838616],[-79.423787,43.836635],[-79.475285,43.82227],[-79.480092,43.813352],[-79.480778,43.803441],[-79.485585,43.79799],[-79.493825,43.794025],[-79.556996,43.779649],[-79.601628,43.761303],[-79.61611,43.758572],[-79.629934,43.750141],[-79.625471,43.728064],[-79.616888,43.713177],[-79.606245,43.695555],[-79.601095,43.685873],[-79.593885,43.681156],[-79.590109,43.672465],[-79.582212,43.671224],[-79.574659,43.670975],[-79.535177,43.58325],[-79.424627,43.619052],[-79.385488,43.602645],[-79.315451,43.612092],[-79.14121,43.79041]]].<BR/><BR/>For more information refer to the implementation guide: <a target="_blank" href="https://help.repliers.com/en/article/filtering-listings-geo-spatially-using-the-map-parameter-7sorw0/">Filtering Listings Geo-Spatially Using the "map" Parameter</a>'
           schema:
             type: string
             format: json
@@ -886,7 +886,7 @@ paths:
                     type: object
                 map:
                   type: string
-                  description: "Filters listings within a geoJSON polygon or multi-polygon boundary.<br/><br/>Example boundary:[[[-79.14121,43.79041],[-79.132627,43.773059],[-79.188932,43.886988],[-79.200605,43.877832],[-79.236654,43.869665],[-79.265836,43.860011],[-79.281972,43.856051],[-79.322828,43.84689],[-79.368146,43.839214],[-79.386021,43.836139],[-79.41486,43.838616],[-79.423787,43.836635],[-79.475285,43.82227],[-79.480092,43.813352],[-79.480778,43.803441],[-79.485585,43.79799],[-79.493825,43.794025],[-79.556996,43.779649],[-79.601628,43.761303],[-79.61611,43.758572],[-79.629934,43.750141],[-79.625471,43.728064],[-79.616888,43.713177],[-79.606245,43.695555],[-79.601095,43.685873],[-79.593885,43.681156],[-79.590109,43.672465],[-79.582212,43.671224],[-79.574659,43.670975],[-79.535177,43.58325],[-79.424627,43.619052],[-79.385488,43.602645],[-79.315451,43.612092],[-79.14121,43.79041]]].<BR/><BR/>For more information refer to the implementation guide: <a target=\"_blank\" href=\"https://help.repliers.com/en/article/filtering-listings-geo-spatially-using-the-map-parameter-7sorw0/\">Filtering Listings Geo-Spatially Using the \"map\" Parameter</a>."
+                  description: 'Filters listings within a geoJSON polygon or multi-polygon boundary.<br/><br/>Example boundary:[[[-79.14121,43.79041],[-79.132627,43.773059],[-79.188932,43.886988],[-79.200605,43.877832],[-79.236654,43.869665],[-79.265836,43.860011],[-79.281972,43.856051],[-79.322828,43.84689],[-79.368146,43.839214],[-79.386021,43.836139],[-79.41486,43.838616],[-79.423787,43.836635],[-79.475285,43.82227],[-79.480092,43.813352],[-79.480778,43.803441],[-79.485585,43.79799],[-79.493825,43.794025],[-79.556996,43.779649],[-79.601628,43.761303],[-79.61611,43.758572],[-79.629934,43.750141],[-79.625471,43.728064],[-79.616888,43.713177],[-79.606245,43.695555],[-79.601095,43.685873],[-79.593885,43.681156],[-79.590109,43.672465],[-79.582212,43.671224],[-79.574659,43.670975],[-79.535177,43.58325],[-79.424627,43.619052],[-79.385488,43.602645],[-79.315451,43.612092],[-79.14121,43.79041]]].<BR/><BR/>For more information refer to the implementation guide: <a target="_blank" href="https://help.repliers.com/en/article/filtering-listings-geo-spatially-using-the-map-parameter-7sorw0/">Filtering Listings Geo-Spatially Using the "map" Parameter</a>.'
                   format: json
       responses:
         "200":
@@ -2918,7 +2918,11 @@ paths:
             type: boolean
         - name: locationsSource
           in: query
-          description: Filters the locations returned by `locations=true` by source. Same values as the `source` parameter of [GET /locations](/reference/get_locations).
+          description: |
+            Filters the locations returned by `locations=true` by source:
+            - `MSL` - Locations sourced from MLS (Multiple Listing Service) data.
+            - `UserDefined` - Custom locations created and defined by users.
+            - `LiveBy` - Locations sourced from LiveBy, a third-party neighborhood and community data provider.
           schema:
             type: array
             items:

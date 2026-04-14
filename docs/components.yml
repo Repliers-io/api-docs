@@ -67,7 +67,18 @@ components:
 
     LocationType:
       type: string
-      enum: [area, city, city-alternate, neighborhood, neighborhood-alternate, postalCode, district, schoolDistrict, school]
+      enum:
+        [
+          area,
+          city,
+          city-alternate,
+          neighborhood,
+          neighborhood-alternate,
+          postalCode,
+          district,
+          schoolDistrict,
+          school,
+        ]
       description: Location type classification
 
     LocationSource:
@@ -86,6 +97,41 @@ components:
               type: string
             msg:
               type: string
+
+  parameters:
+    LocationTypeFilter:
+      name: type
+      in: query
+      description: |
+        Limits results to specified location types:
+        - `area` - Represents larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc.
+        - `city` - Municipal division that can include multiple neighborhoods within its boundaries.
+        - `city-alternate` - Alternate representation of a city, used for specific data sources or contexts.
+        - `neighborhood` - Smallest geographical unit within a city.
+        - `neighborhood-alternate` - Alternate representation of a neighborhood, used for specific data sources or contexts.
+        - `postalCode` - Represents postal code areas, which may span multiple neighborhoods or cities.
+        - `district` - Represents administrative or political districts, which may span multiple neighborhoods or cities.
+        - `schoolDistrict` - Represents school district areas, which may span multiple neighborhoods or cities.
+        - `school` - Represents specific school locations and catchment areas.
+      required: false
+      schema:
+        type: array
+        items:
+          $ref: "#/components/schemas/LocationType"
+
+    LocationSourceFilter:
+      name: source
+      in: query
+      description: |
+        Filters locations by source:
+        - `MSL` - Locations sourced from MLS (Multiple Listing Service) data.
+        - `UserDefined` - Custom locations created and defined by users.
+        - `LiveBy` - Locations sourced from LiveBy, a third-party neighborhood and community data provider.
+      required: false
+      schema:
+        type: array
+        items:
+          $ref: "#/components/schemas/LocationSource"
 
   responses:
     EmptySuccess:

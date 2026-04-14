@@ -3159,11 +3159,17 @@
           {
             "name": "locationsSource",
             "in": "query",
-            "description": "Filters the locations returned by `locations=true` by source. Same values as the `source` parameter of [GET /locations](/reference/get_locations).",
+            "description": "Filters the locations returned by `locations=true` by source:\n- `MSL` - Locations sourced from MLS (Multiple Listing Service) data.\n- `UserDefined` - Custom locations created and defined by users.\n- `LiveBy` - Locations sourced from LiveBy, a third-party neighborhood and community data provider.\n",
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/paths/~1locations/get/parameters/18/schema/items"
+                "type": "string",
+                "enum": [
+                  "MSL",
+                  "UserDefined",
+                  "LiveBy"
+                ],
+                "description": "Location data source"
               }
             }
           },
@@ -3174,7 +3180,19 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/paths/~1locations/get/parameters/0/schema/items"
+                "type": "string",
+                "enum": [
+                  "area",
+                  "city",
+                  "city-alternate",
+                  "neighborhood",
+                  "neighborhood-alternate",
+                  "postalCode",
+                  "district",
+                  "schoolDistrict",
+                  "school"
+                ],
+                "description": "Location type classification"
               }
             }
           }
@@ -6196,6 +6214,18 @@
         ],
         "parameters": [
           {
+            "name": "source",
+            "in": "query",
+            "description": "Filters locations by source:\n- `MSL` - Locations sourced from MLS (Multiple Listing Service) data.\n- `UserDefined` - Custom locations created and defined by users.\n- `LiveBy` - Locations sourced from LiveBy, a third-party neighborhood and community data provider.\n",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/paths/~1listings~1%7BmlsNumber%7D/get/parameters/4/schema/items"
+              }
+            }
+          },
+          {
             "name": "type",
             "in": "query",
             "description": "Limits results to specified location types:\n- `area` - Represents larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc.\n- `city` - Municipal division that can include multiple neighborhoods within its boundaries.\n- `city-alternate` - Alternate representation of a city, used for specific data sources or contexts.\n- `neighborhood` - Smallest geographical unit within a city.\n- `neighborhood-alternate` - Alternate representation of a neighborhood, used for specific data sources or contexts.\n- `postalCode` - Represents postal code areas, which may span multiple neighborhoods or cities.\n- `district` - Represents administrative or political districts, which may span multiple neighborhoods or cities.\n- `schoolDistrict` - Represents school district areas, which may span multiple neighborhoods or cities.\n- `school` - Represents specific school locations and catchment areas.\n",
@@ -6203,19 +6233,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "type": "string",
-                "enum": [
-                  "area",
-                  "city",
-                  "city-alternate",
-                  "neighborhood",
-                  "neighborhood-alternate",
-                  "postalCode",
-                  "district",
-                  "schoolDistrict",
-                  "school"
-                ],
-                "description": "Location type classification"
+                "$ref": "#/paths/~1listings~1%7BmlsNumber%7D/get/parameters/5/schema/items"
               }
             }
           },
@@ -6559,24 +6577,6 @@
             }
           },
           {
-            "name": "source",
-            "in": "query",
-            "description": "Filters locations by source.",
-            "required": false,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "enum": [
-                  "MSL",
-                  "UserDefined",
-                  "LiveBy"
-                ],
-                "description": "Location data source"
-              }
-            }
-          },
-          {
             "name": "classification",
             "in": "query",
             "description": "Filters locations by classification.",
@@ -6641,7 +6641,7 @@
                                 "description": "Human-readable display name for the location"
                               },
                               "type": {
-                                "$ref": "#/paths/~1locations/get/parameters/0/schema/items"
+                                "$ref": "#/paths/~1listings~1%7BmlsNumber%7D/get/parameters/5/schema/items"
                               },
                               "size": {
                                 "type": "number",
@@ -6770,16 +6770,10 @@
             }
           },
           {
-            "name": "type",
-            "in": "query",
-            "description": "Limits results to specified location types:\n- `area` - Represents larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc.\n- `city` - Municipal division that can include multiple neighborhoods within its boundaries.\n- `city-alternate` - Alternate representation of a city, used for specific data sources or contexts.\n- `neighborhood` - Smallest geographical unit within a city.\n- `neighborhood-alternate` - Alternate representation of a neighborhood, used for specific data sources or contexts.\n- `postalCode` - Represents postal code areas, which may span multiple neighborhoods or cities.\n- `district` - Represents administrative or political districts, which may span multiple neighborhoods or cities.\n- `schoolDistrict` - Represents school district areas, which may span multiple neighborhoods or cities.\n- `school` - Represents specific school locations and catchment areas.\n",
-            "required": false,
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/paths/~1locations/get/parameters/0/schema/items"
-              }
-            }
+            "$ref": "#/paths/~1locations/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1locations/get/parameters/1"
           },
           {
             "name": "fields",
@@ -7122,7 +7116,7 @@
                                 "description": "Human-readable display name for the location"
                               },
                               "type": {
-                                "$ref": "#/paths/~1locations/get/parameters/0/schema/items"
+                                "$ref": "#/paths/~1listings~1%7BmlsNumber%7D/get/parameters/5/schema/items"
                               },
                               "classification": {
                                 "type": "string",

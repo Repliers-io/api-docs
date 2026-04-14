@@ -19,24 +19,9 @@ paths:
       tags:
         - Locations
       parameters:
-        - name: type
-          in: query
-          description: |
-            Limits results to specified location types:
-            - `area` - Represents larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc.
-            - `city` - Municipal division that can include multiple neighborhoods within its boundaries.
-            - `city-alternate` - Alternate representation of a city, used for specific data sources or contexts.
-            - `neighborhood` - Smallest geographical unit within a city.
-            - `neighborhood-alternate` - Alternate representation of a neighborhood, used for specific data sources or contexts.
-            - `postalCode` - Represents postal code areas, which may span multiple neighborhoods or cities.
-            - `district` - Represents administrative or political districts, which may span multiple neighborhoods or cities.
-            - `schoolDistrict` - Represents school district areas, which may span multiple neighborhoods or cities.
-            - `school` - Represents specific school locations and catchment areas.
-          required: false
-          schema:
-            type: array
-            items:
-              $ref: "components.yml#/components/schemas/LocationType"
+        - $ref: "components.yml#/components/parameters/LocationSourceFilter"
+
+        - $ref: "components.yml#/components/parameters/LocationTypeFilter"
 
         - name: state
           in: query
@@ -259,15 +244,6 @@ paths:
             format: float
             exclusiveMinimum: 0
 
-        - name: source
-          in: query
-          description: Filters locations by source.
-          required: false
-          schema:
-            type: array
-            items:
-              $ref: "components.yml#/components/schemas/LocationSource"
-
         - name: classification
           in: query
           description: Filters locations by classification.
@@ -335,24 +311,9 @@ paths:
             maxLength: 100
             example: "Sacrame"
 
-        - name: type
-          in: query
-          description: |
-            Limits results to specified location types:
-            - `area` - Represents larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc.
-            - `city` - Municipal division that can include multiple neighborhoods within its boundaries.
-            - `city-alternate` - Alternate representation of a city, used for specific data sources or contexts.
-            - `neighborhood` - Smallest geographical unit within a city.
-            - `neighborhood-alternate` - Alternate representation of a neighborhood, used for specific data sources or contexts.
-            - `postalCode` - Represents postal code areas, which may span multiple neighborhoods or cities.
-            - `district` - Represents administrative or political districts, which may span multiple neighborhoods or cities.
-            - `schoolDistrict` - Represents school district areas, which may span multiple neighborhoods or cities.
-            - `school` - Represents specific school locations and catchment areas.
-          required: false
-          schema:
-            type: array
-            items:
-              $ref: "components.yml#/components/schemas/LocationType"
+        - $ref: "components.yml#/components/parameters/LocationSourceFilter"
+
+        - $ref: "components.yml#/components/parameters/LocationTypeFilter"
 
         - name: fields
           in: query
@@ -578,7 +539,6 @@ paths:
 
 components:
   schemas:
-
     Coordinate:
       type: array
       minItems: 2
