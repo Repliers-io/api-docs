@@ -6157,7 +6157,7 @@
           {
             "name": "type",
             "in": "query",
-            "description": "Limits results to specified location types:\n- `area` - Represents larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc.\n- `city` - Municipal division that can include multiple neighborhoods within its boundaries.\n- `neighborhood` - Smallest geographical unit within a city.\n",
+            "description": "Limits results to specified location types:\n- `area` - Represents larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc.\n- `city` - Municipal division that can include multiple neighborhoods within its boundaries.\n- `city-alternate` - Alternate representation of a city, used for specific data sources or contexts.\n- `neighborhood` - Smallest geographical unit within a city.\n- `neighborhood-alternate` - Alternate representation of a neighborhood, used for specific data sources or contexts.\n- `postalCode` - Represents postal code areas, which may span multiple neighborhoods or cities.\n- `district` - Represents administrative or political districts, which may span multiple neighborhoods or cities.\n- `schoolDistrict` - Represents school district areas, which may span multiple neighborhoods or cities.\n- `school` - Represents specific school locations and catchment areas.\n",
             "required": false,
             "schema": {
               "type": "array",
@@ -6166,7 +6166,13 @@
                 "enum": [
                   "area",
                   "city",
-                  "neighborhood"
+                  "city-alternate",
+                  "neighborhood",
+                  "neighborhood-alternate",
+                  "postalCode",
+                  "district",
+                  "schoolDistrict",
+                  "school"
                 ]
               }
             }
@@ -6521,7 +6527,8 @@
                 "type": "string",
                 "enum": [
                   "MSL",
-                  "UserDefined"
+                  "UserDefined",
+                  "LiveBy"
                 ]
               }
             }
@@ -6571,7 +6578,8 @@
                             "type": "string",
                             "enum": [
                               "MLS",
-                              "UserDefined"
+                              "UserDefined",
+                              "LiveBy"
                             ]
                           }
                         },
@@ -6727,7 +6735,7 @@
           {
             "name": "type",
             "in": "query",
-            "description": "Limits results to specified location types:\n- `area` - Represents larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc.\n- `city` - Municipal division that can include multiple neighborhoods within its boundaries.\n- `neighborhood` - Smallest geographical unit within a city.\n",
+            "description": "Limits results to specified location types:\n- `area` - Represents larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc.\n- `city` - Municipal division that can include multiple neighborhoods within its boundaries.\n- `city-alternate` - Alternate representation of a city, used for specific data sources or contexts.\n- `neighborhood` - Smallest geographical unit within a city.\n- `neighborhood-alternate` - Alternate representation of a neighborhood, used for specific data sources or contexts.\n- `postalCode` - Represents postal code areas, which may span multiple neighborhoods or cities.\n- `district` - Represents administrative or political districts, which may span multiple neighborhoods or cities.\n- `schoolDistrict` - Represents school district areas, which may span multiple neighborhoods or cities.\n- `school` - Represents specific school locations and catchment areas.\n",
             "required": false,
             "schema": {
               "type": "array",
@@ -6736,7 +6744,13 @@
                 "enum": [
                   "area",
                   "city",
-                  "neighborhood"
+                  "city-alternate",
+                  "neighborhood",
+                  "neighborhood-alternate",
+                  "postalCode",
+                  "district",
+                  "schoolDistrict",
+                  "school"
                 ]
               }
             }

@@ -25,13 +25,30 @@ paths:
             Limits results to specified location types:
             - `area` - Represents larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc.
             - `city` - Municipal division that can include multiple neighborhoods within its boundaries.
+            - `city-alternate` - Alternate representation of a city, used for specific data sources or contexts.
             - `neighborhood` - Smallest geographical unit within a city.
+            - `neighborhood-alternate` - Alternate representation of a neighborhood, used for specific data sources or contexts.
+            - `postalCode` - Represents postal code areas, which may span multiple neighborhoods or cities.
+            - `district` - Represents administrative or political districts, which may span multiple neighborhoods or cities.
+            - `schoolDistrict` - Represents school district areas, which may span multiple neighborhoods or cities.
+            - `school` - Represents specific school locations and catchment areas.
           required: false
           schema:
             type: array
             items:
               type: string
-              enum: [area, city, neighborhood]
+              enum:
+                [
+                  area,
+                  city,
+                  city-alternate,
+                  neighborhood,
+                  neighborhood-alternate,
+                  postalCode,
+                  district,
+                  schoolDistrict,
+                  school,
+                ]
 
         - name: state
           in: query
@@ -262,7 +279,7 @@ paths:
             type: array
             items:
               type: string
-              enum: [MSL, UserDefined]
+              enum: [MSL, UserDefined, LiveBy]
 
         - name: classification
           in: query
@@ -297,7 +314,7 @@ paths:
                         description: Sources present in the result set.
                         items:
                           type: string
-                          enum: [MLS, UserDefined]
+                          enum: [MLS, UserDefined, LiveBy]
                       locations:
                         type: array
                         items:
@@ -337,13 +354,30 @@ paths:
             Limits results to specified location types:
             - `area` - Represents larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc.
             - `city` - Municipal division that can include multiple neighborhoods within its boundaries.
+            - `city-alternate` - Alternate representation of a city, used for specific data sources or contexts.
             - `neighborhood` - Smallest geographical unit within a city.
+            - `neighborhood-alternate` - Alternate representation of a neighborhood, used for specific data sources or contexts.
+            - `postalCode` - Represents postal code areas, which may span multiple neighborhoods or cities.
+            - `district` - Represents administrative or political districts, which may span multiple neighborhoods or cities.
+            - `schoolDistrict` - Represents school district areas, which may span multiple neighborhoods or cities.
+            - `school` - Represents specific school locations and catchment areas.
           required: false
           schema:
             type: array
             items:
               type: string
-              enum: [area, city, neighborhood]
+              enum:
+                [
+                  area,
+                  city,
+                  city-alternate,
+                  neighborhood,
+                  neighborhood-alternate,
+                  postalCode,
+                  district,
+                  schoolDistrict,
+                  school,
+                ]
 
         - name: fields
           in: query
