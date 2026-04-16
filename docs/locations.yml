@@ -95,6 +95,18 @@ paths:
             maxLength: 500
             example: "name,address,map.boundary"
 
+        - name: locations
+          in: query
+          description: If false, the locations object will be empty. Useful for speeding up responses when aggregates are requested and locations are not needed. Default is true.
+          schema:
+            type: boolean
+
+        - name: aggregates
+          in: query
+          description: Aggregates values and counts for specified fields. Aggregates have many use cases, they're particularly useful for grouping and displaying acceptable values for fields that are used in filters. For more information refer to <a target="_blank" href="https://help.repliers.com/en/article/using-aggregates-to-determine-acceptable-values-for-filters-c88csc">Using Aggregates To Determine Acceptable Values For Filters</a>.
+          schema:
+            type: string
+
         - name: resultsPerPage
           in: query
           description: The amount of locations to return in each page of the results set.
