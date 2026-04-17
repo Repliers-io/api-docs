@@ -274,6 +274,50 @@ paths:
             items:
               type: string
 
+        - name: name
+          in: query
+          description: Filters locations by exact name (case-insensitive).
+          required: false
+          schema:
+            type: string
+            maxLength: 100
+
+        - name: schoolType
+          in: query
+          description: Filters locations by school type. Applies to locations with `type=school`.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+
+        - name: schoolLevel
+          in: query
+          description: Filters locations by school level. Applies to locations with `type=school`.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+
+        - name: privateSchoolAffiliation
+          in: query
+          description: Filters locations by private school affiliation. Applies to locations with `type=school`.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+
+        - name: schoolDistrictName
+          in: query
+          description: Filters locations by school district name. Applies to locations with `type=school`.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+
       responses:
         "200":
           description: Successful response

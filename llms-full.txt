@@ -170,6 +170,10 @@ Use this endpoint to get details about a specific listing. When requesting a spe
 | Name | Type | Description |
 |---|---|---|
 | boardId | integer (int32) | Filter by boardId. This is only required if your account has access to more than one MLS. |
+| fields | string enum: raw | If set to `raw`, returns raw fields the way data fields come from MLS. |
+| locations | boolean | If set to `true`, fetches locations whose boundary contains this listing's coordinates. Under the hood uses [GET /locations](/reference/get_locations) with `pointWithinBoundary=true`. |
+| locationsSource | array[string] | Filters the locations returned by `locations=true` by source: - `MSL` - Locations sourced from MLS (Multiple Listing Service) data. - `UserDefined` - Custom locations created and defined by users. - `LiveBy` - Locations sourced from LiveBy, a third-party neighborhood and community data provider. |
+| locationsType | array[string] | Filters the locations returned by `locations=true` by type. Same values as the `type` parameter of [GET /locations](/reference/get_locations). |
 
 ---
 
@@ -239,26 +243,34 @@ Search locations based on the provided filter criteria.
 
 | Name | Type | Description |
 |---|---|---|
-| type | array[string] | Limits results to specified location types: - `area` - Represents larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc. - `city` - Municipal division that can include multiple neighborhoods within its boundaries. - `neighborhood` - Smallest geographical unit within a city. |
+| source | array[any] | Filters locations by source: - `MSL` - Locations sourced from MLS (Multiple Listing Service) data. - `UserDefined` - Custom locations created and defined by users. - `LiveBy` - Locations sourced from LiveBy, a third-party neighborhood and community data provider. |
+| type | array[any] | Limits results to specified location types: - `area` - Represents larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc. - `city` - Municipal division that can include multiple neighborhoods within its boundaries. - `city-alternate` - Alternate representation of a city, used for specific data sources or contexts. - `neighborhood` - Smallest geographical unit within a city. - `neighborhood-alternate` - Alternate representation of a neighborhood, used for specific data sources or contexts. - `postalCode` - Represents postal code areas, which may span multiple neighborhoods or cities. - `district` - Represents administrative or political districts, which may span multiple neighborhoods or cities. - `schoolDistrict` - Represents school district areas, which may span multiple neighborhoods or cities. - `school` - Represents specific school locations and catchment areas. |
 | state | array[string] | Filters locations by 2-letter State/Province/Territory codes. Returns locations within the specified states. |
 | area | array[string] | Filters locations by area names. Returns locations within the specified area. Areas represent larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc. |
 | city | array[string] | Filters locations by city names. Returns locations within the specified city. Cities can include multiple neighborhoods within their boundaries. |
 | neighborhood | array[string] | Filter results by neighborhood names. Returns specified neighborhoods. Neighborhoods represent the smallest geographical division in the hierarchy. |
 | locationId | array[string] | Filters by location IDs. Location IDs can be obtained from response of [Locations Autocomplete](/reference/get_locations-autocomplete#/) endpoint |
 | fields | string | Comma-separated list of fields to include in the response. This allows clients to request only the specific data they need, reducing payload size. Examples: - `name,type` - Returns only location names and types - `name,address.city,address.state` - Returns location names and specific address components - `map.boundary` - Returns only geographical boundary data |
+| locations | boolean | If false, the locations object will be empty. Useful for speeding up responses when aggregates are requested and locations are not needed. Default is true. |
+| aggregates | string | Aggregates values and counts for specified fields. Aggregates have many use cases, they're particularly useful for grouping and displaying acceptable values for fields that are used in filters. For more information refer to Using Aggregates To Determine Acceptable Values For Filters. |
 | resultsPerPage | integer default: 100 | The amount of locations to return in each page of the results set. |
 | pageNum | integer default: 1 | If specified indexes a specific page in the results set. For example, if there are 1000 locations and 100 locations per page, if you'd like to view locations 101-200 you'd specify pageNum=2 |
 | map | string (json) | GeoJSON polygon or multi-polygon boundary for geographical filtering. Limits results to locations within the specified boundaries. For complex polygons or multipolygons that exceed query parameter size limits, use the POST method and include the map data in the request body. Format: Array of coordinate arrays, where each coordinate is [longitude, latitude] in WGS 84 format. The polygon must be closed (first and last points must be identical). For more information refer to the implementation guide [Filtering Listings Geo-Spatially Using the "map" Parameter](https://help.repliers.com/en/article/filtering-listings-geo-spatially-using-the-map-parameter-7sorw0/) |
 | radius | number (float) | Accepts a value for radius in KM. Must be used with `lat` and `long` parameters to return locations within the specified radius of a given latitude and longitude. |
 | lat | number (float) | Accepts a value for latitude. Must be used with `long` parameter. When used with `radius`, returns locations within the specified radius of these coordinates. |
 | long | number (float) | Accepts a value for longitude. Must be used with `lat` parameter. When used with `radius`, returns locations within the specified radius of these coordinates. |
+| pointWithinBoundary | boolean default: false | When set to `true`, returns only locations whose boundaries contain the point specified by `lat` and `long` parameters. Must be used together with `lat` and `long`. |
 | sortBy | string enum: typeAsc, typeDesc | Sort results by type |
 | hasBoundary | boolean default: null | Only search through locations that have boundary polygons |
 | minSize | number (float) | Filters locations by minimum size (in square kilometers). |
 | maxSize | number (float) | Filters locations by maximum size (in square kilometers). |
-| source | array[string] | Filters locations by source. |
 | classification | array[string] | Filters locations by classification. |
 | subType | array[string] | Filters locations by sub-type. |
+| name | string | Filters locations by exact name (case-insensitive). |
+| schoolType | array[string] | Filters locations by school type. Applies to locations with `type=school`. |
+| schoolLevel | array[string] | Filters locations by school level. Applies to locations with `type=school`. |
+| privateSchoolAffiliation | array[string] | Filters locations by private school affiliation. Applies to locations with `type=school`. |
+| schoolDistrictName | array[string] | Filters locations by school district name. Applies to locations with `type=school`. |
 
 ---
 
@@ -271,7 +283,6 @@ Autocomplete for Locations search. As your user types, you simply pass their inp
 | Name | Type | Description |
 |---|---|---|
 | search | string | Search query string |
-| type | array[string] | Limits results to specified location types: - `area` - Represents larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc. - `city` - Municipal division that can include multiple neighborhoods within its boundaries. - `neighborhood` - Smallest geographical unit within a city. |
 | fields | string | Comma-separated list of fields to include in the response. This allows clients to request only the specific data they need, reducing payload size. Examples: - `name,type` - Returns only location names and types - `name,address.city,address.state` - Returns location names and specific address components - `map.boundary` - Returns only geographical boundary data |
 | map | string (json) | GeoJSON polygon or multi-polygon boundary for geographical filtering. Limits results to locations within the specified boundaries. For complex polygons or multipolygons that exceed query parameter size limits, use the POST method and include the map data in the request body. Format: Array of coordinate arrays, where each coordinate is [longitude, latitude] in WGS 84 format. The polygon must be closed (first and last points must be identical). For more information refer to the implementation guide [Filtering Listings Geo-Spatially Using the "map" Parameter](https://help.repliers.com/en/article/filtering-listings-geo-spatially-using-the-map-parameter-7sorw0/) |
 | resultsPerPage | integer default: 10 | The amount of locations to return in each page of the results set. |
@@ -365,6 +376,7 @@ This endpoint translates natural language search queries into structured API req
 | clientId | string | no | The `clientId` of the client that the NLP prompt is for. |
 | listings | boolean default: false | no | If `true`, the endpoint will return listings according to the generated urlQueryString parameters, the same way as GET /lisitngs endpoint would treat those parameters. Default is `false`. |
 | fields | string | no | Use if you want to limit the `listings` response object to containing certain fields only. For example: `fields=listPrice,soldPrice` would limit the response to contain `listPrice` and `soldPrice` only. You can also specify the amount of images to return, for example if a listing has 40 images total and you specify `fields=images[5]` it will only return the first 5 images. |
+| useLocationId | boolean default: false | no | When set to `true`, any locations identified in the prompt will be returned as `locationId` values instead of being split into separate `area`, `city`, and `neighborhood` parameters. |
 
 ---
 
@@ -1138,6 +1150,7 @@ Use this endpoint to list offices belonging to the MLS. A brokerage may have one
 
 | Name | Type | Description |
 |---|---|---|
+| officeId | string | If supplied, finds office by officeId using exact match criteria. |
 | keywords | string | If supplied, filters offices by the supplied value. |
 | boardId | string | Find your boardId by visiting https://login.repliers.com/dashboard/data-access |
 
