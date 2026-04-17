@@ -132,6 +132,27 @@ function escapeCell(str) {
   return str.replace(/\|/g, '\\|').replace(/\n/g, ' ');
 }
 
+// Resolve a local JSON-pointer $ref against the bundled doc.
+// The bundler deduplicates shared parameters by inlining the first use and
+// emitting self-references (e.g. "#/paths/~1locations/get/parameters/0") for
+// subsequent uses, so we have to follow them before rendering.
+function resolveRef(doc, ref) {
+  if (!ref || !ref.startsWith('#/')) return null;
+  const segments = ref.slice(2).split('/').map(s => s.replace(/~1/g, '/').replace(/~0/g, '~'));
+  let cur = doc;
+  for (const seg of segments) {
+    if (cur == null) return null;
+    cur = cur[seg];
+  }
+  return cur;
+}
+
+function resolveParams(params, bundled) {
+  return (params || [])
+    .map(p => (p && p.$ref ? resolveRef(bundled, p.$ref) : p))
+    .filter(Boolean);
+}
+
 // Group and order paths from a bundled spec
 function groupPaths(bundled) {
   const groups = {};
@@ -215,7 +236,8 @@ function generateFull(bundled) {
       if (desc) content += `${desc}\n`;
 
       // Path parameters
-      const pathParams = (op.parameters || []).filter(p => p.in === 'path');
+      const resolvedParams = resolveParams(op.parameters, bundled);
+      const pathParams = resolvedParams.filter(p => p.in === 'path');
       if (pathParams.length > 0) {
         content += `\n**Path Parameters:**\n\n`;
         content += `| Name | Type | Description |\n|---|---|---|\n`;
@@ -226,7 +248,7 @@ function generateFull(bundled) {
       }
 
       // Query parameters
-      const queryParams = (op.parameters || []).filter(p => p.in === 'query');
+      const queryParams = resolvedParams.filter(p => p.in === 'query');
       if (queryParams.length > 0) {
         content += `\n**Query Parameters:**\n\n`;
         content += `| Name | Type | Description |\n|---|---|---|\n`;
