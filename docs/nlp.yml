@@ -67,6 +67,15 @@ paths:
                   default: false
                   description: |
                     When set to `true`, any locations identified in the prompt will be returned as `locationId` values instead of being split into separate `area`, `city`, and `neighborhood` parameters.
+                locationsSource:
+                  type: array
+                  description: |
+                    Specify which location sources to use when interpreting the prompt. This can help improve accuracy by providing the NLP model with the location data source most suitable for the query.
+                    - `MSL` - Locations sourced from MLS (Multiple Listing Service) data.
+                    - `UserDefined` - Custom locations created and defined by users.
+                    - `LiveBy` - Locations sourced from LiveBy, a third-party neighborhood and community data provider.
+                  items:
+                    $ref: "components.yml#/components/schemas/LocationSource"
 
       responses:
         "200":

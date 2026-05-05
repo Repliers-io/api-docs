@@ -379,6 +379,7 @@ This endpoint translates natural language search queries into structured API req
 | listings | boolean default: false | no | If `true`, the endpoint will return listings according to the generated urlQueryString parameters, the same way as GET /lisitngs endpoint would treat those parameters. Default is `false`. |
 | fields | string | no | Use if you want to limit the `listings` response object to containing certain fields only. For example: `fields=listPrice,soldPrice` would limit the response to contain `listPrice` and `soldPrice` only. You can also specify the amount of images to return, for example if a listing has 40 images total and you specify `fields=images[5]` it will only return the first 5 images. |
 | useLocationId | boolean default: false | no | When set to `true`, any locations identified in the prompt will be returned as `locationId` values instead of being split into separate `area`, `city`, and `neighborhood` parameters. |
+| locationsSource | array[any] | no | Specify which location sources to use when interpreting the prompt. This can help improve accuracy by providing the NLP model with the location data source most suitable for the query. |
 
 ---
 

@@ -10736,6 +10736,13 @@
                     "type": "boolean",
                     "default": false,
                     "description": "When set to `true`, any locations identified in the prompt will be returned as `locationId` values instead of being split into separate `area`, `city`, and `neighborhood` parameters.\n"
+                  },
+                  "locationsSource": {
+                    "type": "array",
+                    "description": "Specify which location sources to use when interpreting the prompt. This can help improve accuracy by providing the NLP model with the location data source most suitable for the query.\n- `MSL` - Locations sourced from MLS (Multiple Listing Service) data.\n- `UserDefined` - Custom locations created and defined by users.\n- `LiveBy` - Locations sourced from LiveBy, a third-party neighborhood and community data provider.\n",
+                    "items": {
+                      "$ref": "#/paths/~1listings~1%7BmlsNumber%7D/get/parameters/4/schema/items"
+                    }
                   }
                 }
               }
