@@ -17,115 +17,115 @@ Use this endpoint to search listings using various parameters.As your user provi
 |---|---|---|
 | addressKey | string | The address key of the property. Please see the address object of a listing to understand how the address key is constructed |
 | agent | array[string] | Filters listings by agent name or agent ID, for example, John Doe. Supports multiple values, for example ?agent=john&agent=mary |
-| aggregates | string | Aggregates values and counts for specified fields. Aggregates have many use cases, they're particularly useful for grouping and displaying acceptable values for fields that are used in filters. For more information refer to Using Aggregates To Determine Acceptable Values For Filters. |
-| aggregatesUnique | string | Unique aggregates values and counts for specified fields. Should be used specifically for fields containing coma-separated values. Aggregates have many use cases, they're particularly useful for grouping and displaying acceptable values for fields that are used in filters. For more information refer to Using Aggregates To Determine Acceptable Values For Filters. |
+| aggregates | string | Aggregates values and counts for specified fields. Aggregates have many use cases, they're particularly useful for grouping and displaying acceptable values for fields that are used in filters. More info. |
+| aggregatesUnique | string | Unique aggregates values and counts for specified fields. Should be used specifically for fields containing coma-separated values. Aggregates have many use cases, they're particularly useful for grouping and displaying acceptable values for fields that are used in filters. More info. |
 | aggregateStatistics | boolean | If true, when both "aggregates" and "statistics" parameters are used, the requested statistics will be grouped by the requested aggregates. |
-| amenities | array[string] | Example usage: ?amenities=Gym&amenities=Swimming Pool |
+| amenities | array[string] | Filters listings by one or more amenity values. Use the aggregates parameter to retrieve available values. Supports multiple values, for example ?amenities=Gym&amenities=Swimming Pool |
 | amenitiesOperator | string enum: AND, OR,  default:  | If set to "AND", listings must match all amenities values. If set to "OR", listings must match at least 1 amenities value. Default is "AND" |
-| area | string | Filter by the geographical area of the listing (also referred to as region) |
+| area | string | Filters listings by geographical area (also referred to as region). |
 | areaOrCity | array[string] | Filters listings where either the address.area or address.city field matches any of the provided values. |
 | balcony | array[string] | Filters listings by one or more values for balcony. |
 | basement | array[string] | Filters listings by basement description using the supplied value. |
-| boardId | array[integer] | Filter by boardId. This is only required if your account has access to more than one MLS. You may specify one or more board IDs to filter by, if not specified, returns all boards that that account has access to be default. |
-| brokerage | string | Filter results by brokerage name |
-| businessSubType | array[string] |  |
-| businessType | array[string] |  |
-| city | array[string] | Filter listing by one or more cities |
+| boardId | array[integer] | Filter by boardId. This is only required if your account has access to more than one MLS. You may specify one or more board IDs to filter by, if not specified, returns all boards that that account has access to by default. More info. |
+| brokerage | string | Filters listings by brokerage name. |
+| businessSubType | array[string] | Filters commercial listings by business sub-type. Use the aggregates parameter to retrieve available values. |
+| businessType | array[string] | Filters commercial listings by business type. Use the aggregates parameter to retrieve available values. |
+| city | array[string] | Filters listings by one or more cities. |
 | cityOrDistrict | array[string] | Filters listings where either address.city or the address.district field matches any of the provided values. |
 | class | array[string] | The class of listing to filter the search results by. Allowed values: condo, residential, commercial. For backward compatibility, the following alias values are also allowed: CondoProperty, ResidentialProperty, CommercialProperty |
-| cluster | boolean | If true, enables dynamic map clusters. For more information, refer to the Map Clustering Implementation Guide. |
-| clusterFields | string | Specifies which listing fields to include in cluster responses. Use comma-separated values (e.g., ?clusterFields=listPrice,soldPrice). For images you can limit quantity with brackets (e.g., ?clusterFields=images[5] returns first 5 images). |
-| clusterLimit | integer (int32) | Use this parameter to limit the amount of clusters returned when "cluster" is set to true. Values can be between 1 and 200. This parameter can only be used if "cluster" is set to true. |
-| clusterListingsThreshold | integer (int32) | Controls the maximum cluster size for which detailed listing information is included in the response. By default, detailed listing data is only included when a cluster contains exactly 1 listing. Setting this parameter to a higher value (e.g., 5) will include a 'listings' array with full property details for any cluster containing that many or fewer listings. This reduces the need for additional API requests when users interact with small clusters. Values can be between 1 and 100. This parameter can only be used if "cluster" is set to true. |
-| clusterPrecision | integer (int32) | Use this parameter to adjust the granularity of map clusters. A lower value aggregates listings into less clusters, a higher value aggregates listings into more clusters. Values can be between 0 and 29. This parameter can only be used if "cluster" is set to true. |
-| clusterStatistics | boolean | If true, when both "cluster" is true and the "statistics" parameter is used, the statistics will be calculated separately for each cluster. This could be useful in scenarios where understanding data on a per-cluster basis is important, such as when analyzing distinct groups or segments within your data. |
-| coverImage | string enum: kitchen, powder room, ensuite, family room, exterior front, backyard, staircase, primary bedroom, laundry room, office, garage | If specified, changes the cover image to the specified feature. For more information, refer to Changing the Cover Image of Property Listings with AI-Powered CoverImage Parameter |
-| den | string | Filter listings by den description. |
+| cluster | boolean | If true, enables dynamic map clusters. More info. |
+| clusterFields | string | Specifies which listing fields to include in cluster responses. Use comma-separated values (e.g., ?clusterFields=listPrice,soldPrice). For images you can limit quantity with brackets (e.g., ?clusterFields=images[5] returns first 5 images). More info. |
+| clusterLimit | integer (int32) | Use this parameter to limit the amount of clusters returned when "cluster" is set to true. Values can be between 1 and 200. This parameter can only be used if "cluster" is set to true. More info. |
+| clusterListingsThreshold | integer (int32) | Controls the maximum cluster size for which detailed listing information is included in the response. By default, detailed listing data is only included when a cluster contains exactly 1 listing. Setting this parameter to a higher value (e.g., 5) will include a 'listings' array with full property details for any cluster containing that many or fewer listings. This reduces the need for additional API requests when users interact with small clusters. Values can be between 1 and 100. This parameter can only be used if "cluster" is set to true. More info. |
+| clusterPrecision | integer (int32) | Use this parameter to adjust the granularity of map clusters. A lower value aggregates listings into less clusters, a higher value aggregates listings into more clusters. Values can be between 0 and 29. This parameter can only be used if "cluster" is set to true. More info. |
+| clusterStatistics | boolean | If true, when both "cluster" is true and the "statistics" parameter is used, the statistics will be calculated separately for each cluster. This could be useful in scenarios where understanding data on a per-cluster basis is important, such as when analyzing distinct groups or segments within your data. More info. |
+| coverImage | string enum: kitchen, powder room, ensuite, family room, exterior front, backyard, staircase, primary bedroom, laundry room, office, garage | If specified, changes the cover image to the specified feature. More info. |
+| den | string | Filters listings by den type. Use the aggregates parameter to retrieve available values. |
 | displayAddressOnInternet | string enum: Y, N | If not specified, returns both listings whose address may be displayed on the internet (Y) and whose address should not be displayed on the the internet (N) Allowed values: Y, N |
 | displayInternetEntireListing | string enum: Y, N | Used to filter listings permitted for display on internet portals. "Y" indicates that the listing can be displayed, "N" indicates that it can not and may only be used for back office purposes. |
 | displayPublic | string enum: Y, N | If not specified, returns both listings that may be displayed publicly (Y) and those that should be password protected (N) Allowed values: Y, N |
-| district | string | Filter by the geographical district of the listing |
+| district | string | Filters listings by geographical district. |
 | driveway | array[string] | Filters listings by one or more values for driveway. |
 | exteriorConstruction | array[string] | Filters listings by one or more values for exteriorConstruction - note, matches details.exteriorConstruction1 and details.exteriorConstruction2 fields. |
-| fields | string | Use if you want to limit the response to containing certain fields only. For example: fields?listPrice,soldPrice would limit the response to contain listPrice and soldPrice only. You can also specify the amount of images to return, for example if a listing has 40 images total and you specify fields=images[5] it will only return the first 5 images. |
-| garage | array[string] | Filter listings by garage description. |
+| fields | string | Use if you want to limit the response to containing certain fields only. For example: fields?listPrice,soldPrice would limit the response to contain listPrice and soldPrice only. You can also specify the amount of images to return, for example if a listing has 40 images total and you specify fields=images[5] it will only return the first 5 images. More info. |
+| garage | array[string] | Filters listings by garage type. Use the aggregates parameter to retrieve available values. |
 | hasAgents | boolean | If true, only returns listings that have a listing agent assigned to them, if false, only returns listings that do not have a listing agent assigned to them. If not specified, returns both. |
 | hasImages | boolean | If not specified, returns both listings that have images (true) and listings that do not have images (false). |
 | heating | array[string] | Filters listings by one or more values for heating. |
 | lastPriceChangeType | string enum: decrease, increase,  default:  | Allows you to find listings that have either increased or decreased in price. |
 | lastStatus | array[string] | Filters the last status of the listing. Multiple values may be used, ie: lastStatus=sus&lastStatus=sld&laststatus=exp Allowed values: Sus, Exp, Sld, Ter, Dft, Lsd, Sc, Sce, Lc, Pc, Ext, New. For more information on lastStatus meanings refer to lastStatus Definitions |
 | lat | string | Accepts a value for latitude. Must be used with radius parameter to return listings within a certain radius of a given latitude and longitude. |
-| listDate | string (date) | Filter listings by a specific date that the listings were added to the MLS. Date format: YYYY-MM-DD |
+| listDate | string (date) | Filters listings by a specific date that the listings were added to the MLS. Date format: YYYY-MM-DD |
 | listings | boolean | If false, the listings object will be empty. Useful for speeding up responses when statistics and aggregates are requested and listings are not needed. Default is true. |
 | locationId | array[string] | Filters listings by one or more values for locationId. For locations that have boundary data, the location boundary will be used to find listings that fall within the boundary. For locations that do not have boundary data, address components will be used to filter listings. |
 | locker | array[string] | Filters listings by one or more values for locker. |
 | long | string | Accepts a value for longitude. Must be used with radius parameter to return listings within a certain radius of a given latitude and longitude. |
-| map | string (json) | Filters listings within a geoJSON polygon or multi-polygon boundary. Example boundary:[[[-79.14121,43.79041],[-79.132627,43.773059],[-79.188932,43.886988],[-79.200605,43.877832],[-79.236654,43.869665],[-79.265836,43.860011],[-79.281972,43.856051],[-79.322828,43.84689],[-79.368146,43.839214],[-79.386021,43.836139],[-79.41486,43.838616],[-79.423787,43.836635],[-79.475285,43.82227],[-79.480092,43.813352],[-79.480778,43.803441],[-79.485585,43.79799],[-79.493825,43.794025],[-79.556996,43.779649],[-79.601628,43.761303],[-79.61611,43.758572],[-79.629934,43.750141],[-79.625471,43.728064],[-79.616888,43.713177],[-79.606245,43.695555],[-79.601095,43.685873],[-79.593885,43.681156],[-79.590109,43.672465],[-79.582212,43.671224],[-79.574659,43.670975],[-79.535177,43.58325],[-79.424627,43.619052],[-79.385488,43.602645],[-79.315451,43.612092],[-79.14121,43.79041]]]. For more information refer to the implementation guide: Filtering Listings Geo-Spatially Using the "map" Parameter |
-| mapOperator | string enum: OR, AND,  default:  | When a multi-polygon is provided for the "map" parameter the default condition is "OR", meaning that it will return all listings that fall inside any of the polygons. This can be changed to "AND" in which case it will return listings that fall inside all of the polygons. |
-| maxBaths | integer (int32) |  |
-| maxBathroomsHalf | integer (int32) | The maximum amount of half bathrooms to be used as a filter for this search. |
+| map | string (json) | Filters listings within a geoJSON polygon or multi-polygon boundary. Example boundary:[[[-79.14121,43.79041],[-79.132627,43.773059],[-79.188932,43.886988],[-79.200605,43.877832],[-79.236654,43.869665],[-79.265836,43.860011],[-79.281972,43.856051],[-79.322828,43.84689],[-79.368146,43.839214],[-79.386021,43.836139],[-79.41486,43.838616],[-79.423787,43.836635],[-79.475285,43.82227],[-79.480092,43.813352],[-79.480778,43.803441],[-79.485585,43.79799],[-79.493825,43.794025],[-79.556996,43.779649],[-79.601628,43.761303],[-79.61611,43.758572],[-79.629934,43.750141],[-79.625471,43.728064],[-79.616888,43.713177],[-79.606245,43.695555],[-79.601095,43.685873],[-79.593885,43.681156],[-79.590109,43.672465],[-79.582212,43.671224],[-79.574659,43.670975],[-79.535177,43.58325],[-79.424627,43.619052],[-79.385488,43.602645],[-79.315451,43.612092],[-79.14121,43.79041]]]. More info. |
+| mapOperator | string enum: OR, AND,  default:  | When a multi-polygon is provided for the "map" parameter the default condition is "OR", meaning that it will return all listings that fall inside any of the polygons. This can be changed to "AND" in which case it will return listings that fall inside all of the polygons. More info. |
+| maxBaths | integer (int32) | Filters listings whose total bathroom count is <= the supplied value. |
+| maxBathroomsHalf | integer (int32) | Filters listings whose half bathroom count is <= the supplied value. |
 | maxBedrooms | integer (int32) | Filters properties based on the number of bedrooms that were part of the original floorplan, typically located above grade. |
 | maxBedroomsPlus | integer (int32) | Filters properties based on the number of additional bedrooms added beyond the original floorplan. These bedrooms can be located in areas like basements or attics and were not part of the initial construction. |
 | maxBedroomsTotal | integer (int32) | Filters properties by the total number of bedrooms, combining both numBedrooms and numBedroomsPlus. This provides a comprehensive look at all spaces being used as bedrooms. |
-| maxClosedDate | string (date) | Filter listings that have Close Date on or before the supplied value. Date format: YYYY-MM-DD |
-| maxDaysOnMarket | integer (int32) | Filter `status=U` listings that have been on the market for number of days less than or equal to the supplied value. |
-| maxKitchens | integer (int32) |  |
-| maxListDate | string (date) | Filter listings that were listed on or before the supplied value. Date format: YYYY-MM-DD |
-| maxLotSizeSqft | integer (int32) | Filter lot size by maximum square feet. |
+| maxClosedDate | string (date) | Filters listings that have a close date on or before the supplied value. Date format: YYYY-MM-DD |
+| maxDaysOnMarket | integer (int32) | Filters `status=U` listings that have been on the market for number of days less than or equal to the supplied value. |
+| maxKitchens | integer (int32) | Filters listings whose kitchen count is <= the supplied value. |
+| maxListDate | string (date) | Filters listings that were listed on or before the supplied value. Date format: YYYY-MM-DD |
+| maxLotSizeSqft | integer (int32) | Filters listings whose lot size is <= the supplied value in square feet. |
 | maxMaintenanceFee | integer (int32) | If supplied, filters listings whose maintenance fee is <= the supplied value. |
 | maxOpenHouseDate | string (date) | If specified, filters listings that have an open house on or before the supplied date. Date format: YYYY-MM-DD |
-| maxParkingSpaces | integer (int32) |  |
-| maxPrice | integer (int32) |  |
+| maxParkingSpaces | integer (int32) | Filters listings whose parking space count is <= the supplied value. |
+| maxPrice | integer (int32) | Filters listings whose list price is <= the supplied value. |
 | maxPriceChangeDateTime | string (date) | Filters listings that have had a price change on or before the date specified. |
 | maxRepliersUpdatedOn | string (date) | Filters listings whose repliersUpdatedOn is the same or less than the supplied DateTime. repliersUpdatedOn is an internal timestamp, this may be useful for polling applications to identify listings that have updates in information that's exclusive of MLS updates. For example, if an estimate is recalculated since the estimate is not provided by the MLS. |
-| maxSoldDate | string (date) | Filter listings that were sold/leased on or before the supplied value. Date format: YYYY-MM-DD |
-| maxSoldPrice | integer (int32) | Filter listings whose sold price is <= the supplied value. |
-| maxStreetNumber | integer (int32) | This parameter enables users to filter results by specifying the maximum street number. It ensures that the street number of the listing is less than or equal to the value provided. This is helpful when users are interested in properties within a specific range of street numbers, excluding listings that fall outside this range. |
-| maxStories | integer (int32) | Filter listings whose stories are <= the supplied value. |
-| maxSqft | integer (int32) | Filter listings whose square footage is <= the supplied value. Note - excludes listings where the sqft value is not supplied by the MLS. |
+| maxSoldDate | string (date) | Filters listings that were sold/leased on or before the supplied value. Date format: YYYY-MM-DD |
+| maxSoldPrice | integer (int32) | Filters listings whose sold price is <= the supplied value. |
+| maxStreetNumber | integer (int32) | Filters listings whose street number is <= the supplied value. |
+| maxStories | integer (int32) | Filters listings whose stories are <= the supplied value. |
+| maxSqft | integer (int32) | Filters listings whose square footage is <= the supplied value. Excludes listings where the sqft value is not supplied by the MLS. |
 | maxTaxes | integer (int32) | Filters listings whose annual tax amount is equal to or less than the supplied value. |
-| maxUnavailableDate | string (date) | Filter listings that became unavailable on or before the supplied value. Not all MLSes support this parameter. |
-| maxUpdatedOn | string (date) | Filter listings that were updated on or before the supplied value. |
-| maxYearBuilt | integer (int32) | Filter listings whose year built value is <= the supplied value. excludes listings where the year built value is not supplied by the MLS. |
-| minBaths | integer (int32) |  |
-| minBathroomsHalf | integer (int32) | The minimum amount of half bathrooms to be used as a filter for this search. |
+| maxUnavailableDate | string (date) | Filters listings that became unavailable on or before the supplied value. Not all MLSes support this parameter. |
+| maxUpdatedOn | string (date) | Filters listings that were updated on or before the supplied value. |
+| maxYearBuilt | integer (int32) | Filters listings whose year built value is <= the supplied value. Excludes listings where the year built value is not supplied by the MLS. |
+| minBaths | integer (int32) | Filters listings whose total bathroom count is >= the supplied value. |
+| minBathroomsHalf | integer (int32) | Filters listings whose half bathroom count is >= the supplied value. |
 | minBedrooms | integer (int32) | Filters properties based on the number of bedrooms that were part of the original floorplan, typically located above grade. |
 | minBedroomsPlus | integer (int32) | Filters properties based on the number of additional bedrooms added beyond the original floorplan. These bedrooms can be located in areas like basements or attics and were not part of the initial construction. |
 | minBedroomsTotal | integer (int32) | Filters properties by the total number of bedrooms, combining both numBedrooms and numBedroomsPlus. This provides a comprehensive look at all spaces being used as bedrooms. |
-| minClosedDate | string (date) | Filter listings that have Close Date on or after the supplied value. Date format: YYYY-MM-DD |
-| minDaysOnMarket | integer (int32) | Filter `status=U` listings that have been on the market for number of days greater than or equal to the supplied value. |
+| minClosedDate | string (date) | Filters listings that have a close date on or after the supplied value. Date format: YYYY-MM-DD |
+| minDaysOnMarket | integer (int32) | Filters `status=U` listings that have been on the market for number of days greater than or equal to the supplied value. |
 | minGarageSpaces | integer (int32) | Filters listings that have >= the supplied value of garage spaces. |
-| minKitchens | integer (int32) |  |
-| minListDate | string (date) | Filter listings that were listed on or after the supplied value. Date format: YYYY-MM-DD |
-| minLotSizeSqft | integer (int32) | Filter lot size by minimum square feet. |
+| minKitchens | integer (int32) | Filters listings whose kitchen count is >= the supplied value. |
+| minListDate | string (date) | Filters listings that were listed on or after the supplied value. Date format: YYYY-MM-DD |
+| minLotSizeSqft | integer (int32) | Filters listings whose lot size is >= the supplied value in square feet. |
 | minOpenHouseDate | string (date) | If specified, filters listings that have an open house on or after the supplied date. Date format: YYYY-MM-DD |
-| minParkingSpaces | integer (int32) |  |
-| minPrice | integer (int32) |  |
+| minParkingSpaces | integer (int32) | Filters listings whose parking space count is >= the supplied value. |
+| minPrice | integer (int32) | Filters listings whose list price is >= the supplied value. |
 | minPriceChangeDateTime | string (date) | Filters listings that have had a price change on or after the date specified. |
 | minRepliersUpdatedOn | string (date) | Filters listings whose repliersUpdatedOn is the same or greater than the supplied DateTime. repliersUpdatedOn is an internal timestamp, this may be useful for polling applications to identify listings that have updates in information that's exclusive of MLS updates. For example, if an estimate is recalculated since the estimate is not provided by the MLS. |
-| minSoldDate | string (date) | Filter listings that were sold/leased on or after the supplied value. Date format: YYYY-MM-DD |
-| minSoldPrice | string | Filter listings whose sold price is >= the supplied value. |
+| minSoldDate | string (date) | Filters listings that were sold/leased on or after the supplied value. Date format: YYYY-MM-DD |
+| minSoldPrice | integer (int32) | Filter listings whose sold price is >= the supplied value. |
 | minStories | integer (int32) | Filter listings whose stories are >= the supplied value. |
-| minSqft | integer (int32) | Filter listings whose square footage is >= the supplied value. Note - excludes listings where the sqft value is not supplied by the MLS. |
-| minStreetNumber | integer (int32) | This parameter allows users to filter results by specifying the minimum street number. It ensures that the street number of the listing is greater than or equal to the value provided. This is particularly useful for narrowing down search results to properties within a specific range of street numbers. |
+| minSqft | integer (int32) | Filters listings whose square footage is >= the supplied value. Excludes listings where the sqft value is not supplied by the MLS. |
+| minStreetNumber | integer (int32) | Filters listings whose street number is >= the supplied value. |
 | minTaxes | integer (int32) | Filters listings whose annual tax amount is equal to or greater than the supplied value. |
-| minUnavailableDate | string (date) | Filter listings that became unavailable on or after the supplied value. Not all MLSes support this parameter. Date format: YYYY-MM-DD |
-| minUpdatedOn | string (date) | Filter listings that were updated on or after the supplied value. |
-| minYearBuilt | string | Filter listings whose year built value is >= the supplied value. excludes listings where the year built value is not supplied by the MLS. |
+| minUnavailableDate | string (date) | Filters listings that became unavailable on or after the supplied value. Not all MLSes support this parameter. Date format: YYYY-MM-DD |
+| minUpdatedOn | string (date) | Filters listings that were updated on or after the supplied value. |
+| minYearBuilt | integer (int32) | Filter listings whose year built value is >= the supplied value. Excludes listings where the year built value is not supplied by the MLS. |
 | mlsNumber | array[string] | Filter listings by one or more MLS numbers. |
 | neighborhood | array[string] | Filter by the geographical neighborhood that the listing is situated in. For example GET /listings?city=Vaughan&neighborhood=Sonoma Heights&neighborhood=Vellore Village |
 | officeId | string | Filter listings by the office ID of the listing brokerage. |
-| operator | string enum: AND, OR,  default:  | If set to "AND", listings must match all supplied parameters. If set to "OR", listings must match at least 1 parameter. Default is "AND" |
-| pageNum | integer (int32) | If specified indexes a specific page in the results set. For example, if there are 1000 listings and 100 listings per page, if you'd like to view listings 101-201 you'd specify pageNum=2 |
+| operator | string enum: AND, OR,  default:  | If set to "AND", listings must match all supplied parameters. If set to "OR", listings must match at least 1 parameter. Default is "AND". More info. |
+| pageNum | integer (int32) | The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200. |
 | propertyType | array[string] | Filters listings by one or more property types. |
 | propertyTypeOrStyle | array[string] | Filters listings where either details.propertyType or the details.style field matches any of the provided values. |
 | radius | integer (int32) | Accepts a value for radius in KM. Must be used with lat and long parameters to return listings within a certain radius of a given latitude and longitude. |
-| resultsPerPage | integer (int32) | The amount of listings to return in each page of the results set. |
+| resultsPerPage | integer (int32) | The number of listings to return per page. |
 | search | string | One or more keywords may be specified to filter the results by. For more information refer to Full-Text Keyword Search Implementation Guide. |
 | searchFields | string | To be used in conjunction with the "search" parameter. If specified, limits the keyword search to specific fields. For example, if search=yonge and you want to limit the search to streetName you would specify searchFields=address.streetName |
 | sortBy | string enum: createdOnDesc, updatedOnDesc, createdOnAsc, distanceAsc, distanceDesc, updatedOnAsc, soldDateAsc, soldDateDesc, soldPriceAsc, soldPriceDesc, sqftAsc, sqftDesc, listPriceAsc, listPriceDesc, bedsAsc, bedsDesc, bathsDesc, bathsAsc, yearBuiltDesc, yearBuiltAsc, random, repliersUpdatedOnAsc, repliersUpdatedOnDesc,  default:  | The attribute that the listings will be sorted by. Note, distanceAsc and distanceDesc must be used in combination with lat, long and radius parameters. Default is updatedOnDesc |
 | sqft | array[string] | Filters listings by one or more values for sqft. |
-| statistics | string | Use this parameter to request statistics relevant to the listings returned in your search. For more information, refer to the Real-Time Market Statistics Implementation Guide |
+| statistics | string | Use this parameter to request statistics relevant to the listings returned in your search. More info. |
 | standardStatus | array[string] | Use this parameter to filter by Standard Status. Allowed values: Active, Active Under Contract, Canceled, Closed, Coming Soon, Delete, Expired, Hold, Incomplete, Pending, Withdrawn |
 | status | array[string] | Set `status=A` to retrieve active listings. Set `status=U` to retrieve unavailable listings. Set `status=A&status=U` to retrieve both active and unavailable listings. |
 | streetDirection | array[string] | Filter listings by one or more street directions |
@@ -151,7 +151,7 @@ Use this endpoint to search listings using various parameters.As your user provi
 | Field | Type | Required | Description |
 |---|---|---|---|
 | imageSearchItems | array[object] | no | An array of objects used with our AI Image Search feature. For more information refer to our AI Image Search Implementation Guide. |
-| map | string (json) | no | Filters listings within a geoJSON polygon or multi-polygon boundary. Example boundary:[[[-79.14121,43.79041],[-79.132627,43.773059],[-79.188932,43.886988],[-79.200605,43.877832],[-79.236654,43.869665],[-79.265836,43.860011],[-79.281972,43.856051],[-79.322828,43.84689],[-79.368146,43.839214],[-79.386021,43.836139],[-79.41486,43.838616],[-79.423787,43.836635],[-79.475285,43.82227],[-79.480092,43.813352],[-79.480778,43.803441],[-79.485585,43.79799],[-79.493825,43.794025],[-79.556996,43.779649],[-79.601628,43.761303],[-79.61611,43.758572],[-79.629934,43.750141],[-79.625471,43.728064],[-79.616888,43.713177],[-79.606245,43.695555],[-79.601095,43.685873],[-79.593885,43.681156],[-79.590109,43.672465],[-79.582212,43.671224],[-79.574659,43.670975],[-79.535177,43.58325],[-79.424627,43.619052],[-79.385488,43.602645],[-79.315451,43.612092],[-79.14121,43.79041]]]. For more information refer to the implementation guide: Filtering Listings Geo-Spatially Using the "map" Parameter. |
+| map | string (json) | no | Filters listings within a geoJSON polygon or multi-polygon boundary. Example boundary:[[[-79.14121,43.79041],[-79.132627,43.773059],[-79.188932,43.886988],[-79.200605,43.877832],[-79.236654,43.869665],[-79.265836,43.860011],[-79.281972,43.856051],[-79.322828,43.84689],[-79.368146,43.839214],[-79.386021,43.836139],[-79.41486,43.838616],[-79.423787,43.836635],[-79.475285,43.82227],[-79.480092,43.813352],[-79.480778,43.803441],[-79.485585,43.79799],[-79.493825,43.794025],[-79.556996,43.779649],[-79.601628,43.761303],[-79.61611,43.758572],[-79.629934,43.750141],[-79.625471,43.728064],[-79.616888,43.713177],[-79.606245,43.695555],[-79.601095,43.685873],[-79.593885,43.681156],[-79.590109,43.672465],[-79.582212,43.671224],[-79.574659,43.670975],[-79.535177,43.58325],[-79.424627,43.619052],[-79.385488,43.602645],[-79.315451,43.612092],[-79.14121,43.79041]]]. More info. |
 
 ---
 
@@ -191,7 +191,7 @@ Provide this endpoint with an mls number and it'll retrieve similar properties t
 
 | Name | Type | Description |
 |---|---|---|
-| boardId | array[integer] | Filter by boardId. This is only required if your account has access to more than one MLS. You may specify one or more board IDs to filter by, if not specified, returns all boards that that account has access to be default. |
+| boardId | array[integer] | Filter by boardId. This is only required if your account has access to more than one MLS. You may specify one or more board IDs to filter by, if not specified, returns all boards that that account has access to by default. More info. |
 | fields | string | Use if you want to limit the response to containing certain fields only. For example: `fields=listPrice,soldPrice` would limit the response to contain `listPrice` and `soldPrice` only. You can also specify the amount of images to return, for example if a listing has 40 images total and you specify `fields=images[5]` it will only return the first 5 images. |
 | listPriceRange | integer (int32) | If specified, returns similar listings whose listPrice are +/- the supplied value, for a given listing. For example, if the given listing is 1M and listPriceRange is 250k, similar listings between 750k and 1.25M will be returned. |
 | radius | integer (int32) | If specified, will show similar listings within the specified radius (km). If not specified, defaults to showing listings in the same neighborhood. |
@@ -237,7 +237,7 @@ Use this endpoint to retrieve listings that have been deleted from the MLS. List
 
 ### GET /locations
 
-Search locations based on the provided filter criteria.
+Searches for geographical locations such as cities, neighborhoods, and districts. Useful for building location pickers and populating address-based filters in search interfaces. For real-time autocomplete as a user types, use the GET /locations/autocomplete endpoint instead.
 
 **Query Parameters:**
 
@@ -253,8 +253,8 @@ Search locations based on the provided filter criteria.
 | fields | string | Comma-separated list of fields to include in the response. This allows clients to request only the specific data they need, reducing payload size. Examples: - `name,type` - Returns only location names and types - `name,address.city,address.state` - Returns location names and specific address components - `map.boundary` - Returns only geographical boundary data |
 | locations | boolean | If false, the locations object will be empty. Useful for speeding up responses when aggregates are requested and locations are not needed. Default is true. |
 | aggregates | string | Aggregates values and counts for specified fields. Aggregates have many use cases, they're particularly useful for grouping and displaying acceptable values for fields that are used in filters. For more information refer to Using Aggregates To Determine Acceptable Values For Filters. |
-| resultsPerPage | integer default: 100 | The amount of locations to return in each page of the results set. |
-| pageNum | integer default: 1 | If specified indexes a specific page in the results set. For example, if there are 1000 locations and 100 locations per page, if you'd like to view locations 101-200 you'd specify pageNum=2 |
+| resultsPerPage | integer default: 100 | The number of locations to return per page. |
+| pageNum | integer default: 1 | The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200. |
 | map | string (json) | GeoJSON polygon or multi-polygon boundary for geographical filtering. Limits results to locations within the specified boundaries. For complex polygons or multipolygons that exceed query parameter size limits, use the POST method and include the map data in the request body. Format: Array of coordinate arrays, where each coordinate is [longitude, latitude] in WGS 84 format. The polygon must be closed (first and last points must be identical). For more information refer to the implementation guide [Filtering Listings Geo-Spatially Using the "map" Parameter](https://help.repliers.com/en/article/filtering-listings-geo-spatially-using-the-map-parameter-7sorw0/) |
 | radius | number (float) | Accepts a value for radius in KM. Must be used with `lat` and `long` parameters to return locations within the specified radius of a given latitude and longitude. |
 | lat | number (float) | Accepts a value for latitude. Must be used with `long` parameter. When used with `radius`, returns locations within the specified radius of these coordinates. |
@@ -287,7 +287,7 @@ Autocomplete for Locations search. As your user types, you simply pass their inp
 | type | array[any] | Limits results to specified location types: - `area` - Represents larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc. - `city` - Municipal division that can include multiple neighborhoods within its boundaries. - `city-alternate` - Alternate representation of a city, used for specific data sources or contexts. - `neighborhood` - Smallest geographical unit within a city. - `neighborhood-alternate` - Alternate representation of a neighborhood, used for specific data sources or contexts. - `postalCode` - Represents postal code areas, which may span multiple neighborhoods or cities. - `district` - Represents administrative or political districts, which may span multiple neighborhoods or cities. - `schoolDistrict` - Represents school district areas, which may span multiple neighborhoods or cities. - `school` - Represents specific school locations and catchment areas. |
 | fields | string | Comma-separated list of fields to include in the response. This allows clients to request only the specific data they need, reducing payload size. Examples: - `name,type` - Returns only location names and types - `name,address.city,address.state` - Returns location names and specific address components - `map.boundary` - Returns only geographical boundary data |
 | map | string (json) | GeoJSON polygon or multi-polygon boundary for geographical filtering. Limits results to locations within the specified boundaries. For complex polygons or multipolygons that exceed query parameter size limits, use the POST method and include the map data in the request body. Format: Array of coordinate arrays, where each coordinate is [longitude, latitude] in WGS 84 format. The polygon must be closed (first and last points must be identical). For more information refer to the implementation guide [Filtering Listings Geo-Spatially Using the "map" Parameter](https://help.repliers.com/en/article/filtering-listings-geo-spatially-using-the-map-parameter-7sorw0/) |
-| resultsPerPage | integer default: 10 | The amount of locations to return in each page of the results set. |
+| resultsPerPage | integer default: 10 | The number of locations to return per page. |
 | radius | number (float) | Accepts a value for radius in KM. Must be used with `lat` and `long` parameters to return locations within the specified radius of a given latitude and longitude. |
 | lat | number (float) | Accepts a value for latitude. Must be used with `long` parameter. When used with `radius`, returns locations within the specified radius of these coordinates. |
 | long | number (float) | Accepts a value for longitude. Must be used with `lat` parameter. When used with `radius`, returns locations within the specified radius of these coordinates. |
@@ -307,35 +307,35 @@ Autocomplete for Locations search. As your user types, you simply pass their inp
 
 ### POST /buildings
 
-Search buildings based on the provided filter criteria.
+Searches for buildings based on location, price, property type, and other criteria. A building represents a unique address and groups together all current and historical listings at that address, making it useful for building directory pages and pre-construction research.
 
 **Query Parameters:**
 
 | Name | Type | Description |
 |---|---|---|
-| area | array[string] | Filter buildings by the geographical area (also referred to as region or county). |
-| buildingName | array[string] | Filter buildings by their name. Availability of building names may vary by MLS and is not guaranteed for all buildings. |
-| city | array[string] | Filters buildings by city names. Returns buildings within the specified city. |
-| class | array[string] | Filter by property class. |
-| displayPublic | string enum: yes, no | Filter by display public status |
+| area | array[string] | Filters buildings by geographical area (also referred to as region or county). |
+| buildingName | array[string] | Filters buildings by name. Availability of building names may vary by MLS and is not guaranteed for all buildings. |
+| city | array[string] | Filters buildings by city. |
+| class | array[string] | Filters buildings by property class. |
+| displayPublic | string enum: yes, no | Filters buildings by public display status. Y returns buildings that may be displayed publicly, N returns buildings that should be password protected. |
 | lat | number (float) | Accepts a value for latitude. Must be used with radius parameter to return buildings within a certain radius of a given latitude and longitude. |
 | long | number (float) | Accepts a value for longitude. Must be used with radius parameter to return buildings within a certain radius of a given latitude and longitude. |
-| map | string (json) | GeoJSON polygon or multi-polygon boundary for geographical filtering. Limits results to buildings within the specified boundaries. For complex polygons or multipolygons that exceed query parameter size limits, use the POST method and include the map data in the request body. Format: Array of coordinate arrays, where each coordinate is [longitude, latitude] in WGS 84 format. The polygon must be closed (first and last points must be identical). For more information refer to the implementation guide [Filtering Listings Geo-Spatially Using the "map" Parameter](https://help.repliers.com/en/article/filtering-listings-geo-spatially-using-the-map-parameter-7sorw0/) |
-| maxPrice | integer | Maximum price filter |
-| maxStories | integer | Maximum number of stories/floors in the building |
-| minBathrooms | integer | Minimum number of bathrooms |
-| minBedrooms | integer | Minimum number of bedrooms |
-| minPrice | integer | Minimum price filter |
-| minStories | integer | Minimum number of stories/floors in the building |
-| neighborhood | array[string] | Filter results by neighborhood names. Returns specified neighborhoods. Neighborhoods represent the smallest geographical division in the hierarchy. |
-| pageNum | integer default: 1 | If specified indexes a specific page in the results set. For example, if there are 1000 buildings and 100 buildings per page, if you'd like to view buildings 101-200 you'd specify pageNum=2 |
-| propertyType | array[string] | Filter by property type(s). Returns buildings matching the specified property types. |
+| map | string (json) | GeoJSON polygon or multi-polygon boundary for geographical filtering. Limits results to buildings within the specified boundaries. For complex polygons or multipolygons that exceed query parameter size limits, use the POST method and include the map data in the request body. Format: Array of coordinate arrays, where each coordinate is [longitude, latitude] in WGS 84 format. The polygon must be closed (first and last points must be identical). For more information refer to the implementation guide Filtering Listings Geo-Spatially Using the "map" Parameter |
+| maxPrice | integer | Filters buildings whose listing prices are <= the supplied value. |
+| maxStories | integer | Filters buildings whose story count is <= the supplied value. |
+| minBathrooms | integer | Filters buildings whose bathroom count is >= the supplied value. |
+| minBedrooms | integer | Filters buildings whose bedroom count is >= the supplied value. |
+| minPrice | integer | Filters buildings whose listing prices are >= the supplied value. |
+| minStories | integer | Filters buildings whose story count is >= the supplied value. |
+| neighborhood | array[string] | Filters buildings by neighborhood. |
+| pageNum | integer default: 1 | The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200. |
+| propertyType | array[string] | Filters buildings by property type. |
 | radius | number (float) | Accepts a value for radius in KM. Must be used with `lat` and `long` parameters to return buildings within the specified radius of a given latitude and longitude. |
-| resultsPerPage | integer default: 100 | The amount of buildings to return in each page of the results set. |
-| sortBy | string enum: numUnitsDesc | Sort results by specified field |
-| streetName | array[string] | Filter by street name(s). Returns buildings located on the specified streets. |
-| streetNumber | array[string] | Filter by street number(s). Returns buildings with the specified street numbers. |
-| type | string enum: sale, lease | Used to filter properties that are for sale or for lease. |
+| resultsPerPage | integer default: 100 | The number of buildings to return per page. |
+| sortBy | string enum: numUnitsDesc | Sorts results by the specified field. |
+| streetName | array[string] | Filters buildings by street name. |
+| streetNumber | array[string] | Filters buildings by street number. |
+| type | string enum: sale, lease | Filters buildings by listing type. |
 
 **Request Body:**
 
@@ -379,7 +379,7 @@ This endpoint translates natural language search queries into structured API req
 | listings | boolean default: false | no | If `true`, the endpoint will return listings according to the generated urlQueryString parameters, the same way as GET /lisitngs endpoint would treat those parameters. Default is `false`. |
 | fields | string | no | Use if you want to limit the `listings` response object to containing certain fields only. For example: `fields=listPrice,soldPrice` would limit the response to contain `listPrice` and `soldPrice` only. You can also specify the amount of images to return, for example if a listing has 40 images total and you specify `fields=images[5]` it will only return the first 5 images. |
 | useLocationId | boolean default: false | no | When set to `true`, any locations identified in the prompt will be returned as `locationId` values instead of being split into separate `area`, `city`, and `neighborhood` parameters. |
-| locationsSource | array[any] | no | Specify which location sources to use when interpreting the prompt. This can help improve accuracy by providing the NLP model with the location data source most suitable for the query. |
+| locationsSource | array[any] | no | Specify which location sources to use when interpreting the prompt. This can help improve accuracy by providing the NLP model with the location data source most suitable for the query. - `MSL` - Locations sourced from MLS (Multiple Listing Service) data. - `UserDefined` - Custom locations created and defined by users. - `LiveBy` - Locations sourced from LiveBy, a third-party neighborhood and community data provider. |
 
 ---
 
@@ -406,8 +406,8 @@ This endpoint allows you to list and filter all sessions. Each session has a uni
 |---|---|---|
 | nlpId | string | Unique identifier for the NLP session. |
 | clientId | string | Filter sessions based on the `clientId` to see all NLP sessions associated with a specific client. |
-| resultsPerPage | integer default: 100 | The amount of chats to return in each page of the results set. |
-| pageNum | integer default: 1 | If specified indexes a specific page in the results set. For example, if there are 1000 chats and 100 chats per page, if you'd like to view chats 101-200 you'd specify pageNum=2 |
+| resultsPerPage | integer default: 100 | The number of chats to return per page. |
+| pageNum | integer default: 1 | The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200. |
 | prompts | boolean default: null | Fetch all prompts for each of the chats. |
 
 ---
@@ -443,22 +443,22 @@ Use this endpoint to get a list of agents that you've created. You can filter fo
 
 | Name | Type | Description |
 |---|---|---|
-| agentId | integer (int32) |  |
-| boardId | integer (int32) |  |
-| brokerage | string |  |
-| designation | string |  |
-| email | string |  |
-| fname | string |  |
-| lname | string |  |
-| phone | integer (int32) |  |
-| status | boolean |  |
-| externalId | string | Filter agents by their identifier from an external system (such as a CRM). |
+| agentId | integer (int32) | Filters agents by their unique ID. |
+| boardId | integer (int32) | Filters agents by the MLS board they belong to. |
+| brokerage | string | Filters agents by brokerage name. |
+| designation | string | Filters agents by designation (e.g., Sales Representative). |
+| email | string | Filters agents by email address. |
+| fname | string | Filters agents by first name. |
+| lname | string | Filters agents by last name. |
+| phone | integer (int32) | Filters agents by phone number. |
+| status | boolean | If false, returns only disabled agents. If true, returns only active agents. |
+| externalId | string | Filters agents by their identifier from an external system (such as a CRM). |
 
 ---
 
 ### PATCH /agents/{agentId}
 
-Use this endpoint to update information associated with an agent.
+Updates one or more fields for an existing agent. Only include the fields you wish to change — omitted fields retain their current values.
 
 **Path Parameters:**
 
@@ -497,7 +497,7 @@ Use this endpoint to delete an agent. You must specify a new agentId to assign t
 
 ### GET /agents/{agentId}
 
-Use this endpoint to lookup details about a specific agent.
+Returns the full profile of a specific agent. Useful for building agent profile pages or verifying agent details before making updates.
 
 **Path Parameters:**
 
@@ -509,7 +509,7 @@ Use this endpoint to lookup details about a specific agent.
 
 ### POST /agents/{agentId}/transfer
 
-Use this endpoint to transfer all clients from one agent to another.
+Transfers all clients from one agent to another. Useful when an agent leaves your organization and their clients need to be reassigned.
 
 **Path Parameters:**
 
@@ -555,18 +555,18 @@ Use this endpoint to get a list of clients that you've created. You can filter f
 
 | Name | Type | Description |
 |---|---|---|
-| agentId | integer (int32) |  |
-| clientId | integer (int32) |  |
-| email | string |  |
-| fname | string |  |
+| agentId | integer (int32) | Filters clients by the ID of their assigned agent. |
+| clientId | integer (int32) | Filters clients by their unique ID. |
+| email | string | Filters clients by email address. |
+| fname | string | Filters clients by first name. |
 | keywords | string | One or more keywords may be specified to filter the results by. Useful for searching clients. If specified all other params are ignored. |
-| lname | string |  |
-| phone | integer (int32) |  |
-| status | boolean |  |
+| lname | string | Filters clients by last name. |
+| phone | integer (int32) | Filters clients by phone number. |
+| status | boolean | If false, returns only disabled clients. If true, returns only active clients. |
 | condition | string default: EXACT | Determines the search condition applied to the filters. If EXACT, requires that the given value for one or more params is an exact match of the stored value. If CONTAINS, requires that the given value for one or more params is contained within the stored value. Allowed values: EXACT, CONTAINS |
 | operator | string default: OR | Determines the search logic applied to the filters. If OR, requires that one or more params contain/equal the given value. If AND, requires that all params contain/equal the given value. Allowed values: OR, AND |
-| pageNum | integer (int32) default: 1 | If specified indexes a specific page in the results set. For example, if there are 1000 listings and 100 listings per page, if you'd like to view listings 101-201 you'd specify pageNum=2 |
-| resultsPerPage | integer (int32) default: 100 | The amount of listings to return in each page of the results set. |
+| pageNum | integer (int32) default: 1 | The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200. |
+| resultsPerPage | integer (int32) default: 100 | The number of clients to return per page. |
 | tags | string | One or more comma separated strings that can be used to filter clients. For example GET /clients?tags=buyer,toronto. The response contains clients that have any of the tags specified. |
 | showSavedSearches | boolean default: true | Enables automatic retrieval of Saved Searches for each client in the response. For best performance it's recommended to disable this setting if Saved Searches are not required. |
 | externalId | string | Filter clients by their identifier from an external system (such as a CRM). |
@@ -575,7 +575,7 @@ Use this endpoint to get a list of clients that you've created. You can filter f
 
 ### PATCH /clients/{clientId}
 
-Use this endpoint to update a client's information.
+Updates one or more fields for an existing client. Only include the fields you wish to change — omitted fields retain their current values.
 
 **Path Parameters:**
 
@@ -601,7 +601,7 @@ Use this endpoint to update a client's information.
 
 ### DELETE /clients/{clientId}
 
-Use this endpoint to delete a client.
+Deletes a client and all associated data, including their saved searches, favorites, and messages.
 
 **Path Parameters:**
 
@@ -613,7 +613,7 @@ Use this endpoint to delete a client.
 
 ### GET /clients/{clientId}
 
-Use this endpoint to get details about a specific client.
+Returns the full profile of a specific client, including their contact information, preferences, and tags.
 
 **Path Parameters:**
 
@@ -711,7 +711,7 @@ Use this endpoint to create a saved search for a client.Important - When a saved
 
 ### GET /searches
 
-Use this endpoint to list and filter saved searches that have been created.
+Returns a list of saved searches. Use this to display a client's active searches, or to audit searches across multiple agents.
 
 **Query Parameters:**
 
@@ -719,8 +719,8 @@ Use this endpoint to list and filter saved searches that have been created.
 |---|---|---|
 | agentId | integer (int32) |  |
 | clientId | integer (int32) |  |
-| pageNum | integer (int32) default: 1 | If specified, indexes a specific page in the results set. For example, if there are 1000 searches and 100 searches per page, if you'd like to view searches 101-201 you'd specify pageNum=2 |
-| resultsPerPage | integer (int32) default: 100 | The amount of searches to return in each page of the results set. |
+| pageNum | integer (int32) default: 1 | The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200. |
+| resultsPerPage | integer (int32) default: 100 | The number of searches to return per page. |
 | searchId | integer (int32) |  |
 | status | boolean |  |
 
@@ -792,7 +792,7 @@ Use this endpoint to update a saved search. Important - When a saved search is u
 
 ### DELETE /searches/{searchId}
 
-Use this endpoint to delete a saved search.
+Deletes a saved search. The client will no longer receive notifications for this search.
 
 **Path Parameters:**
 
@@ -804,7 +804,7 @@ Use this endpoint to delete a saved search.
 
 ### GET /searches/{searchId}
 
-Use this endpoint to lookup the details of a saved search.
+Returns the full details of a specific saved search, including its filter criteria and notification settings.
 
 **Path Parameters:**
 
@@ -828,8 +828,8 @@ Use this endpoint to lookup matches for a saved search. Matches are listings tha
 
 | Name | Type | Description |
 |---|---|---|
-| pageNum | integer (int32) default: 1 | If specified, indexes a specific page in the results set. For example, if there are 1000 searches and 100 searches per page, if you'd like to view searches 101-201 you'd specify pageNum=2 |
-| resultsPerPage | integer (int32) default: 100 | The amount of searches to return in each page of the results set. |
+| pageNum | integer (int32) default: 1 | The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200. |
+| resultsPerPage | integer (int32) default: 100 | The number of listings to return per page. |
 | endDate | string (date) | If specified filters matches whose match date is <= the supplied value. |
 | startDate | string (date) | If specified filters matches whose match date is >= the supplied value. |
 | lastStatus | string | If specified filters matches whose last status is the supplied value. Allowed values: Sus, Exp, Sld, Ter, Dft, Lsd, Sc, Lc, Pc, Ext, New |
@@ -842,7 +842,7 @@ Use this endpoint to lookup matches for a saved search. Matches are listings tha
 
 ### GET /searches/{searchId}/matches/{matchId}
 
-Use this endpoint to lookup details about a specific match for a saved search.
+Returns the details of a specific listing match within a saved search, including the listing data and the match's viewed and liked status.
 
 **Path Parameters:**
 
@@ -855,7 +855,7 @@ Use this endpoint to lookup details about a specific match for a saved search.
 
 ### PATCH /searches/{searchId}/matches/{matchId}
 
-Use this endpoint to update attributes associated with a specific match for a saved search.
+Updates the viewed or liked status of a specific listing match. Use this to track client engagement — for example, marking a match as viewed when a client opens a listing, or liked when they express interest.
 
 **Path Parameters:**
 
@@ -877,7 +877,7 @@ Use this endpoint to update attributes associated with a specific match for a sa
 
 ### POST /estimates
 
-Use this endpoint to estimate a property's value by providing us with the property's attributes. For more information refer to the AI-Powered Property Estimates Implementation Guide.
+Use this endpoint to estimate a property's value by providing us with the property's attributes. More info.
 
 **Request Body:**
 
@@ -898,7 +898,7 @@ Use this endpoint to estimate a property's value by providing us with the proper
 
 ### GET /estimates
 
-Use this endpoint to get estimates
+Returns a list of property value estimates you've created. Useful for managing and reviewing estimates across multiple properties.
 
 **Query Parameters:**
 
@@ -906,14 +906,14 @@ Use this endpoint to get estimates
 |---|---|---|
 | clientId | integer (int32) | If specified, filters estimates by clientId |
 | estimateId | integer (int32) | If specified, filters estimates by estimateId |
-| pageNum | integer (int32) | If specified goes to a specific page in the results set. For example, if there are 1000 estimates and 100 estimates per page, if you'd like to view estimates 101-201 you'd specify pageNum=2 |
-| resultsPerPage | integer (int32) | The amount of estimates to return in each page of the results set. |
+| pageNum | integer (int32) | The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200. |
+| resultsPerPage | integer (int32) | The number of estimates to return per page. |
 
 ---
 
 ### PATCH /estimates/{estimateId}
 
-Use this endpoint to estimate a property's value by providing us with the property's attributes.
+Updates an existing property value estimate with revised property attributes. Use this if property details have changed and you need a recalculated estimate.
 
 **Path Parameters:**
 
@@ -939,7 +939,7 @@ Use this endpoint to estimate a property's value by providing us with the proper
 
 ### DELETE /estimates/{estimateId}
 
-Delete an estimate
+Deletes a specific property value estimate.
 
 **Path Parameters:**
 
@@ -980,8 +980,8 @@ Use this endpoint to list and filter sent messages.
 | startTime | string (date) | If specified, filters messages which were sent on or after the supplied value. |
 | message | string |  |
 | messageId | integer (int32) |  |
-| pageNum | integer (int32) default: 1 | If specified indexes a specific page in the results set. For example, if there are 1000 listings and 100 listings per page, if you'd like to view listings 101-201 you'd specify pageNum=2 |
-| resultsPerPage | integer (int32) default: 100 | The amount of listings to return in each page of the results set. |
+| pageNum | integer (int32) default: 1 | The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200. |
+| resultsPerPage | integer (int32) default: 100 | The number of messages to return per page. |
 | sender | string | Allowed values: agent,client |
 | status | string | Allowed values: sent,pending |
 | token | string |  |
@@ -1004,7 +1004,7 @@ Use this endpoint to get details about a message that was sent.
 
 ### POST /favorites
 
-Use this endpoint to add a new favorite for a client.
+Adds a property to a client's favorites list. You can optionally include comments and tags — comments let clients note their thoughts on a property, and tags enable filtering favorites by custom categories.
 
 **Request Body:**
 
@@ -1020,26 +1020,26 @@ Use this endpoint to add a new favorite for a client.
 
 ### GET /favorites
 
-Use this endpoint to retrieve a list of properties that a client has favorited.
+Returns a list of properties that a client has favorited. Results can be filtered by listing status, last status, and tags, making it easy to surface only the most relevant favorites.
 
 **Query Parameters:**
 
 | Name | Type | Description |
 |---|---|---|
-| boardId | integer (int32) |  |
-| clientId | integer (int32) |  |
+| boardId | integer (int32) | Required if your account has access to multiple MLSes. Filters favorites to a specific board. |
+| clientId | integer (int32) | The ID of the client whose favorites to retrieve. |
 | fields | string | Use if you want to limit the response to containing certain fields only. For example: fields?listPrice,soldPrice would limit the response to contain listPrice and soldPrice only. You can also specify the amount of images to return, for example if a listing has 40 images total and you specify fields=images[5] it will only return the first 5 images. |
-| lastStatus | array[string] |  |
-| pageNum | integer (int32) |  |
-| resultsPerPage | integer (int32) |  |
-| status | string |  |
+| lastStatus | array[string] | Filters favorites by the last status of the favorited listing. |
+| pageNum | integer (int32) | The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200. |
+| resultsPerPage | integer (int32) | The number of favorites to return per page. |
+| status | string | Filters favorites by the current status of the favorited listing. |
 | tags | string | Allows you to search tags within favorites, accepts a comma-separated string, for example "needs work, turn-key" |
 
 ---
 
 ### DELETE /favorites/{favoriteId}
 
-Use this endpoint to delete a favorite.
+Removes a property from a client's favorites list.
 
 **Path Parameters:**
 
@@ -1131,15 +1131,15 @@ Use this endpoint to list and filter members (agents) belonging to the MLS.
 
 | Name | Type | Description |
 |---|---|---|
-| agentId | string | If supplied, finds member by agentId using exact match criteria. |
-| agentName | string | If supplied, finds member by agent name using exact match criteria. |
-| boardId | string |  |
-| brokerage | string | Filters members by brokerage name using partial match criteria. |
-| keywords | string | If supplied, searches for members by keyword across multiple fields. |
-| officeId | string | If supplied, filters members by office ID. |
-| pageNum | integer (int32) default: 1 | If specified loads a specific page in the results set. For example, if there are 1000 members and 100 members per page, if you'd like to view members 101-201 you'd specify pageNum=2 |
-| position | string | If supplied, filters members by position. |
-| resultsPerPage | integer (int32) default: 100 | The amount of members to return in each page of the results set. |
+| agentId | string | Filters members by agent ID using exact match. |
+| agentName | string | Filters members by agent name using exact match. |
+| boardId | string | Filters members by the MLS board they belong to. |
+| brokerage | string | Filters members by brokerage name using partial match. |
+| keywords | string | Searches members by keyword across multiple fields. |
+| officeId | string | Filters members by office ID. |
+| pageNum | integer (int32) default: 1 | The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200. |
+| position | string | Filters members by their position or role (e.g., Broker, Sales Representative). |
+| resultsPerPage | integer (int32) default: 100 | The number of members to return per page. |
 
 ---
 
@@ -1163,7 +1163,7 @@ Use this endpoint to list offices belonging to the MLS. A brokerage may have one
 
 ### GET /brokerages
 
-Use this endpoint to list brokerages belonging to the MLS.
+Returns a list of brokerages registered with the MLS. Useful for building brokerage directory pages or populating brokerage filter options in search interfaces.
 
 ---
 
