@@ -9,6 +9,9 @@ paths:
     post:
       summary: Create a subscription
       description: Use this endpoint to subscribe to a webhook.
+      externalDocs:
+        description: How to Subscribe to Events
+        url: https://help.repliers.com/en/article/webhooks-implementation-guide-oimchm/#3-how-to-subscribe-to-events
       operationId: create-a-webhook
       requestBody:
         content:
@@ -176,6 +179,9 @@ paths:
     get:
       summary: List events
       description: Use this endpoint to retrieve a list of webhook events that you may subscribe to.
+      externalDocs:
+        description: Supported Events
+        url: https://help.repliers.com/en/article/webhooks-implementation-guide-oimchm/#3-supported-events
       operationId: list-events
       responses:
         "200":

@@ -15,7 +15,10 @@ paths:
   /locations:
     get:
       summary: Search locations
-      description: Search locations based on the provided filter criteria.
+      description: Searches for geographical locations such as cities, neighborhoods, and districts. Useful for building location pickers and populating address-based filters in search interfaces. For real-time autocomplete as a user types, use the GET /locations/autocomplete endpoint instead.
+      externalDocs:
+        description: Locations API Implementation Guide
+        url: https://help.repliers.com/en/article/locations-api-implementation-guide-s4c68b/#2-get-locations
       tags:
         - Locations
       parameters:
@@ -109,7 +112,7 @@ paths:
 
         - name: resultsPerPage
           in: query
-          description: The amount of locations to return in each page of the results set.
+          description: The number of locations to return per page.
           required: false
           schema:
             type: integer
@@ -119,7 +122,7 @@ paths:
 
         - name: pageNum
           in: query
-          description: If specified indexes a specific page in the results set. For example, if there are 1000 locations and 100 locations per page, if you'd like to view locations 101-200 you'd specify pageNum=2
+          description: The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200.
           required: false
           schema:
             type: integer
@@ -354,6 +357,9 @@ paths:
       description: Autocomplete for Locations search. As your user types,
         you simply pass their input into search param and get locations which match their input.
         You can use other params to fine-tune the locations which will be returned for a given search.
+      externalDocs:
+        description: Building an Autocomplete Search Feature
+        url: https://help.repliers.com/en/article/building-an-autocomplete-search-feature-with-repliers-apis-1eaoxyl/
       tags:
         - Locations
       parameters:
@@ -443,7 +449,7 @@ paths:
 
         - name: resultsPerPage
           in: query
-          description: The amount of locations to return in each page of the results set.
+          description: The number of locations to return per page.
           required: false
           schema:
             type: integer
