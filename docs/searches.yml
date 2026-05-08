@@ -8,6 +8,9 @@ paths:
   /searches:
     post:
       summary: Create a saved search
+      externalDocs:
+        description: Key Features
+        url: https://help.repliers.com/en/article/saved-search-implementation-guide-1pomr3h/#1-key-features
       description: Use this endpoint to create a saved search for a client.<strong>Important</strong> - When a saved search is updated the filters must be specific enough so that the initial matches do not exceed 100 listings otherwise a 406 (not accepted) response will be received.
       operationId: create-a-saved-search
       requestBody:
@@ -447,7 +450,7 @@ paths:
       deprecated: false
     get:
       summary: Filter saved searches
-      description: Use this endpoint to list and filter saved searches that have been created.
+      description: Returns a list of saved searches. Use this to display a client's active searches, or to audit searches across multiple agents.
       operationId: filter-searches
       parameters:
         - name: agentId
@@ -462,14 +465,14 @@ paths:
             format: int32
         - name: pageNum
           in: query
-          description: If specified, indexes a specific page in the results set. For example, if there are 1000 searches and 100 searches per page, if you'd like to view searches 101-201 you'd specify pageNum=2
+          description: The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200.
           schema:
             type: integer
             format: int32
             default: 1
         - name: resultsPerPage
           in: query
-          description: The amount of searches to return in each page of the results set.
+          description: The number of searches to return per page.
           schema:
             type: integer
             format: int32
@@ -713,7 +716,7 @@ paths:
       deprecated: false
     delete:
       summary: Delete a saved search
-      description: Use this endpoint to delete a saved search.
+      description: Deletes a saved search. The client will no longer receive notifications for this search.
       operationId: delete-a-saved-search
       parameters:
         - name: searchId
@@ -730,7 +733,7 @@ paths:
       deprecated: false
     get:
       summary: Get a saved search
-      description: Use this endpoint to lookup the details of a saved search.
+      description: Returns the full details of a specific saved search, including its filter criteria and notification settings.
       operationId: get-a-saved-search
       parameters:
         - name: searchId
@@ -753,14 +756,14 @@ paths:
       parameters:
         - name: pageNum
           in: query
-          description: If specified, indexes a specific page in the results set. For example, if there are 1000 searches and 100 searches per page, if you'd like to view searches 101-201 you'd specify pageNum=2
+          description: The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200.
           schema:
             type: integer
             format: int32
             default: 1
         - name: resultsPerPage
           in: query
-          description: The amount of searches to return in each page of the results set.
+          description: The number of listings to return per page.
           schema:
             type: integer
             format: int32
@@ -818,7 +821,7 @@ paths:
   /searches/{searchId}/matches/{matchId}:
     get:
       summary: Get a match
-      description: Use this endpoint to lookup details about a specific match for a saved search.
+      description: Returns the details of a specific listing match within a saved search, including the listing data and the match's viewed and liked status.
       operationId: get-a-match
       parameters:
         - name: searchId
@@ -841,7 +844,7 @@ paths:
       deprecated: false
     patch:
       summary: Update a match
-      description: Use this endpoint to update attributes associated with a specific match for a saved search.
+      description: Updates the viewed or liked status of a specific listing match. Use this to track client engagement — for example, marking a match as viewed when a client opens a listing, or liked when they express interest.
       operationId: update-a-match
       parameters:
         - name: searchId

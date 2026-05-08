@@ -25,12 +25,12 @@ paths:
               type: string
         - name: aggregates
           in: query
-          description: Aggregates values and counts for specified fields. Aggregates have many use cases, they're particularly useful for grouping and displaying acceptable values for fields that are used in filters. For more information refer to <a target="_blank" href="https://help.repliers.com/en/article/using-aggregates-to-determine-acceptable-values-for-filters-c88csc">Using Aggregates To Determine Acceptable Values For Filters</a>.
+          description: Aggregates values and counts for specified fields. Aggregates have many use cases, they're particularly useful for grouping and displaying acceptable values for fields that are used in filters. <a target="_blank" href="https://help.repliers.com/en/article/using-aggregates-to-determine-acceptable-values-for-filters-c88csc/#6-determining-distinct-values">More info</a>.
           schema:
             type: string
         - name: aggregatesUnique
           in: query
-          description: Unique aggregates values and counts for specified fields. Should be used specifically for fields containing coma-separated values. Aggregates have many use cases, they're particularly useful for grouping and displaying acceptable values for fields that are used in filters. For more information refer to <a target="_blank" href="https://help.repliers.com/en/article/using-aggregates-to-determine-acceptable-values-for-filters-c88csc">Using Aggregates To Determine Acceptable Values For Filters</a>.
+          description: Unique aggregates values and counts for specified fields. Should be used specifically for fields containing coma-separated values. Aggregates have many use cases, they're particularly useful for grouping and displaying acceptable values for fields that are used in filters. <a target="_blank" href="https://help.repliers.com/en/article/using-aggregates-to-determine-acceptable-values-for-filters-c88csc/#6-determining-distinct-values">More info</a>.
           schema:
             type: string
         - name: aggregateStatistics
@@ -40,7 +40,7 @@ paths:
             type: boolean
         - name: amenities
           in: query
-          description: "Example usage: ?amenities=Gym&amenities=Swimming Pool"
+          description: Filters listings by one or more amenity values. Use the aggregates parameter to retrieve available values. Supports multiple values, for example ?amenities=Gym&amenities=Swimming Pool
           schema:
             type: array
             items:
@@ -57,7 +57,7 @@ paths:
             default: ""
         - name: area
           in: query
-          description: Filter by the geographical area of the listing (also referred to as region)
+          description: Filters listings by geographical area (also referred to as region).
           schema:
             type: string
         - name: areaOrCity
@@ -83,7 +83,7 @@ paths:
               type: string
         - name: boardId
           in: query
-          description: Filter by boardId. This is only required if your account has access to more than one MLS. You may specify one or more board IDs to filter by, if not specified, returns all boards that that account has access to be default.
+          description: "Filter by boardId. This is only required if your account has access to more than one MLS. You may specify one or more board IDs to filter by, if not specified, returns all boards that that account has access to by default. <a target=\"_blank\" href=\"https://help.repliers.com/en/article/understanding-and-using-boardids-in-the-repliers-api-lfywn2/#2-using-boardids-in-api-requests\">More info</a>."
           schema:
             type: array
             items:
@@ -91,24 +91,26 @@ paths:
               format: int32
         - name: brokerage
           in: query
-          description: Filter results by brokerage name
+          description: Filters listings by brokerage name.
           schema:
             type: string
         - name: businessSubType
           in: query
+          description: Filters commercial listings by business sub-type. Use the aggregates parameter to retrieve available values.
           schema:
             type: array
             items:
               type: string
         - name: businessType
           in: query
+          description: Filters commercial listings by business type. Use the aggregates parameter to retrieve available values.
           schema:
             type: array
             items:
               type: string
         - name: city
           in: query
-          description: Filter listing by one or more cities
+          description: Filters listings by one or more cities.
           schema:
             type: array
             items:
@@ -129,40 +131,40 @@ paths:
               type: string
         - name: cluster
           in: query
-          description: If true, enables dynamic map clusters. For more information, refer to the <a target="_blank" href="https://help.repliers.com/en/article/map-clustering-implementation-guide-1c1tgl6/">Map Clustering Implementation Guide</a>.
+          description: If true, enables dynamic map clusters. <a target="_blank" href="https://help.repliers.com/en/article/map-clustering-implementation-guide-1c1tgl6/#3-requesting-clusters">More info</a>.
           schema:
             type: boolean
         - name: clusterFields
           in: query
-          description: Specifies which listing fields to include in cluster responses. Use comma-separated values (e.g., ?clusterFields=listPrice,soldPrice). For images you can limit quantity with brackets (e.g., ?clusterFields=images[5] returns first 5 images).
+          description: Specifies which listing fields to include in cluster responses. Use comma-separated values (e.g., ?clusterFields=listPrice,soldPrice). For images you can limit quantity with brackets (e.g., ?clusterFields=images[5] returns first 5 images). <a target="_blank" href="https://help.repliers.com/en/article/map-clustering-implementation-guide-1c1tgl6/#3-single-listing-clusters-the-clusterfields-parameter">More info</a>.
           schema:
             type: string
         - name: clusterLimit
           in: query
-          description: Use this parameter to limit the amount of clusters returned when "cluster" is set to true. Values can be between 1 and 200. This parameter can only be used if "cluster" is set to true.
+          description: Use this parameter to limit the amount of clusters returned when "cluster" is set to true. Values can be between 1 and 200. This parameter can only be used if "cluster" is set to true. <a target="_blank" href="https://help.repliers.com/en/article/map-clustering-implementation-guide-1c1tgl6/#3-cluster-limit">More info</a>.
           schema:
             type: integer
             format: int32
         - name: clusterListingsThreshold
           in: query
-          description: Controls the maximum cluster size for which detailed listing information is included in the response. By default, detailed listing data is only included when a cluster contains exactly 1 listing. Setting this parameter to a higher value (e.g., 5) will include a 'listings' array with full property details for any cluster containing that many or fewer listings. This reduces the need for additional API requests when users interact with small clusters. Values can be between 1 and 100. This parameter can only be used if "cluster" is set to true.
+          description: Controls the maximum cluster size for which detailed listing information is included in the response. By default, detailed listing data is only included when a cluster contains exactly 1 listing. Setting this parameter to a higher value (e.g., 5) will include a 'listings' array with full property details for any cluster containing that many or fewer listings. This reduces the need for additional API requests when users interact with small clusters. Values can be between 1 and 100. This parameter can only be used if "cluster" is set to true. <a target="_blank" href="https://help.repliers.com/en/article/map-clustering-implementation-guide-1c1tgl6/#3-clusterlistingsthreshold-parameter">More info</a>.
           schema:
             type: integer
             format: int32
         - name: clusterPrecision
           in: query
-          description: Use this parameter to adjust the granularity of map clusters. A lower value aggregates listings into less clusters, a higher value aggregates listings into more clusters. Values can be between 0 and 29. This parameter can only be used if "cluster" is set to true.
+          description: Use this parameter to adjust the granularity of map clusters. A lower value aggregates listings into less clusters, a higher value aggregates listings into more clusters. Values can be between 0 and 29. This parameter can only be used if "cluster" is set to true. <a target="_blank" href="https://help.repliers.com/en/article/map-clustering-implementation-guide-1c1tgl6/#3-cluster-precision">More info</a>.
           schema:
             type: integer
             format: int32
         - name: clusterStatistics
           in: query
-          description: If true, when both "cluster" is true and the "statistics" parameter is used, the statistics will be calculated separately for each cluster. This could be useful in scenarios where understanding data on a per-cluster basis is important, such as when analyzing distinct groups or segments within your data.
+          description: If true, when both "cluster" is true and the "statistics" parameter is used, the statistics will be calculated separately for each cluster. This could be useful in scenarios where understanding data on a per-cluster basis is important, such as when analyzing distinct groups or segments within your data. <a target="_blank" href="https://help.repliers.com/en/article/map-clustering-implementation-guide-1c1tgl6/#3-cluster-statistics">More info</a>.
           schema:
             type: boolean
         - name: coverImage
           in: query
-          description: If specified, changes the cover image to the specified feature. For more information, refer to <a target="_blank" href="https://help.repliers.com/en/article/changing-the-cover-image-of-property-listings-with-ai-powered-coverimage-parameter-40861n">Changing the Cover Image of Property Listings with AI-Powered CoverImage Parameter</a>
+          description: If specified, changes the cover image to the specified feature. <a target="_blank" href="https://help.repliers.com/en/article/changing-the-cover-image-of-property-listings-with-ai-powered-coverimage-parameter-40861n/#6-supported-values-for-coverimage">More info</a>.
           schema:
             type: string
             enum:
@@ -179,7 +181,7 @@ paths:
               - garage
         - name: den
           in: query
-          description: Filter listings by den description.
+          description: Filters listings by den type. Use the aggregates parameter to retrieve available values.
           schema:
             type: string
         - name: displayAddressOnInternet
@@ -208,7 +210,7 @@ paths:
               - "N"
         - name: district
           in: query
-          description: Filter by the geographical district of the listing
+          description: Filters listings by geographical district.
           schema:
             type: string
         - name: driveway
@@ -227,12 +229,12 @@ paths:
               type: string
         - name: fields
           in: query
-          description: "Use if you want to limit the response to containing certain fields only. For example: fields?listPrice,soldPrice would limit the response to contain listPrice and soldPrice only. You can also specify the amount of images to return, for example if a listing has 40 images total and you specify fields=images[5] it will only return the first 5 images."
+          description: "Use if you want to limit the response to containing certain fields only. For example: fields?listPrice,soldPrice would limit the response to contain listPrice and soldPrice only. You can also specify the amount of images to return, for example if a listing has 40 images total and you specify fields=images[5] it will only return the first 5 images. <a target=\"_blank\" href=\"https://help.repliers.com/en/article/optimizing-api-requests-with-the-fields-parameter-lq416x/#3-how-to-use-the-fields-parameter\">More info</a>."
           schema:
             type: string
         - name: garage
           in: query
-          description: Filter listings by garage description.
+          description: Filters listings by garage type. Use the aggregates parameter to retrieve available values.
           schema:
             type: array
             items:
@@ -278,7 +280,7 @@ paths:
             type: string
         - name: listDate
           in: query
-          description: "Filter listings by a specific date that the listings were added to the MLS. Date format: <code>YYYY-MM-DD</code>"
+          description: "Filters listings by a specific date that the listings were added to the MLS. Date format: <code>YYYY-MM-DD</code>"
           schema:
             type: string
             format: date
@@ -308,13 +310,13 @@ paths:
             type: string
         - name: map
           in: query
-          description: 'Filters listings within a geoJSON polygon or multi-polygon boundary.<br/><br/>Example boundary:[[[-79.14121,43.79041],[-79.132627,43.773059],[-79.188932,43.886988],[-79.200605,43.877832],[-79.236654,43.869665],[-79.265836,43.860011],[-79.281972,43.856051],[-79.322828,43.84689],[-79.368146,43.839214],[-79.386021,43.836139],[-79.41486,43.838616],[-79.423787,43.836635],[-79.475285,43.82227],[-79.480092,43.813352],[-79.480778,43.803441],[-79.485585,43.79799],[-79.493825,43.794025],[-79.556996,43.779649],[-79.601628,43.761303],[-79.61611,43.758572],[-79.629934,43.750141],[-79.625471,43.728064],[-79.616888,43.713177],[-79.606245,43.695555],[-79.601095,43.685873],[-79.593885,43.681156],[-79.590109,43.672465],[-79.582212,43.671224],[-79.574659,43.670975],[-79.535177,43.58325],[-79.424627,43.619052],[-79.385488,43.602645],[-79.315451,43.612092],[-79.14121,43.79041]]].<BR/><BR/>For more information refer to the implementation guide: <a target="_blank" href="https://help.repliers.com/en/article/filtering-listings-geo-spatially-using-the-map-parameter-7sorw0/">Filtering Listings Geo-Spatially Using the "map" Parameter</a>'
+          description: 'Filters listings within a geoJSON polygon or multi-polygon boundary.<br/><br/>Example boundary:[[[-79.14121,43.79041],[-79.132627,43.773059],[-79.188932,43.886988],[-79.200605,43.877832],[-79.236654,43.869665],[-79.265836,43.860011],[-79.281972,43.856051],[-79.322828,43.84689],[-79.368146,43.839214],[-79.386021,43.836139],[-79.41486,43.838616],[-79.423787,43.836635],[-79.475285,43.82227],[-79.480092,43.813352],[-79.480778,43.803441],[-79.485585,43.79799],[-79.493825,43.794025],[-79.556996,43.779649],[-79.601628,43.761303],[-79.61611,43.758572],[-79.629934,43.750141],[-79.625471,43.728064],[-79.616888,43.713177],[-79.606245,43.695555],[-79.601095,43.685873],[-79.593885,43.681156],[-79.590109,43.672465],[-79.582212,43.671224],[-79.574659,43.670975],[-79.535177,43.58325],[-79.424627,43.619052],[-79.385488,43.602645],[-79.315451,43.612092],[-79.14121,43.79041]]]. <a target="_blank" href="https://help.repliers.com/en/article/filtering-listings-geo-spatially-using-the-map-parameter-7sorw0/#3-single-polygon-request">More info</a>.'
           schema:
             type: string
             format: json
         - name: mapOperator
           in: query
-          description: When a multi-polygon is provided for the "map" parameter the default condition is "OR", meaning that it will return all listings that fall inside any of the polygons. This can be changed to "AND" in which case it will return listings that fall inside all of the polygons.
+          description: When a multi-polygon is provided for the "map" parameter the default condition is "OR", meaning that it will return all listings that fall inside any of the polygons. This can be changed to "AND" in which case it will return listings that fall inside all of the polygons. <a target="_blank" href="https://help.repliers.com/en/article/filtering-listings-geo-spatially-using-the-map-parameter-7sorw0/#3-using-the-mapoperator-parameter">More info</a>.
           schema:
             type: string
             enum:
@@ -324,12 +326,13 @@ paths:
             default: ""
         - name: maxBaths
           in: query
+          description: Filters listings whose total bathroom count is <= the supplied value.
           schema:
             type: integer
             format: int32
         - name: maxBathroomsHalf
           in: query
-          description: The maximum amount of half bathrooms to be used as a filter for this search.
+          description: Filters listings whose half bathroom count is <= the supplied value.
           schema:
             type: integer
             format: int32
@@ -353,30 +356,31 @@ paths:
             format: int32
         - name: maxClosedDate
           in: query
-          description: "Filter listings that have Close Date on or before the supplied value. Date format: <code>YYYY-MM-DD</code>"
+          description: "Filters listings that have a close date on or before the supplied value. Date format: <code>YYYY-MM-DD</code>"
           schema:
             type: string
             format: date
         - name: maxDaysOnMarket
           in: query
-          description: Filter `status=U` listings that have been on the market for number of days less than or equal to the supplied value.
+          description: Filters `status=U` listings that have been on the market for number of days less than or equal to the supplied value.
           schema:
             type: integer
             format: int32
         - name: maxKitchens
           in: query
+          description: Filters listings whose kitchen count is <= the supplied value.
           schema:
             type: integer
             format: int32
         - name: maxListDate
           in: query
-          description: "Filter listings that were listed on or before the supplied value. Date format: <code>YYYY-MM-DD</code>"
+          description: "Filters listings that were listed on or before the supplied value. Date format: <code>YYYY-MM-DD</code>"
           schema:
             type: string
             format: date
         - name: maxLotSizeSqft
           in: query
-          description: Filter lot size by maximum square feet.
+          description: Filters listings whose lot size is <= the supplied value in square feet.
           schema:
             type: integer
             format: int32
@@ -394,11 +398,13 @@ paths:
             format: date
         - name: maxParkingSpaces
           in: query
+          description: Filters listings whose parking space count is <= the supplied value.
           schema:
             type: integer
             format: int32
         - name: maxPrice
           in: query
+          description: Filters listings whose list price is <= the supplied value.
           schema:
             type: integer
             format: int32
@@ -416,31 +422,31 @@ paths:
             format: date
         - name: maxSoldDate
           in: query
-          description: "Filter listings that were sold/leased on or before the supplied value. Date format: <code>YYYY-MM-DD</code>"
+          description: "Filters listings that were sold/leased on or before the supplied value. Date format: <code>YYYY-MM-DD</code>"
           schema:
             type: string
             format: date
         - name: maxSoldPrice
           in: query
-          description: Filter listings whose sold price is <= the supplied value.
+          description: Filters listings whose sold price is <= the supplied value.
           schema:
             type: integer
             format: int32
         - name: maxStreetNumber
           in: query
-          description: This parameter enables users to filter results by specifying the maximum street number. It ensures that the street number of the listing is less than or equal to the value provided. This is helpful when users are interested in properties within a specific range of street numbers, excluding listings that fall outside this range.
+          description: Filters listings whose street number is <= the supplied value.
           schema:
             type: integer
             format: int32
         - name: maxStories
           in: query
-          description: Filter listings whose stories are <= the supplied value.
+          description: Filters listings whose stories are <= the supplied value.
           schema:
             type: integer
             format: int32
         - name: maxSqft
           in: query
-          description: Filter listings whose square footage is <= the supplied value. Note - excludes listings where the sqft value is not supplied by the MLS.
+          description: Filters listings whose square footage is <= the supplied value. Excludes listings where the sqft value is not supplied by the MLS.
           schema:
             type: integer
             format: int32
@@ -452,30 +458,31 @@ paths:
             format: int32
         - name: maxUnavailableDate
           in: query
-          description: Filter listings that became unavailable on or before the supplied value. Not all MLSes support this parameter.
+          description: Filters listings that became unavailable on or before the supplied value. Not all MLSes support this parameter.
           schema:
             type: string
             format: date
         - name: maxUpdatedOn
           in: query
-          description: Filter listings that were updated on or before the supplied value.
+          description: Filters listings that were updated on or before the supplied value.
           schema:
             type: string
             format: date
         - name: maxYearBuilt
           in: query
-          description: Filter listings whose year built value is <= the supplied value. excludes listings where the year built value is not supplied by the MLS.
+          description: Filters listings whose year built value is <= the supplied value. Excludes listings where the year built value is not supplied by the MLS.
           schema:
             type: integer
             format: int32
         - name: minBaths
           in: query
+          description: Filters listings whose total bathroom count is >= the supplied value.
           schema:
             type: integer
             format: int32
         - name: minBathroomsHalf
           in: query
-          description: The minimum amount of half bathrooms to be used as a filter for this search.
+          description: Filters listings whose half bathroom count is >= the supplied value.
           schema:
             type: integer
             format: int32
@@ -499,13 +506,13 @@ paths:
             format: int32
         - name: minClosedDate
           in: query
-          description: "Filter listings that have Close Date on or after the supplied value. Date format: <code>YYYY-MM-DD</code>"
+          description: "Filters listings that have a close date on or after the supplied value. Date format: <code>YYYY-MM-DD</code>"
           schema:
             type: string
             format: date
         - name: minDaysOnMarket
           in: query
-          description: Filter `status=U` listings that have been on the market for number of days greater than or equal to the supplied value.
+          description: Filters `status=U` listings that have been on the market for number of days greater than or equal to the supplied value.
           schema:
             type: integer
             format: int32
@@ -517,18 +524,19 @@ paths:
             format: int32
         - name: minKitchens
           in: query
+          description: Filters listings whose kitchen count is >= the supplied value.
           schema:
             type: integer
             format: int32
         - name: minListDate
           in: query
-          description: "Filter listings that were listed on or after the supplied value. Date format: <code>YYYY-MM-DD</code>"
+          description: "Filters listings that were listed on or after the supplied value. Date format: <code>YYYY-MM-DD</code>"
           schema:
             type: string
             format: date
         - name: minLotSizeSqft
           in: query
-          description: Filter lot size by minimum square feet.
+          description: Filters listings whose lot size is >= the supplied value in square feet.
           schema:
             type: integer
             format: int32
@@ -540,11 +548,13 @@ paths:
             format: date
         - name: minParkingSpaces
           in: query
+          description: Filters listings whose parking space count is >= the supplied value.
           schema:
             type: integer
             format: int32
         - name: minPrice
           in: query
+          description: Filters listings whose list price is >= the supplied value.
           schema:
             type: integer
             format: int32
@@ -562,7 +572,7 @@ paths:
             format: date
         - name: minSoldDate
           in: query
-          description: "Filter listings that were sold/leased on or after the supplied value. Date format: <code>YYYY-MM-DD</code>"
+          description: "Filters listings that were sold/leased on or after the supplied value. Date format: <code>YYYY-MM-DD</code>"
           schema:
             type: string
             format: date
@@ -570,7 +580,8 @@ paths:
           in: query
           description: Filter listings whose sold price is >= the supplied value.
           schema:
-            type: string
+            type: integer
+            format: int32
         - name: minStories
           in: query
           description: Filter listings whose stories are >= the supplied value.
@@ -579,13 +590,13 @@ paths:
             format: int32
         - name: minSqft
           in: query
-          description: Filter listings whose square footage is >= the supplied value. Note - excludes listings where the sqft value is not supplied by the MLS.
+          description: Filters listings whose square footage is >= the supplied value. Excludes listings where the sqft value is not supplied by the MLS.
           schema:
             type: integer
             format: int32
         - name: minStreetNumber
           in: query
-          description: This parameter allows users to filter results by specifying the minimum street number. It ensures that the street number of the listing is greater than or equal to the value provided. This is particularly useful for narrowing down search results to properties within a specific range of street numbers.
+          description: Filters listings whose street number is >= the supplied value.
           schema:
             type: integer
             format: int32
@@ -597,21 +608,22 @@ paths:
             format: int32
         - name: minUnavailableDate
           in: query
-          description: "Filter listings that became unavailable on or after the supplied value. Not all MLSes support this parameter. Date format: <code>YYYY-MM-DD</code>"
+          description: "Filters listings that became unavailable on or after the supplied value. Not all MLSes support this parameter. Date format: <code>YYYY-MM-DD</code>"
           schema:
             type: string
             format: date
         - name: minUpdatedOn
           in: query
-          description: Filter listings that were updated on or after the supplied value.
+          description: Filters listings that were updated on or after the supplied value.
           schema:
             type: string
             format: date
         - name: minYearBuilt
           in: query
-          description: Filter listings whose year built value is >= the supplied value. excludes listings where the year built value is not supplied by the MLS.
+          description: Filter listings whose year built value is >= the supplied value. Excludes listings where the year built value is not supplied by the MLS.
           schema:
-            type: string
+            type: integer
+            format: int32
         - name: mlsNumber
           in: query
           description: Filter listings by one or more MLS numbers.
@@ -633,7 +645,7 @@ paths:
             type: string
         - name: operator
           in: query
-          description: If set to "AND", listings must match all supplied parameters. If set to "OR", listings must match at least 1 parameter. Default is "AND"
+          description: "If set to \"AND\", listings must match all supplied parameters. If set to \"OR\", listings must match at least 1 parameter. Default is \"AND\". <a target=\"_blank\" href=\"https://help.repliers.com/en/article/understanding-operators-in-the-repliers-api-1h2or2x/#2-overview\">More info</a>."
           schema:
             type: string
             enum:
@@ -643,7 +655,7 @@ paths:
             default: ""
         - name: pageNum
           in: query
-          description: If specified indexes a specific page in the results set. For example, if there are 1000 listings and 100 listings per page, if you'd like to view listings 101-201 you'd specify pageNum=2
+          description: The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200.
           schema:
             type: integer
             format: int32
@@ -669,7 +681,7 @@ paths:
             format: int32
         - name: resultsPerPage
           in: query
-          description: The amount of listings to return in each page of the results set.
+          description: The number of listings to return per page.
           schema:
             type: integer
             format: int32
@@ -723,7 +735,7 @@ paths:
               type: string
         - name: statistics
           in: query
-          description: Use this parameter to request statistics relevant to the listings returned in your search. For more information, refer to the <a target="_blank" href="https://help.repliers.com/en/article/real-time-market-statistics-implementation-guide-l3b1uy/">Real-Time Market Statistics Implementation Guide</a>
+          description: Use this parameter to request statistics relevant to the listings returned in your search. <a target="_blank" href="https://help.repliers.com/en/article/real-time-market-statistics-implementation-guide-l3b1uy/#1-how-to-request-statistics">More info</a>.
           schema:
             type: string
         - name: standardStatus
@@ -886,7 +898,7 @@ paths:
                     type: object
                 map:
                   type: string
-                  description: 'Filters listings within a geoJSON polygon or multi-polygon boundary.<br/><br/>Example boundary:[[[-79.14121,43.79041],[-79.132627,43.773059],[-79.188932,43.886988],[-79.200605,43.877832],[-79.236654,43.869665],[-79.265836,43.860011],[-79.281972,43.856051],[-79.322828,43.84689],[-79.368146,43.839214],[-79.386021,43.836139],[-79.41486,43.838616],[-79.423787,43.836635],[-79.475285,43.82227],[-79.480092,43.813352],[-79.480778,43.803441],[-79.485585,43.79799],[-79.493825,43.794025],[-79.556996,43.779649],[-79.601628,43.761303],[-79.61611,43.758572],[-79.629934,43.750141],[-79.625471,43.728064],[-79.616888,43.713177],[-79.606245,43.695555],[-79.601095,43.685873],[-79.593885,43.681156],[-79.590109,43.672465],[-79.582212,43.671224],[-79.574659,43.670975],[-79.535177,43.58325],[-79.424627,43.619052],[-79.385488,43.602645],[-79.315451,43.612092],[-79.14121,43.79041]]].<BR/><BR/>For more information refer to the implementation guide: <a target="_blank" href="https://help.repliers.com/en/article/filtering-listings-geo-spatially-using-the-map-parameter-7sorw0/">Filtering Listings Geo-Spatially Using the "map" Parameter</a>.'
+                  description: 'Filters listings within a geoJSON polygon or multi-polygon boundary.<br/><br/>Example boundary:[[[-79.14121,43.79041],[-79.132627,43.773059],[-79.188932,43.886988],[-79.200605,43.877832],[-79.236654,43.869665],[-79.265836,43.860011],[-79.281972,43.856051],[-79.322828,43.84689],[-79.368146,43.839214],[-79.386021,43.836139],[-79.41486,43.838616],[-79.423787,43.836635],[-79.475285,43.82227],[-79.480092,43.813352],[-79.480778,43.803441],[-79.485585,43.79799],[-79.493825,43.794025],[-79.556996,43.779649],[-79.601628,43.761303],[-79.61611,43.758572],[-79.629934,43.750141],[-79.625471,43.728064],[-79.616888,43.713177],[-79.606245,43.695555],[-79.601095,43.685873],[-79.593885,43.681156],[-79.590109,43.672465],[-79.582212,43.671224],[-79.574659,43.670975],[-79.535177,43.58325],[-79.424627,43.619052],[-79.385488,43.602645],[-79.315451,43.612092],[-79.14121,43.79041]]]. <a target="_blank" href="https://help.repliers.com/en/article/filtering-listings-geo-spatially-using-the-map-parameter-7sorw0/#3-single-polygon-request">More info</a>.'
                   format: json
       responses:
         "200":
@@ -12388,6 +12400,9 @@ paths:
         This is really useful if you'd like to show your users other properties they may be interested in.
 
         By default this endpoint will retrieve similar properties in the same neighborhood, however you can override this by using a radius parameter.
+      externalDocs:
+        description: Similar Active Listings
+        url: https://help.repliers.com/en/article/sold-comparables-similar-active-listings-selection-logic-1h396j8/#3-similar-active-listings
       operationId: find-similar-listings
       parameters:
         - name: mlsNumber
@@ -12398,7 +12413,7 @@ paths:
           required: true
         - name: boardId
           in: query
-          description: Filter by boardId. This is only required if your account has access to more than one MLS. You may specify one or more board IDs to filter by, if not specified, returns all boards that that account has access to be default.
+          description: "Filter by boardId. This is only required if your account has access to more than one MLS. You may specify one or more board IDs to filter by, if not specified, returns all boards that that account has access to by default. <a target=\"_blank\" href=\"https://help.repliers.com/en/article/understanding-and-using-boardids-in-the-repliers-api-lfywn2/#2-using-boardids-in-api-requests\">More info</a>."
           schema:
             type: array
             items:
@@ -12440,6 +12455,9 @@ paths:
         Use this endpoint to retrieve the MLS history of a specific address.
 
         In addition to displaying the history you could also use the information in the response to create a graph that illustrates the change in value over time.
+      externalDocs:
+        description: History for a Specific Address
+        url: https://help.repliers.com/en/article/accessing-historical-listings-for-an-address-1kfsor7/#4-history-for-a-specific-address
       operationId: lookup-address-history
       parameters:
         - name: city
@@ -12496,6 +12514,9 @@ paths:
     get:
       summary: Get deleted listings
       description: Use this endpoint to retrieve listings that have been deleted from the MLS. Listings that have been deleted from the MLS should not be displayed in your websites and apps. Note - deleted listings are not applicable in some MLSes.
+      externalDocs:
+        description: Staying Synchronized with Deleted Listings
+        url: https://help.repliers.com/en/article/managing-deleted-listings-19q712v/#2-implementation-staying-synchronized-with-deleted-listings
       operationId: get-deleted-listings
       parameters:
         - name: updatedOn
@@ -12570,14 +12591,14 @@ paths:
       parameters:
         - name: pageNum
           in: query
-          description: If specified loads a specific page in the results set. For example, if there are 1000 buildings and 100 buildings per page, if you'd like to view buildings 101-201 you'd specify pageNum=2
+          description: The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200.
           schema:
             type: integer
             format: int32
             default: 1
         - name: resultsPerPage
           in: query
-          description: The amount of buildings to return in each page of the results set.
+          description: The number of buildings to return per page.
           schema:
             type: integer
             format: int32

@@ -16,6 +16,9 @@ paths:
         Messages can be used to facilitate communication between agents and their clients for marketing automation or general communication.
 
         Text messaging and email is supported.
+      externalDocs:
+        description: Send a Message
+        url: https://help.repliers.com/en/article/how-to-send-your-first-message-using-repliers-f93kbg/#2-step-3-send-a-message
       operationId: send-a-message
       requestBody:
         content:
@@ -113,14 +116,14 @@ paths:
             format: int32
         - name: pageNum
           in: query
-          description: If specified indexes a specific page in the results set. For example, if there are 1000 listings and 100 listings per page, if you'd like to view listings 101-201 you'd specify pageNum=2
+          description: The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200.
           schema:
             type: integer
             format: int32
             default: 1
         - name: resultsPerPage
           in: query
-          description: The amount of listings to return in each page of the results set.
+          description: The number of messages to return per page.
           schema:
             type: integer
             format: int32

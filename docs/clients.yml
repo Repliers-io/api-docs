@@ -9,6 +9,9 @@ paths:
     post:
       summary: Create a client
       description: Use this endpoint to create a client. When creating saved searches, messages or favorites a client needs to be specified.
+      externalDocs:
+        description: "Step 2: Create a Client"
+        url: https://help.repliers.com/en/article/implementation-guide-for-agents-and-clients-of4k3i/#2-step-2-create-a-client
       operationId: create-a-client
       requestBody:
         content:
@@ -82,20 +85,24 @@ paths:
       parameters:
         - name: agentId
           in: query
+          description: Filters clients by the ID of their assigned agent.
           schema:
             type: integer
             format: int32
         - name: clientId
           in: query
+          description: Filters clients by their unique ID.
           schema:
             type: integer
             format: int32
         - name: email
           in: query
+          description: Filters clients by email address.
           schema:
             type: string
         - name: fname
           in: query
+          description: Filters clients by first name.
           schema:
             type: string
         - name: keywords
@@ -105,15 +112,18 @@ paths:
             type: string
         - name: lname
           in: query
+          description: Filters clients by last name.
           schema:
             type: string
         - name: phone
           in: query
+          description: Filters clients by phone number.
           schema:
             type: integer
             format: int32
         - name: status
           in: query
+          description: If false, returns only disabled clients. If true, returns only active clients.
           schema:
             type: boolean
         - name: condition
@@ -130,14 +140,14 @@ paths:
             default: OR
         - name: pageNum
           in: query
-          description: If specified indexes a specific page in the results set. For example, if there are 1000 listings and 100 listings per page, if you'd like to view listings 101-201 you'd specify pageNum=2
+          description: The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200.
           schema:
             type: integer
             format: int32
             default: 1
         - name: resultsPerPage
           in: query
-          description: The amount of listings to return in each page of the results set.
+          description: The number of clients to return per page.
           schema:
             type: integer
             format: int32
@@ -167,7 +177,10 @@ paths:
   /clients/{clientId}:
     patch:
       summary: Update a client
-      description: Use this endpoint to update a client's information.
+      description: Updates one or more fields for an existing client. Only include the fields you wish to change — omitted fields retain their current values.
+      externalDocs:
+        description: Update a Client or Agent
+        url: https://help.repliers.com/en/article/implementation-guide-for-agents-and-clients-of4k3i/#2-step-4-update-a-client-or-agent
       operationId: update-a-client
       parameters:
         - name: clientId
@@ -230,7 +243,10 @@ paths:
       deprecated: false
     delete:
       summary: Delete a client
-      description: Use this endpoint to delete a client.
+      description: Deletes a client and all associated data, including their saved searches, favorites, and messages.
+      externalDocs:
+        description: Deleting an Agent or Client
+        url: https://help.repliers.com/en/article/implementation-guide-for-agents-and-clients-of4k3i/#2-deleting-an-agent-or-client
       operationId: delete-a-client
       parameters:
         - name: clientId
@@ -247,7 +263,7 @@ paths:
       deprecated: false
     get:
       summary: Get a client
-      description: Use this endpoint to get details about a specific client.
+      description: Returns the full profile of a specific client, including their contact information, preferences, and tags.
       operationId: get-a-client
       parameters:
         - name: clientId

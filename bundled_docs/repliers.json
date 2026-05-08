@@ -52,7 +52,7 @@
           {
             "name": "aggregates",
             "in": "query",
-            "description": "Aggregates values and counts for specified fields. Aggregates have many use cases, they're particularly useful for grouping and displaying acceptable values for fields that are used in filters. For more information refer to <a target=\"_blank\" href=\"https://help.repliers.com/en/article/using-aggregates-to-determine-acceptable-values-for-filters-c88csc\">Using Aggregates To Determine Acceptable Values For Filters</a>.",
+            "description": "Aggregates values and counts for specified fields. Aggregates have many use cases, they're particularly useful for grouping and displaying acceptable values for fields that are used in filters. <a target=\"_blank\" href=\"https://help.repliers.com/en/article/using-aggregates-to-determine-acceptable-values-for-filters-c88csc/#6-determining-distinct-values\">More info</a>.",
             "schema": {
               "type": "string"
             }
@@ -60,7 +60,7 @@
           {
             "name": "aggregatesUnique",
             "in": "query",
-            "description": "Unique aggregates values and counts for specified fields. Should be used specifically for fields containing coma-separated values. Aggregates have many use cases, they're particularly useful for grouping and displaying acceptable values for fields that are used in filters. For more information refer to <a target=\"_blank\" href=\"https://help.repliers.com/en/article/using-aggregates-to-determine-acceptable-values-for-filters-c88csc\">Using Aggregates To Determine Acceptable Values For Filters</a>.",
+            "description": "Unique aggregates values and counts for specified fields. Should be used specifically for fields containing coma-separated values. Aggregates have many use cases, they're particularly useful for grouping and displaying acceptable values for fields that are used in filters. <a target=\"_blank\" href=\"https://help.repliers.com/en/article/using-aggregates-to-determine-acceptable-values-for-filters-c88csc/#6-determining-distinct-values\">More info</a>.",
             "schema": {
               "type": "string"
             }
@@ -76,7 +76,7 @@
           {
             "name": "amenities",
             "in": "query",
-            "description": "Example usage: ?amenities=Gym&amenities=Swimming Pool",
+            "description": "Filters listings by one or more amenity values. Use the aggregates parameter to retrieve available values. Supports multiple values, for example ?amenities=Gym&amenities=Swimming Pool",
             "schema": {
               "type": "array",
               "items": {
@@ -101,7 +101,7 @@
           {
             "name": "area",
             "in": "query",
-            "description": "Filter by the geographical area of the listing (also referred to as region)",
+            "description": "Filters listings by geographical area (also referred to as region).",
             "schema": {
               "type": "string"
             }
@@ -142,7 +142,7 @@
           {
             "name": "boardId",
             "in": "query",
-            "description": "Filter by boardId. This is only required if your account has access to more than one MLS. You may specify one or more board IDs to filter by, if not specified, returns all boards that that account has access to be default.",
+            "description": "Filter by boardId. This is only required if your account has access to more than one MLS. You may specify one or more board IDs to filter by, if not specified, returns all boards that that account has access to by default. <a target=\"_blank\" href=\"https://help.repliers.com/en/article/understanding-and-using-boardids-in-the-repliers-api-lfywn2/#2-using-boardids-in-api-requests\">More info</a>.",
             "schema": {
               "type": "array",
               "items": {
@@ -154,7 +154,7 @@
           {
             "name": "brokerage",
             "in": "query",
-            "description": "Filter results by brokerage name",
+            "description": "Filters listings by brokerage name.",
             "schema": {
               "type": "string"
             }
@@ -162,6 +162,7 @@
           {
             "name": "businessSubType",
             "in": "query",
+            "description": "Filters commercial listings by business sub-type. Use the aggregates parameter to retrieve available values.",
             "schema": {
               "type": "array",
               "items": {
@@ -172,6 +173,7 @@
           {
             "name": "businessType",
             "in": "query",
+            "description": "Filters commercial listings by business type. Use the aggregates parameter to retrieve available values.",
             "schema": {
               "type": "array",
               "items": {
@@ -182,7 +184,7 @@
           {
             "name": "city",
             "in": "query",
-            "description": "Filter listing by one or more cities",
+            "description": "Filters listings by one or more cities.",
             "schema": {
               "type": "array",
               "items": {
@@ -215,7 +217,7 @@
           {
             "name": "cluster",
             "in": "query",
-            "description": "If true, enables dynamic map clusters. For more information, refer to the <a target=\"_blank\" href=\"https://help.repliers.com/en/article/map-clustering-implementation-guide-1c1tgl6/\">Map Clustering Implementation Guide</a>.",
+            "description": "If true, enables dynamic map clusters. <a target=\"_blank\" href=\"https://help.repliers.com/en/article/map-clustering-implementation-guide-1c1tgl6/#3-requesting-clusters\">More info</a>.",
             "schema": {
               "type": "boolean"
             }
@@ -223,7 +225,7 @@
           {
             "name": "clusterFields",
             "in": "query",
-            "description": "Specifies which listing fields to include in cluster responses. Use comma-separated values (e.g., ?clusterFields=listPrice,soldPrice). For images you can limit quantity with brackets (e.g., ?clusterFields=images[5] returns first 5 images).",
+            "description": "Specifies which listing fields to include in cluster responses. Use comma-separated values (e.g., ?clusterFields=listPrice,soldPrice). For images you can limit quantity with brackets (e.g., ?clusterFields=images[5] returns first 5 images). <a target=\"_blank\" href=\"https://help.repliers.com/en/article/map-clustering-implementation-guide-1c1tgl6/#3-single-listing-clusters-the-clusterfields-parameter\">More info</a>.",
             "schema": {
               "type": "string"
             }
@@ -231,7 +233,7 @@
           {
             "name": "clusterLimit",
             "in": "query",
-            "description": "Use this parameter to limit the amount of clusters returned when \"cluster\" is set to true. Values can be between 1 and 200. This parameter can only be used if \"cluster\" is set to true.",
+            "description": "Use this parameter to limit the amount of clusters returned when \"cluster\" is set to true. Values can be between 1 and 200. This parameter can only be used if \"cluster\" is set to true. <a target=\"_blank\" href=\"https://help.repliers.com/en/article/map-clustering-implementation-guide-1c1tgl6/#3-cluster-limit\">More info</a>.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -240,7 +242,7 @@
           {
             "name": "clusterListingsThreshold",
             "in": "query",
-            "description": "Controls the maximum cluster size for which detailed listing information is included in the response. By default, detailed listing data is only included when a cluster contains exactly 1 listing. Setting this parameter to a higher value (e.g., 5) will include a 'listings' array with full property details for any cluster containing that many or fewer listings. This reduces the need for additional API requests when users interact with small clusters. Values can be between 1 and 100. This parameter can only be used if \"cluster\" is set to true.",
+            "description": "Controls the maximum cluster size for which detailed listing information is included in the response. By default, detailed listing data is only included when a cluster contains exactly 1 listing. Setting this parameter to a higher value (e.g., 5) will include a 'listings' array with full property details for any cluster containing that many or fewer listings. This reduces the need for additional API requests when users interact with small clusters. Values can be between 1 and 100. This parameter can only be used if \"cluster\" is set to true. <a target=\"_blank\" href=\"https://help.repliers.com/en/article/map-clustering-implementation-guide-1c1tgl6/#3-clusterlistingsthreshold-parameter\">More info</a>.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -249,7 +251,7 @@
           {
             "name": "clusterPrecision",
             "in": "query",
-            "description": "Use this parameter to adjust the granularity of map clusters. A lower value aggregates listings into less clusters, a higher value aggregates listings into more clusters. Values can be between 0 and 29. This parameter can only be used if \"cluster\" is set to true.",
+            "description": "Use this parameter to adjust the granularity of map clusters. A lower value aggregates listings into less clusters, a higher value aggregates listings into more clusters. Values can be between 0 and 29. This parameter can only be used if \"cluster\" is set to true. <a target=\"_blank\" href=\"https://help.repliers.com/en/article/map-clustering-implementation-guide-1c1tgl6/#3-cluster-precision\">More info</a>.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -258,7 +260,7 @@
           {
             "name": "clusterStatistics",
             "in": "query",
-            "description": "If true, when both \"cluster\" is true and the \"statistics\" parameter is used, the statistics will be calculated separately for each cluster. This could be useful in scenarios where understanding data on a per-cluster basis is important, such as when analyzing distinct groups or segments within your data.",
+            "description": "If true, when both \"cluster\" is true and the \"statistics\" parameter is used, the statistics will be calculated separately for each cluster. This could be useful in scenarios where understanding data on a per-cluster basis is important, such as when analyzing distinct groups or segments within your data. <a target=\"_blank\" href=\"https://help.repliers.com/en/article/map-clustering-implementation-guide-1c1tgl6/#3-cluster-statistics\">More info</a>.",
             "schema": {
               "type": "boolean"
             }
@@ -266,7 +268,7 @@
           {
             "name": "coverImage",
             "in": "query",
-            "description": "If specified, changes the cover image to the specified feature. For more information, refer to <a target=\"_blank\" href=\"https://help.repliers.com/en/article/changing-the-cover-image-of-property-listings-with-ai-powered-coverimage-parameter-40861n\">Changing the Cover Image of Property Listings with AI-Powered CoverImage Parameter</a>",
+            "description": "If specified, changes the cover image to the specified feature. <a target=\"_blank\" href=\"https://help.repliers.com/en/article/changing-the-cover-image-of-property-listings-with-ai-powered-coverimage-parameter-40861n/#6-supported-values-for-coverimage\">More info</a>.",
             "schema": {
               "type": "string",
               "enum": [
@@ -287,7 +289,7 @@
           {
             "name": "den",
             "in": "query",
-            "description": "Filter listings by den description.",
+            "description": "Filters listings by den type. Use the aggregates parameter to retrieve available values.",
             "schema": {
               "type": "string"
             }
@@ -331,7 +333,7 @@
           {
             "name": "district",
             "in": "query",
-            "description": "Filter by the geographical district of the listing",
+            "description": "Filters listings by geographical district.",
             "schema": {
               "type": "string"
             }
@@ -361,7 +363,7 @@
           {
             "name": "fields",
             "in": "query",
-            "description": "Use if you want to limit the response to containing certain fields only. For example: fields?listPrice,soldPrice would limit the response to contain listPrice and soldPrice only. You can also specify the amount of images to return, for example if a listing has 40 images total and you specify fields=images[5] it will only return the first 5 images.",
+            "description": "Use if you want to limit the response to containing certain fields only. For example: fields?listPrice,soldPrice would limit the response to contain listPrice and soldPrice only. You can also specify the amount of images to return, for example if a listing has 40 images total and you specify fields=images[5] it will only return the first 5 images. <a target=\"_blank\" href=\"https://help.repliers.com/en/article/optimizing-api-requests-with-the-fields-parameter-lq416x/#3-how-to-use-the-fields-parameter\">More info</a>.",
             "schema": {
               "type": "string"
             }
@@ -369,7 +371,7 @@
           {
             "name": "garage",
             "in": "query",
-            "description": "Filter listings by garage description.",
+            "description": "Filters listings by garage type. Use the aggregates parameter to retrieve available values.",
             "schema": {
               "type": "array",
               "items": {
@@ -440,7 +442,7 @@
           {
             "name": "listDate",
             "in": "query",
-            "description": "Filter listings by a specific date that the listings were added to the MLS. Date format: <code>YYYY-MM-DD</code>",
+            "description": "Filters listings by a specific date that the listings were added to the MLS. Date format: <code>YYYY-MM-DD</code>",
             "schema": {
               "type": "string",
               "format": "date"
@@ -487,7 +489,7 @@
           {
             "name": "map",
             "in": "query",
-            "description": "Filters listings within a geoJSON polygon or multi-polygon boundary.<br/><br/>Example boundary:[[[-79.14121,43.79041],[-79.132627,43.773059],[-79.188932,43.886988],[-79.200605,43.877832],[-79.236654,43.869665],[-79.265836,43.860011],[-79.281972,43.856051],[-79.322828,43.84689],[-79.368146,43.839214],[-79.386021,43.836139],[-79.41486,43.838616],[-79.423787,43.836635],[-79.475285,43.82227],[-79.480092,43.813352],[-79.480778,43.803441],[-79.485585,43.79799],[-79.493825,43.794025],[-79.556996,43.779649],[-79.601628,43.761303],[-79.61611,43.758572],[-79.629934,43.750141],[-79.625471,43.728064],[-79.616888,43.713177],[-79.606245,43.695555],[-79.601095,43.685873],[-79.593885,43.681156],[-79.590109,43.672465],[-79.582212,43.671224],[-79.574659,43.670975],[-79.535177,43.58325],[-79.424627,43.619052],[-79.385488,43.602645],[-79.315451,43.612092],[-79.14121,43.79041]]].<BR/><BR/>For more information refer to the implementation guide: <a target=\"_blank\" href=\"https://help.repliers.com/en/article/filtering-listings-geo-spatially-using-the-map-parameter-7sorw0/\">Filtering Listings Geo-Spatially Using the \"map\" Parameter</a>",
+            "description": "Filters listings within a geoJSON polygon or multi-polygon boundary.<br/><br/>Example boundary:[[[-79.14121,43.79041],[-79.132627,43.773059],[-79.188932,43.886988],[-79.200605,43.877832],[-79.236654,43.869665],[-79.265836,43.860011],[-79.281972,43.856051],[-79.322828,43.84689],[-79.368146,43.839214],[-79.386021,43.836139],[-79.41486,43.838616],[-79.423787,43.836635],[-79.475285,43.82227],[-79.480092,43.813352],[-79.480778,43.803441],[-79.485585,43.79799],[-79.493825,43.794025],[-79.556996,43.779649],[-79.601628,43.761303],[-79.61611,43.758572],[-79.629934,43.750141],[-79.625471,43.728064],[-79.616888,43.713177],[-79.606245,43.695555],[-79.601095,43.685873],[-79.593885,43.681156],[-79.590109,43.672465],[-79.582212,43.671224],[-79.574659,43.670975],[-79.535177,43.58325],[-79.424627,43.619052],[-79.385488,43.602645],[-79.315451,43.612092],[-79.14121,43.79041]]]. <a target=\"_blank\" href=\"https://help.repliers.com/en/article/filtering-listings-geo-spatially-using-the-map-parameter-7sorw0/#3-single-polygon-request\">More info</a>.",
             "schema": {
               "type": "string",
               "format": "json"
@@ -496,7 +498,7 @@
           {
             "name": "mapOperator",
             "in": "query",
-            "description": "When a multi-polygon is provided for the \"map\" parameter the default condition is \"OR\", meaning that it will return all listings that fall inside any of the polygons. This can be changed to \"AND\" in which case it will return listings that fall inside all of the polygons.",
+            "description": "When a multi-polygon is provided for the \"map\" parameter the default condition is \"OR\", meaning that it will return all listings that fall inside any of the polygons. This can be changed to \"AND\" in which case it will return listings that fall inside all of the polygons. <a target=\"_blank\" href=\"https://help.repliers.com/en/article/filtering-listings-geo-spatially-using-the-map-parameter-7sorw0/#3-using-the-mapoperator-parameter\">More info</a>.",
             "schema": {
               "type": "string",
               "enum": [
@@ -510,6 +512,7 @@
           {
             "name": "maxBaths",
             "in": "query",
+            "description": "Filters listings whose total bathroom count is <= the supplied value.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -518,7 +521,7 @@
           {
             "name": "maxBathroomsHalf",
             "in": "query",
-            "description": "The maximum amount of half bathrooms to be used as a filter for this search.",
+            "description": "Filters listings whose half bathroom count is <= the supplied value.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -554,7 +557,7 @@
           {
             "name": "maxClosedDate",
             "in": "query",
-            "description": "Filter listings that have Close Date on or before the supplied value. Date format: <code>YYYY-MM-DD</code>",
+            "description": "Filters listings that have a close date on or before the supplied value. Date format: <code>YYYY-MM-DD</code>",
             "schema": {
               "type": "string",
               "format": "date"
@@ -563,7 +566,7 @@
           {
             "name": "maxDaysOnMarket",
             "in": "query",
-            "description": "Filter `status=U` listings that have been on the market for number of days less than or equal to the supplied value.",
+            "description": "Filters `status=U` listings that have been on the market for number of days less than or equal to the supplied value.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -572,6 +575,7 @@
           {
             "name": "maxKitchens",
             "in": "query",
+            "description": "Filters listings whose kitchen count is <= the supplied value.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -580,7 +584,7 @@
           {
             "name": "maxListDate",
             "in": "query",
-            "description": "Filter listings that were listed on or before the supplied value. Date format: <code>YYYY-MM-DD</code>",
+            "description": "Filters listings that were listed on or before the supplied value. Date format: <code>YYYY-MM-DD</code>",
             "schema": {
               "type": "string",
               "format": "date"
@@ -589,7 +593,7 @@
           {
             "name": "maxLotSizeSqft",
             "in": "query",
-            "description": "Filter lot size by maximum square feet.",
+            "description": "Filters listings whose lot size is <= the supplied value in square feet.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -616,6 +620,7 @@
           {
             "name": "maxParkingSpaces",
             "in": "query",
+            "description": "Filters listings whose parking space count is <= the supplied value.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -624,6 +629,7 @@
           {
             "name": "maxPrice",
             "in": "query",
+            "description": "Filters listings whose list price is <= the supplied value.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -650,7 +656,7 @@
           {
             "name": "maxSoldDate",
             "in": "query",
-            "description": "Filter listings that were sold/leased on or before the supplied value. Date format: <code>YYYY-MM-DD</code>",
+            "description": "Filters listings that were sold/leased on or before the supplied value. Date format: <code>YYYY-MM-DD</code>",
             "schema": {
               "type": "string",
               "format": "date"
@@ -659,7 +665,7 @@
           {
             "name": "maxSoldPrice",
             "in": "query",
-            "description": "Filter listings whose sold price is <= the supplied value.",
+            "description": "Filters listings whose sold price is <= the supplied value.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -668,7 +674,7 @@
           {
             "name": "maxStreetNumber",
             "in": "query",
-            "description": "This parameter enables users to filter results by specifying the maximum street number. It ensures that the street number of the listing is less than or equal to the value provided. This is helpful when users are interested in properties within a specific range of street numbers, excluding listings that fall outside this range.",
+            "description": "Filters listings whose street number is <= the supplied value.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -677,7 +683,7 @@
           {
             "name": "maxStories",
             "in": "query",
-            "description": "Filter listings whose stories are <= the supplied value.",
+            "description": "Filters listings whose stories are <= the supplied value.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -686,7 +692,7 @@
           {
             "name": "maxSqft",
             "in": "query",
-            "description": "Filter listings whose square footage is <= the supplied value. Note - excludes listings where the sqft value is not supplied by the MLS.",
+            "description": "Filters listings whose square footage is <= the supplied value. Excludes listings where the sqft value is not supplied by the MLS.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -704,7 +710,7 @@
           {
             "name": "maxUnavailableDate",
             "in": "query",
-            "description": "Filter listings that became unavailable on or before the supplied value. Not all MLSes support this parameter.",
+            "description": "Filters listings that became unavailable on or before the supplied value. Not all MLSes support this parameter.",
             "schema": {
               "type": "string",
               "format": "date"
@@ -713,7 +719,7 @@
           {
             "name": "maxUpdatedOn",
             "in": "query",
-            "description": "Filter listings that were updated on or before the supplied value.",
+            "description": "Filters listings that were updated on or before the supplied value.",
             "schema": {
               "type": "string",
               "format": "date"
@@ -722,7 +728,7 @@
           {
             "name": "maxYearBuilt",
             "in": "query",
-            "description": "Filter listings whose year built value is <= the supplied value. excludes listings where the year built value is not supplied by the MLS.",
+            "description": "Filters listings whose year built value is <= the supplied value. Excludes listings where the year built value is not supplied by the MLS.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -731,6 +737,7 @@
           {
             "name": "minBaths",
             "in": "query",
+            "description": "Filters listings whose total bathroom count is >= the supplied value.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -739,7 +746,7 @@
           {
             "name": "minBathroomsHalf",
             "in": "query",
-            "description": "The minimum amount of half bathrooms to be used as a filter for this search.",
+            "description": "Filters listings whose half bathroom count is >= the supplied value.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -775,7 +782,7 @@
           {
             "name": "minClosedDate",
             "in": "query",
-            "description": "Filter listings that have Close Date on or after the supplied value. Date format: <code>YYYY-MM-DD</code>",
+            "description": "Filters listings that have a close date on or after the supplied value. Date format: <code>YYYY-MM-DD</code>",
             "schema": {
               "type": "string",
               "format": "date"
@@ -784,7 +791,7 @@
           {
             "name": "minDaysOnMarket",
             "in": "query",
-            "description": "Filter `status=U` listings that have been on the market for number of days greater than or equal to the supplied value.",
+            "description": "Filters `status=U` listings that have been on the market for number of days greater than or equal to the supplied value.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -802,6 +809,7 @@
           {
             "name": "minKitchens",
             "in": "query",
+            "description": "Filters listings whose kitchen count is >= the supplied value.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -810,7 +818,7 @@
           {
             "name": "minListDate",
             "in": "query",
-            "description": "Filter listings that were listed on or after the supplied value. Date format: <code>YYYY-MM-DD</code>",
+            "description": "Filters listings that were listed on or after the supplied value. Date format: <code>YYYY-MM-DD</code>",
             "schema": {
               "type": "string",
               "format": "date"
@@ -819,7 +827,7 @@
           {
             "name": "minLotSizeSqft",
             "in": "query",
-            "description": "Filter lot size by minimum square feet.",
+            "description": "Filters listings whose lot size is >= the supplied value in square feet.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -837,6 +845,7 @@
           {
             "name": "minParkingSpaces",
             "in": "query",
+            "description": "Filters listings whose parking space count is >= the supplied value.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -845,6 +854,7 @@
           {
             "name": "minPrice",
             "in": "query",
+            "description": "Filters listings whose list price is >= the supplied value.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -871,7 +881,7 @@
           {
             "name": "minSoldDate",
             "in": "query",
-            "description": "Filter listings that were sold/leased on or after the supplied value. Date format: <code>YYYY-MM-DD</code>",
+            "description": "Filters listings that were sold/leased on or after the supplied value. Date format: <code>YYYY-MM-DD</code>",
             "schema": {
               "type": "string",
               "format": "date"
@@ -882,7 +892,8 @@
             "in": "query",
             "description": "Filter listings whose sold price is >= the supplied value.",
             "schema": {
-              "type": "string"
+              "type": "integer",
+              "format": "int32"
             }
           },
           {
@@ -897,7 +908,7 @@
           {
             "name": "minSqft",
             "in": "query",
-            "description": "Filter listings whose square footage is >= the supplied value. Note - excludes listings where the sqft value is not supplied by the MLS.",
+            "description": "Filters listings whose square footage is >= the supplied value. Excludes listings where the sqft value is not supplied by the MLS.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -906,7 +917,7 @@
           {
             "name": "minStreetNumber",
             "in": "query",
-            "description": "This parameter allows users to filter results by specifying the minimum street number. It ensures that the street number of the listing is greater than or equal to the value provided. This is particularly useful for narrowing down search results to properties within a specific range of street numbers.",
+            "description": "Filters listings whose street number is >= the supplied value.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -924,7 +935,7 @@
           {
             "name": "minUnavailableDate",
             "in": "query",
-            "description": "Filter listings that became unavailable on or after the supplied value. Not all MLSes support this parameter. Date format: <code>YYYY-MM-DD</code>",
+            "description": "Filters listings that became unavailable on or after the supplied value. Not all MLSes support this parameter. Date format: <code>YYYY-MM-DD</code>",
             "schema": {
               "type": "string",
               "format": "date"
@@ -933,7 +944,7 @@
           {
             "name": "minUpdatedOn",
             "in": "query",
-            "description": "Filter listings that were updated on or after the supplied value.",
+            "description": "Filters listings that were updated on or after the supplied value.",
             "schema": {
               "type": "string",
               "format": "date"
@@ -942,9 +953,10 @@
           {
             "name": "minYearBuilt",
             "in": "query",
-            "description": "Filter listings whose year built value is >= the supplied value. excludes listings where the year built value is not supplied by the MLS.",
+            "description": "Filter listings whose year built value is >= the supplied value. Excludes listings where the year built value is not supplied by the MLS.",
             "schema": {
-              "type": "string"
+              "type": "integer",
+              "format": "int32"
             }
           },
           {
@@ -980,7 +992,7 @@
           {
             "name": "operator",
             "in": "query",
-            "description": "If set to \"AND\", listings must match all supplied parameters. If set to \"OR\", listings must match at least 1 parameter. Default is \"AND\"",
+            "description": "If set to \"AND\", listings must match all supplied parameters. If set to \"OR\", listings must match at least 1 parameter. Default is \"AND\". <a target=\"_blank\" href=\"https://help.repliers.com/en/article/understanding-operators-in-the-repliers-api-1h2or2x/#2-overview\">More info</a>.",
             "schema": {
               "type": "string",
               "enum": [
@@ -994,7 +1006,7 @@
           {
             "name": "pageNum",
             "in": "query",
-            "description": "If specified indexes a specific page in the results set. For example, if there are 1000 listings and 100 listings per page, if you'd like to view listings 101-201 you'd specify pageNum=2",
+            "description": "The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -1034,7 +1046,7 @@
           {
             "name": "resultsPerPage",
             "in": "query",
-            "description": "The amount of listings to return in each page of the results set.",
+            "description": "The number of listings to return per page.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -1105,7 +1117,7 @@
           {
             "name": "statistics",
             "in": "query",
-            "description": "Use this parameter to request statistics relevant to the listings returned in your search. For more information, refer to the <a target=\"_blank\" href=\"https://help.repliers.com/en/article/real-time-market-statistics-implementation-guide-l3b1uy/\">Real-Time Market Statistics Implementation Guide</a>",
+            "description": "Use this parameter to request statistics relevant to the listings returned in your search. <a target=\"_blank\" href=\"https://help.repliers.com/en/article/real-time-market-statistics-implementation-guide-l3b1uy/#1-how-to-request-statistics\">More info</a>.",
             "schema": {
               "type": "string"
             }
@@ -1352,7 +1364,7 @@
                   },
                   "map": {
                     "type": "string",
-                    "description": "Filters listings within a geoJSON polygon or multi-polygon boundary.<br/><br/>Example boundary:[[[-79.14121,43.79041],[-79.132627,43.773059],[-79.188932,43.886988],[-79.200605,43.877832],[-79.236654,43.869665],[-79.265836,43.860011],[-79.281972,43.856051],[-79.322828,43.84689],[-79.368146,43.839214],[-79.386021,43.836139],[-79.41486,43.838616],[-79.423787,43.836635],[-79.475285,43.82227],[-79.480092,43.813352],[-79.480778,43.803441],[-79.485585,43.79799],[-79.493825,43.794025],[-79.556996,43.779649],[-79.601628,43.761303],[-79.61611,43.758572],[-79.629934,43.750141],[-79.625471,43.728064],[-79.616888,43.713177],[-79.606245,43.695555],[-79.601095,43.685873],[-79.593885,43.681156],[-79.590109,43.672465],[-79.582212,43.671224],[-79.574659,43.670975],[-79.535177,43.58325],[-79.424627,43.619052],[-79.385488,43.602645],[-79.315451,43.612092],[-79.14121,43.79041]]].<BR/><BR/>For more information refer to the implementation guide: <a target=\"_blank\" href=\"https://help.repliers.com/en/article/filtering-listings-geo-spatially-using-the-map-parameter-7sorw0/\">Filtering Listings Geo-Spatially Using the \"map\" Parameter</a>.",
+                    "description": "Filters listings within a geoJSON polygon or multi-polygon boundary.<br/><br/>Example boundary:[[[-79.14121,43.79041],[-79.132627,43.773059],[-79.188932,43.886988],[-79.200605,43.877832],[-79.236654,43.869665],[-79.265836,43.860011],[-79.281972,43.856051],[-79.322828,43.84689],[-79.368146,43.839214],[-79.386021,43.836139],[-79.41486,43.838616],[-79.423787,43.836635],[-79.475285,43.82227],[-79.480092,43.813352],[-79.480778,43.803441],[-79.485585,43.79799],[-79.493825,43.794025],[-79.556996,43.779649],[-79.601628,43.761303],[-79.61611,43.758572],[-79.629934,43.750141],[-79.625471,43.728064],[-79.616888,43.713177],[-79.606245,43.695555],[-79.601095,43.685873],[-79.593885,43.681156],[-79.590109,43.672465],[-79.582212,43.671224],[-79.574659,43.670975],[-79.535177,43.58325],[-79.424627,43.619052],[-79.385488,43.602645],[-79.315451,43.612092],[-79.14121,43.79041]]]. <a target=\"_blank\" href=\"https://help.repliers.com/en/article/filtering-listings-geo-spatially-using-the-map-parameter-7sorw0/#3-single-polygon-request\">More info</a>.",
                     "format": "json"
                   }
                 }
@@ -5940,6 +5952,10 @@
       "get": {
         "summary": "Get similar listings",
         "description": "Provide this endpoint with an mls number and it'll retrieve similar properties that are also for sale.\n\nThis is really useful if you'd like to show your users other properties they may be interested in.\n\nBy default this endpoint will retrieve similar properties in the same neighborhood, however you can override this by using a radius parameter.",
+        "externalDocs": {
+          "description": "Similar Active Listings",
+          "url": "https://help.repliers.com/en/article/sold-comparables-similar-active-listings-selection-logic-1h396j8/#3-similar-active-listings"
+        },
         "operationId": "find-similar-listings",
         "parameters": [
           {
@@ -5954,7 +5970,7 @@
           {
             "name": "boardId",
             "in": "query",
-            "description": "Filter by boardId. This is only required if your account has access to more than one MLS. You may specify one or more board IDs to filter by, if not specified, returns all boards that that account has access to be default.",
+            "description": "Filter by boardId. This is only required if your account has access to more than one MLS. You may specify one or more board IDs to filter by, if not specified, returns all boards that that account has access to by default. <a target=\"_blank\" href=\"https://help.repliers.com/en/article/understanding-and-using-boardids-in-the-repliers-api-lfywn2/#2-using-boardids-in-api-requests\">More info</a>.",
             "schema": {
               "type": "array",
               "items": {
@@ -6014,6 +6030,10 @@
       "get": {
         "summary": "Get address history",
         "description": "Use this endpoint to retrieve the MLS history of a specific address.\n\nIn addition to displaying the history you could also use the information in the response to create a graph that illustrates the change in value over time.",
+        "externalDocs": {
+          "description": "History for a Specific Address",
+          "url": "https://help.repliers.com/en/article/accessing-historical-listings-for-an-address-1kfsor7/#4-history-for-a-specific-address"
+        },
         "operationId": "lookup-address-history",
         "parameters": [
           {
@@ -6103,6 +6123,10 @@
       "get": {
         "summary": "Get deleted listings",
         "description": "Use this endpoint to retrieve listings that have been deleted from the MLS. Listings that have been deleted from the MLS should not be displayed in your websites and apps. Note - deleted listings are not applicable in some MLSes.",
+        "externalDocs": {
+          "description": "Staying Synchronized with Deleted Listings",
+          "url": "https://help.repliers.com/en/article/managing-deleted-listings-19q712v/#2-implementation-staying-synchronized-with-deleted-listings"
+        },
         "operationId": "get-deleted-listings",
         "parameters": [
           {
@@ -6208,7 +6232,11 @@
     "/locations": {
       "get": {
         "summary": "Search locations",
-        "description": "Search locations based on the provided filter criteria.",
+        "description": "Searches for geographical locations such as cities, neighborhoods, and districts. Useful for building location pickers and populating address-based filters in search interfaces. For real-time autocomplete as a user types, use the GET /locations/autocomplete endpoint instead.",
+        "externalDocs": {
+          "description": "Locations API Implementation Guide",
+          "url": "https://help.repliers.com/en/article/locations-api-implementation-guide-s4c68b/#2-get-locations"
+        },
         "tags": [
           "Locations"
         ],
@@ -6332,7 +6360,7 @@
           {
             "name": "resultsPerPage",
             "in": "query",
-            "description": "The amount of locations to return in each page of the results set.",
+            "description": "The number of locations to return per page.",
             "required": false,
             "schema": {
               "type": "integer",
@@ -6344,7 +6372,7 @@
           {
             "name": "pageNum",
             "in": "query",
-            "description": "If specified indexes a specific page in the results set. For example, if there are 1000 locations and 100 locations per page, if you'd like to view locations 101-200 you'd specify pageNum=2",
+            "description": "The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200.",
             "required": false,
             "schema": {
               "type": "integer",
@@ -6827,6 +6855,10 @@
       "get": {
         "summary": "Locations autocomplete",
         "description": "Autocomplete for Locations search. As your user types, you simply pass their input into search param and get locations which match their input. You can use other params to fine-tune the locations which will be returned for a given search.",
+        "externalDocs": {
+          "description": "Building an Autocomplete Search Feature",
+          "url": "https://help.repliers.com/en/article/building-an-autocomplete-search-feature-with-repliers-apis-1eaoxyl/"
+        },
         "tags": [
           "Locations"
         ],
@@ -7013,7 +7045,7 @@
           {
             "name": "resultsPerPage",
             "in": "query",
-            "description": "The amount of locations to return in each page of the results set.",
+            "description": "The number of locations to return per page.",
             "required": false,
             "schema": {
               "type": "integer",
@@ -7268,7 +7300,7 @@
     "/brokerages": {
       "get": {
         "summary": "Brokerages",
-        "description": "Use this endpoint to list brokerages belonging to the MLS.",
+        "description": "Returns a list of brokerages registered with the MLS. Useful for building brokerage directory pages or populating brokerage filter options in search interfaces.",
         "operationId": "brokerages",
         "responses": {
           "200": {
@@ -7338,12 +7370,16 @@
       "get": {
         "summary": "Members",
         "description": "Use this endpoint to list and filter members (agents) belonging to the MLS.",
+        "externalDocs": {
+          "description": "Understanding the Members Endpoint",
+          "url": "https://help.repliers.com/en/article/understanding-the-members-endpoint-cpc4c/#1-overview"
+        },
         "operationId": "members",
         "parameters": [
           {
             "name": "agentId",
             "in": "query",
-            "description": "If supplied, finds member by agentId using exact match criteria.",
+            "description": "Filters members by agent ID using exact match.",
             "schema": {
               "type": "string"
             }
@@ -7351,7 +7387,7 @@
           {
             "name": "agentName",
             "in": "query",
-            "description": "If supplied, finds member by agent name using exact match criteria.",
+            "description": "Filters members by agent name using exact match.",
             "schema": {
               "type": "string"
             }
@@ -7359,6 +7395,7 @@
           {
             "name": "boardId",
             "in": "query",
+            "description": "Filters members by the MLS board they belong to.",
             "schema": {
               "type": "string"
             }
@@ -7366,7 +7403,7 @@
           {
             "name": "brokerage",
             "in": "query",
-            "description": "Filters members by brokerage name using partial match criteria.",
+            "description": "Filters members by brokerage name using partial match.",
             "schema": {
               "type": "string"
             }
@@ -7374,7 +7411,7 @@
           {
             "name": "keywords",
             "in": "query",
-            "description": "If supplied, searches for members by keyword across multiple fields.",
+            "description": "Searches members by keyword across multiple fields.",
             "schema": {
               "type": "string"
             }
@@ -7382,7 +7419,7 @@
           {
             "name": "officeId",
             "in": "query",
-            "description": "If supplied, filters members by office ID.",
+            "description": "Filters members by office ID.",
             "schema": {
               "type": "string"
             }
@@ -7390,7 +7427,7 @@
           {
             "name": "pageNum",
             "in": "query",
-            "description": "If specified loads a specific page in the results set. For example, if there are 1000 members and 100 members per page, if you'd like to view members 101-201 you'd specify pageNum=2",
+            "description": "The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200.",
             "schema": {
               "type": "integer",
               "format": "int32",
@@ -7401,7 +7438,7 @@
           {
             "name": "position",
             "in": "query",
-            "description": "If supplied, filters members by position.",
+            "description": "Filters members by their position or role (e.g., Broker, Sales Representative).",
             "schema": {
               "type": "string"
             }
@@ -7409,7 +7446,7 @@
           {
             "name": "resultsPerPage",
             "in": "query",
-            "description": "The amount of members to return in each page of the results set.",
+            "description": "The number of members to return per page.",
             "schema": {
               "type": "integer",
               "format": "int32",
@@ -7439,7 +7476,7 @@
           {
             "name": "pageNum",
             "in": "query",
-            "description": "If specified loads a specific page in the results set. For example, if there are 1000 buildings and 100 buildings per page, if you'd like to view buildings 101-201 you'd specify pageNum=2",
+            "description": "The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200.",
             "schema": {
               "type": "integer",
               "format": "int32",
@@ -7449,7 +7486,7 @@
           {
             "name": "resultsPerPage",
             "in": "query",
-            "description": "The amount of buildings to return in each page of the results set.",
+            "description": "The number of buildings to return per page.",
             "schema": {
               "type": "integer",
               "format": "int32",
@@ -7666,6 +7703,10 @@
       "post": {
         "summary": "Create an agent",
         "description": "Use this endpoint to create an agent. Each client that you create needs to be associated with an agent, therefore it's necessary to create at least one agent before you start creating clients.",
+        "externalDocs": {
+          "description": "Step 1: Create an Agent",
+          "url": "https://help.repliers.com/en/article/implementation-guide-for-agents-and-clients-of4k3i/#2-step-1-create-an-agent"
+        },
         "operationId": "create-an-agent",
         "requestBody": {
           "content": {
@@ -7755,6 +7796,7 @@
           {
             "name": "agentId",
             "in": "query",
+            "description": "Filters agents by their unique ID.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -7763,6 +7805,7 @@
           {
             "name": "boardId",
             "in": "query",
+            "description": "Filters agents by the MLS board they belong to.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -7771,6 +7814,7 @@
           {
             "name": "brokerage",
             "in": "query",
+            "description": "Filters agents by brokerage name.",
             "schema": {
               "type": "string"
             }
@@ -7778,6 +7822,7 @@
           {
             "name": "designation",
             "in": "query",
+            "description": "Filters agents by designation (e.g., Sales Representative).",
             "schema": {
               "type": "string"
             }
@@ -7785,6 +7830,7 @@
           {
             "name": "email",
             "in": "query",
+            "description": "Filters agents by email address.",
             "schema": {
               "type": "string"
             }
@@ -7792,6 +7838,7 @@
           {
             "name": "fname",
             "in": "query",
+            "description": "Filters agents by first name.",
             "schema": {
               "type": "string"
             }
@@ -7799,6 +7846,7 @@
           {
             "name": "lname",
             "in": "query",
+            "description": "Filters agents by last name.",
             "schema": {
               "type": "string"
             }
@@ -7806,6 +7854,7 @@
           {
             "name": "phone",
             "in": "query",
+            "description": "Filters agents by phone number.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -7814,6 +7863,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "If false, returns only disabled agents. If true, returns only active agents.",
             "schema": {
               "type": "boolean"
             }
@@ -7821,7 +7871,7 @@
           {
             "name": "externalId",
             "in": "query",
-            "description": "Filter agents by their identifier from an external system (such as a CRM).",
+            "description": "Filters agents by their identifier from an external system (such as a CRM).",
             "schema": {
               "type": "string"
             }
@@ -7841,7 +7891,11 @@
     "/agents/{agentId}": {
       "patch": {
         "summary": "Update an agent",
-        "description": "Use this endpoint to update information associated with an agent.",
+        "description": "Updates one or more fields for an existing agent. Only include the fields you wish to change — omitted fields retain their current values.",
+        "externalDocs": {
+          "description": "Update a Client or Agent",
+          "url": "https://help.repliers.com/en/article/implementation-guide-for-agents-and-clients-of4k3i/#2-step-4-update-a-client-or-agent"
+        },
         "operationId": "update-an-agent",
         "parameters": [
           {
@@ -7953,7 +8007,7 @@
       },
       "get": {
         "summary": "Get an agent",
-        "description": "Use this endpoint to lookup details about a specific agent.",
+        "description": "Returns the full profile of a specific agent. Useful for building agent profile pages or verifying agent details before making updates.",
         "operationId": "get-an-agent",
         "parameters": [
           {
@@ -7980,7 +8034,11 @@
     "/agents/{agentId}/transfer": {
       "post": {
         "summary": "Transfer an agent's clients",
-        "description": "Use this endpoint to transfer all clients from one agent to another.",
+        "description": "Transfers all clients from one agent to another. Useful when an agent leaves your organization and their clients need to be reassigned.",
+        "externalDocs": {
+          "description": "Transferring an Agent's Clients",
+          "url": "https://help.repliers.com/en/article/implementation-guide-for-agents-and-clients-of4k3i/#2-transferring-an-agents-clients"
+        },
         "operationId": "transfer-agents",
         "parameters": [
           {
@@ -8028,6 +8086,10 @@
       "post": {
         "summary": "Create a client",
         "description": "Use this endpoint to create a client. When creating saved searches, messages or favorites a client needs to be specified.",
+        "externalDocs": {
+          "description": "Step 2: Create a Client",
+          "url": "https://help.repliers.com/en/article/implementation-guide-for-agents-and-clients-of4k3i/#2-step-2-create-a-client"
+        },
         "operationId": "create-a-client",
         "requestBody": {
           "content": {
@@ -8131,6 +8193,7 @@
           {
             "name": "agentId",
             "in": "query",
+            "description": "Filters clients by the ID of their assigned agent.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -8139,6 +8202,7 @@
           {
             "name": "clientId",
             "in": "query",
+            "description": "Filters clients by their unique ID.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -8147,6 +8211,7 @@
           {
             "name": "email",
             "in": "query",
+            "description": "Filters clients by email address.",
             "schema": {
               "type": "string"
             }
@@ -8154,6 +8219,7 @@
           {
             "name": "fname",
             "in": "query",
+            "description": "Filters clients by first name.",
             "schema": {
               "type": "string"
             }
@@ -8169,6 +8235,7 @@
           {
             "name": "lname",
             "in": "query",
+            "description": "Filters clients by last name.",
             "schema": {
               "type": "string"
             }
@@ -8176,6 +8243,7 @@
           {
             "name": "phone",
             "in": "query",
+            "description": "Filters clients by phone number.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -8184,6 +8252,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "If false, returns only disabled clients. If true, returns only active clients.",
             "schema": {
               "type": "boolean"
             }
@@ -8209,7 +8278,7 @@
           {
             "name": "pageNum",
             "in": "query",
-            "description": "If specified indexes a specific page in the results set. For example, if there are 1000 listings and 100 listings per page, if you'd like to view listings 101-201 you'd specify pageNum=2",
+            "description": "The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200.",
             "schema": {
               "type": "integer",
               "format": "int32",
@@ -8219,7 +8288,7 @@
           {
             "name": "resultsPerPage",
             "in": "query",
-            "description": "The amount of listings to return in each page of the results set.",
+            "description": "The number of clients to return per page.",
             "schema": {
               "type": "integer",
               "format": "int32",
@@ -8266,7 +8335,11 @@
     "/clients/{clientId}": {
       "patch": {
         "summary": "Update a client",
-        "description": "Use this endpoint to update a client's information.",
+        "description": "Updates one or more fields for an existing client. Only include the fields you wish to change — omitted fields retain their current values.",
+        "externalDocs": {
+          "description": "Update a Client or Agent",
+          "url": "https://help.repliers.com/en/article/implementation-guide-for-agents-and-clients-of4k3i/#2-step-4-update-a-client-or-agent"
+        },
         "operationId": "update-a-client",
         "parameters": [
           {
@@ -8356,7 +8429,11 @@
       },
       "delete": {
         "summary": "Delete a client",
-        "description": "Use this endpoint to delete a client.",
+        "description": "Deletes a client and all associated data, including their saved searches, favorites, and messages.",
+        "externalDocs": {
+          "description": "Deleting an Agent or Client",
+          "url": "https://help.repliers.com/en/article/implementation-guide-for-agents-and-clients-of4k3i/#2-deleting-an-agent-or-client"
+        },
         "operationId": "delete-a-client",
         "parameters": [
           {
@@ -8381,7 +8458,7 @@
       },
       "get": {
         "summary": "Get a client",
-        "description": "Use this endpoint to get details about a specific client.",
+        "description": "Returns the full profile of a specific client, including their contact information, preferences, and tags.",
         "operationId": "get-a-client",
         "parameters": [
           {
@@ -8469,6 +8546,10 @@
     "/searches": {
       "post": {
         "summary": "Create a saved search",
+        "externalDocs": {
+          "description": "Key Features",
+          "url": "https://help.repliers.com/en/article/saved-search-implementation-guide-1pomr3h/#1-key-features"
+        },
         "description": "Use this endpoint to create a saved search for a client.<strong>Important</strong> - When a saved search is updated the filters must be specific enough so that the initial matches do not exceed 100 listings otherwise a 406 (not accepted) response will be received.",
         "operationId": "create-a-saved-search",
         "requestBody": {
@@ -8987,7 +9068,7 @@
       },
       "get": {
         "summary": "Filter saved searches",
-        "description": "Use this endpoint to list and filter saved searches that have been created.",
+        "description": "Returns a list of saved searches. Use this to display a client's active searches, or to audit searches across multiple agents.",
         "operationId": "filter-searches",
         "parameters": [
           {
@@ -9009,7 +9090,7 @@
           {
             "name": "pageNum",
             "in": "query",
-            "description": "If specified, indexes a specific page in the results set. For example, if there are 1000 searches and 100 searches per page, if you'd like to view searches 101-201 you'd specify pageNum=2",
+            "description": "The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200.",
             "schema": {
               "type": "integer",
               "format": "int32",
@@ -9019,7 +9100,7 @@
           {
             "name": "resultsPerPage",
             "in": "query",
-            "description": "The amount of searches to return in each page of the results set.",
+            "description": "The number of searches to return per page.",
             "schema": {
               "type": "integer",
               "format": "int32",
@@ -9351,7 +9432,7 @@
       },
       "delete": {
         "summary": "Delete a saved search",
-        "description": "Use this endpoint to delete a saved search.",
+        "description": "Deletes a saved search. The client will no longer receive notifications for this search.",
         "operationId": "delete-a-saved-search",
         "parameters": [
           {
@@ -9376,7 +9457,7 @@
       },
       "get": {
         "summary": "Get a saved search",
-        "description": "Use this endpoint to lookup the details of a saved search.",
+        "description": "Returns the full details of a specific saved search, including its filter criteria and notification settings.",
         "operationId": "get-a-saved-search",
         "parameters": [
           {
@@ -9409,7 +9490,7 @@
           {
             "name": "pageNum",
             "in": "query",
-            "description": "If specified, indexes a specific page in the results set. For example, if there are 1000 searches and 100 searches per page, if you'd like to view searches 101-201 you'd specify pageNum=2",
+            "description": "The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200.",
             "schema": {
               "type": "integer",
               "format": "int32",
@@ -9419,7 +9500,7 @@
           {
             "name": "resultsPerPage",
             "in": "query",
-            "description": "The amount of searches to return in each page of the results set.",
+            "description": "The number of listings to return per page.",
             "schema": {
               "type": "integer",
               "format": "int32",
@@ -9509,7 +9590,7 @@
     "/searches/{searchId}/matches/{matchId}": {
       "get": {
         "summary": "Get a match",
-        "description": "Use this endpoint to lookup details about a specific match for a saved search.",
+        "description": "Returns the details of a specific listing match within a saved search, including the listing data and the match's viewed and liked status.",
         "operationId": "get-a-match",
         "parameters": [
           {
@@ -9543,7 +9624,7 @@
       },
       "patch": {
         "summary": "Update a match",
-        "description": "Use this endpoint to update attributes associated with a specific match for a saved search.",
+        "description": "Updates the viewed or liked status of a specific listing match. Use this to track client engagement — for example, marking a match as viewed when a client opens a listing, or liked when they express interest.",
         "operationId": "update-a-match",
         "parameters": [
           {
@@ -9598,7 +9679,11 @@
     "/estimates": {
       "post": {
         "summary": "Create an estimate",
-        "description": "Use this endpoint to estimate a property's value by providing us with the property's attributes. For more information refer to the <a target=\"_blank\" href=\"https://help.repliers.com/en/article/ai-powered-property-estimates-implementation-guide-6gdbvp/\">AI-Powered Property Estimates Implementation Guide</a>.",
+        "description": "Use this endpoint to estimate a property's value by providing us with the property's attributes. <a target=\"_blank\" href=\"https://help.repliers.com/en/article/ai-powered-property-estimates-implementation-guide-6gdbvp/\">More info</a>.",
+        "externalDocs": {
+          "description": "Create an Estimate",
+          "url": "https://help.repliers.com/en/article/building-a-step-by-step-property-estimate-tool-for-homeowners-and-sellers-tlblmn/#3-create-an-estimate"
+        },
         "operationId": "create-an-estimate",
         "requestBody": {
           "content": {
@@ -9767,7 +9852,7 @@
       },
       "get": {
         "summary": "Get Estimates",
-        "description": "Use this endpoint to get estimates",
+        "description": "Returns a list of property value estimates you've created. Useful for managing and reviewing estimates across multiple properties.",
         "operationId": "get-estimates",
         "parameters": [
           {
@@ -9791,7 +9876,7 @@
           {
             "name": "pageNum",
             "in": "query",
-            "description": "If specified goes to a specific page in the results set. For example, if there are 1000 estimates and 100 estimates per page, if you'd like to view estimates 101-201 you'd specify pageNum=2",
+            "description": "The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -9800,7 +9885,7 @@
           {
             "name": "resultsPerPage",
             "in": "query",
-            "description": "The amount of estimates to return in each page of the results set.",
+            "description": "The number of estimates to return per page.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -9821,7 +9906,7 @@
     "/estimates/{estimateId}": {
       "patch": {
         "summary": "Update an estimate",
-        "description": "Use this endpoint to estimate a property's value by providing us with the property's attributes.",
+        "description": "Updates an existing property value estimate with revised property attributes. Use this if property details have changed and you need a recalculated estimate.",
         "operationId": "create-an-estimate-copy",
         "parameters": [
           {
@@ -10022,7 +10107,7 @@
       },
       "delete": {
         "summary": "Delete an estimate",
-        "description": "",
+        "description": "Deletes a specific property value estimate.",
         "operationId": "delete-an-estimate",
         "parameters": [
           {
@@ -10050,6 +10135,10 @@
       "post": {
         "summary": "Send a message",
         "description": "Use this endpoint to send a message.\n\nA message is either sent from an agent to a client, or from a client to an agent.\n\nMessages can be used to facilitate communication between agents and their clients for marketing automation or general communication.\n\nText messaging and email is supported.",
+        "externalDocs": {
+          "description": "Send a Message",
+          "url": "https://help.repliers.com/en/article/how-to-send-your-first-message-using-repliers-f93kbg/#2-step-3-send-a-message"
+        },
         "operationId": "send-a-message",
         "requestBody": {
           "content": {
@@ -10191,7 +10280,7 @@
           {
             "name": "pageNum",
             "in": "query",
-            "description": "If specified indexes a specific page in the results set. For example, if there are 1000 listings and 100 listings per page, if you'd like to view listings 101-201 you'd specify pageNum=2",
+            "description": "The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200.",
             "schema": {
               "type": "integer",
               "format": "int32",
@@ -10201,7 +10290,7 @@
           {
             "name": "resultsPerPage",
             "in": "query",
-            "description": "The amount of listings to return in each page of the results set.",
+            "description": "The number of messages to return per page.",
             "schema": {
               "type": "integer",
               "format": "int32",
@@ -10273,7 +10362,11 @@
     "/favorites": {
       "post": {
         "summary": "Add a favorite",
-        "description": "Use this endpoint to add a new favorite for a client.",
+        "description": "Adds a property to a client's favorites list. You can optionally include comments and tags — comments let clients note their thoughts on a property, and tags enable filtering favorites by custom categories.",
+        "externalDocs": {
+          "description": "Creating a Favorite",
+          "url": "https://help.repliers.com/en/article/favorite-listings-implementation-guide-u9g9u/#6-creating-a-favorite"
+        },
         "operationId": "add-a-favorite",
         "requestBody": {
           "content": {
@@ -10325,12 +10418,17 @@
       },
       "get": {
         "summary": "Get favorites",
-        "description": "Use this endpoint to retrieve a list of properties that a client has favorited.",
+        "description": "Returns a list of properties that a client has favorited. Results can be filtered by listing status, last status, and tags, making it easy to surface only the most relevant favorites.",
+        "externalDocs": {
+          "description": "Listing and Filtering Favorites",
+          "url": "https://help.repliers.com/en/article/favorite-listings-implementation-guide-u9g9u/#6-listing-and-filtering-favorites"
+        },
         "operationId": "get-favorites",
         "parameters": [
           {
             "name": "boardId",
             "in": "query",
+            "description": "Required if your account has access to multiple MLSes. Filters favorites to a specific board.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -10339,6 +10437,7 @@
           {
             "name": "clientId",
             "in": "query",
+            "description": "The ID of the client whose favorites to retrieve.",
             "required": true,
             "schema": {
               "type": "integer",
@@ -10356,6 +10455,7 @@
           {
             "name": "lastStatus",
             "in": "query",
+            "description": "Filters favorites by the last status of the favorited listing.",
             "schema": {
               "type": "array",
               "items": {
@@ -10366,6 +10466,7 @@
           {
             "name": "pageNum",
             "in": "query",
+            "description": "The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -10374,6 +10475,7 @@
           {
             "name": "resultsPerPage",
             "in": "query",
+            "description": "The number of favorites to return per page.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -10382,6 +10484,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "Filters favorites by the current status of the favorited listing.",
             "schema": {
               "type": "string"
             }
@@ -10409,7 +10512,11 @@
     "/favorites/{favoriteId}": {
       "delete": {
         "summary": "Delete a favorite",
-        "description": "Use this endpoint to delete a favorite.",
+        "description": "Removes a property from a client's favorites list.",
+        "externalDocs": {
+          "description": "Deleting a Favorite",
+          "url": "https://help.repliers.com/en/article/favorite-listings-implementation-guide-u9g9u/#6-deleting-a-favorite"
+        },
         "operationId": "delete-a-favorite",
         "parameters": [
           {
@@ -10437,6 +10544,10 @@
       "post": {
         "summary": "Create a subscription",
         "description": "Use this endpoint to subscribe to a webhook.",
+        "externalDocs": {
+          "description": "How to Subscribe to Events",
+          "url": "https://help.repliers.com/en/article/webhooks-implementation-guide-oimchm/#3-how-to-subscribe-to-events"
+        },
         "operationId": "create-a-webhook",
         "requestBody": {
           "content": {
@@ -10665,6 +10776,10 @@
       "get": {
         "summary": "List events",
         "description": "Use this endpoint to retrieve a list of webhook events that you may subscribe to.",
+        "externalDocs": {
+          "description": "Supported Events",
+          "url": "https://help.repliers.com/en/article/webhooks-implementation-guide-oimchm/#3-supported-events"
+        },
         "operationId": "list-events",
         "responses": {
           "200": {
@@ -10681,6 +10796,10 @@
       "post": {
         "summary": "New Prompt",
         "description": "This endpoint translates natural language search queries into structured API requests for the Repliers listings endpoint. For example, the prompt `find me properties in new york`` would be converted to the equivalent API call: https://api.repliers.io/listings?city=New York\n",
+        "externalDocs": {
+          "description": "How It Works",
+          "url": "https://help.repliers.com/en/article/utilizing-ai-powered-nlp-for-real-estate-listing-searches-1fvddra/#3-how-it-works"
+        },
         "tags": [
           "NLP"
         ],
@@ -10968,7 +11087,7 @@
           {
             "name": "resultsPerPage",
             "in": "query",
-            "description": "The amount of chats to return in each page of the results set.",
+            "description": "The number of chats to return per page.",
             "required": false,
             "schema": {
               "type": "integer",
@@ -10980,7 +11099,7 @@
           {
             "name": "pageNum",
             "in": "query",
-            "description": "If specified indexes a specific page in the results set. For example, if there are 1000 chats and 100 chats per page, if you'd like to view chats 101-200 you'd specify pageNum=2",
+            "description": "The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200.",
             "required": false,
             "schema": {
               "type": "integer",
@@ -11082,7 +11201,7 @@
     "/buildings": {
       "post": {
         "summary": "Buildings Search",
-        "description": "Search buildings based on the provided filter criteria.",
+        "description": "Searches for buildings based on location, price, property type, and other criteria. A building represents a unique address and groups together all current and historical listings at that address, making it useful for building directory pages and pre-construction research.",
         "tags": [
           "Buildings"
         ],
@@ -11090,8 +11209,7 @@
           {
             "name": "area",
             "in": "query",
-            "description": "Filter buildings by the geographical area (also referred to as region or county).\n",
-            "required": false,
+            "description": "Filters buildings by geographical area (also referred to as region or county).",
             "schema": {
               "type": "array",
               "items": {
@@ -11102,8 +11220,7 @@
           {
             "name": "buildingName",
             "in": "query",
-            "description": "Filter buildings by their name. Availability of building names may vary by MLS and is not guaranteed for all buildings.\n",
-            "required": false,
+            "description": "Filters buildings by name. Availability of building names may vary by MLS and is not guaranteed for all buildings.",
             "schema": {
               "type": "array",
               "items": {
@@ -11114,8 +11231,7 @@
           {
             "name": "city",
             "in": "query",
-            "description": "Filters buildings by city names. Returns buildings within the specified city.\n",
-            "required": false,
+            "description": "Filters buildings by city.",
             "schema": {
               "type": "array",
               "items": {
@@ -11126,8 +11242,7 @@
           {
             "name": "class",
             "in": "query",
-            "description": "Filter by property class.\n",
-            "required": false,
+            "description": "Filters buildings by property class.",
             "schema": {
               "type": "array",
               "items": {
@@ -11144,8 +11259,7 @@
           {
             "name": "displayPublic",
             "in": "query",
-            "description": "Filter by display public status",
-            "required": false,
+            "description": "Filters buildings by public display status. Y returns buildings that may be displayed publicly, N returns buildings that should be password protected.",
             "schema": {
               "type": "string",
               "enum": [
@@ -11159,7 +11273,6 @@
             "name": "lat",
             "in": "query",
             "description": "Accepts a value for latitude. Must be used with radius parameter to return buildings within a certain radius of a given latitude and longitude.",
-            "required": false,
             "schema": {
               "type": "number",
               "format": "float",
@@ -11171,7 +11284,6 @@
             "name": "long",
             "in": "query",
             "description": "Accepts a value for longitude. Must be used with radius parameter to return buildings within a certain radius of a given latitude and longitude.",
-            "required": false,
             "schema": {
               "type": "number",
               "format": "float",
@@ -11182,8 +11294,7 @@
           {
             "name": "map",
             "in": "query",
-            "description": "GeoJSON polygon or multi-polygon boundary for geographical filtering. Limits results to buildings within the specified boundaries.\nFor complex polygons or multipolygons that exceed query parameter size limits, use the POST method\nand include the map data in the request body.\n\nFormat: Array of coordinate arrays, where each coordinate is [longitude, latitude] in WGS 84 format.\nThe polygon must be closed (first and last points must be identical).\n\nFor more information refer to the implementation guide [Filtering Listings Geo-Spatially Using the \"map\" Parameter](https://help.repliers.com/en/article/filtering-listings-geo-spatially-using-the-map-parameter-7sorw0/)\n",
-            "required": false,
+            "description": "GeoJSON polygon or multi-polygon boundary for geographical filtering. Limits results to buildings within the specified boundaries. For complex polygons or multipolygons that exceed query parameter size limits, use the POST method and include the map data in the request body. Format: Array of coordinate arrays, where each coordinate is [longitude, latitude] in WGS 84 format. The polygon must be closed (first and last points must be identical). For more information refer to the implementation guide <a target=\"_blank\" href=\"https://help.repliers.com/en/article/filtering-listings-geo-spatially-using-the-map-parameter-7sorw0/\">Filtering Listings Geo-Spatially Using the \"map\" Parameter</a>",
             "schema": {
               "type": "string",
               "format": "json"
@@ -11192,8 +11303,7 @@
           {
             "name": "maxPrice",
             "in": "query",
-            "description": "Maximum price filter",
-            "required": false,
+            "description": "Filters buildings whose listing prices are <= the supplied value.",
             "schema": {
               "type": "integer",
               "minimum": 0
@@ -11202,8 +11312,7 @@
           {
             "name": "maxStories",
             "in": "query",
-            "description": "Maximum number of stories/floors in the building",
-            "required": false,
+            "description": "Filters buildings whose story count is <= the supplied value.",
             "schema": {
               "type": "integer",
               "minimum": 1
@@ -11212,8 +11321,7 @@
           {
             "name": "minBathrooms",
             "in": "query",
-            "description": "Minimum number of bathrooms",
-            "required": false,
+            "description": "Filters buildings whose bathroom count is >= the supplied value.",
             "schema": {
               "type": "integer",
               "minimum": 0
@@ -11222,8 +11330,7 @@
           {
             "name": "minBedrooms",
             "in": "query",
-            "description": "Minimum number of bedrooms",
-            "required": false,
+            "description": "Filters buildings whose bedroom count is >= the supplied value.",
             "schema": {
               "type": "integer",
               "minimum": 0
@@ -11232,8 +11339,7 @@
           {
             "name": "minPrice",
             "in": "query",
-            "description": "Minimum price filter",
-            "required": false,
+            "description": "Filters buildings whose listing prices are >= the supplied value.",
             "schema": {
               "type": "integer",
               "minimum": 0
@@ -11242,8 +11348,7 @@
           {
             "name": "minStories",
             "in": "query",
-            "description": "Minimum number of stories/floors in the building",
-            "required": false,
+            "description": "Filters buildings whose story count is >= the supplied value.",
             "schema": {
               "type": "integer",
               "minimum": 1
@@ -11252,8 +11357,7 @@
           {
             "name": "neighborhood",
             "in": "query",
-            "description": "Filter results by neighborhood names. Returns specified neighborhoods.\nNeighborhoods represent the smallest geographical division in the hierarchy.\n",
-            "required": false,
+            "description": "Filters buildings by neighborhood.",
             "schema": {
               "type": "array",
               "items": {
@@ -11264,8 +11368,7 @@
           {
             "name": "pageNum",
             "in": "query",
-            "description": "If specified indexes a specific page in the results set. For example, if there are 1000 buildings and 100 buildings per page, if you'd like to view buildings 101-200 you'd specify pageNum=2",
-            "required": false,
+            "description": "The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200.",
             "schema": {
               "type": "integer",
               "minimum": 1,
@@ -11275,8 +11378,7 @@
           {
             "name": "propertyType",
             "in": "query",
-            "description": "Filter by property type(s). Returns buildings matching the specified property types.\n",
-            "required": false,
+            "description": "Filters buildings by property type.",
             "schema": {
               "type": "array",
               "items": {
@@ -11287,8 +11389,7 @@
           {
             "name": "radius",
             "in": "query",
-            "description": "Accepts a value for radius in KM. Must be used with `lat` and `long` parameters to return buildings within the specified radius of a given latitude and longitude.\n",
-            "required": false,
+            "description": "Accepts a value for radius in KM. Must be used with `lat` and `long` parameters to return buildings within the specified radius of a given latitude and longitude.",
             "schema": {
               "type": "number",
               "format": "float",
@@ -11298,8 +11399,7 @@
           {
             "name": "resultsPerPage",
             "in": "query",
-            "description": "The amount of buildings to return in each page of the results set.",
-            "required": false,
+            "description": "The number of buildings to return per page.",
             "schema": {
               "type": "integer",
               "minimum": 1,
@@ -11310,8 +11410,7 @@
           {
             "name": "sortBy",
             "in": "query",
-            "description": "Sort results by specified field",
-            "required": false,
+            "description": "Sorts results by the specified field.",
             "schema": {
               "type": "string",
               "enum": [
@@ -11323,8 +11422,7 @@
           {
             "name": "streetName",
             "in": "query",
-            "description": "Filter by street name(s). Returns buildings located on the specified streets.\n",
-            "required": false,
+            "description": "Filters buildings by street name.",
             "schema": {
               "type": "array",
               "items": {
@@ -11335,8 +11433,7 @@
           {
             "name": "streetNumber",
             "in": "query",
-            "description": "Filter by street number(s). Returns buildings with the specified street numbers.\n",
-            "required": false,
+            "description": "Filters buildings by street number.",
             "schema": {
               "type": "array",
               "items": {
@@ -11347,8 +11444,7 @@
           {
             "name": "type",
             "in": "query",
-            "description": "Used to filter properties that are for sale or for lease.\n",
-            "required": false,
+            "description": "Filters buildings by listing type.",
             "schema": {
               "type": "string",
               "enum": [

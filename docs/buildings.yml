@@ -16,15 +16,13 @@ paths:
   /buildings:
     post:
       summary: Buildings Search
-      description: Search buildings based on the provided filter criteria.
+      description: Searches for buildings based on location, price, property type, and other criteria. A building represents a unique address and groups together all current and historical listings at that address, making it useful for building directory pages and pre-construction research.
       tags:
         - Buildings
       parameters:
         - name: area
           in: query
-          description: |
-            Filter buildings by the geographical area (also referred to as region or county).
-          required: false
+          description: Filters buildings by geographical area (also referred to as region or county).
           schema:
             type: array
             items:
@@ -32,9 +30,7 @@ paths:
 
         - name: buildingName
           in: query
-          description: |
-            Filter buildings by their name. Availability of building names may vary by MLS and is not guaranteed for all buildings.
-          required: false
+          description: Filters buildings by name. Availability of building names may vary by MLS and is not guaranteed for all buildings.
           schema:
             type: array
             items:
@@ -42,9 +38,7 @@ paths:
 
         - name: city
           in: query
-          description: |
-            Filters buildings by city names. Returns buildings within the specified city.
-          required: false
+          description: Filters buildings by city.
           schema:
             type: array
             items:
@@ -52,9 +46,7 @@ paths:
 
         - name: class
           in: query
-          description: |
-            Filter by property class.
-          required: false
+          description: Filters buildings by property class.
           schema:
             type: array
             items:
@@ -62,15 +54,13 @@ paths:
 
         - name: displayPublic
           in: query
-          description: Filter by display public status
-          required: false
+          description: Filters buildings by public display status. Y returns buildings that may be displayed publicly, N returns buildings that should be password protected.
           schema:
             $ref: "components.yml#/components/schemas/YesNo"
 
         - name: lat
           in: query
           description: Accepts a value for latitude. Must be used with radius parameter to return buildings within a certain radius of a given latitude and longitude.
-          required: false
           schema:
             type: number
             format: float
@@ -80,7 +70,6 @@ paths:
         - name: long
           in: query
           description: Accepts a value for longitude. Must be used with radius parameter to return buildings within a certain radius of a given latitude and longitude.
-          required: false
           schema:
             type: number
             format: float
@@ -89,74 +78,56 @@ paths:
 
         - name: map
           in: query
-          description: |
-            GeoJSON polygon or multi-polygon boundary for geographical filtering. Limits results to buildings within the specified boundaries.
-            For complex polygons or multipolygons that exceed query parameter size limits, use the POST method
-            and include the map data in the request body.
-
-            Format: Array of coordinate arrays, where each coordinate is [longitude, latitude] in WGS 84 format.
-            The polygon must be closed (first and last points must be identical).
-
-            For more information refer to the implementation guide [Filtering Listings Geo-Spatially Using the "map" Parameter](https://help.repliers.com/en/article/filtering-listings-geo-spatially-using-the-map-parameter-7sorw0/)
-          required: false
+          description: "GeoJSON polygon or multi-polygon boundary for geographical filtering. Limits results to buildings within the specified boundaries. For complex polygons or multipolygons that exceed query parameter size limits, use the POST method and include the map data in the request body. Format: Array of coordinate arrays, where each coordinate is [longitude, latitude] in WGS 84 format. The polygon must be closed (first and last points must be identical). For more information refer to the implementation guide <a target=\"_blank\" href=\"https://help.repliers.com/en/article/filtering-listings-geo-spatially-using-the-map-parameter-7sorw0/\">Filtering Listings Geo-Spatially Using the \"map\" Parameter</a>"
           schema:
             type: string
             format: json
 
         - name: maxPrice
           in: query
-          description: Maximum price filter
-          required: false
+          description: Filters buildings whose listing prices are <= the supplied value.
           schema:
             type: integer
             minimum: 0
 
         - name: maxStories
           in: query
-          description: Maximum number of stories/floors in the building
-          required: false
+          description: Filters buildings whose story count is <= the supplied value.
           schema:
             type: integer
             minimum: 1
 
         - name: minBathrooms
           in: query
-          description: Minimum number of bathrooms
-          required: false
+          description: Filters buildings whose bathroom count is >= the supplied value.
           schema:
             type: integer
             minimum: 0
 
         - name: minBedrooms
           in: query
-          description: Minimum number of bedrooms
-          required: false
+          description: Filters buildings whose bedroom count is >= the supplied value.
           schema:
             type: integer
             minimum: 0
 
         - name: minPrice
           in: query
-          description: Minimum price filter
-          required: false
+          description: Filters buildings whose listing prices are >= the supplied value.
           schema:
             type: integer
             minimum: 0
 
         - name: minStories
           in: query
-          description: Minimum number of stories/floors in the building
-          required: false
+          description: Filters buildings whose story count is >= the supplied value.
           schema:
             type: integer
             minimum: 1
 
         - name: neighborhood
           in: query
-          description: |
-            Filter results by neighborhood names. Returns specified neighborhoods.
-            Neighborhoods represent the smallest geographical division in the hierarchy.
-          required: false
+          description: Filters buildings by neighborhood.
           schema:
             type: array
             items:
@@ -164,8 +135,7 @@ paths:
 
         - name: pageNum
           in: query
-          description: If specified indexes a specific page in the results set. For example, if there are 1000 buildings and 100 buildings per page, if you'd like to view buildings 101-200 you'd specify pageNum=2
-          required: false
+          description: The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200.
           schema:
             type: integer
             minimum: 1
@@ -173,9 +143,7 @@ paths:
 
         - name: propertyType
           in: query
-          description: |
-            Filter by property type(s). Returns buildings matching the specified property types.
-          required: false
+          description: Filters buildings by property type.
           schema:
             type: array
             items:
@@ -183,9 +151,7 @@ paths:
 
         - name: radius
           in: query
-          description: |
-            Accepts a value for radius in KM. Must be used with `lat` and `long` parameters to return buildings within the specified radius of a given latitude and longitude.
-          required: false
+          description: Accepts a value for radius in KM. Must be used with `lat` and `long` parameters to return buildings within the specified radius of a given latitude and longitude.
           schema:
             type: number
             format: float
@@ -193,8 +159,7 @@ paths:
 
         - name: resultsPerPage
           in: query
-          description: The amount of buildings to return in each page of the results set.
-          required: false
+          description: The number of buildings to return per page.
           schema:
             type: integer
             minimum: 1
@@ -203,16 +168,13 @@ paths:
 
         - name: sortBy
           in: query
-          description: Sort results by specified field
-          required: false
+          description: Sorts results by the specified field.
           schema:
             $ref: "components.yml#/components/schemas/BuildingsSortBy"
 
         - name: streetName
           in: query
-          description: |
-            Filter by street name(s). Returns buildings located on the specified streets.
-          required: false
+          description: Filters buildings by street name.
           schema:
             type: array
             items:
@@ -220,9 +182,7 @@ paths:
 
         - name: streetNumber
           in: query
-          description: |
-            Filter by street number(s). Returns buildings with the specified street numbers.
-          required: false
+          description: Filters buildings by street number.
           schema:
             type: array
             items:
@@ -230,9 +190,7 @@ paths:
 
         - name: type
           in: query
-          description: |
-            Used to filter properties that are for sale or for lease.
-          required: false
+          description: Filters buildings by listing type.
           schema:
             $ref: "components.yml#/components/schemas/ListingType"
 

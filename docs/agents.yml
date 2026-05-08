@@ -9,6 +9,9 @@ paths:
     post:
       summary: Create an agent
       description: Use this endpoint to create an agent. Each client that you create needs to be associated with an agent, therefore it's necessary to create at least one agent before you start creating clients.
+      externalDocs:
+        description: "Step 1: Create an Agent"
+        url: https://help.repliers.com/en/article/implementation-guide-for-agents-and-clients-of4k3i/#2-step-1-create-an-agent
       operationId: create-an-agent
       requestBody:
         content:
@@ -74,46 +77,55 @@ paths:
       parameters:
         - name: agentId
           in: query
+          description: Filters agents by their unique ID.
           schema:
             type: integer
             format: int32
         - name: boardId
           in: query
+          description: Filters agents by the MLS board they belong to.
           schema:
             type: integer
             format: int32
         - name: brokerage
           in: query
+          description: Filters agents by brokerage name.
           schema:
             type: string
         - name: designation
           in: query
+          description: Filters agents by designation (e.g., Sales Representative).
           schema:
             type: string
         - name: email
           in: query
+          description: Filters agents by email address.
           schema:
             type: string
         - name: fname
           in: query
+          description: Filters agents by first name.
           schema:
             type: string
         - name: lname
           in: query
+          description: Filters agents by last name.
           schema:
             type: string
         - name: phone
           in: query
+          description: Filters agents by phone number.
           schema:
             type: integer
             format: int32
         - name: status
           in: query
+          description: If false, returns only disabled agents. If true, returns only active agents.
           schema:
             type: boolean
         - name: externalId
           in: query
-          description: Filter agents by their identifier from an external system (such as a CRM).
+          description: Filters agents by their identifier from an external system (such as a CRM).
           schema:
             type: string
       responses:
@@ -125,7 +137,10 @@ paths:
   /agents/{agentId}:
     patch:
       summary: Update an agent
-      description: Use this endpoint to update information associated with an agent.
+      description: Updates one or more fields for an existing agent. Only include the fields you wish to change — omitted fields retain their current values.
+      externalDocs:
+        description: Update a Client or Agent
+        url: https://help.repliers.com/en/article/implementation-guide-for-agents-and-clients-of4k3i/#2-step-4-update-a-client-or-agent
       operationId: update-an-agent
       parameters:
         - name: agentId
@@ -203,7 +218,7 @@ paths:
       deprecated: false
     get:
       summary: Get an agent
-      description: Use this endpoint to lookup details about a specific agent.
+      description: Returns the full profile of a specific agent. Useful for building agent profile pages or verifying agent details before making updates.
       operationId: get-an-agent
       parameters:
         - name: agentId
@@ -221,7 +236,10 @@ paths:
   /agents/{agentId}/transfer:
     post:
       summary: Transfer an agent's clients
-      description: Use this endpoint to transfer all clients from one agent to another.
+      description: Transfers all clients from one agent to another. Useful when an agent leaves your organization and their clients need to be reassigned.
+      externalDocs:
+        description: Transferring an Agent's Clients
+        url: https://help.repliers.com/en/article/implementation-guide-for-agents-and-clients-of4k3i/#2-transferring-an-agents-clients
       operationId: transfer-agents
       parameters:
         - name: agentId

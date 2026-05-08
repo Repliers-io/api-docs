@@ -8,7 +8,10 @@ paths:
   /estimates:
     post:
       summary: Create an estimate
-      description: Use this endpoint to estimate a property's value by providing us with the property's attributes. For more information refer to the <a target="_blank" href="https://help.repliers.com/en/article/ai-powered-property-estimates-implementation-guide-6gdbvp/">AI-Powered Property Estimates Implementation Guide</a>.
+      description: Use this endpoint to estimate a property's value by providing us with the property's attributes. <a target="_blank" href="https://help.repliers.com/en/article/ai-powered-property-estimates-implementation-guide-6gdbvp/">More info</a>.
+      externalDocs:
+        description: Create an Estimate
+        url: https://help.repliers.com/en/article/building-a-step-by-step-property-estimate-tool-for-homeowners-and-sellers-tlblmn/#3-create-an-estimate
       operationId: create-an-estimate
       requestBody:
         content:
@@ -128,7 +131,7 @@ paths:
       deprecated: false
     get:
       summary: Get Estimates
-      description: Use this endpoint to get estimates
+      description: Returns a list of property value estimates you've created. Useful for managing and reviewing estimates across multiple properties.
       operationId: get-estimates
       parameters:
         - name: clientId
@@ -145,13 +148,13 @@ paths:
             format: int32
         - name: pageNum
           in: query
-          description: If specified goes to a specific page in the results set. For example, if there are 1000 estimates and 100 estimates per page, if you'd like to view estimates 101-201 you'd specify pageNum=2
+          description: The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200.
           schema:
             type: integer
             format: int32
         - name: resultsPerPage
           in: query
-          description: The amount of estimates to return in each page of the results set.
+          description: The number of estimates to return per page.
           schema:
             type: integer
             format: int32
@@ -164,7 +167,7 @@ paths:
   /estimates/{estimateId}:
     patch:
       summary: Update an estimate
-      description: Use this endpoint to estimate a property's value by providing us with the property's attributes.
+      description: Updates an existing property value estimate with revised property attributes. Use this if property details have changed and you need a recalculated estimate.
       operationId: create-an-estimate-copy
       parameters:
         - name: estimateId
@@ -313,7 +316,7 @@ paths:
       deprecated: false
     delete:
       summary: Delete an estimate
-      description: ""
+      description: Deletes a specific property value estimate.
       operationId: delete-an-estimate
       parameters:
         - name: estimateId
