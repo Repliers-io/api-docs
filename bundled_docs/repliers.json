@@ -7652,6 +7652,15 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "inputInsidePolygon",
+            "in": "query",
+            "description": "A boolean indicating whether to return only places whose boundary polygons contain the specified point. Note that not all places have boundaries - such places will always be returned regardless of this parameter.",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
           }
         ],
         "responses": {
