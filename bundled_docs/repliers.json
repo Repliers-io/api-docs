@@ -1098,9 +1098,17 @@
                 "random",
                 "repliersUpdatedOnAsc",
                 "repliersUpdatedOnDesc",
-                ""
-              ],
-              "default": ""
+                "statusAscListDateAsc",
+                "statusAscListDateDesc",
+                "statusAscListPriceAsc",
+                "statusAscListPriceDesc",
+                "qualityAsc",
+                "qualityDesc",
+                "listPricePerSqFtAsc",
+                "listPricePerSqFtDesc",
+                "soldPricePerSqFtAsc",
+                "soldPricePerSqFtDesc"
+              ]
             }
           },
           {

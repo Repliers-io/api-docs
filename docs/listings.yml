@@ -724,8 +724,16 @@ paths:
               - random
               - repliersUpdatedOnAsc
               - repliersUpdatedOnDesc
-              - ""
-            default: ""
+              - statusAscListDateAsc
+              - statusAscListDateDesc
+              - statusAscListPriceAsc
+              - statusAscListPriceDesc
+              - qualityAsc
+              - qualityDesc
+              - listPricePerSqFtAsc
+              - listPricePerSqFtDesc
+              - soldPricePerSqFtAsc
+              - soldPricePerSqFtDesc
         - name: sqft
           in: query
           description: Filters listings by one or more values for sqft.
