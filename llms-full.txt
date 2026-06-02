@@ -117,6 +117,7 @@ Use this endpoint to search listings using various parameters.As your user provi
 | officeId | string | Filter listings by the office ID of the listing brokerage. |
 | operator | string enum: AND, OR,  default:  | If set to "AND", listings must match all supplied parameters. If set to "OR", listings must match at least 1 parameter. Default is "AND". More info. |
 | pageNum | integer (int32) | The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200. |
+| pretty | boolean default: false | If true, reorders fields within each returned listing into a canonical order optimized for human readability. Does not affect which fields are returned or their values. Default is false. |
 | propertyType | array[string] | Filters listings by one or more property types. |
 | propertyTypeOrStyle | array[string] | Filters listings where either details.propertyType or the details.style field matches any of the provided values. |
 | radius | integer (int32) | Accepts a value for radius in KM. Must be used with lat and long parameters to return listings within a certain radius of a given latitude and longitude. |

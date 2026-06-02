@@ -659,6 +659,12 @@ paths:
           schema:
             type: integer
             format: int32
+        - name: pretty
+          in: query
+          description: If true, reorders fields within each returned listing into a canonical order optimized for human readability. Does not affect which fields are returned or their values. Default is false.
+          schema:
+            type: boolean
+            default: false
         - name: propertyType
           in: query
           description: Filters listings by one or more property types.
