@@ -3188,7 +3188,7 @@
           {
             "name": "locationsSource",
             "in": "query",
-            "description": "Filters the locations returned by `locations=true` by source:\n- `MSL` - Locations sourced from MLS (Multiple Listing Service) data.\n- `UserDefined` - Custom locations created and defined by users.\n- `LiveBy` - Locations sourced from LiveBy, a third-party neighborhood and community data provider.\n",
+            "description": "Filters the locations returned by `locations=true` by source:\n- `MSL` - Locations sourced from MLS (Multiple Listing Service) data.\n- `UserDefined` - Custom locations created and defined by users.\n- `LiveBy` - Locations sourced from LiveBy, a third-party neighborhood and community data provider.\n- `PublicRecord` - Locations sourced from Public Records Data.\n",
             "schema": {
               "type": "array",
               "items": {
@@ -3196,7 +3196,8 @@
                 "enum": [
                   "MSL",
                   "UserDefined",
-                  "LiveBy"
+                  "LiveBy",
+                  "PublicRecord"
                 ],
                 "description": "Location data source"
               }
@@ -3219,7 +3220,8 @@
                   "postalCode",
                   "district",
                   "schoolDistrict",
-                  "school"
+                  "school",
+                  "property"
                 ],
                 "description": "Location type classification"
               }
@@ -6261,7 +6263,7 @@
           {
             "name": "source",
             "in": "query",
-            "description": "Filters locations by source:\n- `MSL` - Locations sourced from MLS (Multiple Listing Service) data.\n- `UserDefined` - Custom locations created and defined by users.\n- `LiveBy` - Locations sourced from LiveBy, a third-party neighborhood and community data provider.\n",
+            "description": "Filters locations by source:\n- `MSL` - Locations sourced from MLS (Multiple Listing Service) data.\n- `UserDefined` - Custom locations created and defined by users.\n- `LiveBy` - Locations sourced from LiveBy, a third-party neighborhood and community data provider.\n- `PublicRecord` - Locations sourced from Public Records Data.\n",
             "required": false,
             "schema": {
               "type": "array",
@@ -6273,7 +6275,7 @@
           {
             "name": "type",
             "in": "query",
-            "description": "Limits results to specified location types:\n- `area` - Represents larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc.\n- `city` - Municipal division that can include multiple neighborhoods within its boundaries.\n- `city-alternate` - Alternate representation of a city, used for specific data sources or contexts.\n- `neighborhood` - Smallest geographical unit within a city.\n- `neighborhood-alternate` - Alternate representation of a neighborhood, used for specific data sources or contexts.\n- `postalCode` - Represents postal code areas, which may span multiple neighborhoods or cities.\n- `district` - Represents administrative or political districts, which may span multiple neighborhoods or cities.\n- `schoolDistrict` - Represents school district areas, which may span multiple neighborhoods or cities.\n- `school` - Represents specific school locations and catchment areas.\n",
+            "description": "Limits results to specified location types:\n- `area` - Represents larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc.\n- `city` - Municipal division that can include multiple neighborhoods within its boundaries.\n- `city-alternate` - Alternate representation of a city, used for specific data sources or contexts.\n- `neighborhood` - Smallest geographical unit within a city.\n- `neighborhood-alternate` - Alternate representation of a neighborhood, used for specific data sources or contexts.\n- `postalCode` - Represents postal code areas, which may span multiple neighborhoods or cities.\n- `district` - Represents administrative or political districts, which may span multiple neighborhoods or cities.\n- `schoolDistrict` - Represents school district areas, which may span multiple neighborhoods or cities.\n- `school` - Represents specific school locations and catchment areas.\n- `property` - Represents individual properties or land parcels along with publicly available information derived from public records data.\n",
             "required": false,
             "schema": {
               "type": "array",
@@ -6741,7 +6743,8 @@
                             "enum": [
                               "MLS",
                               "UserDefined",
-                              "LiveBy"
+                              "LiveBy",
+                              "PublicRecord"
                             ]
                           }
                         },
@@ -10884,7 +10887,7 @@
                   },
                   "locationsSource": {
                     "type": "array",
-                    "description": "Specify which location sources to use when interpreting the prompt. This can help improve accuracy by providing the NLP model with the location data source most suitable for the query.\n- `MSL` - Locations sourced from MLS (Multiple Listing Service) data.\n- `UserDefined` - Custom locations created and defined by users.\n- `LiveBy` - Locations sourced from LiveBy, a third-party neighborhood and community data provider.\n",
+                    "description": "Specify which location sources to use when interpreting the prompt. This can help improve accuracy by providing the NLP model with the location data source most suitable for the query.\n- `MSL` - Locations sourced from MLS (Multiple Listing Service) data.\n- `UserDefined` - Custom locations created and defined by users.\n- `LiveBy` - Locations sourced from LiveBy, a third-party neighborhood and community data provider.\n- `PublicRecord` - Locations sourced from Public Records Data.\n",
                     "items": {
                       "$ref": "#/paths/~1listings~1%7BmlsNumber%7D/get/parameters/4/schema/items"
                     }

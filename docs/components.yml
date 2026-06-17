@@ -78,12 +78,13 @@ components:
           district,
           schoolDistrict,
           school,
+          property,
         ]
       description: Location type classification
 
     LocationSource:
       type: string
-      enum: [MSL, UserDefined, LiveBy]
+      enum: [MSL, UserDefined, LiveBy, PublicRecord]
       description: Location data source
 
     Error:
@@ -113,6 +114,7 @@ components:
         - `district` - Represents administrative or political districts, which may span multiple neighborhoods or cities.
         - `schoolDistrict` - Represents school district areas, which may span multiple neighborhoods or cities.
         - `school` - Represents specific school locations and catchment areas.
+        - `property` - Represents individual properties or land parcels along with publicly available information derived from public records data.
       required: false
       schema:
         type: array
@@ -127,6 +129,7 @@ components:
         - `MSL` - Locations sourced from MLS (Multiple Listing Service) data.
         - `UserDefined` - Custom locations created and defined by users.
         - `LiveBy` - Locations sourced from LiveBy, a third-party neighborhood and community data provider.
+        - `PublicRecord` - Locations sourced from Public Records Data.
       required: false
       schema:
         type: array

@@ -336,7 +336,7 @@ paths:
                         description: Sources present in the result set.
                         items:
                           type: string
-                          enum: [MLS, UserDefined, LiveBy]
+                          enum: [MLS, UserDefined, LiveBy, PublicRecord]
                       locations:
                         type: array
                         items:

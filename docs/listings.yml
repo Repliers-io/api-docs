@@ -83,7 +83,7 @@ paths:
               type: string
         - name: boardId
           in: query
-          description: "Filter by boardId. This is only required if your account has access to more than one MLS. You may specify one or more board IDs to filter by, if not specified, returns all boards that that account has access to by default. <a target=\"_blank\" href=\"https://help.repliers.com/en/article/understanding-and-using-boardids-in-the-repliers-api-lfywn2/#2-using-boardids-in-api-requests\">More info</a>."
+          description: 'Filter by boardId. This is only required if your account has access to more than one MLS. You may specify one or more board IDs to filter by, if not specified, returns all boards that that account has access to by default. <a target="_blank" href="https://help.repliers.com/en/article/understanding-and-using-boardids-in-the-repliers-api-lfywn2/#2-using-boardids-in-api-requests">More info</a>.'
           schema:
             type: array
             items:
@@ -229,7 +229,7 @@ paths:
               type: string
         - name: fields
           in: query
-          description: "Use if you want to limit the response to containing certain fields only. For example: fields?listPrice,soldPrice would limit the response to contain listPrice and soldPrice only. You can also specify the amount of images to return, for example if a listing has 40 images total and you specify fields=images[5] it will only return the first 5 images. <a target=\"_blank\" href=\"https://help.repliers.com/en/article/optimizing-api-requests-with-the-fields-parameter-lq416x/#3-how-to-use-the-fields-parameter\">More info</a>."
+          description: 'Use if you want to limit the response to containing certain fields only. For example: fields?listPrice,soldPrice would limit the response to contain listPrice and soldPrice only. You can also specify the amount of images to return, for example if a listing has 40 images total and you specify fields=images[5] it will only return the first 5 images. <a target="_blank" href="https://help.repliers.com/en/article/optimizing-api-requests-with-the-fields-parameter-lq416x/#3-how-to-use-the-fields-parameter">More info</a>.'
           schema:
             type: string
         - name: garage
@@ -645,7 +645,7 @@ paths:
             type: string
         - name: operator
           in: query
-          description: "If set to \"AND\", listings must match all supplied parameters. If set to \"OR\", listings must match at least 1 parameter. Default is \"AND\". <a target=\"_blank\" href=\"https://help.repliers.com/en/article/understanding-operators-in-the-repliers-api-1h2or2x/#2-overview\">More info</a>."
+          description: 'If set to "AND", listings must match all supplied parameters. If set to "OR", listings must match at least 1 parameter. Default is "AND". <a target="_blank" href="https://help.repliers.com/en/article/understanding-operators-in-the-repliers-api-1h2or2x/#2-overview">More info</a>.'
           schema:
             type: string
             enum:
@@ -2949,6 +2949,7 @@ paths:
             - `MSL` - Locations sourced from MLS (Multiple Listing Service) data.
             - `UserDefined` - Custom locations created and defined by users.
             - `LiveBy` - Locations sourced from LiveBy, a third-party neighborhood and community data provider.
+            - `PublicRecord` - Locations sourced from Public Records Data.
           schema:
             type: array
             items:
@@ -12427,7 +12428,7 @@ paths:
           required: true
         - name: boardId
           in: query
-          description: "Filter by boardId. This is only required if your account has access to more than one MLS. You may specify one or more board IDs to filter by, if not specified, returns all boards that that account has access to by default. <a target=\"_blank\" href=\"https://help.repliers.com/en/article/understanding-and-using-boardids-in-the-repliers-api-lfywn2/#2-using-boardids-in-api-requests\">More info</a>."
+          description: 'Filter by boardId. This is only required if your account has access to more than one MLS. You may specify one or more board IDs to filter by, if not specified, returns all boards that that account has access to by default. <a target="_blank" href="https://help.repliers.com/en/article/understanding-and-using-boardids-in-the-repliers-api-lfywn2/#2-using-boardids-in-api-requests">More info</a>.'
           schema:
             type: array
             items:
