@@ -28,7 +28,51 @@ paths:
             type: string
       responses:
         "200":
-          $ref: components.yml#/components/responses/EmptySuccess
+          description: Successful response containing a paginated list of offices
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: components.yml#/components/schemas/PaginationInfo
+                  - type: object
+                    properties:
+                      offices:
+                        type: array
+                        description: Array of office objects
+                        items:
+                          type: object
+                          properties:
+                            resource:
+                              type: string
+                              description: Resource identifier
+                            officeId:
+                              type: string
+                              description: Unique identifier for the office
+                            name:
+                              type: string
+                              description: Name of the office
+                            address:
+                              type: object
+                              description: Address details for the office
+                              properties:
+                                address1:
+                                  type: [string, "null"]
+                                  description: Primary address line
+                                address2:
+                                  type: [string, "null"]
+                                  description: Secondary address line
+                                city:
+                                  type: [string, "null"]
+                                  description: City name
+                                state:
+                                  type: [string, "null"]
+                                  description: State or province
+                                postal:
+                                  type: [string, "null"]
+                                  description: Postal or ZIP code
+                                country:
+                                  type: [string, "null"]
+                                  description: Country name
         "400":
           $ref: components.yml#/components/responses/BadRequest
       deprecated: false
