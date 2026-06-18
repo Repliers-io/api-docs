@@ -29,6 +29,16 @@ paths:
           description: Filters members by the MLS board they belong to.
           schema:
             type: string
+        - name: hasEmail
+          in: query
+          description: If supplied, filters members by whether they have an email address on record.
+          schema:
+            type: boolean
+        - name: originatingSystemName
+          in: query
+          description: Filters members by the name of the originating MLS system.
+          schema:
+            type: string
         - name: brokerage
           in: query
           description: Filters members by brokerage name using partial match.
@@ -39,11 +49,6 @@ paths:
           description: Searches members by keyword across multiple fields.
           schema:
             type: string
-        - name: officeId
-          in: query
-          description: Filters members by office ID.
-          schema:
-            type: string
         - name: pageNum
           in: query
           description: The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200.
@@ -52,11 +57,6 @@ paths:
             format: int32
             default: 1
             maximum: 10000
-        - name: position
-          in: query
-          description: Filters members by their position or role (e.g., Broker, Sales Representative).
-          schema:
-            type: string
         - name: resultsPerPage
           in: query
           description: The number of members to return per page.
@@ -67,7 +67,102 @@ paths:
             maximum: 1000
       responses:
         "200":
-          $ref: components.yml#/components/responses/EmptySuccess
+          description: Successful response containing a paginated list of members
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: components.yml#/components/schemas/PaginationInfo
+                  - type: object
+                    properties:
+                      members:
+                        type: array
+                        description: Array of member objects
+                        items:
+                          type: object
+                          properties:
+                            resource:
+                              type: string
+                              description: Resource identifier
+                            agentId:
+                              type: string
+                              description: Unique identifier for the agent
+                            boardAgentId:
+                              type: string
+                              description: Agent identifier assigned by the MLS board
+                            officeId:
+                              type: [string, "null"]
+                              description: Identifier of the office the member belongs to
+                            updatedOn:
+                              type: [string, "null"]
+                              description: Timestamp of the last update
+                            name:
+                              type: string
+                              description: Full name of the member
+                            board:
+                              type: [string, "null"]
+                              description: MLS board the member belongs to
+                            position:
+                              type: [string, "null"]
+                              description: Position or role of the member
+                            phones:
+                              type: array
+                              description: List of phone numbers for the member
+                              items:
+                                type: string
+                            social:
+                              type: array
+                              description: List of social media profiles
+                              items:
+                                type: string
+                            website:
+                              type: [string, "null"]
+                              description: Member's website URL
+                            photo:
+                              type: object
+                              description: Profile photo URLs
+                              properties:
+                                small:
+                                  type: [string, "null"]
+                                  description: URL of the small-sized photo
+                                large:
+                                  type: [string, "null"]
+                                  description: URL of the large-sized photo
+                                updatedOn:
+                                  type: [string, "null"]
+                                  description: Timestamp of the last photo update
+                            brokerage:
+                              type: object
+                              description: Brokerage the member is associated with
+                              properties:
+                                name:
+                                  type: [string, "null"]
+                                  description: Name of the brokerage
+                                address:
+                                  type: object
+                                  description: Address of the brokerage
+                                  properties:
+                                    address1:
+                                      type: [string, "null"]
+                                      description: Primary address line
+                                    address2:
+                                      type: [string, "null"]
+                                      description: Secondary address line
+                                    city:
+                                      type: [string, "null"]
+                                      description: City name
+                                    state:
+                                      type: [string, "null"]
+                                      description: State or province
+                                    postal:
+                                      type: [string, "null"]
+                                      description: Postal or ZIP code
+                                    country:
+                                      type: [string, "null"]
+                                      description: Country name
+                            email:
+                              type: [string, "null"]
+                              description: Email address of the member
         "400":
           $ref: components.yml#/components/responses/BadRequest
       deprecated: false
