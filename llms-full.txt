@@ -173,7 +173,7 @@ Use this endpoint to get details about a specific listing. When requesting a spe
 | boardId | integer (int32) | Filter by boardId. This is only required if your account has access to more than one MLS. |
 | fields | string enum: raw | If set to `raw`, returns raw fields the way data fields come from MLS. |
 | locations | boolean | If set to `true`, fetches locations whose boundary contains this listing's coordinates. Under the hood uses [GET /locations](/reference/get_locations) with `pointWithinBoundary=true`. |
-| locationsSource | array[string] | Filters the locations returned by `locations=true` by source: - `MSL` - Locations sourced from MLS (Multiple Listing Service) data. - `UserDefined` - Custom locations created and defined by users. - `LiveBy` - Locations sourced from LiveBy, a third-party neighborhood and community data provider. |
+| locationsSource | array[string] | Filters the locations returned by `locations=true` by source: - `MSL` - Locations sourced from MLS (Multiple Listing Service) data. - `UserDefined` - Custom locations created and defined by users. - `LiveBy` - Locations sourced from LiveBy, a third-party neighborhood and community data provider. - `PublicRecord` - Locations sourced from Public Records Data. |
 | locationsType | array[string] | Filters the locations returned by `locations=true` by type. Same values as the `type` parameter of [GET /locations](/reference/get_locations). |
 
 ---
@@ -244,8 +244,8 @@ Searches for geographical locations such as cities, neighborhoods, and districts
 
 | Name | Type | Description |
 |---|---|---|
-| source | array[any] | Filters locations by source: - `MSL` - Locations sourced from MLS (Multiple Listing Service) data. - `UserDefined` - Custom locations created and defined by users. - `LiveBy` - Locations sourced from LiveBy, a third-party neighborhood and community data provider. |
-| type | array[any] | Limits results to specified location types: - `area` - Represents larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc. - `city` - Municipal division that can include multiple neighborhoods within its boundaries. - `city-alternate` - Alternate representation of a city, used for specific data sources or contexts. - `neighborhood` - Smallest geographical unit within a city. - `neighborhood-alternate` - Alternate representation of a neighborhood, used for specific data sources or contexts. - `postalCode` - Represents postal code areas, which may span multiple neighborhoods or cities. - `district` - Represents administrative or political districts, which may span multiple neighborhoods or cities. - `schoolDistrict` - Represents school district areas, which may span multiple neighborhoods or cities. - `school` - Represents specific school locations and catchment areas. |
+| source | array[any] | Filters locations by source: - `MSL` - Locations sourced from MLS (Multiple Listing Service) data. - `UserDefined` - Custom locations created and defined by users. - `LiveBy` - Locations sourced from LiveBy, a third-party neighborhood and community data provider. - `PublicRecord` - Locations sourced from Public Records Data. |
+| type | array[any] | Limits results to specified location types: - `area` - Represents larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc. - `city` - Municipal division that can include multiple neighborhoods within its boundaries. - `city-alternate` - Alternate representation of a city, used for specific data sources or contexts. - `neighborhood` - Smallest geographical unit within a city. - `neighborhood-alternate` - Alternate representation of a neighborhood, used for specific data sources or contexts. - `postalCode` - Represents postal code areas, which may span multiple neighborhoods or cities. - `district` - Represents administrative or political districts, which may span multiple neighborhoods or cities. - `schoolDistrict` - Represents school district areas, which may span multiple neighborhoods or cities. - `school` - Represents specific school locations and catchment areas. - `property` - Represents individual properties or land parcels along with publicly available information derived from public records data. |
 | state | array[string] | Filters locations by 2-letter State/Province/Territory codes. Returns locations within the specified states. |
 | area | array[string] | Filters locations by area names. Returns locations within the specified area. Areas represent larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc. |
 | city | array[string] | Filters locations by city names. Returns locations within the specified city. Cities can include multiple neighborhoods within their boundaries. |
@@ -284,8 +284,8 @@ Autocomplete for Locations search. As your user types, you simply pass their inp
 | Name | Type | Description |
 |---|---|---|
 | search | string | Search query string |
-| source | array[any] | Filters locations by source: - `MSL` - Locations sourced from MLS (Multiple Listing Service) data. - `UserDefined` - Custom locations created and defined by users. - `LiveBy` - Locations sourced from LiveBy, a third-party neighborhood and community data provider. |
-| type | array[any] | Limits results to specified location types: - `area` - Represents larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc. - `city` - Municipal division that can include multiple neighborhoods within its boundaries. - `city-alternate` - Alternate representation of a city, used for specific data sources or contexts. - `neighborhood` - Smallest geographical unit within a city. - `neighborhood-alternate` - Alternate representation of a neighborhood, used for specific data sources or contexts. - `postalCode` - Represents postal code areas, which may span multiple neighborhoods or cities. - `district` - Represents administrative or political districts, which may span multiple neighborhoods or cities. - `schoolDistrict` - Represents school district areas, which may span multiple neighborhoods or cities. - `school` - Represents specific school locations and catchment areas. |
+| source | array[any] | Filters locations by source: - `MSL` - Locations sourced from MLS (Multiple Listing Service) data. - `UserDefined` - Custom locations created and defined by users. - `LiveBy` - Locations sourced from LiveBy, a third-party neighborhood and community data provider. - `PublicRecord` - Locations sourced from Public Records Data. |
+| type | array[any] | Limits results to specified location types: - `area` - Represents larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc. - `city` - Municipal division that can include multiple neighborhoods within its boundaries. - `city-alternate` - Alternate representation of a city, used for specific data sources or contexts. - `neighborhood` - Smallest geographical unit within a city. - `neighborhood-alternate` - Alternate representation of a neighborhood, used for specific data sources or contexts. - `postalCode` - Represents postal code areas, which may span multiple neighborhoods or cities. - `district` - Represents administrative or political districts, which may span multiple neighborhoods or cities. - `schoolDistrict` - Represents school district areas, which may span multiple neighborhoods or cities. - `school` - Represents specific school locations and catchment areas. - `property` - Represents individual properties or land parcels along with publicly available information derived from public records data. |
 | fields | string | Comma-separated list of fields to include in the response. This allows clients to request only the specific data they need, reducing payload size. Examples: - `name,type` - Returns only location names and types - `name,address.city,address.state` - Returns location names and specific address components - `map.boundary` - Returns only geographical boundary data |
 | map | string (json) | GeoJSON polygon or multi-polygon boundary for geographical filtering. Limits results to locations within the specified boundaries. For complex polygons or multipolygons that exceed query parameter size limits, use the POST method and include the map data in the request body. Format: Array of coordinate arrays, where each coordinate is [longitude, latitude] in WGS 84 format. The polygon must be closed (first and last points must be identical). For more information refer to the implementation guide [Filtering Listings Geo-Spatially Using the "map" Parameter](https://help.repliers.com/en/article/filtering-listings-geo-spatially-using-the-map-parameter-7sorw0/) |
 | resultsPerPage | integer default: 10 | The number of locations to return per page. |
@@ -380,7 +380,7 @@ This endpoint translates natural language search queries into structured API req
 | listings | boolean default: false | no | If `true`, the endpoint will return listings according to the generated urlQueryString parameters, the same way as GET /lisitngs endpoint would treat those parameters. Default is `false`. |
 | fields | string | no | Use if you want to limit the `listings` response object to containing certain fields only. For example: `fields=listPrice,soldPrice` would limit the response to contain `listPrice` and `soldPrice` only. You can also specify the amount of images to return, for example if a listing has 40 images total and you specify `fields=images[5]` it will only return the first 5 images. |
 | useLocationId | boolean default: false | no | When set to `true`, any locations identified in the prompt will be returned as `locationId` values instead of being split into separate `area`, `city`, and `neighborhood` parameters. |
-| locationsSource | array[any] | no | Specify which location sources to use when interpreting the prompt. This can help improve accuracy by providing the NLP model with the location data source most suitable for the query. - `MSL` - Locations sourced from MLS (Multiple Listing Service) data. - `UserDefined` - Custom locations created and defined by users. - `LiveBy` - Locations sourced from LiveBy, a third-party neighborhood and community data provider. |
+| locationsSource | array[any] | no | Specify which location sources to use when interpreting the prompt. This can help improve accuracy by providing the NLP model with the location data source most suitable for the query. - `MSL` - Locations sourced from MLS (Multiple Listing Service) data. - `UserDefined` - Custom locations created and defined by users. - `LiveBy` - Locations sourced from LiveBy, a third-party neighborhood and community data provider. - `PublicRecord` - Locations sourced from Public Records Data. |
 
 ---
 
@@ -1035,6 +1035,26 @@ Returns a list of properties that a client has favorited. Results can be filtere
 | resultsPerPage | integer (int32) | The number of favorites to return per page. |
 | status | string | Filters favorites by the current status of the favorited listing. |
 | tags | string | Allows you to search tags within favorites, accepts a comma-separated string, for example "needs work, turn-key" |
+| pretty | boolean | If true, returns the response in a human-readable formatted JSON. |
+
+---
+
+### PATCH /favorites/{favoriteId}
+
+Updates the comments or tags on an existing favorite.
+
+**Path Parameters:**
+
+| Name | Type | Description |
+|---|---|---|
+| favoriteId | integer (int32) |  |
+
+**Request Body:**
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| comments | string | no | Updated comments for the favorite. |
+| tags | array[string] | no | Updated tags for the favorite. |
 
 ---
 
@@ -1135,11 +1155,11 @@ Use this endpoint to list and filter members (agents) belonging to the MLS.
 | agentId | string | Filters members by agent ID using exact match. |
 | agentName | string | Filters members by agent name using exact match. |
 | boardId | string | Filters members by the MLS board they belong to. |
+| hasEmail | boolean | If supplied, filters members by whether they have an email address on record. |
+| originatingSystemName | string | Filters members by the name of the originating MLS system. |
 | brokerage | string | Filters members by brokerage name using partial match. |
 | keywords | string | Searches members by keyword across multiple fields. |
-| officeId | string | Filters members by office ID. |
 | pageNum | integer (int32) default: 1 | The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200. |
-| position | string | Filters members by their position or role (e.g., Broker, Sales Representative). |
 | resultsPerPage | integer (int32) default: 100 | The number of members to return per page. |
 
 ---
@@ -1154,6 +1174,8 @@ Use this endpoint to list offices belonging to the MLS. A brokerage may have one
 
 | Name | Type | Description |
 |---|---|---|
+| pageNum | integer | Page number for paginated results. |
+| resultsPerPage | integer | Number of results to return per page. |
 | officeId | string | If supplied, finds office by officeId using exact match criteria. |
 | keywords | string | If supplied, filters offices by the supplied value. |
 | boardId | string | Find your boardId by visiting https://login.repliers.com/dashboard/data-access |
@@ -1165,6 +1187,15 @@ Use this endpoint to list offices belonging to the MLS. A brokerage may have one
 ### GET /brokerages
 
 Returns a list of brokerages registered with the MLS. Useful for building brokerage directory pages or populating brokerage filter options in search interfaces.
+
+**Query Parameters:**
+
+| Name | Type | Description |
+|---|---|---|
+| pageNum | integer | Page number for paginated results. |
+| resultsPerPage | integer | Number of results to return per page. |
+| keywords | string | If supplied, filters brokerages by the supplied value. |
+| boardId | string | Find your boardId by visiting https://login.repliers.com/dashboard/data-access |
 
 ---
 
