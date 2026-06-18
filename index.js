@@ -114,11 +114,26 @@ function stripHtml(str) {
 }
 
 // Format a schema type for display (e.g. "array[string]", "integer (int32)")
-function formatType(schema) {
+// Pass bundled doc to resolve $ref pointers within array items.
+function formatType(schema, bundled) {
   if (!schema) return 'any';
+  // OpenAPI 3.1 nullable: type can be an array like ["string", "null"]
+  if (Array.isArray(schema.type)) {
+    const nonNull = schema.type.filter(t => t !== 'null');
+    const nullable = schema.type.includes('null');
+    let t = nonNull.join(' | ');
+    if (nullable) t += ' | null';
+    return t;
+  }
   if (schema.type === 'array') {
-    const itemType = schema.items?.type || 'any';
-    return `array[${itemType}]`;
+    let items = schema.items;
+    // Resolve $ref in items (bundler deduplicates shared enum schemas as self-refs)
+    if (items?.$ref && bundled) items = resolveRef(bundled, items.$ref) || items;
+    if (!items) return 'array';
+    if (items.type === 'object' || items.properties) return 'array[object]';
+    if (items.type) return `array[${items.type}]`;
+    if (items.enum) return 'array[string]';
+    return 'array[any]';
   }
   let t = schema.type || 'any';
   if (schema.enum) t += ` enum: ${schema.enum.join(', ')}`;
@@ -138,7 +153,11 @@ function escapeCell(str) {
 // subsequent uses, so we have to follow them before rendering.
 function resolveRef(doc, ref) {
   if (!ref || !ref.startsWith('#/')) return null;
-  const segments = ref.slice(2).split('/').map(s => s.replace(/~1/g, '/').replace(/~0/g, '~'));
+  // JSON Pointer (RFC 6901) unescaping + URL-decode: the bundler encodes
+  // path template characters like { } as %7B %7D in self-referencing $refs.
+  const segments = ref.slice(2).split('/').map(s =>
+    decodeURIComponent(s.replace(/~1/g, '/').replace(/~0/g, '~'))
+  );
   let cur = doc;
   for (const seg of segments) {
     if (cur == null) return null;
@@ -151,6 +170,47 @@ function resolveParams(params, bundled) {
   return (params || [])
     .map(p => (p && p.$ref ? resolveRef(bundled, p.$ref) : p))
     .filter(Boolean);
+}
+
+// Render a response schema as markdown table rows (2-level flattening).
+// Handles allOf (paginated responses), plain objects, and arrays of objects.
+function generateResponseTable(schema, bundled) {
+  if (!schema) return '';
+
+  // Merge allOf sub-schemas into a single properties map
+  let properties = {};
+  if (schema.allOf) {
+    for (const sub of schema.allOf) {
+      const resolved = sub.$ref ? (resolveRef(bundled, sub.$ref) || sub) : sub;
+      if (resolved.properties) Object.assign(properties, resolved.properties);
+    }
+  } else if (schema.properties) {
+    properties = schema.properties;
+  } else {
+    return '';
+  }
+
+  if (Object.keys(properties).length === 0) return '';
+
+  let rows = '';
+  for (const [name, prop] of Object.entries(properties)) {
+    rows += `| ${name} | ${formatType(prop, bundled)} | ${escapeCell(stripHtml(prop.description || ''))} |\n`;
+
+    // Expand first-level children of plain objects
+    if (prop.type === 'object' && prop.properties) {
+      for (const [child, childProp] of Object.entries(prop.properties)) {
+        rows += `| ${name}.${child} | ${formatType(childProp, bundled)} | ${escapeCell(stripHtml(childProp.description || ''))} |\n`;
+      }
+    }
+
+    // Expand first-level children of arrays of objects
+    if (prop.type === 'array' && prop.items?.properties) {
+      for (const [child, childProp] of Object.entries(prop.items.properties)) {
+        rows += `| ${name}[].${child} | ${formatType(childProp, bundled)} | ${escapeCell(stripHtml(childProp.description || ''))} |\n`;
+      }
+    }
+  }
+  return rows;
 }
 
 // Group and order paths from a bundled spec
@@ -242,7 +302,7 @@ function generateFull(bundled) {
         content += `\n**Path Parameters:**\n\n`;
         content += `| Name | Type | Description |\n|---|---|---|\n`;
         for (const p of pathParams) {
-          content += `| ${p.name} | ${formatType(p.schema)} | ${escapeCell(stripHtml(p.description))} |\n`;
+          content += `| ${p.name} | ${formatType(p.schema, bundled)} | ${escapeCell(stripHtml(p.description))} |\n`;
           totalParams++;
         }
       }
@@ -253,7 +313,7 @@ function generateFull(bundled) {
         content += `\n**Query Parameters:**\n\n`;
         content += `| Name | Type | Description |\n|---|---|---|\n`;
         for (const p of queryParams) {
-          content += `| ${p.name} | ${formatType(p.schema)} | ${escapeCell(stripHtml(p.description))} |\n`;
+          content += `| ${p.name} | ${formatType(p.schema, bundled)} | ${escapeCell(stripHtml(p.description))} |\n`;
           totalParams++;
         }
       }
@@ -267,9 +327,18 @@ function generateFull(bundled) {
         for (const [name, prop] of Object.entries(bodySchema.properties)) {
           const req = required.has(name) ? 'yes' : 'no';
           const propDesc = stripHtml(prop.description || '');
-          content += `| ${name} | ${formatType(prop)} | ${req} | ${escapeCell(propDesc)} |\n`;
+          content += `| ${name} | ${formatType(prop, bundled)} | ${req} | ${escapeCell(propDesc)} |\n`;
           totalParams++;
         }
+      }
+
+      // Response (200)
+      const responseSchema = op.responses?.['200']?.content?.['application/json']?.schema;
+      const responseTable = generateResponseTable(responseSchema, bundled);
+      if (responseTable) {
+        content += `\n**Response (200):**\n\n`;
+        content += `| Field | Type | Description |\n|---|---|---|\n`;
+        content += responseTable;
       }
 
       content += `\n---\n`;

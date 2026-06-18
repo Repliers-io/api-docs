@@ -10,9 +10,54 @@ paths:
       summary: Brokerages
       description: Returns a list of brokerages registered with the MLS. Useful for building brokerage directory pages or populating brokerage filter options in search interfaces.
       operationId: brokerages
+      parameters:
+        - name: pageNum
+          in: query
+          description: Page number for paginated results.
+          schema:
+            type: integer
+        - name: resultsPerPage
+          in: query
+          description: Number of results to return per page.
+          schema:
+            type: integer
+        - name: keywords
+          in: query
+          description: If supplied, filters brokerages by the supplied value.
+          schema:
+            type: string
+        - name: boardId
+          in: query
+          description: Find your boardId by visiting https://login.repliers.com/dashboard/data-access
+          schema:
+            type: string
       responses:
         "200":
-          $ref: components.yml#/components/responses/EmptySuccess
+          description: Successful response containing a paginated list of brokerages
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: components.yml#/components/schemas/PaginationInfo
+                  - type: object
+                    properties:
+                      brokerages:
+                        type: array
+                        description: Array of brokerage objects
+                        items:
+                          type: object
+                          properties:
+                            resource:
+                              type: string
+                              description: Resource identifier
+                            offices:
+                              type: array
+                              description: List of office IDs associated with this brokerage
+                              items:
+                                type: string
+                            name:
+                              type: string
+                              description: Name of the brokerage
         "400":
           $ref: components.yml#/components/responses/BadRequest
       deprecated: false

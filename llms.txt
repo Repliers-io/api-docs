@@ -76,6 +76,7 @@ Auth: API key via `REPLIERS-API-KEY` header
 
 - POST /favorites: Add a favorite
 - GET /favorites: Get favorites
+- PATCH /favorites/{favoriteId}: Update a favorite
 - DELETE /favorites/{favoriteId}: Delete a favorite
 
 ## Webhooks

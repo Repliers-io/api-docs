@@ -41,7 +41,15 @@ paths:
                     type: string
       responses:
         "200":
-          $ref: components.yml#/components/responses/EmptySuccess
+          description: Favorite successfully created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  favoriteId:
+                    type: integer
+                    description: Unique identifier of the newly created favorite
         "400":
           $ref: components.yml#/components/responses/BadRequest
       deprecated: false
@@ -100,13 +108,900 @@ paths:
           description: Allows you to search tags within favorites, accepts a comma-separated string, for example "needs work, turn-key"
           schema:
             type: string
+        - name: pretty
+          in: query
+          description: If true, returns the response in a human-readable formatted JSON.
+          schema:
+            type: boolean
       responses:
         "200":
-          $ref: components.yml#/components/responses/EmptySuccess
+          description: Successful response containing a paginated list of favorited listings
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: components.yml#/components/schemas/PaginationInfo
+                  - type: object
+                    properties:
+                      favorites:
+                        type: array
+                        description: Array of favorited listing objects
+                        items:
+                          type: object
+                          properties:
+                            mlsNumber:
+                              type: string
+                              description: MLS listing number
+                            resource:
+                              type: string
+                              description: Resource identifier
+                            status:
+                              type: string
+                              description: Current listing status code
+                            class:
+                              type: string
+                              description: Property class
+                            type:
+                              type: string
+                              description: Listing type (e.g. Sale, Lease)
+                            listPrice:
+                              type: string
+                              description: Listed price of the property
+                            listDate:
+                              type: string
+                              format: date-time
+                              description: Date the property was listed
+                            lastStatus:
+                              type: string
+                              description: Last known status of the listing
+                            soldPrice:
+                              type: [string, "null"]
+                              description: Price at which the property was sold
+                            soldDate:
+                              type: [string, "null"]
+                              description: Date the property was sold
+                            originalPrice:
+                              type: string
+                              description: Original list price
+                            assignment:
+                              type: [string, "null"]
+                              description: Assignment information
+                            address:
+                              type: object
+                              description: Property address details
+                              properties:
+                                area:
+                                  type: [string, "null"]
+                                  description: Geographical area or county
+                                city:
+                                  type: [string, "null"]
+                                  description: City name
+                                country:
+                                  type: [string, "null"]
+                                  description: Country code
+                                district:
+                                  type: [string, "null"]
+                                  description: District or municipality
+                                majorIntersection:
+                                  type: [string, "null"]
+                                  description: Nearest major intersection
+                                neighborhood:
+                                  type: [string, "null"]
+                                  description: Neighborhood name
+                                streetDirection:
+                                  type: [string, "null"]
+                                  description: Street direction suffix
+                                streetName:
+                                  type: string
+                                  description: Street name
+                                streetNumber:
+                                  type: string
+                                  description: Street number
+                                streetSuffix:
+                                  type: [string, "null"]
+                                  description: Street suffix (e.g. Ave, St)
+                                unitNumber:
+                                  type: [string, "null"]
+                                  description: Unit or suite number
+                                zip:
+                                  type: string
+                                  description: Postal or ZIP code
+                                state:
+                                  type: string
+                                  description: State or province code
+                                communityCode:
+                                  type: [string, "null"]
+                                  description: Community code
+                                streetDirectionPrefix:
+                                  type: [string, "null"]
+                                  description: Street direction prefix
+                                addressKey:
+                                  type: string
+                                  description: Unique address key identifier
+                            map:
+                              type: object
+                              description: Geographical coordinates
+                              properties:
+                                latitude:
+                                  type: string
+                                  description: Latitude coordinate
+                                longitude:
+                                  type: string
+                                  description: Longitude coordinate
+                                point:
+                                  type: string
+                                  description: WKT point representation
+                            permissions:
+                              type: object
+                              description: Display permission flags for the listing
+                              properties:
+                                displayAddressOnInternet:
+                                  type: string
+                                  description: Whether the address may be displayed on the internet
+                                displayPublic:
+                                  type: string
+                                  description: Whether the listing may be displayed publicly
+                                displayInternetEntireListing:
+                                  type: string
+                                  description: Whether the full listing may be displayed on the internet
+                                displayOnMap:
+                                  type: string
+                                  description: Whether the listing may be shown on a map
+                            images:
+                              type: array
+                              description: List of image file paths
+                              items:
+                                type: string
+                            photoCount:
+                              type: integer
+                              description: Total number of photos
+                            details:
+                              type: object
+                              description: Detailed property attributes
+                              properties:
+                                airConditioning:
+                                  type: [string, "null"]
+                                  description: Air conditioning type
+                                basement1:
+                                  type: [string, "null"]
+                                  description: Basement type
+                                basement2:
+                                  type: [string, "null"]
+                                  description: Secondary basement type
+                                centralVac:
+                                  type: [string, "null"]
+                                  description: Central vacuum availability
+                                den:
+                                  type: [string, "null"]
+                                  description: Den description
+                                description:
+                                  type: string
+                                  description: Full property description
+                                elevator:
+                                  type: [string, "null"]
+                                  description: Elevator availability
+                                exteriorConstruction1:
+                                  type: [string, "null"]
+                                  description: Primary exterior construction material
+                                exteriorConstruction2:
+                                  type: [string, "null"]
+                                  description: Secondary exterior construction material
+                                extras:
+                                  type: string
+                                  description: Additional features or inclusions
+                                furnished:
+                                  type: [string, "null"]
+                                  description: Furnished status
+                                garage:
+                                  type: [string, "null"]
+                                  description: Garage type
+                                heating:
+                                  type: [string, "null"]
+                                  description: Heating type
+                                numBathrooms:
+                                  type: [string, "null"]
+                                  description: Number of bathrooms
+                                numBathroomsPlus:
+                                  type: [string, "null"]
+                                  description: Additional bathroom count
+                                numBathroomsHalf:
+                                  type: [string, "null"]
+                                  description: Number of half bathrooms
+                                numBedrooms:
+                                  type: [string, "null"]
+                                  description: Number of bedrooms
+                                numBedroomsPlus:
+                                  type: [string, "null"]
+                                  description: Additional bedroom count
+                                numFireplaces:
+                                  type: [string, "null"]
+                                  description: Number of fireplaces
+                                numGarageSpaces:
+                                  type: [string, "null"]
+                                  description: Number of garage spaces
+                                numParkingSpaces:
+                                  type: [string, "null"]
+                                  description: Number of parking spaces
+                                numRooms:
+                                  type: [string, "null"]
+                                  description: Number of rooms
+                                numRoomsPlus:
+                                  type: [string, "null"]
+                                  description: Additional room count
+                                numKitchens:
+                                  type: [string, "null"]
+                                  description: Number of kitchens
+                                numKitchensPlus:
+                                  type: [string, "null"]
+                                  description: Additional kitchen count
+                                numDrivewaySpaces:
+                                  type: [string, "null"]
+                                  description: Number of driveway spaces
+                                patio:
+                                  type: [string, "null"]
+                                  description: Patio description
+                                balcony:
+                                  type: [string, "null"]
+                                  description: Balcony availability
+                                propertyType:
+                                  type: [string, "null"]
+                                  description: Property type description
+                                sqft:
+                                  type: [string, "null"]
+                                  description: Square footage
+                                sqftRange:
+                                  type: [string, "null"]
+                                  description: Square footage range
+                                style:
+                                  type: [string, "null"]
+                                  description: Architectural style
+                                swimmingPool:
+                                  type: [string, "null"]
+                                  description: Swimming pool availability
+                                virtualTourUrl:
+                                  type: [string, "null"]
+                                  description: URL to the virtual tour
+                                yearBuilt:
+                                  type: [string, "null"]
+                                  description: Year the property was built
+                                viewType:
+                                  type: [string, "null"]
+                                  description: View description
+                                flooringType:
+                                  type: [string, "null"]
+                                  description: Flooring material types
+                                roofMaterial:
+                                  type: [string, "null"]
+                                  description: Roof material
+                                HOAFee:
+                                  type: [string, "null"]
+                                  description: Primary HOA monthly fee
+                                HOAFee2:
+                                  type: [string, "null"]
+                                  description: Secondary HOA fee
+                                HOAFee3:
+                                  type: [string, "null"]
+                                  description: Tertiary HOA fee
+                                waterfront:
+                                  type: [string, "null"]
+                                  description: Waterfront description
+                                waterSource:
+                                  type: [string, "null"]
+                                  description: Water source
+                                landAccessType:
+                                  type: [string, "null"]
+                                  description: Land access type
+                                landSewer:
+                                  type: [string, "null"]
+                                  description: Land sewer type
+                                zoningDescription:
+                                  type: [string, "null"]
+                                  description: Zoning description
+                                zoning:
+                                  type: [string, "null"]
+                                  description: Zoning classification
+                                zoningType:
+                                  type: [string, "null"]
+                                  description: Zoning type
+                                leaseTerms:
+                                  type: [string, "null"]
+                                  description: Lease terms
+                                laundryLevel:
+                                  type: [string, "null"]
+                                  description: Level where laundry is located
+                                driveway:
+                                  type: [string, "null"]
+                                  description: Driveway type
+                                foundationType:
+                                  type: [string, "null"]
+                                  description: Foundation type
+                                constructionStatus:
+                                  type: [string, "null"]
+                                  description: Construction status
+                                constructionStyleSplitLevel:
+                                  type: [string, "null"]
+                                  description: Split level construction indicator
+                                loadingType:
+                                  type: [string, "null"]
+                                  description: Loading type
+                                ceilingType:
+                                  type: [string, "null"]
+                                  description: Ceiling type
+                                sewer:
+                                  type: [string, "null"]
+                                  description: Sewer type
+                                familyRoom:
+                                  type: [string, "null"]
+                                  description: Family room description
+                                amperage:
+                                  type: [string, "null"]
+                                  description: Electrical amperage
+                                centralAirConditioning:
+                                  type: [string, "null"]
+                                  description: Central air conditioning indicator
+                                energuideRating:
+                                  type: [string, "null"]
+                                  description: EnerGuide or energy efficiency rating
+                                energyCertification:
+                                  type: [string, "null"]
+                                  description: Energy certification level
+                                certificationLevel:
+                                  type: [string, "null"]
+                                  description: General certification level
+                                landscapeFeatures:
+                                  type: [string, "null"]
+                                  description: Landscape features
+                                fireProtection:
+                                  type: [string, "null"]
+                                  description: Fire protection system
+                                farmType:
+                                  type: [string, "null"]
+                                  description: Farm type
+                                businessType:
+                                  type: [string, "null"]
+                                  description: Business type
+                                businessSubType:
+                                  type: [string, "null"]
+                                  description: Business sub-type
+                                landDisposition:
+                                  type: [string, "null"]
+                                  description: Land disposition
+                                storageType:
+                                  type: [string, "null"]
+                                  description: Storage type
+                                liveStreamEventURL:
+                                  type: [string, "null"]
+                                  description: Live stream event URL
+                                parkCostMonthly:
+                                  type: [string, "null"]
+                                  description: Monthly parking cost
+                                commonElementsIncluded:
+                                  type: [string, "null"]
+                                  description: Common elements included
+                                greenPropertyInformationStatement:
+                                  type: [string, "null"]
+                                  description: Green property information statement
+                                handicappedEquipped:
+                                  type: [string, "null"]
+                                  description: Handicap accessibility
+                                livingAreaMeasurement:
+                                  type: [string, "null"]
+                                  description: Living area measurement unit
+                                analyticsClick:
+                                  type: [string, "null"]
+                                  description: Analytics click tracking value
+                                moreInformationLink:
+                                  type: [string, "null"]
+                                  description: Link for more information
+                                alternateURLVideoLink:
+                                  type: [string, "null"]
+                                  description: Alternate video link URL
+                                bathrooms:
+                                  type: object
+                                  description: Bathroom details keyed by bathroom number
+                                  additionalProperties:
+                                    type: object
+                                    properties:
+                                      level:
+                                        type: [string, "null"]
+                                        description: Floor level of the bathroom
+                                      count:
+                                        type: [string, "null"]
+                                        description: Number of bathroom units
+                                      pieces:
+                                        type: [string, "null"]
+                                        description: Number of fixtures in the bathroom
+                            daysOnMarket:
+                              type: string
+                              description: Number of days the property has been on the market
+                            simpleDaysOnMarket:
+                              type: integer
+                              description: Simplified days on market count
+                            occupancy:
+                              type: [string, "null"]
+                              description: Occupancy status
+                            updatedOn:
+                              type: [string, "null"]
+                              format: date-time
+                              description: Timestamp of the last listing update
+                            coopCompensation:
+                              type: [string, "null"]
+                              description: Cooperating broker compensation
+                            condominium:
+                              type: object
+                              description: Condominium-specific details
+                              properties:
+                                ammenities:
+                                  type: array
+                                  description: List of condominium amenities
+                                  items:
+                                    type: string
+                                buildingInsurance:
+                                  type: [string, "null"]
+                                  description: Building insurance details
+                                condoCorp:
+                                  type: [string, "null"]
+                                  description: Condominium corporation name
+                                condoCorpNum:
+                                  type: [string, "null"]
+                                  description: Condominium corporation number
+                                exposure:
+                                  type: [string, "null"]
+                                  description: Unit exposure direction
+                                lockerNumber:
+                                  type: [string, "null"]
+                                  description: Locker number
+                                locker:
+                                  type: [string, "null"]
+                                  description: Locker availability
+                                lockerUnitNumber:
+                                  type: [string, "null"]
+                                  description: Locker unit number
+                                lockerLevel:
+                                  type: [string, "null"]
+                                  description: Locker level
+                                parkingType:
+                                  type: [string, "null"]
+                                  description: Parking type
+                                pets:
+                                  type: [string, "null"]
+                                  description: Pet policy
+                                propertyMgr:
+                                  type: [string, "null"]
+                                  description: Property manager name
+                                stories:
+                                  type: [string, "null"]
+                                  description: Number of stories in the building
+                                ensuiteLaundry:
+                                  type: [string, "null"]
+                                  description: Ensuite laundry availability
+                                sharesPercentage:
+                                  type: [string, "null"]
+                                  description: Ownership shares percentage
+                                unitNumber:
+                                  type: [string, "null"]
+                                  description: Unit number
+                                fees:
+                                  type: object
+                                  description: Monthly fee inclusions
+                                  properties:
+                                    cableInlc:
+                                      type: [string, "null"]
+                                      description: Whether cable is included
+                                    heatIncl:
+                                      type: [string, "null"]
+                                      description: Whether heat is included
+                                    hydroIncl:
+                                      type: [string, "null"]
+                                      description: Whether hydro/electricity is included
+                                    maintenance:
+                                      type: [string, "null"]
+                                      description: Monthly maintenance fee amount
+                                    parkingIncl:
+                                      type: [string, "null"]
+                                      description: Whether parking is included
+                                    taxesIncl:
+                                      type: [string, "null"]
+                                      description: Whether taxes are included
+                                    waterIncl:
+                                      type: [string, "null"]
+                                      description: Whether water is included
+                            lot:
+                              type: object
+                              description: Lot details
+                              properties:
+                                acres:
+                                  type: [string, "null"]
+                                  description: Lot size in acres
+                                depth:
+                                  type: [string, "null"]
+                                  description: Lot depth
+                                irregular:
+                                  type: [string, "null"]
+                                  description: Whether the lot is irregular
+                                legalDescription:
+                                  type: [string, "null"]
+                                  description: Legal description of the lot
+                                measurement:
+                                  type: [string, "null"]
+                                  description: Unit of lot measurement
+                                width:
+                                  type: [string, "null"]
+                                  description: Lot width
+                                size:
+                                  type: [string, "null"]
+                                  description: Lot size description
+                                source:
+                                  type: [string, "null"]
+                                  description: Source of lot dimensions
+                                dimensionsSource:
+                                  type: [string, "null"]
+                                  description: Source of lot dimension data
+                                dimensions:
+                                  type: [string, "null"]
+                                  description: Lot dimensions
+                                squareFeet:
+                                  type: [string, "null"]
+                                  description: Lot size in square feet
+                                features:
+                                  type: [string, "null"]
+                                  description: Lot features
+                                taxLot:
+                                  type: [string, "null"]
+                                  description: Tax lot identifier
+                            nearby:
+                              type: object
+                              description: Nearby amenities
+                              properties:
+                                ammenities:
+                                  type: array
+                                  description: List of nearby amenities
+                                  items:
+                                    type: string
+                            office:
+                              type: object
+                              description: Listing office information
+                              properties:
+                                brokerageName:
+                                  type: string
+                                  description: Name of the listing brokerage
+                            openHouse:
+                              type: array
+                              description: Scheduled open house events
+                              items:
+                                type: object
+                                properties:
+                                  date:
+                                    type: [string, "null"]
+                                    description: Open house date
+                                  startTime:
+                                    type: [string, "null"]
+                                    description: Open house start time
+                                  endTime:
+                                    type: [string, "null"]
+                                    description: Open house end time
+                                  type:
+                                    type: [string, "null"]
+                                    description: Open house type (e.g. Public, Broker)
+                                  status:
+                                    type: [string, "null"]
+                                    description: Open house status
+                                  dateValue:
+                                    type: [string, "null"]
+                                    format: date-time
+                                    description: ISO date-time of the open house
+                            rooms:
+                              type: array
+                              description: Room details
+                              items:
+                                type: object
+                                properties:
+                                  description:
+                                    type: string
+                                    description: Room type or name
+                                  features:
+                                    type: [string, "null"]
+                                    description: Primary room features
+                                  features2:
+                                    type: [string, "null"]
+                                    description: Secondary room features
+                                  features3:
+                                    type: [string, "null"]
+                                    description: Tertiary room features
+                                  length:
+                                    type: [string, "null"]
+                                    description: Room length
+                                  width:
+                                    type: [string, "null"]
+                                    description: Room width
+                                  level:
+                                    type: [string, "null"]
+                                    description: Floor level of the room
+                            taxes:
+                              type: object
+                              description: Tax information
+                              properties:
+                                annualAmount:
+                                  type: [string, "null"]
+                                  description: Annual tax amount
+                                assessmentYear:
+                                  type: [string, "null"]
+                                  description: Tax assessment year
+                            timestamps:
+                              type: object
+                              description: Key listing timestamps
+                              properties:
+                                idxUpdated:
+                                  type: [string, "null"]
+                                  format: date-time
+                                  description: Last IDX update timestamp
+                                listingUpdated:
+                                  type: [string, "null"]
+                                  format: date-time
+                                  description: Last listing update timestamp
+                                photosUpdated:
+                                  type: [string, "null"]
+                                  format: date-time
+                                  description: Last photo update timestamp
+                                conditionalExpiryDate:
+                                  type: [string, "null"]
+                                  description: Conditional expiry date
+                                terminatedDate:
+                                  type: [string, "null"]
+                                  description: Date the listing was terminated
+                                suspendedDate:
+                                  type: [string, "null"]
+                                  description: Date the listing was suspended
+                                listingEntryDate:
+                                  type: [string, "null"]
+                                  description: Date the listing was entered
+                                closedDate:
+                                  type: [string, "null"]
+                                  description: Date the listing was closed
+                                unavailableDate:
+                                  type: [string, "null"]
+                                  description: Date the listing became unavailable
+                                expiryDate:
+                                  type: [string, "null"]
+                                  description: Listing expiry date
+                                extensionEntryDate:
+                                  type: [string, "null"]
+                                  description: Date of listing extension entry
+                                possessionDate:
+                                  type: [string, "null"]
+                                  description: Possession date
+                                repliersUpdatedOn:
+                                  type: [string, "null"]
+                                  format: date-time
+                                  description: Last update timestamp in the Repliers system
+                            agents:
+                              type: array
+                              description: Agents associated with the listing
+                              items:
+                                type: object
+                                properties:
+                                  agentId:
+                                    type: string
+                                    description: Unique agent identifier
+                                  boardAgentId:
+                                    type: string
+                                    description: Agent identifier assigned by the MLS board
+                                  officeId:
+                                    type: string
+                                    description: Office identifier
+                                  boardOfficeId:
+                                    type: [string, "null"]
+                                    description: Office identifier assigned by the MLS board
+                                  updatedOn:
+                                    type: [string, "null"]
+                                    description: Last update timestamp for the agent record
+                                  name:
+                                    type: string
+                                    description: Agent full name
+                                  board:
+                                    type: [string, "null"]
+                                    description: MLS board the agent belongs to
+                                  position:
+                                    type: [string, "null"]
+                                    description: Agent position or role
+                                  phones:
+                                    type: array
+                                    description: Agent phone numbers
+                                    items:
+                                      type: string
+                                  social:
+                                    type: array
+                                    description: Agent social media profiles
+                                    items:
+                                      type: string
+                                  website:
+                                    type: [string, "null"]
+                                    description: Agent website URL
+                                  photo:
+                                    type: object
+                                    description: Agent profile photo URLs
+                                    properties:
+                                      small:
+                                        type: [string, "null"]
+                                        description: URL of the small-sized photo
+                                      large:
+                                        type: [string, "null"]
+                                        description: URL of the large-sized photo
+                                      updatedOn:
+                                        type: [string, "null"]
+                                        description: Last photo update timestamp
+                                  brokerage:
+                                    type: object
+                                    description: Agent's brokerage information
+                                    properties:
+                                      name:
+                                        type: [string, "null"]
+                                        description: Brokerage name
+                                      address:
+                                        type: object
+                                        description: Brokerage address
+                                        properties:
+                                          address1:
+                                            type: [string, "null"]
+                                            description: Primary address line
+                                          address2:
+                                            type: [string, "null"]
+                                            description: Secondary address line
+                                          city:
+                                            type: [string, "null"]
+                                            description: City name
+                                          state:
+                                            type: [string, "null"]
+                                            description: State or province
+                                          postal:
+                                            type: [string, "null"]
+                                            description: Postal or ZIP code
+                                          country:
+                                            type: [string, "null"]
+                                            description: Country name
+                                      officeBroker:
+                                        type: [string, "null"]
+                                        description: Office broker name
+                                      officeBrokerKey:
+                                        type: [string, "null"]
+                                        description: Office broker key
+                                      officeBrokerMlsId:
+                                        type: [string, "null"]
+                                        description: Office broker MLS ID
+                                      officeManager:
+                                        type: [string, "null"]
+                                        description: Office manager name
+                                      officeManagerKey:
+                                        type: [string, "null"]
+                                        description: Office manager key
+                                      officeManagerMlsId:
+                                        type: [string, "null"]
+                                        description: Office manager MLS ID
+                                      officeKey:
+                                        type: [string, "null"]
+                                        description: Office key
+                                      officeMlsId:
+                                        type: [string, "null"]
+                                        description: Office MLS ID
+                                      mainOfficeKey:
+                                        type: [string, "null"]
+                                        description: Main office key
+                                      mainOfficeMlsId:
+                                        type: [string, "null"]
+                                        description: Main office MLS ID
+                                      officeBrokerEmail:
+                                        type: [string, "null"]
+                                        description: Office broker email address
+                                      officeManagerEmail:
+                                        type: [string, "null"]
+                                        description: Office manager email address
+                            history:
+                              type: array
+                              description: Listing price and status history
+                              items:
+                                type: object
+                            comparables:
+                              type: array
+                              description: Comparable listings
+                              items:
+                                type: object
+                            estimate:
+                              type: object
+                              description: Automated valuation estimate
+                              properties:
+                                date:
+                                  type: string
+                                  format: date-time
+                                  description: Date the estimate was calculated
+                                high:
+                                  type: number
+                                  description: High end of the estimated value range
+                                low:
+                                  type: number
+                                  description: Low end of the estimated value range
+                                confidence:
+                                  type: number
+                                  description: Confidence score of the estimate (0–1)
+                                value:
+                                  type: number
+                                  description: Estimated property value
+                                history:
+                                  type: object
+                                  description: Historical estimate values
+                                  properties:
+                                    mth:
+                                      type: object
+                                      description: Monthly estimate history keyed by year-month
+                                      additionalProperties:
+                                        type: object
+                                        properties:
+                                          value:
+                                            type: number
+                                            description: Estimated value for that month
+                            boardId:
+                              type: integer
+                              description: MLS board ID the listing belongs to
+                            favoriteId:
+                              type: integer
+                              description: Unique identifier of the favorite record
+                            comments:
+                              type: [string, "null"]
+                              description: Client comments on the favorited listing
+                            tags:
+                              type: [string, "null"]
+                              description: Tags associated with the favorite
         "400":
           $ref: components.yml#/components/responses/BadRequest
       deprecated: false
   /favorites/{favoriteId}:
+    patch:
+      summary: Update a favorite
+      description: Updates the comments or tags on an existing favorite.
+      operationId: update-a-favorite
+      parameters:
+        - name: favoriteId
+          in: path
+          schema:
+            type: integer
+            format: int32
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                comments:
+                  type: string
+                  description: Updated comments for the favorite.
+                tags:
+                  type: array
+                  description: Updated tags for the favorite.
+                  items:
+                    type: string
+      responses:
+        "200":
+          description: Favorite successfully updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  clientId:
+                    type: integer
+                    description: ID of the client who owns the favorite
+                  mlsNumber:
+                    type: string
+                    description: MLS listing number of the favorited property
+                  tags:
+                    type: [string, "null"]
+                    description: Tags associated with the favorite
+                  comments:
+                    type: [string, "null"]
+                    description: Client comments on the favorited listing
+        "400":
+          $ref: components.yml#/components/responses/BadRequest
+      deprecated: false
     delete:
       summary: Delete a favorite
       description: Removes a property from a client's favorites list.
