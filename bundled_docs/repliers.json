@@ -10900,11 +10900,70 @@
             }
           },
           {
+            "name": "lat",
+            "in": "query",
+            "description": "Accepts a value for latitude. Can be used only for sorting with `distanceAsc` or `distanceDesc`.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "long",
+            "in": "query",
+            "description": "Accepts a value for longitude. Can be used only for sorting with `distanceAsc` or `distanceDesc`. Must be used with `lat` and `radius` parameters to return listings within a certain radius of a given latitude and longitude.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "pretty",
             "in": "query",
             "description": "If true, returns the response in a human-readable formatted JSON.",
             "schema": {
               "type": "boolean"
+            }
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "The attribute that the favorites will be sorted by. Note, `distanceAsc` and `distanceDesc` must be used in combination with `lat`, `long` parameters. Default is `updatedOnDesc`.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "createdOnDesc",
+                "updatedOnDesc",
+                "createdOnAsc",
+                "updatedOnAsc",
+                "soldDateAsc",
+                "soldDateDesc",
+                "soldPriceAsc",
+                "soldPriceDesc",
+                "listPriceAsc",
+                "listPriceDesc",
+                "bedsAsc",
+                "bedsDesc",
+                "bathsDesc",
+                "bathsAsc",
+                "yearBuiltDesc",
+                "yearBuiltAsc",
+                "random",
+                "distanceAsc",
+                "distanceDesc",
+                "sqftAsc",
+                "sqftDesc",
+                "repliersUpdatedOnDesc",
+                "repliersUpdatedOnAsc",
+                "statusAscListDateAsc",
+                "statusAscListDateDesc",
+                "statusAscListPriceAsc",
+                "statusAscListPriceDesc",
+                "qualityAsc",
+                "qualityDesc",
+                "listPricePerSqFtAsc",
+                "listPricePerSqFtDesc",
+                "soldPricePerSqFtAsc",
+                "soldPricePerSqFtDesc"
+              ]
             }
           }
         ],

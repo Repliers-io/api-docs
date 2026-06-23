@@ -1212,7 +1212,10 @@ Returns a list of properties that a client has favorited. Results can be filtere
 | resultsPerPage | integer (int32) | The number of favorites to return per page. |
 | status | string | Filters favorites by the current status of the favorited listing. |
 | tags | string | Allows you to search tags within favorites, accepts a comma-separated string, for example "needs work, turn-key" |
+| lat | string | Accepts a value for latitude. Can be used only for sorting with `distanceAsc` or `distanceDesc`. |
+| long | string | Accepts a value for longitude. Can be used only for sorting with `distanceAsc` or `distanceDesc`. Must be used with `lat` and `radius` parameters to return listings within a certain radius of a given latitude and longitude. |
 | pretty | boolean | If true, returns the response in a human-readable formatted JSON. |
+| sortBy | string enum: createdOnDesc, updatedOnDesc, createdOnAsc, updatedOnAsc, soldDateAsc, soldDateDesc, soldPriceAsc, soldPriceDesc, listPriceAsc, listPriceDesc, bedsAsc, bedsDesc, bathsDesc, bathsAsc, yearBuiltDesc, yearBuiltAsc, random, distanceAsc, distanceDesc, sqftAsc, sqftDesc, repliersUpdatedOnDesc, repliersUpdatedOnAsc, statusAscListDateAsc, statusAscListDateDesc, statusAscListPriceAsc, statusAscListPriceDesc, qualityAsc, qualityDesc, listPricePerSqFtAsc, listPricePerSqFtDesc, soldPricePerSqFtAsc, soldPricePerSqFtDesc | The attribute that the favorites will be sorted by. Note, `distanceAsc` and `distanceDesc` must be used in combination with `lat`, `long` parameters. Default is `updatedOnDesc`. |
 
 **Response (200):**
 
