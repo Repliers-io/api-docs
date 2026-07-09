@@ -591,12 +591,32 @@
             }
           },
           {
+            "name": "maxLotDepth",
+            "in": "query",
+            "description": "Filters listings whose lot depth is <= the supplied value.",
+            "schema": {
+              "type": "number",
+              "format": "float",
+              "exclusiveMinimum": 0
+            }
+          },
+          {
             "name": "maxLotSizeSqft",
             "in": "query",
             "description": "Filters listings whose lot size is <= the supplied value in square feet.",
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "maxLotWidth",
+            "in": "query",
+            "description": "Filters listings whose lot width is <= the supplied value.",
+            "schema": {
+              "type": "number",
+              "format": "float",
+              "exclusiveMinimum": 0
             }
           },
           {
@@ -825,12 +845,32 @@
             }
           },
           {
+            "name": "minLotDepth",
+            "in": "query",
+            "description": "Filters listings whose lot depth is >= the supplied value.",
+            "schema": {
+              "type": "number",
+              "format": "float",
+              "exclusiveMinimum": 0
+            }
+          },
+          {
             "name": "minLotSizeSqft",
             "in": "query",
             "description": "Filters listings whose lot size is >= the supplied value in square feet.",
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "minLotWidth",
+            "in": "query",
+            "description": "Filters listings whose lot width is >= the supplied value.",
+            "schema": {
+              "type": "number",
+              "format": "float",
+              "exclusiveMinimum": 0
             }
           },
           {

@@ -71,7 +71,9 @@ Use this endpoint to search listings using various parameters.As your user provi
 | maxDaysOnMarket | integer (int32) | Filters `status=U` listings that have been on the market for number of days less than or equal to the supplied value. |
 | maxKitchens | integer (int32) | Filters listings whose kitchen count is <= the supplied value. |
 | maxListDate | string (date) | Filters listings that were listed on or before the supplied value. Date format: YYYY-MM-DD |
+| maxLotDepth | number (float) | Filters listings whose lot depth is <= the supplied value. |
 | maxLotSizeSqft | integer (int32) | Filters listings whose lot size is <= the supplied value in square feet. |
+| maxLotWidth | number (float) | Filters listings whose lot width is <= the supplied value. |
 | maxMaintenanceFee | integer (int32) | If supplied, filters listings whose maintenance fee is <= the supplied value. |
 | maxOpenHouseDate | string (date) | If specified, filters listings that have an open house on or before the supplied date. Date format: YYYY-MM-DD |
 | maxParkingSpaces | integer (int32) | Filters listings whose parking space count is <= the supplied value. |
@@ -97,7 +99,9 @@ Use this endpoint to search listings using various parameters.As your user provi
 | minGarageSpaces | integer (int32) | Filters listings that have >= the supplied value of garage spaces. |
 | minKitchens | integer (int32) | Filters listings whose kitchen count is >= the supplied value. |
 | minListDate | string (date) | Filters listings that were listed on or after the supplied value. Date format: YYYY-MM-DD |
+| minLotDepth | number (float) | Filters listings whose lot depth is >= the supplied value. |
 | minLotSizeSqft | integer (int32) | Filters listings whose lot size is >= the supplied value in square feet. |
+| minLotWidth | number (float) | Filters listings whose lot width is >= the supplied value. |
 | minOpenHouseDate | string (date) | If specified, filters listings that have an open house on or after the supplied date. Date format: YYYY-MM-DD |
 | minParkingSpaces | integer (int32) | Filters listings whose parking space count is >= the supplied value. |
 | minPrice | integer (int32) | Filters listings whose list price is >= the supplied value. |
