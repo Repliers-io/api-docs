@@ -1410,6 +1410,8 @@ Use this endpoint to list and filter members (agents) belonging to the MLS.
 | hasEmail | boolean | If supplied, filters members by whether they have an email address on record. |
 | originatingSystemName | string | Filters members by the name of the originating MLS system. |
 | brokerage | string | Filters members by brokerage name using partial match. |
+| officeId | string | Filters members by the ID of the office they belong to. |
+| position | string | Filters members by their position or role. |
 | keywords | string | Searches members by keyword across multiple fields. |
 | pageNum | integer (int32) default: 1 | The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200. |
 | resultsPerPage | integer (int32) default: 100 | The number of members to return per page. |

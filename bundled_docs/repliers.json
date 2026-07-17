@@ -7660,6 +7660,22 @@
             }
           },
           {
+            "name": "officeId",
+            "in": "query",
+            "description": "Filters members by the ID of the office they belong to.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "position",
+            "in": "query",
+            "description": "Filters members by their position or role.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "keywords",
             "in": "query",
             "description": "Searches members by keyword across multiple fields.",
