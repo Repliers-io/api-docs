@@ -131,8 +131,8 @@ function formatType(schema, bundled) {
     if (items?.$ref && bundled) items = resolveRef(bundled, items.$ref) || items;
     if (!items) return 'array';
     if (items.type === 'object' || items.properties) return 'array[object]';
+    if (items.enum) return `array[${items.type || 'string'}] enum: ${items.enum.join(', ')}`;
     if (items.type) return `array[${items.type}]`;
-    if (items.enum) return 'array[string]';
     return 'array[any]';
   }
   let t = schema.type || 'any';
