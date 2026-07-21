@@ -148,6 +148,8 @@ paths:
               - random
               - distanceAsc
               - distanceDesc
+              - centroidDistanceAsc
+              - centroidDistanceDesc
               - sqftAsc
               - sqftDesc
               - repliersUpdatedOnDesc

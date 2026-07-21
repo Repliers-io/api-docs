@@ -740,6 +740,8 @@ paths:
               - createdOnAsc
               - distanceAsc
               - distanceDesc
+              - centroidDistanceAsc
+              - centroidDistanceDesc
               - updatedOnAsc
               - soldDateAsc
               - soldDateDesc
