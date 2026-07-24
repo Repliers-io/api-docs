@@ -745,6 +745,8 @@ paths:
               - updatedOnAsc
               - soldDateAsc
               - soldDateDesc
+              - closedDateAsc
+              - closedDateDesc
               - soldPriceAsc
               - soldPriceDesc
               - sqftAsc
