@@ -72,7 +72,7 @@ async function validateCommand(argv) {
 
 // Bundle command handler
 async function bundleCommand(argv) {
-  const { file, output } = argv;
+  const { file, output, includeInternal } = argv;
 
   // First validate the file
   console.log(pc.blue(`Validating ${file}...`));
@@ -86,7 +86,7 @@ async function bundleCommand(argv) {
   console.log(pc.green(`✓ ${file} is valid, proceeding with bundling...`));
 
   try {
-    const bundled = await bundle(file);
+    const bundled = applyInternalFilter(await bundle(file), includeInternal);
     const jsonOutput = JSON.stringify(bundled, null, 2);
 
     await ensureDirectoryExists(output);
@@ -151,13 +151,18 @@ function escapeCell(str) {
 // The bundler deduplicates shared parameters by inlining the first use and
 // emitting self-references (e.g. "#/paths/~1locations/get/parameters/0") for
 // subsequent uses, so we have to follow them before rendering.
-function resolveRef(doc, ref) {
-  if (!ref || !ref.startsWith('#/')) return null;
-  // JSON Pointer (RFC 6901) unescaping + URL-decode: the bundler encodes
-  // path template characters like { } as %7B %7D in self-referencing $refs.
-  const segments = ref.slice(2).split('/').map(s =>
+// Split a local JSON-pointer $ref into decoded path segments.
+// JSON Pointer (RFC 6901) unescaping + URL-decode: the bundler encodes
+// path template characters like { } as %7B %7D in self-referencing $refs.
+function refSegments(ref) {
+  return ref.slice(2).split('/').map(s =>
     decodeURIComponent(s.replace(/~1/g, '/').replace(/~0/g, '~'))
   );
+}
+
+function resolveRef(doc, ref) {
+  if (!ref || !ref.startsWith('#/')) return null;
+  const segments = refSegments(ref);
   let cur = doc;
   for (const seg of segments) {
     if (cur == null) return null;
@@ -170,6 +175,101 @@ function resolveParams(params, bundled) {
   return (params || [])
     .map(p => (p && p.$ref ? resolveRef(bundled, p.$ref) : p))
     .filter(Boolean);
+}
+
+const HTTP_METHODS = new Set([
+  'get', 'put', 'post', 'delete', 'options', 'head', 'patch', 'trace',
+]);
+
+// Locate every operation flagged `x-internal: true`.
+function findInternalOps(doc) {
+  const ops = [];
+  for (const [path, item] of Object.entries(doc.paths || {})) {
+    if (!item || typeof item !== 'object') continue;
+    for (const [method, op] of Object.entries(item)) {
+      if (!HTTP_METHODS.has(method)) continue;
+      if (op && op['x-internal'] === true) {
+        ops.push({ path, method, segments: ['paths', path, method] });
+      }
+    }
+  }
+  return ops;
+}
+
+// Rebuild the doc with every self-$ref that points *into* a doomed operation
+// replaced by the value it resolves to.
+//
+// The bundler deduplicates shared parameters by inlining the first occurrence
+// and emitting self-references to it (see resolveRef). If an internal operation
+// happens to hold that first occurrence, deleting it would leave published
+// operations pointing at a pointer that no longer resolves — a broken spec.
+// So we inline those values before the delete, never after.
+function inlineDoomedRefs(doc, doomed, maxDepth = 16) {
+  const pointsIntoDoomed = (segments) =>
+    doomed.some(d =>
+      d.segments.length <= segments.length &&
+      d.segments.every((s, i) => s === segments[i])
+    );
+
+  const walk = (node, depth) => {
+    if (node === null || typeof node !== 'object') return node;
+    if (Array.isArray(node)) return node.map(n => walk(n, depth));
+
+    if (typeof node.$ref === 'string' && node.$ref.startsWith('#/') && depth < maxDepth) {
+      if (pointsIntoDoomed(refSegments(node.$ref))) {
+        // Resolve against the ORIGINAL doc — the doomed op is still present here.
+        const target = resolveRef(doc, node.$ref);
+        if (target != null) return walk(structuredClone(target), depth + 1);
+      }
+    }
+
+    const out = {};
+    for (const [k, v] of Object.entries(node)) out[k] = walk(v, depth);
+    return out;
+  };
+
+  return walk(doc, 0);
+}
+
+// Remove `x-internal: true` operations from a bundled doc.
+// Returns the cleaned doc plus the list of what was dropped, so callers can
+// report it — a spec that silently loses endpoints is worse than one that fails.
+function stripInternal(doc) {
+  const internal = findInternalOps(doc);
+  if (internal.length === 0) return { doc, removed: [] };
+
+  const cleaned = inlineDoomedRefs(doc, internal);
+
+  for (const { path, method } of internal) {
+    delete cleaned.paths[path][method];
+    // Drop the path item entirely once no operations remain on it, so we don't
+    // publish a bare `parameters`/`summary` stub.
+    const remaining = Object.keys(cleaned.paths[path]);
+    if (!remaining.some(k => HTTP_METHODS.has(k))) delete cleaned.paths[path];
+  }
+
+  return {
+    doc: cleaned,
+    removed: internal.map(i => `${i.method.toUpperCase()} ${i.path}`),
+  };
+}
+
+// Shared post-bundle step for the bundle and llms commands.
+function applyInternalFilter(bundled, includeInternal) {
+  if (includeInternal) {
+    const kept = findInternalOps(bundled);
+    if (kept.length > 0) {
+      console.log(pc.yellow(`⚠ Including ${kept.length} internal endpoint(s) (--include-internal)`));
+    }
+    return bundled;
+  }
+
+  const { doc, removed } = stripInternal(bundled);
+  if (removed.length > 0) {
+    console.log(pc.yellow(`⚠ Excluded ${removed.length} internal endpoint(s):`));
+    removed.forEach(r => console.log(pc.yellow(`    - ${r}`)));
+  }
+  return doc;
 }
 
 // Render a response schema as markdown table rows (2-level flattening).
@@ -350,11 +450,11 @@ function generateFull(bundled) {
 
 // LLMs.txt command handler
 async function llmsCommand(argv) {
-  const { file, output, full } = argv;
+  const { file, output, full, includeInternal } = argv;
 
   console.log(pc.blue(`Bundling ${file}...`));
   try {
-    const bundled = await bundle(file);
+    const bundled = applyInternalFilter(await bundle(file), includeInternal);
 
     let content, orderedKeys, groups, totalParams;
     if (full) {
@@ -425,6 +525,11 @@ const cli = yargs(hideBin(process.argv))
           describe: 'Output file path for bundled specification',
           type: 'string',
           demandOption: true,
+        })
+        .option('include-internal', {
+          describe: 'Keep operations marked "x-internal: true" (excluded by default)',
+          type: 'boolean',
+          default: false,
         });
     },
     bundleCommand
@@ -448,6 +553,11 @@ const cli = yargs(hideBin(process.argv))
         })
         .option('full', {
           describe: 'Generate detailed version with all parameters and request bodies',
+          type: 'boolean',
+          default: false,
+        })
+        .option('include-internal', {
+          describe: 'Keep operations marked "x-internal: true" (excluded by default)',
           type: 'boolean',
           default: false,
         });

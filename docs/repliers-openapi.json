@@ -137,6 +137,15 @@
         },
         "/buildings/{addressKey}": {
             "$ref": "buildings.yml#/paths/~1buildings~1{addressKey}"
+        },
+        "/partners/har/listings/views": {
+            "$ref": "partners-har.yml#/paths/~1partners~1har~1listings~1views"
+        },
+        "/partners/har/showingsmart/logs": {
+            "$ref": "partners-har.yml#/paths/~1partners~1har~1showingsmart~1logs"
+        },
+        "/partners/har/listings/reviews": {
+            "$ref": "partners-har.yml#/paths/~1partners~1har~1listings~1reviews"
         }
     },
     "x-readme": {

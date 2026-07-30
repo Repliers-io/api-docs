@@ -1,0 +1,417 @@
+openapi: 3.1.0
+info:
+  title: HAR Partner API
+  version: 1.0.0
+servers:
+  - url: https://api.repliers.io
+paths:
+  /partners/har/listings/views:
+    get:
+      summary: Get listing view statistics
+      description: Returns per-listing web and mobile view counts tracked by HAR.com. Requires an API key configured for the HAR integration with a broker code. If the key is scoped to a specific agent, results are always restricted to that agent regardless of the boardAgentId supplied.
+      operationId: get-har-listing-views
+      x-internal: true
+      parameters:
+        - name: mlsNumber
+          in: query
+          description: Filters results to a single listing by its MLS number.
+          schema:
+            type: string
+            maxLength: 100
+        - name: dateBegin
+          in: query
+          description: Start of the tracking date range, inclusive. Format YYYY-MM-DD.
+          schema:
+            type: string
+            format: date
+        - name: dateEnd
+          in: query
+          description: End of the tracking date range, inclusive. Format YYYY-MM-DD.
+          schema:
+            type: string
+            format: date
+        - name: boardAgentId
+          in: query
+          description: Filters results to the listing agent with this board agent key. If the API key is scoped to a specific agent, supplying a different agent returns 403.
+          schema:
+            type: string
+            maxLength: 100
+        - name: sortBy
+          in: query
+          description: "Sorts results by a column, optionally with a direction suffix of :asc or :desc. Defaults to :asc when omitted. Allowed columns: laAgentkey, mlsNumber, dateTracked, webView, mobileView."
+          schema:
+            type: string
+            pattern: "^(laAgentkey|mlsNumber|dateTracked|webView|mobileView)(:(asc|desc))?$"
+        - name: limit
+          in: query
+          description: Maximum number of records to return.
+          schema:
+            type: integer
+            format: int32
+            minimum: 1
+            maximum: 500
+        - name: offset
+          in: query
+          description: Number of records to skip before returning results.
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+      responses:
+        "200":
+          description: Listing view statistics
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Indicates whether the upstream HAR request succeeded.
+                  total:
+                    type: integer
+                    description: Total number of records matching the query, before limit and offset are applied.
+                  limit:
+                    type: integer
+                    description: Maximum number of records returned per page for this request.
+                  offset:
+                    type: integer
+                    description: Number of records skipped before this page of results.
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        mlsNumber:
+                          type: string
+                          description: MLS number of the listing.
+                        laAgentkey:
+                          type: string
+                          description: Board agent key of the listing agent.
+                        dateTracked:
+                          type: string
+                          format: date
+                          description: Date the view counts were recorded.
+                        webView:
+                          type: integer
+                          description: Number of views from web clients on that date.
+                        mobileView:
+                          type: integer
+                          description: Number of views from mobile clients on that date.
+        "400":
+          $ref: components.yml#/components/responses/BadRequest
+        "403":
+          $ref: "#/components/responses/HarForbidden"
+      deprecated: false
+  /partners/har/showingsmart/logs:
+    get:
+      summary: Get ShowingSmart showing logs
+      description: Returns ShowingSmart showing records, including scheduling details, the showing agent's contact information, and any feedback left after the showing. Requires an API key configured for the HAR integration with a broker code. Agent-scoped keys are always constrained to at least one of the listing or showing agent axes.
+      operationId: get-har-showingsmart-logs
+      x-internal: true
+      parameters:
+        - name: mlsNumber
+          in: query
+          description: Filters results to a single listing by its MLS number.
+          schema:
+            type: string
+            maxLength: 100
+        - name: dateBegin
+          in: query
+          description: Start of the showing date range, inclusive. Format YYYY-MM-DD.
+          schema:
+            type: string
+            format: date
+        - name: dateEnd
+          in: query
+          description: End of the showing date range, inclusive. Format YYYY-MM-DD.
+          schema:
+            type: string
+            format: date
+        - name: listingBoardAgentId
+          in: query
+          description: Filters results to showings on listings held by this board agent key. If the API key is scoped to a specific agent and this names a different agent, results are pinned to the caller's own showings instead.
+          schema:
+            type: string
+            maxLength: 100
+        - name: showingBoardAgentId
+          in: query
+          description: Filters results to showings conducted by this board agent key. If the API key is scoped to a specific agent and this names a different agent, results are pinned to the caller's own listings instead. Naming a different agent on both axes at once returns 403.
+          schema:
+            type: string
+            maxLength: 100
+        - name: sortBy
+          in: query
+          description: "Sorts results by a column, optionally with a direction suffix of :asc or :desc. Defaults to :asc when omitted. Allowed columns: listingkey, showingId, saComments, showingDate, showingStartTime, showingEndTime, showingType, showingStatus, saAgentkey, saCellPhone, saEmail, saOfficeName, saOfficekey, feedbackText, laAgentkey, laCellPhone, laEmail, laOfficeName, laOfficekey."
+          schema:
+            type: string
+            pattern: "^(listingkey|showingId|saComments|showingDate|showingStartTime|showingEndTime|showingType|showingStatus|saAgentkey|saCellPhone|saEmail|saOfficeName|saOfficekey|feedbackText|laAgentkey|laCellPhone|laEmail|laOfficeName|laOfficekey)(:(asc|desc))?$"
+        - name: limit
+          in: query
+          description: Maximum number of records to return.
+          schema:
+            type: integer
+            format: int32
+            minimum: 1
+            maximum: 500
+        - name: offset
+          in: query
+          description: Number of records to skip before returning results.
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+      responses:
+        "200":
+          description: ShowingSmart showing logs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Indicates whether the upstream HAR request succeeded.
+                  total:
+                    type: integer
+                    description: Total number of records matching the query, before limit and offset are applied.
+                  limit:
+                    type: integer
+                    description: Maximum number of records returned per page for this request.
+                  offset:
+                    type: integer
+                    description: Number of records skipped before this page of results.
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        listingkey:
+                          type: integer
+                          description: HAR internal identifier of the listing.
+                        listagentAgentkey:
+                          type: string
+                          deprecated: true
+                          description: "Deprecated: use laAgentkey instead. Board agent key of the listing agent, duplicated from laAgentkey. Not sortable."
+                        listofficeOfficekey:
+                          type: string
+                          deprecated: true
+                          description: "Deprecated: use laOfficekey instead. Board office key of the listing office, duplicated from laOfficekey. Not sortable."
+                        showingId:
+                          type: integer
+                          description: Unique identifier of the showing.
+                        showingDate:
+                          type: string
+                          format: date
+                          description: Date the showing was scheduled for.
+                        showingStartTime:
+                          type: string
+                          format: date-time
+                          description: Scheduled start of the showing window.
+                        showingEndTime:
+                          type: string
+                          format: date-time
+                          description: Scheduled end of the showing window.
+                        showingType:
+                          type: string
+                          description: HAR showing type code, for example SHOWG for a showing, INSPT for an inspection or WALKT for a walkthrough.
+                        showingStatus:
+                          type: string
+                          description: HAR showing status code, for example SETUP, CONFM for confirmed, UNCFM for unconfirmed, ALTER for altered or CANCL for cancelled.
+                        laAgentkey:
+                          type: string
+                          description: Board agent key of the listing agent.
+                        laCellPhone:
+                          type: string
+                          description: Cell phone number of the listing agent.
+                        laEmail:
+                          type: string
+                          description: Email address of the listing agent.
+                        laOfficeName:
+                          type: string
+                          description: Name of the listing agent's office.
+                        laOfficekey:
+                          type: string
+                          description: Board office key of the listing agent's office.
+                        saComments:
+                          type: string
+                          description: Comments left by the showing agent when booking.
+                        saAgentkey:
+                          type: string
+                          description: Board agent key of the showing agent.
+                        saCellPhone:
+                          type: string
+                          description: Cell phone number of the showing agent.
+                        saEmail:
+                          type: string
+                          description: Email address of the showing agent.
+                        saOfficeName:
+                          type: string
+                          description: Name of the showing agent's office.
+                        saOfficekey:
+                          type: string
+                          description: Board office key of the showing agent's office.
+                        feedbackText:
+                          type:
+                            - string
+                            - "null"
+                          description: Feedback left after the showing, or null if none was submitted.
+        "400":
+          $ref: components.yml#/components/responses/BadRequest
+        "403":
+          $ref: "#/components/responses/HarForbidden"
+      deprecated: false
+  /partners/har/listings/reviews:
+    get:
+      summary: Get customer experience ratings
+      description: Returns client-submitted customer experience ratings for closed transactions, scored across competency, knowledge, communication and overall experience. Requires an API key configured for the HAR integration with a broker code. If the key is scoped to a specific agent, results are always restricted to that agent regardless of the boardAgentId supplied.
+      operationId: get-har-listing-reviews
+      x-internal: true
+      parameters:
+        - name: mlsNumber
+          in: query
+          description: Filters results to a single listing by its MLS number.
+          schema:
+            type: string
+            maxLength: 100
+        - name: dateBegin
+          in: query
+          description: Start of the date range, inclusive. Format YYYY-MM-DD.
+          schema:
+            type: string
+            format: date
+        - name: dateEnd
+          in: query
+          description: End of the date range, inclusive. Format YYYY-MM-DD.
+          schema:
+            type: string
+            format: date
+        - name: boardAgentId
+          in: query
+          description: Filters results to the agent with this board agent key. If the API key is scoped to a specific agent, supplying a different agent returns 403.
+          schema:
+            type: string
+            maxLength: 100
+        - name: sortBy
+          in: query
+          description: "Sorts results by a column, optionally with a direction suffix of :asc or :desc. Defaults to :asc when omitted. Allowed columns: mlsNumber, memberNumber, agentId, agentkey, agentEmail, clientName, clientEmail, transactionType, score, competency, knowledge, communication, myExperience, closedDate, publishDate, createdDate."
+          schema:
+            type: string
+            pattern: "^(mlsNumber|memberNumber|agentId|agentkey|agentEmail|clientName|clientEmail|transactionType|score|competency|knowledge|communication|myExperience|closedDate|publishDate|createdDate)(:(asc|desc))?$"
+        - name: limit
+          in: query
+          description: Maximum number of records to return.
+          schema:
+            type: integer
+            format: int32
+            minimum: 1
+            maximum: 500
+        - name: offset
+          in: query
+          description: Number of records to skip before returning results.
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+      responses:
+        "200":
+          description: Customer experience ratings
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Indicates whether the upstream HAR request succeeded.
+                  total:
+                    type: integer
+                    description: Total number of records matching the query, before limit and offset are applied.
+                  limit:
+                    type: integer
+                    description: Maximum number of records returned per page for this request.
+                  offset:
+                    type: integer
+                    description: Number of records skipped before this page of results.
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        mlsNumber:
+                          type: string
+                          description: MLS number of the listing the rating relates to.
+                        brokerCode:
+                          type: string
+                          description: Board broker code of the rated agent's brokerage.
+                        memberNumber:
+                          type: integer
+                          description: HAR member number of the rated agent.
+                        agentkey:
+                          type: string
+                          description: Board agent key of the rated agent.
+                        agentId:
+                          type: string
+                          description: Board agent key of the rated agent. Duplicates agentkey; both are sortable.
+                        agentEmail:
+                          type: string
+                          description: Email address of the rated agent.
+                        clientName:
+                          type: string
+                          description: Name of the client who submitted the rating.
+                        clientEmail:
+                          type: string
+                          description: Email address of the client who submitted the rating.
+                        transactionType:
+                          type: string
+                          description: Side of the transaction the rating relates to, for example sell or list.
+                        score:
+                          type: number
+                          description: Overall rating score. May be fractional when the four component ratings below differ.
+                        competency:
+                          type: number
+                          description: Rating for the agent's competency.
+                        knowledge:
+                          type: number
+                          description: Rating for the agent's market knowledge.
+                        communication:
+                          type: number
+                          description: Rating for the agent's communication.
+                        myExperience:
+                          type: number
+                          description: Rating for the client's overall experience.
+                        comments:
+                          type: string
+                          description: Free-text review left by the client.
+                        agentComment:
+                          type:
+                            - string
+                            - "null"
+                          description: Response left by the agent, or null if none was submitted.
+                        closedDate:
+                          type: string
+                          format: date
+                          description: Date the transaction closed.
+                        publishDate:
+                          type: string
+                          format: date-time
+                          description: Date and time the rating was published.
+                        createdDate:
+                          type: string
+                          format: date-time
+                          description: Date and time the rating was created.
+        "400":
+          $ref: components.yml#/components/responses/BadRequest
+        "403":
+          $ref: "#/components/responses/HarForbidden"
+      deprecated: false
+components:
+  responses:
+    HarForbidden:
+      description: |
+        The API key is not permitted to perform this request. Returned when the key is not configured for the HAR
+        integration, when it has no broker code configured, or when an agent-scoped key requests another agent's data.
+      content:
+        application/json:
+          schema:
+            $ref: components.yml#/components/schemas/Error
