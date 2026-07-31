@@ -60,4 +60,6 @@ paths:
                               description: Name of the brokerage
         "400":
           $ref: components.yml#/components/responses/BadRequest
+        "401":
+          $ref: components.yml#/components/responses/Unauthorized
       deprecated: false

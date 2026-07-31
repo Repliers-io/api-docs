@@ -128,6 +128,8 @@ paths:
           $ref: components.yml#/components/responses/EmptySuccess
         "400":
           $ref: components.yml#/components/responses/BadRequest
+        "401":
+          $ref: components.yml#/components/responses/Unauthorized
       deprecated: false
     get:
       summary: Get Estimates
@@ -163,6 +165,8 @@ paths:
           $ref: components.yml#/components/responses/EmptySuccess
         "400":
           $ref: components.yml#/components/responses/BadRequest
+        "401":
+          $ref: components.yml#/components/responses/Unauthorized
       deprecated: false
   /estimates/{estimateId}:
     patch:
@@ -313,6 +317,8 @@ paths:
           $ref: components.yml#/components/responses/EmptySuccess
         "400":
           $ref: components.yml#/components/responses/BadRequest
+        "401":
+          $ref: components.yml#/components/responses/Unauthorized
       deprecated: false
     delete:
       summary: Delete an estimate
@@ -330,4 +336,6 @@ paths:
           $ref: components.yml#/components/responses/EmptySuccess
         "400":
           $ref: components.yml#/components/responses/BadRequest
+        "401":
+          $ref: components.yml#/components/responses/Unauthorized
       deprecated: false

@@ -2986,6 +2986,8 @@ paths:
                               type: integer
                               example: 2
                               default: 0
+        "401":
+          $ref: components.yml#/components/responses/Unauthorized
       deprecated: false
   /listings/{mlsNumber}:
     get:
@@ -12483,6 +12485,8 @@ paths:
                               type: number
                               example: 87014.48159747802
                               default: 0
+        "401":
+          $ref: components.yml#/components/responses/Unauthorized
       deprecated: false
   /listings/{mlsNumber}/similar:
     get:
@@ -12538,6 +12542,8 @@ paths:
           $ref: components.yml#/components/responses/EmptySuccess
         "400":
           $ref: components.yml#/components/responses/BadRequest
+        "401":
+          $ref: components.yml#/components/responses/Unauthorized
       deprecated: false
   /listings/history:
     get:
@@ -12600,6 +12606,8 @@ paths:
           $ref: components.yml#/components/responses/EmptySuccess
         "400":
           $ref: components.yml#/components/responses/BadRequest
+        "401":
+          $ref: components.yml#/components/responses/Unauthorized
       deprecated: false
   /listings/deleted:
     get:
@@ -12630,6 +12638,8 @@ paths:
           $ref: components.yml#/components/responses/EmptySuccess
         "400":
           $ref: components.yml#/components/responses/BadRequest
+        "401":
+          $ref: components.yml#/components/responses/Unauthorized
       deprecated: false
   /listings/locations:
     get:
@@ -12671,6 +12681,8 @@ paths:
           $ref: components.yml#/components/responses/EmptySuccess
         "400":
           $ref: components.yml#/components/responses/BadRequest
+        "401":
+          $ref: components.yml#/components/responses/Unauthorized
       deprecated: true
   /listings/property-types: {}
   /listings/buildings:
@@ -12778,3 +12790,5 @@ paths:
           $ref: components.yml#/components/responses/EmptySuccess
         "400":
           $ref: components.yml#/components/responses/BadRequest
+        "401":
+          $ref: components.yml#/components/responses/Unauthorized

@@ -34,4 +34,6 @@ paths:
           $ref: components.yml#/components/responses/EmptySuccess
         "400":
           $ref: components.yml#/components/responses/BadRequest
+        "401":
+          $ref: components.yml#/components/responses/Unauthorized
       deprecated: false

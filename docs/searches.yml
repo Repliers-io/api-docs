@@ -440,6 +440,8 @@ paths:
                     type: array
         "400":
           $ref: components.yml#/components/responses/BadRequest
+        "401":
+          $ref: components.yml#/components/responses/Unauthorized
         "406":
           description: "406"
           content:
@@ -491,6 +493,8 @@ paths:
           $ref: components.yml#/components/responses/EmptySuccess
         "400":
           $ref: components.yml#/components/responses/BadRequest
+        "401":
+          $ref: components.yml#/components/responses/Unauthorized
       deprecated: false
   /searches/{searchId}:
     patch:
@@ -713,6 +717,8 @@ paths:
           $ref: components.yml#/components/responses/EmptySuccess
         "400":
           $ref: components.yml#/components/responses/BadRequest
+        "401":
+          $ref: components.yml#/components/responses/Unauthorized
       deprecated: false
     delete:
       summary: Delete a saved search
@@ -730,6 +736,8 @@ paths:
           $ref: components.yml#/components/responses/EmptySuccess
         "400":
           $ref: components.yml#/components/responses/BadRequest
+        "401":
+          $ref: components.yml#/components/responses/Unauthorized
       deprecated: false
     get:
       summary: Get a saved search
@@ -747,6 +755,8 @@ paths:
           $ref: components.yml#/components/responses/EmptySuccess
         "400":
           $ref: components.yml#/components/responses/BadRequest
+        "401":
+          $ref: components.yml#/components/responses/Unauthorized
       deprecated: false
   /searches/{searchId}/matches:
     get:
@@ -817,6 +827,8 @@ paths:
           $ref: components.yml#/components/responses/EmptySuccess
         "400":
           $ref: components.yml#/components/responses/BadRequest
+        "401":
+          $ref: components.yml#/components/responses/Unauthorized
       deprecated: false
   /searches/{searchId}/matches/{matchId}:
     get:
@@ -841,6 +853,8 @@ paths:
           $ref: components.yml#/components/responses/EmptySuccess
         "400":
           $ref: components.yml#/components/responses/BadRequest
+        "401":
+          $ref: components.yml#/components/responses/Unauthorized
       deprecated: false
     patch:
       summary: Update a match
@@ -876,4 +890,6 @@ paths:
           $ref: components.yml#/components/responses/EmptySuccess
         "400":
           $ref: components.yml#/components/responses/BadRequest
+        "401":
+          $ref: components.yml#/components/responses/Unauthorized
       deprecated: false

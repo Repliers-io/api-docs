@@ -153,3 +153,9 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/Error"
+    Unauthorized:
+      description: The API key was not recognized by the API server, or the key is not active.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"

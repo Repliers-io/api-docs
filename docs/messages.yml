@@ -77,6 +77,8 @@ paths:
           $ref: components.yml#/components/responses/EmptySuccess
         "400":
           $ref: components.yml#/components/responses/BadRequest
+        "401":
+          $ref: components.yml#/components/responses/Unauthorized
       deprecated: false
     get:
       summary: Filter messages
@@ -147,6 +149,8 @@ paths:
           $ref: components.yml#/components/responses/EmptySuccess
         "400":
           $ref: components.yml#/components/responses/BadRequest
+        "401":
+          $ref: components.yml#/components/responses/Unauthorized
       deprecated: false
   /messages/{messageId}:
     get:
@@ -165,4 +169,6 @@ paths:
           $ref: components.yml#/components/responses/EmptySuccess
         "400":
           $ref: components.yml#/components/responses/BadRequest
+        "401":
+          $ref: components.yml#/components/responses/Unauthorized
       deprecated: false

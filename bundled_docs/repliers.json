@@ -3229,6 +3229,9 @@
                 }
               }
             }
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -6054,6 +6057,9 @@
                 }
               }
             }
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -6129,6 +6135,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -6222,6 +6231,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -6268,6 +6280,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -6331,6 +6346,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": true
@@ -6929,7 +6947,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/paths/~1places/get/responses/400/content/application~1json/schema"
+                  "$ref": "#/paths/~1nlp/get/responses/401/content/application~1json/schema"
                 }
               }
             }
@@ -6939,7 +6957,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/paths/~1places/get/responses/400/content/application~1json/schema"
+                  "$ref": "#/paths/~1nlp/get/responses/401/content/application~1json/schema"
                 }
               }
             }
@@ -6952,7 +6970,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/paths/~1places/get/responses/400/content/application~1json/schema"
+                  "$ref": "#/paths/~1nlp/get/responses/401/content/application~1json/schema"
                 }
               }
             }
@@ -7491,6 +7509,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -7634,6 +7655,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false,
@@ -7946,6 +7970,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -8110,6 +8137,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         }
       }
@@ -8170,24 +8200,13 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "param": {
-                          "type": "string"
-                        },
-                        "msg": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
+                  "$ref": "#/paths/~1nlp/get/responses/401/content/application~1json/schema"
                 }
               }
             }
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -8278,6 +8297,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -8377,6 +8399,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -8470,6 +8495,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -8495,6 +8523,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -8520,6 +8551,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -8571,6 +8605,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -8663,6 +8700,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           },
           "409": {
             "description": "409",
@@ -8821,6 +8861,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -8917,6 +8960,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -8946,6 +8992,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -8971,6 +9020,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -8987,6 +9039,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -9032,6 +9087,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -9545,6 +9603,9 @@
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
           },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
+          },
           "406": {
             "description": "406",
             "content": {
@@ -9623,6 +9684,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -9920,6 +9984,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -9945,6 +10012,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -9970,6 +10040,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -10076,6 +10149,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -10112,6 +10188,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -10165,6 +10244,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -10340,6 +10422,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -10392,6 +10477,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -10595,6 +10683,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -10620,6 +10711,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -10713,6 +10807,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -10821,6 +10918,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -10848,6 +10948,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -10919,6 +11022,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -12779,6 +12885,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -12859,6 +12968,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -12888,6 +13000,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -13005,6 +13120,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -13019,6 +13137,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -13070,6 +13191,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -13095,6 +13219,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -13120,6 +13247,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -13140,6 +13270,9 @@
           },
           "400": {
             "$ref": "#/paths/~1places/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           }
         },
         "deprecated": false
@@ -13314,6 +13447,9 @@
           "400": {
             "description": "Bad Request - Invalid input."
           },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
+          },
           "406": {
             "description": "Not accepted - If the input is not relevant to a listings search a 406 response will be returned. For example, \"why is the sky blue\" would return a 406 response."
           },
@@ -13401,6 +13537,30 @@
                       }
                     }
                   ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key was not recognized by the API server, or the key is not active.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "param": {
+                          "type": "string"
+                        },
+                        "msg": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -13544,6 +13704,9 @@
                 }
               }
             }
+          },
+          "401": {
+            "$ref": "#/paths/~1nlp/get/responses/401"
           },
           "500": {
             "description": "Internal Server Error - An error occurred while processing the request."
@@ -13879,7 +14042,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/paths/~1places/get/responses/400/content/application~1json/schema"
+                  "$ref": "#/paths/~1nlp/get/responses/401/content/application~1json/schema"
                 }
               }
             }

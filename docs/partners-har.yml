@@ -100,6 +100,8 @@ paths:
                           description: Number of views from mobile clients on that date.
         "400":
           $ref: components.yml#/components/responses/BadRequest
+        "401":
+          $ref: components.yml#/components/responses/Unauthorized
         "403":
           $ref: "#/components/responses/HarForbidden"
       deprecated: false
@@ -258,6 +260,8 @@ paths:
                           description: Feedback left after the showing, or null if none was submitted.
         "400":
           $ref: components.yml#/components/responses/BadRequest
+        "401":
+          $ref: components.yml#/components/responses/Unauthorized
         "403":
           $ref: "#/components/responses/HarForbidden"
       deprecated: false
@@ -402,6 +406,8 @@ paths:
                           description: Date and time the rating was created.
         "400":
           $ref: components.yml#/components/responses/BadRequest
+        "401":
+          $ref: components.yml#/components/responses/Unauthorized
         "403":
           $ref: "#/components/responses/HarForbidden"
       deprecated: false

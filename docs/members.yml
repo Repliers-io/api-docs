@@ -175,4 +175,6 @@ paths:
                               description: Email address of the member
         "400":
           $ref: components.yml#/components/responses/BadRequest
+        "401":
+          $ref: components.yml#/components/responses/Unauthorized
       deprecated: false

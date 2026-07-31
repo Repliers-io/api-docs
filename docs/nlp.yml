@@ -95,6 +95,8 @@ paths:
                         $ref: "#/components/schemas/NLPRequest"
         "400":
           description: Bad Request - Invalid input.
+        "401":
+          $ref: components.yml#/components/responses/Unauthorized
         "406":
           description: Not accepted - If the input is not relevant to a listings search a 406 response will be returned. For example, "why is the sky blue" would return a 406 response.
         "500":
@@ -138,6 +140,8 @@ paths:
                               properties:
                                 request:
                                   $ref: "#/components/schemas/NLPRequest"
+        "401":
+          $ref: components.yml#/components/responses/Unauthorized
         "500":
           description: Internal Server Error - An error occurred while processing the request.
   /nlp/chats:
@@ -237,6 +241,8 @@ paths:
                                     properties:
                                       request:
                                         $ref: "#/components/schemas/NLPRequest"
+        "401":
+          $ref: components.yml#/components/responses/Unauthorized
         "500":
           description: Internal Server Error - An error occurred while processing the request.
 

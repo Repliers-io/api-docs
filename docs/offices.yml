@@ -85,6 +85,8 @@ paths:
                                   description: Country name
         "400":
           $ref: components.yml#/components/responses/BadRequest
+        "401":
+          $ref: components.yml#/components/responses/Unauthorized
       deprecated: false
       x-readme:
         code-samples:
