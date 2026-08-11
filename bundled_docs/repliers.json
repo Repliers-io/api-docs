@@ -6146,7 +6146,7 @@
     "/listings/history": {
       "get": {
         "summary": "Get address history",
-        "description": "Use this endpoint to retrieve the MLS history of a specific address.\n\nIn addition to displaying the history you could also use the information in the response to create a graph that illustrates the change in value over time.",
+        "description": "Use this endpoint to retrieve the MLS history of a specific address.\n\nIn addition to displaying the history you could also use the information in the response to create a graph that illustrates the change in value over time.\n\nYou must identify the property in one of the following ways:\n\n- supply `mlsNumber`, or\n- supply `addressKey`, or\n- supply `streetName` together with `streetNumber` and either `city` or `zip`.\n\nThe remaining address parameters (`unitNumber`, `streetSuffix`, `streetDirection`) are always optional and can be used to narrow the match.",
         "externalDocs": {
           "description": "History for a Specific Address",
           "url": "https://help.repliers.com/en/article/accessing-historical-listings-for-an-address-1kfsor7/#4-history-for-a-specific-address"
@@ -6156,8 +6156,7 @@
           {
             "name": "city",
             "in": "query",
-            "description": "The city of the property. Note - a city is not required if a zip is provided.",
-            "required": true,
+            "description": "The city of the property. Required when searching by `streetName`, unless a `zip` is provided.",
             "schema": {
               "type": "string"
             }
@@ -6165,7 +6164,7 @@
           {
             "name": "streetName",
             "in": "query",
-            "required": true,
+            "description": "The street name of the property. Required unless `mlsNumber` or `addressKey` is provided.",
             "schema": {
               "type": "string"
             }
@@ -6173,7 +6172,7 @@
           {
             "name": "streetNumber",
             "in": "query",
-            "required": true,
+            "description": "The street number of the property. Required when searching by `streetName`.",
             "schema": {
               "type": "string"
             }
@@ -6202,10 +6201,10 @@
           {
             "name": "zip",
             "in": "query",
-            "description": "The zip code or postal code of the property. Supports partial match, for example if supplied value is \"123\" it will match \"12345\".  Note - a zip is not required if a city is provided.",
-            "required": true,
+            "description": "The zip code or postal code of the property. Supports partial match, for example if supplied value is \"123\" it will match \"12345\". Required when searching by `streetName`, unless a `city` is provided.",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "minLength": 3
             }
           },
           {
@@ -6213,7 +6212,8 @@
             "in": "query",
             "description": "If specified, will return the history for the property that can be identified by the given MLS number",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "maxLength": 50
             }
           },
           {
@@ -6221,7 +6221,17 @@
             "in": "query",
             "description": "The address key of the property. Please see the address object of a listing to understand how the address key is constructed",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "maxLength": 100
+            }
+          },
+          {
+            "name": "pretty",
+            "in": "query",
+            "description": "If true, reorders fields within each returned listing into a canonical order optimized for human readability. Does not affect which fields are returned or their values. Default is false.",
+            "schema": {
+              "type": "boolean",
+              "default": false
             }
           }
         ],
