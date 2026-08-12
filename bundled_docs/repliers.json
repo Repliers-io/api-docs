@@ -1234,11 +1234,24 @@
           {
             "name": "standardStatus",
             "in": "query",
-            "description": "Use this parameter to filter by Standard Status. <br/><br/>Allowed values: <code>Active</code>, <code>Active Under Contract</code>, <code>Canceled</code>, <code>Closed</code>, <code>Coming Soon</code>, <code>Delete</code>, <code>Expired</code>, <code>Hold</code>, <code>Incomplete</code>, <code>Pending</code>, <code>Withdrawn</code>",
+            "description": "Use this parameter to filter by Standard Status.\n\nAllowed values:\n\n- `Active` — The listing is currently on the market and available for sale or lease. The property is being actively marketed and showings can be arranged.\n- `Active Under Contract` — The listing has an accepted offer and is under contract, but remains active on the market. The seller is still accepting backup offers in case the primary contract falls through.\n- `Canceled` — The listing agreement was terminated by mutual agreement between the seller and listing agent before its expiration date.\n- `Closed` — The listing is no longer available. This is a general status indicating the listing process has concluded.\n- `Coming Soon` — The property will be listed in the near future but is not yet officially on the market. This pre-marketing status allows agents to generate interest before the official listing date.\n- `Delete` — The listing has been marked for removal from the system and should no longer appear in search results.\n- `Expired` — The listing agreement period has ended without the property being sold or leased. The agreement between the seller and agent has concluded.\n- `Hold` — The listing is temporarily off the market at the seller's request but has not been officially withdrawn or canceled.\n- `Incomplete` — The listing has been entered into the system but does not yet have all required information for publication.\n- `Pending` — The listing has an accepted offer and is under contract, progressing toward closing. The property is no longer being actively marketed and showings are typically not permitted.\n- `Withdrawn` — The seller has temporarily removed the property from the market, typically with the intent to re-list later.",
             "schema": {
               "type": "array",
               "items": {
-                "type": "string"
+                "type": "string",
+                "enum": [
+                  "Active",
+                  "Active Under Contract",
+                  "Canceled",
+                  "Closed",
+                  "Coming Soon",
+                  "Delete",
+                  "Expired",
+                  "Hold",
+                  "Incomplete",
+                  "Pending",
+                  "Withdrawn"
+                ]
               }
             }
           },
@@ -9389,17 +9402,17 @@
                     "type": "array",
                     "description": "Indicates what Standard Status of property to search for. <br/><br/>Allowed values:<br/><br/><code>Active</code>, <code>Active Under Contract</code>, <code>Closed</code>, <code>Expired</code>, <code>Pending</code>, <code>Canceled</code>, <code>Incomplete</code>",
                     "items": {
-                      "type": "string"
-                    },
-                    "enum": [
-                      "Active",
-                      "Active Under Contract",
-                      "Closed",
-                      "Expired",
-                      "Pending",
-                      "Canceled",
-                      "Incomplete"
-                    ]
+                      "type": "string",
+                      "enum": [
+                        "Active",
+                        "Active Under Contract",
+                        "Closed",
+                        "Expired",
+                        "Pending",
+                        "Canceled",
+                        "Incomplete"
+                      ]
+                    }
                   }
                 }
               },
@@ -9971,17 +9984,17 @@
                     "type": "array",
                     "description": "Indicates what Standard Status of property to search for. <br/><br/>Allowed values:<br/><br/><code>Active</code>, <code>Active Under Contract</code>, <code>Closed</code>, <code>Expired</code>, <code>Pending</code>, <code>Canceled</code>, <code>Incomplete</code>",
                     "items": {
-                      "type": "string"
-                    },
-                    "enum": [
-                      "Active",
-                      "Active Under Contract",
-                      "Closed",
-                      "Expired",
-                      "Pending",
-                      "Canceled",
-                      "Incomplete"
-                    ]
+                      "type": "string",
+                      "enum": [
+                        "Active",
+                        "Active Under Contract",
+                        "Closed",
+                        "Expired",
+                        "Pending",
+                        "Canceled",
+                        "Incomplete"
+                      ]
+                    }
                   }
                 }
               }

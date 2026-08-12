@@ -225,14 +225,14 @@ paths:
                   description: Indicates what Standard Status of property to search for. <br/><br/>Allowed values:<br/><br/><code>Active</code>, <code>Active Under Contract</code>, <code>Closed</code>, <code>Expired</code>, <code>Pending</code>, <code>Canceled</code>, <code>Incomplete</code>
                   items:
                     type: string
-                  enum:
-                    - Active
-                    - Active Under Contract
-                    - Closed
-                    - Expired
-                    - Pending
-                    - Canceled
-                    - Incomplete
+                    enum:
+                      - Active
+                      - Active Under Contract
+                      - Closed
+                      - Expired
+                      - Pending
+                      - Canceled
+                      - Incomplete
             examples:
               Request Example:
                 value:
@@ -704,14 +704,14 @@ paths:
                   description: Indicates what Standard Status of property to search for. <br/><br/>Allowed values:<br/><br/><code>Active</code>, <code>Active Under Contract</code>, <code>Closed</code>, <code>Expired</code>, <code>Pending</code>, <code>Canceled</code>, <code>Incomplete</code>
                   items:
                     type: string
-                  enum:
-                    - Active
-                    - Active Under Contract
-                    - Closed
-                    - Expired
-                    - Pending
-                    - Canceled
-                    - Incomplete
+                    enum:
+                      - Active
+                      - Active Under Contract
+                      - Closed
+                      - Expired
+                      - Pending
+                      - Canceled
+                      - Incomplete
       responses:
         "200":
           $ref: components.yml#/components/responses/EmptySuccess
