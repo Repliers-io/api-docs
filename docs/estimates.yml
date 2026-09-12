@@ -162,7 +162,152 @@ paths:
             format: int32
       responses:
         "200":
-          $ref: components.yml#/components/responses/EmptySuccess
+          description: "200"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page:
+                    type: integer
+                  numPages:
+                    type: integer
+                  pageSize:
+                    type: integer
+                  count:
+                    type: integer
+                  estimates:
+                    type: array
+                    description: The list of matching estimates.
+                    items:
+                      type: object
+                      properties:
+                        estimateId:
+                          type: integer
+                          format: int32
+                          example: 9611
+                        ulid:
+                          type: string
+                          example: 01J8Z3K4N5PQRSTUVWXYZ0AB1C
+                          description: A ULID uniquely identifying this estimate.
+                        clientId:
+                          type: integer
+                          format: int32
+                          example: 190073
+                        createdOn:
+                          type: string
+                          example: "2024-06-15T12:00:00.000Z"
+                        updatedOn:
+                          type: string
+                          nullable: true
+                        estimate:
+                          type: number
+                          example: 480000
+                          description: The estimated property value.
+                        estimateHigh:
+                          type: number
+                          example: 510000
+                          description: The high end of the estimated value range.
+                        estimateLow:
+                          type: number
+                          example: 450000
+                          description: The low end of the estimated value range.
+                        confidence:
+                          type: number
+                          example: 0.82
+                          description: A confidence score for this estimate.
+                        sendEmailMonthly:
+                          type: boolean
+                          example: false
+                        payload:
+                          type: object
+                          description: The property details this estimate was computed from — see the equivalent fields on POST /estimates.
+                          properties:
+                            resource:
+                              type: string
+                            address:
+                              type: object
+                              properties:
+                                city:
+                                  type: string
+                                  example: Houston
+                                streetName:
+                                  type: string
+                                  example: Cypresswood
+                                streetNumber:
+                                  type: string
+                                  example: "12103"
+                                streetSuffix:
+                                  type: string
+                                  example: Drive
+                                zip:
+                                  type: string
+                                  example: "77070"
+                            details:
+                              type: object
+                              properties:
+                                numBathrooms:
+                                  type: integer
+                                  example: 4
+                                numBedrooms:
+                                  type: integer
+                                  example: 4
+                                numGarageSpaces:
+                                  type: integer
+                                  example: 2
+                                numParkingSpaces:
+                                  type: integer
+                                  example: 2
+                                propertyType:
+                                  type: string
+                                  example: Residential
+                                sqft:
+                                  type: string
+                                  example: "3562"
+                                style:
+                                  type: string
+                                  example: Single Family Residence
+                                yearBuilt:
+                                  type: string
+                                  example: "1983"
+                            taxes:
+                              type: object
+                              properties:
+                                annualAmount:
+                                  type: number
+                                  example: 9722
+                            map:
+                              type: object
+                              properties:
+                                latitude:
+                                  type: number
+                                  example: 29.98234
+                                longitude:
+                                  type: number
+                                  example: -95.603577
+                                point:
+                                  type: string
+                                  example: "POINT (-95.603577 29.98234)"
+                            condominium:
+                              type: object
+                              description: Condominium-specific details, if applicable.
+                            lot:
+                              type: object
+                              description: Lot details, if applicable. See the `lot` object on [GET /listings/{mlsNumber}](/reference/get_listings_mlsnumber).
+                        history:
+                          type: object
+                          description: Historical estimate values.
+                          properties:
+                            mth:
+                              type: object
+                              description: Monthly estimate history keyed by year-month (e.g. "2024-10").
+                              additionalProperties:
+                                type: object
+                                properties:
+                                  value:
+                                    type: number
+                                    example: 478500
+                                    description: Estimated value for that month.
         "400":
           $ref: components.yml#/components/responses/BadRequest
         "401":

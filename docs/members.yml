@@ -93,33 +93,57 @@ paths:
                           properties:
                             resource:
                               type: string
+                              example: "Property:1"
                               description: Resource identifier
+                            resourceId:
+                              type: [string, "null"]
+                              example: "1"
+                              description: Identifier of the resource this member record relates to.
                             agentId:
                               type: string
+                              example: "10000000000000000001"
                               description: Unique identifier for the agent
                             boardAgentId:
                               type: string
+                              example: agent1
                               description: Agent identifier assigned by the MLS board
                             officeId:
                               type: [string, "null"]
+                              example: "20000000000000000001"
                               description: Identifier of the office the member belongs to
                             updatedOn:
                               type: [string, "null"]
+                              example: "2024-06-15T12:00:00.000Z"
                               description: Timestamp of the last update
                             name:
                               type: string
+                              example: Jamie Brown
                               description: Full name of the member
                             board:
                               type: [string, "null"]
                               description: MLS board the member belongs to
                             position:
                               type: [string, "null"]
+                              example: Full-time
                               description: Position or role of the member
+                            status:
+                              type: [string, "null"]
+                              example: Active
+                              description: The status of this member record (e.g. active, deleted).
+                            stateLicense:
+                              type: [string, "null"]
+                              example: "0000000"
+                              description: The member's state license number, if on record.
+                            mlsName:
+                              type: [string, "null"]
+                              example: HAR
+                              description: The name of the MLS/board this member record originates from.
                             phones:
                               type: array
                               description: List of phone numbers for the member
                               items:
                                 type: string
+                                example: "15555550100"
                             social:
                               type: array
                               description: List of social media profiles
@@ -147,6 +171,7 @@ paths:
                               properties:
                                 name:
                                   type: [string, "null"]
+                                  example: Northshore Brokerage
                                   description: Name of the brokerage
                                 address:
                                   type: object
@@ -154,24 +179,71 @@ paths:
                                   properties:
                                     address1:
                                       type: [string, "null"]
+                                      example: "896 King St W"
                                       description: Primary address line
                                     address2:
                                       type: [string, "null"]
                                       description: Secondary address line
                                     city:
                                       type: [string, "null"]
+                                      example: Houston
                                       description: City name
                                     state:
                                       type: [string, "null"]
+                                      example: TX
                                       description: State or province
                                     postal:
                                       type: [string, "null"]
+                                      example: "77002"
                                       description: Postal or ZIP code
                                     country:
                                       type: [string, "null"]
                                       description: Country name
+                                officeBroker:
+                                  type: [string, "null"]
+                                  example: Summit Real Estate
+                                  description: Name of the office's broker of record.
+                                officeBrokerKey:
+                                  type: [string, "null"]
+                                  example: "20000000000000000001"
+                                  description: MLS-assigned key identifying the office's broker of record.
+                                officeBrokerMlsId:
+                                  type: [string, "null"]
+                                  example: MLS01
+                                  description: MLS identifier for the office's broker of record.
+                                officeManager:
+                                  type: [string, "null"]
+                                  description: Name of the office's manager.
+                                officeManagerKey:
+                                  type: [string, "null"]
+                                  description: MLS-assigned key identifying the office's manager.
+                                officeManagerMlsId:
+                                  type: [string, "null"]
+                                  description: MLS identifier for the office's manager.
+                                officeKey:
+                                  type: [string, "null"]
+                                  example: "20000000000000000001"
+                                  description: MLS-assigned key identifying the office.
+                                officeMlsId:
+                                  type: [string, "null"]
+                                  example: MLS01
+                                  description: MLS identifier for the office.
+                                mainOfficeKey:
+                                  type: [string, "null"]
+                                  description: MLS-assigned key identifying the office's main/parent office, if part of a multi-office brokerage.
+                                mainOfficeMlsId:
+                                  type: [string, "null"]
+                                  description: MLS identifier for the office's main/parent office, if part of a multi-office brokerage.
+                                officeBrokerEmail:
+                                  type: [string, "null"]
+                                  example: jordan.smith@example.com
+                                  description: Email address of the office's broker of record.
+                                officeManagerEmail:
+                                  type: [string, "null"]
+                                  description: Email address of the office's manager.
                             email:
                               type: [string, "null"]
+                              example: taylor.chen@example.com
                               description: Email address of the member
         "400":
           $ref: components.yml#/components/responses/BadRequest

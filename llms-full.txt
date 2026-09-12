@@ -177,7 +177,7 @@ Use this endpoint to get details about a specific listing. When requesting a spe
 | boardId | integer (int32) | Filter by boardId. This is only required if your account has access to more than one MLS. |
 | fields | string enum: raw | If set to `raw`, returns raw fields the way data fields come from MLS. |
 | locations | boolean | If set to `true`, fetches locations whose boundary contains this listing's coordinates. Under the hood uses [GET /locations](/reference/get_locations) with `pointWithinBoundary=true`. |
-| locationsSource | array[string] enum: MSL, UserDefined, LiveBy, PublicRecord | Filters the locations returned by `locations=true` by source: - `MSL` - Locations sourced from MLS (Multiple Listing Service) data. - `UserDefined` - Custom locations created and defined by users. - `LiveBy` - Locations sourced from LiveBy, a third-party neighborhood and community data provider. - `PublicRecord` - Locations sourced from Public Records Data. |
+| locationsSource | array[string] enum: MLS, UserDefined, LiveBy, PublicRecord | Filters the locations returned by `locations=true` by source: - `MLS` - Locations sourced from MLS (Multiple Listing Service) data. - `UserDefined` - Custom locations created and defined by users. - `LiveBy` - Locations sourced from LiveBy, a third-party neighborhood and community data provider. - `PublicRecord` - Locations sourced from Public Records Data. |
 | locationsType | array[string] enum: area, city, city-alternate, neighborhood, neighborhood-alternate, postalCode, district, schoolDistrict, school, property | Filters the locations returned by `locations=true` by type. Same values as the `type` parameter of [GET /locations](/reference/get_locations). |
 
 ---
@@ -202,25 +202,86 @@ Provide this endpoint with an mls number and it'll retrieve similar properties t
 | radius | integer (int32) | If specified, will show similar listings within the specified radius (km). If not specified, defaults to showing listings in the same neighborhood. |
 | sortBy | string default: updatedOnDesc | Allowed values: updatedOnDesc,updatedOnAsc,createdOnAsc,createdOnDesc |
 
+**Response (200):**
+
+| Field | Type | Description |
+|---|---|---|
+| page | integer |  |
+| numPages | integer |  |
+| pageSize | integer |  |
+| count | integer |  |
+| similar | array[object] | The similar listings. Confirmed against a live response to have the same shape as GET /listings/{mlsNumber} (address, details, lot, nearby, office, openHouse, rooms, taxes, timestamps, agents, condominium, permissions, images, etc. — see that endpoint for the full nested shape), plus the additional fields below. |
+| similar[].mlsNumber | string |  |
+| similar[].distance | number | The distance from the source listing. |
+| similar[].listPriceLog | array[object] | A history of list price changes for this listing. |
+| similar[].lastPriceChangeType | string |  |
+| similar[].estimate | object | An automated valuation estimate for this listing, if available. |
+| similar[].boardId | integer (int32) |  |
+
 ---
 
 ### GET /listings/history
 
-Use this endpoint to retrieve the MLS history of a specific address. In addition to displaying the history you could also use the information in the response to create a graph that illustrates the change in value over time.
+Use this endpoint to retrieve the MLS history of a specific address. In addition to displaying the history you could also use the information in the response to create a graph that illustrates the change in value over time. You must identify the property in one of the following ways: - supply `mlsNumber`, or - supply `addressKey`, or - supply `streetName` together with `streetNumber` and either `city` or `zip`. The remaining address parameters (`unitNumber`, `streetSuffix`, `streetDirection`) are always optional and can be used to narrow the match.
 
 **Query Parameters:**
 
 | Name | Type | Description |
 |---|---|---|
-| city | string | The city of the property. Note - a city is not required if a zip is provided. |
-| streetName | string |  |
-| streetNumber | string |  |
+| city | string | The city of the property. Required when searching by `streetName`, unless a `zip` is provided. |
+| streetName | string | The street name of the property. Required unless `mlsNumber` or `addressKey` is provided. |
+| streetNumber | string | The street number of the property. Required when searching by `streetName`. |
 | unitNumber | string |  |
 | streetSuffix | string |  |
 | streetDirection | string |  |
-| zip | string | The zip code or postal code of the property. Supports partial match, for example if supplied value is "123" it will match "12345". Note - a zip is not required if a city is provided. |
+| zip | string | The zip code or postal code of the property. Supports partial match, for example if supplied value is "123" it will match "12345". Required when searching by `streetName`, unless a `city` is provided. |
 | mlsNumber | string | If specified, will return the history for the property that can be identified by the given MLS number |
 | addressKey | string | The address key of the property. Please see the address object of a listing to understand how the address key is constructed |
+| pretty | boolean default: false | If true, reorders fields within each returned listing into a canonical order optimized for human readability. Does not affect which fields are returned or their values. Default is false. |
+
+**Response (200):**
+
+| Field | Type | Description |
+|---|---|---|
+| state | string |  |
+| zip | string |  |
+| streetNumber | string |  |
+| streetName | string |  |
+| streetSuffix | string |  |
+| streetDirection | string |  |
+| unitNumber | string |  |
+| city | string |  |
+| neighborhood | string |  |
+| district | string |  |
+| communityCode | string |  |
+| lat | number |  |
+| long | number |  |
+| sqft | string |  |
+| beds | integer |  |
+| baths | integer |  |
+| style | string |  |
+| propertyType | string |  |
+| history | array[object] | The listings recorded at this address, most recent first. |
+| history[].mlsNumber | string |  |
+| history[].boardId | integer (int32) |  |
+| history[].unitNumber | string |  |
+| history[].type | string |  |
+| history[].beds | integer |  |
+| history[].baths | integer |  |
+| history[].sqft | string |  |
+| history[].style | string |  |
+| history[].propertyType | string |  |
+| history[].listPrice | integer |  |
+| history[].listDate | string |  |
+| history[].lastStatus | string |  |
+| history[].soldPrice | integer |  |
+| history[].soldDate | string |  |
+| history[].office | object |  |
+| history[].permissions | object |  |
+| history[].timestamps | object |  |
+| history[].photoCount | integer |  |
+| history[].taxes | object |  |
+| history[].images | array[string] |  |
 
 ---
 
@@ -236,6 +297,21 @@ Use this endpoint to retrieve listings that have been deleted from the MLS. List
 | minUpdatedOn | string (date) |  |
 | maxUpdatedOn | string (date) |  |
 
+**Response (200):**
+
+| Field | Type | Description |
+|---|---|---|
+| page | integer |  |
+| numPages | integer |  |
+| pageSize | integer |  |
+| count | integer |  |
+| listings | array[object] | The deleted listings matching the given filters. |
+| listings[].boardId | integer (int32) |  |
+| listings[].mlsNumber | string |  |
+| listings[].resource | string |  |
+| listings[].address | object |  |
+| listings[].timestamps | object |  |
+
 ---
 
 ## Locations
@@ -248,7 +324,7 @@ Searches for geographical locations such as cities, neighborhoods, and districts
 
 | Name | Type | Description |
 |---|---|---|
-| source | array[string] enum: MSL, UserDefined, LiveBy, PublicRecord | Filters locations by source: - `MSL` - Locations sourced from MLS (Multiple Listing Service) data. - `UserDefined` - Custom locations created and defined by users. - `LiveBy` - Locations sourced from LiveBy, a third-party neighborhood and community data provider. - `PublicRecord` - Locations sourced from Public Records Data. |
+| source | array[string] enum: MLS, UserDefined, LiveBy, PublicRecord | Filters locations by source: - `MLS` - Locations sourced from MLS (Multiple Listing Service) data. - `UserDefined` - Custom locations created and defined by users. - `LiveBy` - Locations sourced from LiveBy, a third-party neighborhood and community data provider. - `PublicRecord` - Locations sourced from Public Records Data. |
 | type | array[string] enum: area, city, city-alternate, neighborhood, neighborhood-alternate, postalCode, district, schoolDistrict, school, property | Limits results to specified location types: - `area` - Represents larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc. - `city` - Municipal division that can include multiple neighborhoods within its boundaries. - `city-alternate` - Alternate representation of a city, used for specific data sources or contexts. - `neighborhood` - Smallest geographical unit within a city. - `neighborhood-alternate` - Alternate representation of a neighborhood, used for specific data sources or contexts. - `postalCode` - Represents postal code areas, which may span multiple neighborhoods or cities. - `district` - Represents administrative or political districts, which may span multiple neighborhoods or cities. - `schoolDistrict` - Represents school district areas, which may span multiple neighborhoods or cities. - `school` - Represents specific school locations and catchment areas. - `property` - Represents individual properties or land parcels along with publicly available information derived from public records data. |
 | state | array[string] | Filters locations by 2-letter State/Province/Territory codes. Returns locations within the specified states. |
 | area | array[string] | Filters locations by area names. Returns locations within the specified area. Areas represent larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc. |
@@ -290,9 +366,17 @@ Searches for geographical locations such as cities, neighborhoods, and districts
 | locations[].locationId | string | Unique identifier for the location |
 | locations[].name | string | Human-readable display name for the location |
 | locations[].type | any |  |
+| locations[].subType | string | A finer-grained classification within `type`, if applicable. |
+| locations[].source | string | The source of this location record. Allowed values: MLS, UserDefined, LiveBy, PublicRecord. |
+| locations[].liveById | string | The identifier for this location in LiveBy, the demographic data provider, if source is LiveBy. |
+| locations[].mlsId | string | The identifier for this location in the originating MLS, if source is MLS. |
 | locations[].size | number (float) | Size of the location in square kilometers |
 | locations[].map | object | Geographical information including coordinates and boundary data |
 | locations[].address | object | Structured representation of a location's address components. |
+| locations[].demographics | object | Demographic statistics for this location, where available. |
+| locations[].resource | string | The resource identifier this location relates to, if applicable. |
+| locations[].school | object | School data for this location. Present when type=school and source=LiveBy. |
+| locations[].publicRecord | object | Public-record parcel/property/ownership/tax data for this location. Present when type=property and source=PublicRecord. |
 
 ---
 
@@ -305,7 +389,7 @@ Autocomplete for Locations search. As your user types, you simply pass their inp
 | Name | Type | Description |
 |---|---|---|
 | search | string | Search query string |
-| source | array[string] enum: MSL, UserDefined, LiveBy, PublicRecord | Filters locations by source: - `MSL` - Locations sourced from MLS (Multiple Listing Service) data. - `UserDefined` - Custom locations created and defined by users. - `LiveBy` - Locations sourced from LiveBy, a third-party neighborhood and community data provider. - `PublicRecord` - Locations sourced from Public Records Data. |
+| source | array[string] enum: MLS, UserDefined, LiveBy, PublicRecord | Filters locations by source: - `MLS` - Locations sourced from MLS (Multiple Listing Service) data. - `UserDefined` - Custom locations created and defined by users. - `LiveBy` - Locations sourced from LiveBy, a third-party neighborhood and community data provider. - `PublicRecord` - Locations sourced from Public Records Data. |
 | type | array[string] enum: area, city, city-alternate, neighborhood, neighborhood-alternate, postalCode, district, schoolDistrict, school, property | Limits results to specified location types: - `area` - Represents larger geographical divisions that may contain multiple cities and neighborhoods. Examples of Areas are counties, regions etc. - `city` - Municipal division that can include multiple neighborhoods within its boundaries. - `city-alternate` - Alternate representation of a city, used for specific data sources or contexts. - `neighborhood` - Smallest geographical unit within a city. - `neighborhood-alternate` - Alternate representation of a neighborhood, used for specific data sources or contexts. - `postalCode` - Represents postal code areas, which may span multiple neighborhoods or cities. - `district` - Represents administrative or political districts, which may span multiple neighborhoods or cities. - `schoolDistrict` - Represents school district areas, which may span multiple neighborhoods or cities. - `school` - Represents specific school locations and catchment areas. - `property` - Represents individual properties or land parcels along with publicly available information derived from public records data. |
 | fields | string | Comma-separated list of fields to include in the response. This allows clients to request only the specific data they need, reducing payload size. Examples: - `name,type` - Returns only location names and types - `name,address.city,address.state` - Returns location names and specific address components - `map.boundary` - Returns only geographical boundary data |
 | map | string (json) | GeoJSON polygon or multi-polygon boundary for geographical filtering. Limits results to locations within the specified boundaries. For complex polygons or multipolygons that exceed query parameter size limits, use the POST method and include the map data in the request body. Format: Array of coordinate arrays, where each coordinate is [longitude, latitude] in WGS 84 format. The polygon must be closed (first and last points must be identical). For more information refer to the implementation guide [Filtering Listings Geo-Spatially Using the "map" Parameter](https://help.repliers.com/en/article/filtering-listings-geo-spatially-using-the-map-parameter-7sorw0/) |
@@ -331,15 +415,8 @@ Autocomplete for Locations search. As your user types, you simply pass their inp
 | numPages | integer | Total number of pages |
 | pageSize | integer | Number of results per page |
 | count | integer | Total number of results |
+| source | array[string] enum: MLS, UserDefined, LiveBy, PublicRecord | Sources present in the result set. |
 | locations | array[object] |  |
-| locations[].locationId | string | Unique identifier for the location |
-| locations[].name | string | Human-readable display name for the location |
-| locations[].type | any |  |
-| locations[].classification | string | Classification of the location |
-| locations[].subType | string | Sub-type of the location |
-| locations[].size | number (float) | Size of the location in square kilometers |
-| locations[].map | object |  |
-| locations[].address | any |  |
 
 ---
 
@@ -461,7 +538,7 @@ This endpoint translates natural language search queries into structured API req
 | listings | boolean default: false | no | If `true`, the endpoint will return listings according to the generated urlQueryString parameters, the same way as GET /lisitngs endpoint would treat those parameters. Default is `false`. |
 | fields | string | no | Use if you want to limit the `listings` response object to containing certain fields only. For example: `fields=listPrice,soldPrice` would limit the response to contain `listPrice` and `soldPrice` only. You can also specify the amount of images to return, for example if a listing has 40 images total and you specify `fields=images[5]` it will only return the first 5 images. |
 | useLocationId | boolean default: false | no | When set to `true`, any locations identified in the prompt will be returned as `locationId` values instead of being split into separate `area`, `city`, and `neighborhood` parameters. |
-| locationsSource | array[string] enum: MSL, UserDefined, LiveBy, PublicRecord | no | Specify which location sources to use when interpreting the prompt. This can help improve accuracy by providing the NLP model with the location data source most suitable for the query. - `MSL` - Locations sourced from MLS (Multiple Listing Service) data. - `UserDefined` - Custom locations created and defined by users. - `LiveBy` - Locations sourced from LiveBy, a third-party neighborhood and community data provider. - `PublicRecord` - Locations sourced from Public Records Data. |
+| locationsSource | array[string] enum: MLS, UserDefined, LiveBy, PublicRecord | no | Specify which location sources to use when interpreting the prompt. This can help improve accuracy by providing the NLP model with the location data source most suitable for the query. - `MLS` - Locations sourced from MLS (Multiple Listing Service) data. - `UserDefined` - Custom locations created and defined by users. - `LiveBy` - Locations sourced from LiveBy, a third-party neighborhood and community data provider. - `PublicRecord` - Locations sourced from Public Records Data. |
 
 **Response (200):**
 
@@ -575,6 +652,12 @@ Use this endpoint to get a list of agents that you've created. You can filter fo
 | status | boolean | If false, returns only disabled agents. If true, returns only active agents. |
 | externalId | string | Filters agents by their identifier from an external system (such as a CRM). |
 
+**Response (200):**
+
+| Field | Type | Description |
+|---|---|---|
+| agents | array[object] |  |
+
 ---
 
 ### PATCH /agents/{agentId}
@@ -625,6 +708,24 @@ Returns the full profile of a specific agent. Useful for building agent profile 
 | Name | Type | Description |
 |---|---|---|
 | agentId | integer (int32) |  |
+
+**Response (200):**
+
+| Field | Type | Description |
+|---|---|---|
+| agentId | integer (int32) | The unique identifier of the agent. |
+| status | boolean | If false, all operations for the agent are disabled. |
+| fname | string | The first name of the agent. |
+| lname | string | The last name of the agent. |
+| phone | string | The mobile phone number of the agent. |
+| email | string | The email address of the agent. |
+| proxyPhone | string | A proxy phone number used to mask the agent's direct number, if configured. |
+| proxyEmail | string | A proxy email address used to mask the agent's direct email, if configured. |
+| avatar | string | A URL/path to an avatar/picture of this agent. |
+| brokerage | string | The name of the Brokerage/Office that this agent is registered with. |
+| designation | string | This agent's designation. For example, "Sales Representative" |
+| externalId | string | The externalId is intended for storing agent identifiers from external systems (such as CRMs) for reference purposes. |
+| data | any | Additional metadata associated with the agent. Observed as null in testing — exact shape unconfirmed. |
 
 ---
 
@@ -692,6 +793,16 @@ Use this endpoint to get a list of clients that you've created. You can filter f
 | showSavedSearches | boolean default: true | Enables automatic retrieval of Saved Searches for each client in the response. For best performance it's recommended to disable this setting if Saved Searches are not required. |
 | externalId | string | Filter clients by their identifier from an external system (such as a CRM). |
 
+**Response (200):**
+
+| Field | Type | Description |
+|---|---|---|
+| page | integer |  |
+| numPages | integer |  |
+| pageSize | integer |  |
+| count | integer |  |
+| clients | array[object] |  |
+
 ---
 
 ### PATCH /clients/{clientId}
@@ -742,11 +853,60 @@ Returns the full profile of a specific client, including their contact informati
 |---|---|---|
 | clientId | integer (int32) |  |
 
+**Response (200):**
+
+| Field | Type | Description |
+|---|---|---|
+| clientId | integer (int32) | The unique identifier of the client. |
+| agentId | integer (int32) | The agentId of the agent that this client is assigned to. |
+| fname | string | The first name of this client. |
+| lname | string | The last name of this client. |
+| phone | string | The mobile phone number of this client. |
+| email | string | The email address of this client. |
+| proxyEmail | string | A proxy email address used to mask the client's direct email, if configured. |
+| status | boolean | If false, all operations for the client are disabled. |
+| lastActivity | string | The date/time of the client's last recorded activity, if any. |
+| tags | array[string] | Tags assigned to this client for filtering and list-building purposes. |
+| preferences | object |  |
+| preferences.email | boolean | If false, the client will not receive messages via email. |
+| preferences.sms | boolean | If false, the client will not receive messages via sms (text). |
+| preferences.unsubscribe | boolean | If true, the client is unsubscribed from all forms of communication. |
+| preferences.whatsapp | boolean | If false, the client will not receive messages via WhatsApp. |
+| expiryDate | string | The date/time this client record expires, if applicable. |
+| searches | array[object] | A summary of this client's saved searches. See [GET /searches](/reference/get_searches) for the full saved search object. |
+| searches[].searchId | integer (int32) |  |
+| searches[].type | string |  |
+| searches[].status | integer |  |
+| searches[].maxBeds | integer |  |
+| searches[].minBeds | integer |  |
+| searches[].maxBaths | integer |  |
+| searches[].minBaths | integer |  |
+| searches[].maxPrice | integer |  |
+| searches[].minPrice | integer |  |
+| searches[].classes | array[string] |  |
+| searches[].areas | array[string] |  |
+| searches[].cities | array[string] |  |
+| searches[].styles | array[string] |  |
+| searches[].streetNames | array[string] |  |
+| searches[].streetNumbers | array[string] |  |
+| searches[].neighborhoods | array[string] |  |
+| searches[].propertyTypes | array[string] |  |
+| searches[].maps | any | Map/geo-boundary filter for this saved search, if set. Observed as null in testing — exact shape unconfirmed. |
+| createdOn | string | The date/time this client was created. |
+| externalId | string | The externalId is intended for storing client identifiers from external systems (such as CRMs) for reference purposes. |
+| data | any | Additional metadata associated with the client. Observed as null in testing — exact shape unconfirmed. |
+
 ---
 
 ### GET /clients/tags
 
 Use this endpoint to get a list of all the tags that you've assigned to clients.
+
+**Response (200):**
+
+| Field | Type | Description |
+|---|---|---|
+| tags | object | An object keyed by tag name. Observed empty in testing (no tags assigned) — value shape unconfirmed. |
 
 ---
 
@@ -832,56 +992,62 @@ Use this endpoint to create a saved search for a client.Important - When a saved
 
 | Field | Type | Description |
 |---|---|---|
-| searchId | integer default: 0 |  |
-| name | any |  |
+| searchId | integer |  |
+| name | string | An optional label for this saved search. |
 | createdOn | string |  |
-| agentId | integer default: 0 |  |
-| minBeds | integer default: 0 |  |
-| maxBeds | integer default: 0 |  |
-| minBaths | integer default: 0 |  |
-| maxBaths | any |  |
-| minPrice | integer default: 0 |  |
-| maxPrice | integer default: 0 |  |
-| maxMaintenanceFee | any |  |
-| minGarageSpaces | any |  |
-| minParkingSpaces | any |  |
-| minKitchens | any |  |
-| minSqft | any |  |
-| maxSqft | any |  |
-| minYearBuilt | any |  |
-| maxYearBuilt | any |  |
-| minStories | any |  |
-| maxStories | any |  |
-| maxCoveredSpaces | any |  |
-| minCoveredSpaces | any |  |
-| status | boolean default: true |  |
+| agentId | integer |  |
+| minBeds | integer |  |
+| maxBeds | integer |  |
+| minBaths | integer |  |
+| maxBaths | integer |  |
+| minPrice | integer |  |
+| maxPrice | integer |  |
+| maxMaintenanceFee | number |  |
+| minGarageSpaces | integer |  |
+| minParkingSpaces | integer |  |
+| minKitchens | integer |  |
+| minSqft | integer |  |
+| maxSqft | integer |  |
+| minYearBuilt | integer |  |
+| maxYearBuilt | integer |  |
+| minLotSizeSqft | integer |  |
+| maxLotSizeSqft | integer |  |
+| minOpenHouseDate | string | Filters matches to listings with an open house on or after this date. |
+| maxOpenHouseDate | string | Filters matches to listings with an open house on or before this date. |
+| minStories | integer |  |
+| maxStories | integer |  |
+| maxCoveredSpaces | integer |  |
+| minCoveredSpaces | integer |  |
+| status | boolean |  |
 | type | string |  |
-| clientId | integer default: 0 |  |
-| streetNumbers | array |  |
-| streetNames | array |  |
+| clientId | integer |  |
+| streetNumbers | array[string] |  |
+| streetNames | array[string] |  |
 | cities | array[string] |  |
 | neighborhoods | array[string] |  |
-| propertyTypes | array |  |
-| styles | array |  |
+| propertyTypes | array[string] |  |
+| styles | array[string] |  |
 | areas | array[string] |  |
-| map | array |  |
+| map | array | A GeoJSON polygon/multi-polygon boundary used to filter matches geographically, in the same format as the `map` parameter on [POST /listings](/reference/post_listings). |
+| mapType | string | The type of the `map` boundary (e.g. polygon, multipolygon), if set. |
 | class | array[string] |  |
-| basement | array |  |
+| basement | array[string] |  |
 | client | object |  |
 | client.fname | string |  |
 | client.lname | string |  |
 | client.email | string |  |
 | client.phone | string |  |
 | notificationFrequency | string |  |
-| soldNotifications | boolean default: true |  |
-| priceChangeNotifications | boolean default: true |  |
-| sewer | array |  |
-| waterSource | array |  |
-| heating | array |  |
-| swimmingPool | array |  |
-| amenities | array |  |
-| keywords | array |  |
-| pets | array |  |
+| soldNotifications | boolean |  |
+| priceChangeNotifications | boolean |  |
+| sewer | array[string] |  |
+| waterSource | array[string] |  |
+| heating | array[string] |  |
+| swimmingPool | array[string] |  |
+| amenities | array[string] |  |
+| keywords | array[string] |  |
+| pets | array[string] |  |
+| standardStatus | string | The standardized status filter applied to matches, if set. |
 
 ---
 
@@ -899,6 +1065,16 @@ Returns a list of saved searches. Use this to display a client's active searches
 | resultsPerPage | integer (int32) default: 100 | The number of searches to return per page. |
 | searchId | integer (int32) |  |
 | status | boolean |  |
+
+**Response (200):**
+
+| Field | Type | Description |
+|---|---|---|
+| page | integer |  |
+| numPages | integer |  |
+| pageSize | integer |  |
+| count | integer |  |
+| searches | array[object] |  |
 
 ---
 
@@ -1014,6 +1190,17 @@ Use this endpoint to lookup matches for a saved search. Matches are listings tha
 | sortBy | string default: updatedOnDesc | Allowed values: updatedOnDesc,createdOnDesc |
 | status | string | If not specified returns both available and unavailable listings. If specified limits results to specified status. Allowed values: A,U |
 
+**Response (200):**
+
+| Field | Type | Description |
+|---|---|---|
+| page | integer |  |
+| numPages | integer |  |
+| pageSize | integer |  |
+| count | integer |  |
+| viewed | boolean | Echoes back a `viewed` filter, if one was applied. |
+| matches | array[object] |  |
+
 ---
 
 ### GET /searches/{searchId}/matches/{matchId}
@@ -1026,6 +1213,32 @@ Returns the details of a specific listing match within a saved search, including
 |---|---|---|
 | searchId | integer (int32) |  |
 | matchId | integer (int32) |  |
+
+**Response (200):**
+
+| Field | Type | Description |
+|---|---|---|
+| matchId | integer (int32) | The unique identifier of this match. |
+| searchId | integer (int32) | The searchId of the saved search this match belongs to. |
+| viewed | boolean | Whether the client has viewed this match. |
+| viewedOn | string | The date/time the client viewed this match, if viewed. |
+| liked | boolean | Whether the client has liked this match, if set. |
+| likedOn | string | The date/time the client liked this match, if liked. |
+| dateTime | string | The date/time this match was created. |
+| updatedOn | string | The date/time this match was last updated, if ever. |
+| listing | object | A summary of the matched listing. See [GET /listings/{mlsNumber}](/reference/get_listings_mlsnumber) for the full listing object. |
+| listing.mlsNumber | string |  |
+| listing.listPrice | number |  |
+| listing.status | string |  |
+| listing.lastStatus | string |  |
+| listing.soldPrice | number |  |
+| listing.soldDate | string |  |
+| listing.listDate | string |  |
+| listing.map | object |  |
+| listing.address | object |  |
+| listing.details | object |  |
+| listing.office | object |  |
+| listing.images | array[string] |  |
 
 ---
 
@@ -1084,6 +1297,28 @@ Returns a list of property value estimates you've created. Useful for managing a
 | estimateId | integer (int32) | If specified, filters estimates by estimateId |
 | pageNum | integer (int32) | The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200. |
 | resultsPerPage | integer (int32) | The number of estimates to return per page. |
+
+**Response (200):**
+
+| Field | Type | Description |
+|---|---|---|
+| page | integer |  |
+| numPages | integer |  |
+| pageSize | integer |  |
+| count | integer |  |
+| estimates | array[object] | The list of matching estimates. |
+| estimates[].estimateId | integer (int32) |  |
+| estimates[].ulid | string | A ULID uniquely identifying this estimate. |
+| estimates[].clientId | integer (int32) |  |
+| estimates[].createdOn | string |  |
+| estimates[].updatedOn | string |  |
+| estimates[].estimate | number | The estimated property value. |
+| estimates[].estimateHigh | number | The high end of the estimated value range. |
+| estimates[].estimateLow | number | The low end of the estimated value range. |
+| estimates[].confidence | number | A confidence score for this estimate. |
+| estimates[].sendEmailMonthly | boolean |  |
+| estimates[].payload | object | The property details this estimate was computed from — see the equivalent fields on POST /estimates. |
+| estimates[].history | object | Historical estimate values. |
 
 ---
 
@@ -1162,6 +1397,16 @@ Use this endpoint to list and filter sent messages.
 | status | string | Allowed values: sent,pending |
 | token | string |  |
 
+**Response (200):**
+
+| Field | Type | Description |
+|---|---|---|
+| page | integer |  |
+| numPages | integer |  |
+| pageSize | integer |  |
+| count | integer |  |
+| messages | array[object] |  |
+
 ---
 
 ### GET /messages/{messageId}
@@ -1173,6 +1418,28 @@ Use this endpoint to get details about a message that was sent.
 | Name | Type | Description |
 |---|---|---|
 | messageId | integer (int32) |  |
+
+**Response (200):**
+
+| Field | Type | Description |
+|---|---|---|
+| messageId | integer (int32) | The unique identifier of the message. |
+| agentId | integer (int32) | The agentId of the agent that's either receiving or sending the message. |
+| clientId | integer (int32) | The clientId of the client that's either receiving or sending the message. |
+| sender | string | Indicates whether the agent sent the message or the client. Allowed values: agent, client |
+| source | string | Indicates how the message was created (e.g. via the API or another channel). |
+| token | string | An opaque token associated with this message. |
+| content | object |  |
+| content.listings | array[string] | An array of listings (mlsNumbers) sent in this message. |
+| content.searches | array[integer] | An array of saved searches (searchIds) sent in this message. |
+| content.message | string | The text content of this message. |
+| content.subject | string | The email subject, if this message changed it from the default. |
+| content.links | array[string] | An array of links (URLs) sent in this message. |
+| content.pictures | array[string] | An array of pictures (URLs) sent in this message. |
+| delivery | object |  |
+| delivery.scheduleDateTime | string | The date/time this message is scheduled to be sent, if scheduled for later delivery. |
+| delivery.sentDateTime | string | The date/time this message was sent. |
+| delivery.status | string | The delivery status of this message. |
 
 ---
 
@@ -1263,9 +1530,12 @@ Returns a list of properties that a client has favorited. Results can be filtere
 | favorites[].timestamps | object | Key listing timestamps |
 | favorites[].agents | array[object] | Agents associated with the listing |
 | favorites[].history | array[object] | Listing price and status history |
-| favorites[].comparables | array[object] | Comparable listings |
+| favorites[].comparables | array[object] | Comparable sold/listed properties used for market comparison. Each item largely mirrors the shape of the parent favorited listing (address, details, condominium, images, timestamps). |
 | favorites[].estimate | object | Automated valuation estimate |
 | favorites[].boardId | integer | MLS board ID the listing belongs to |
+| favorites[].standardStatus | string | The listing's status, normalized to the RESO Data Dictionary standard values. |
+| favorites[].raw | object | The raw, unmapped fields as provided by the source MLS. Field names and availability vary by board/MLS, so they aren't individually enumerated here. |
+| favorites[].reso | object | The listing's fields mapped to the RESO Data Dictionary standard. Field names and availability vary by board/MLS, so they aren't individually enumerated here. |
 | favorites[].favoriteId | integer | Unique identifier of the favorite record |
 | favorites[].comments | string | null | Client comments on the favorited listing |
 | favorites[].tags | string | null | Tags associated with the favorite |
@@ -1386,6 +1656,16 @@ Use this endpoint to get details associated with a specific webhook subscription
 |---|---|---|
 | webhookId | integer (int32) |  |
 
+**Response (200):**
+
+| Field | Type | Description |
+|---|---|---|
+| id | integer (int32) | The unique identifier of the webhook subscription (webhookId). |
+| target_url | string | The URL that event notifications are delivered to. |
+| event | string | The event this subscription is subscribed to. Allowed values: agent.created, agent.updated, agent.deleted, client.created, client.updated, client.deleted, search.created, search.updated, search.deleted, search.match.created, search.match.updated, message.created, message.updated, message.deleted, listing.created, listing.updated, listing.deleted, favorite.created, favorite.deleted |
+| configuration | object | Configuration options for the webhook, such as delivery filters. |
+| configuration.filters | array[object] |  |
+
 ---
 
 ### GET /webhooks/events
@@ -1426,6 +1706,7 @@ Use this endpoint to list and filter members (agents) belonging to the MLS.
 | count | integer | Total number of results |
 | members | array[object] | Array of member objects |
 | members[].resource | string | Resource identifier |
+| members[].resourceId | string | null | Identifier of the resource this member record relates to. |
 | members[].agentId | string | Unique identifier for the agent |
 | members[].boardAgentId | string | Agent identifier assigned by the MLS board |
 | members[].officeId | string | null | Identifier of the office the member belongs to |
@@ -1433,6 +1714,9 @@ Use this endpoint to list and filter members (agents) belonging to the MLS.
 | members[].name | string | Full name of the member |
 | members[].board | string | null | MLS board the member belongs to |
 | members[].position | string | null | Position or role of the member |
+| members[].status | string | null | The status of this member record (e.g. active, deleted). |
+| members[].stateLicense | string | null | The member's state license number, if on record. |
+| members[].mlsName | string | null | The name of the MLS/board this member record originates from. |
 | members[].phones | array[string] | List of phone numbers for the member |
 | members[].social | array[string] | List of social media profiles |
 | members[].website | string | null | Member's website URL |
@@ -1468,9 +1752,22 @@ Use this endpoint to list offices belonging to the MLS. A brokerage may have one
 | count | integer | Total number of results |
 | offices | array[object] | Array of office objects |
 | offices[].resource | string | Resource identifier |
+| offices[].resourceId | string | null | Identifier of the resource this office record relates to. |
 | offices[].officeId | string | Unique identifier for the office |
 | offices[].name | string | Name of the office |
+| offices[].status | string | null | The status of this office record (e.g. active, deleted). |
 | offices[].address | object | Address details for the office |
+| offices[].phone | string | null | The office's phone number. |
+| offices[].website | string | null | The office's website URL. |
+| offices[].officeBrokerKey | string | null | MLS-assigned key identifying the office's broker of record. |
+| offices[].officeBrokerMlsId | string | null | MLS identifier for the office's broker of record. |
+| offices[].officeManagerKey | string | null | MLS-assigned key identifying the office's manager. |
+| offices[].officeManagerMlsId | string | null | MLS identifier for the office's manager. |
+| offices[].officeKey | string | null | MLS-assigned key identifying the office. |
+| offices[].officeMlsId | string | null | MLS identifier for the office. |
+| offices[].mainOfficeKey | string | null | MLS-assigned key identifying the office's main/parent office, if part of a multi-office brokerage. |
+| offices[].mainOfficeMlsId | string | null | MLS identifier for the office's main/parent office, if part of a multi-office brokerage. |
+| offices[].mlsName | string | null | The name of the MLS/board this office record originates from. |
 
 ---
 
@@ -1517,5 +1814,14 @@ Use this endpoint to retrieve relevant schools, parks, transit stops and safety 
 | lat | string | The latitude of the point that you'd like to retrieve places data for. |
 | long | string | The longitude of the point that you'd like to retrieve places data for. |
 | inputInsidePolygon | boolean | When set to `true`, each returned place that has a boundary polygon will include an `inputInsidePolygon` field indicating whether the specified lat/long falls inside that polygon. All places are returned regardless of this parameter; places without boundaries are unaffected and will not include this field. |
+
+**Response (200):**
+
+| Field | Type | Description |
+|---|---|---|
+| schools | array[any] |  |
+| parks | array[any] |  |
+| transit_stops | array[any] |  |
+| safety_places | array[any] |  |
 
 ---

@@ -146,7 +146,24 @@ paths:
             type: string
       responses:
         "200":
-          $ref: components.yml#/components/responses/EmptySuccess
+          description: "200"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page:
+                    type: integer
+                  numPages:
+                    type: integer
+                  pageSize:
+                    type: integer
+                  count:
+                    type: integer
+                  messages:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Message"
         "400":
           $ref: components.yml#/components/responses/BadRequest
         "401":
@@ -166,9 +183,95 @@ paths:
           required: true
       responses:
         "200":
-          $ref: components.yml#/components/responses/EmptySuccess
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
         "400":
           $ref: components.yml#/components/responses/BadRequest
         "401":
           $ref: components.yml#/components/responses/Unauthorized
       deprecated: false
+components:
+  schemas:
+    Message:
+      type: object
+      properties:
+        messageId:
+          type: integer
+          format: int32
+          example: 26646440
+          description: The unique identifier of the message.
+        agentId:
+          type: integer
+          format: int32
+          example: 107306
+          description: The agentId of the agent that's either receiving or sending the message.
+        clientId:
+          type: integer
+          format: int32
+          example: 190073
+          description: The clientId of the client that's either receiving or sending the message.
+        sender:
+          type: string
+          example: agent
+          description: "Indicates whether the agent sent the message or the client. Allowed values: agent, client"
+        source:
+          type: string
+          example: api
+          description: Indicates how the message was created (e.g. via the API or another channel).
+        token:
+          type: string
+          description: An opaque token associated with this message.
+        content:
+          type: object
+          properties:
+            listings:
+              type: array
+              description: An array of listings (mlsNumbers) sent in this message.
+              items:
+                type: string
+                example: C1234567
+            searches:
+              type: array
+              description: An array of saved searches (searchIds) sent in this message.
+              items:
+                type: integer
+                format: int32
+                example: 107167
+            message:
+              type: string
+              example: Hi, how are you today?
+              description: The text content of this message.
+            subject:
+              type: string
+              nullable: true
+              description: The email subject, if this message changed it from the default.
+            links:
+              type: array
+              description: An array of links (URLs) sent in this message.
+              items:
+                type: string
+                example: https://example.com/resource/123
+            pictures:
+              type: array
+              description: An array of pictures (URLs) sent in this message.
+              items:
+                type: string
+                example: https://example.com/resource/123
+        delivery:
+          type: object
+          properties:
+            scheduleDateTime:
+              type: string
+              nullable: true
+              description: The date/time this message is scheduled to be sent, if scheduled for later delivery.
+            sentDateTime:
+              type: string
+              example: "2024-06-15T12:00:00.000Z"
+              description: The date/time this message was sent.
+            status:
+              type: string
+              example: sent
+              description: The delivery status of this message.

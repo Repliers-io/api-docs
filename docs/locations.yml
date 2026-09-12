@@ -586,10 +586,16 @@ paths:
                   - $ref: "components.yml#/components/schemas/PaginationInfo"
                   - type: object
                     properties:
+                      source:
+                        type: array
+                        description: Sources present in the result set.
+                        items:
+                          type: string
+                          enum: [MLS, UserDefined, LiveBy, PublicRecord]
                       locations:
                         type: array
                         items:
-                          $ref: "#/components/schemas/SuggestedLocation"
+                          $ref: "#/components/schemas/Location"
         "400":
           $ref: "#/components/responses/BadRequest"
         "401":
@@ -635,6 +641,21 @@ components:
         neighborhood:
           type: string
           description: Specific neighborhood name (smallest geographical unit)
+        zip:
+          type: string
+          description: Postal or ZIP code, if applicable to this location.
+        zipPlus4:
+          type: string
+          nullable: true
+          description: The ZIP+4 extension, if available.
+        street:
+          type: string
+          nullable: true
+          description: The street name, for property-type (parcel) locations.
+        streetAddress:
+          type: string
+          nullable: true
+          description: The full street address, for property-type (parcel) locations.
 
     SuggestedLocation:
       type: object
@@ -664,6 +685,13 @@ components:
               type: string
             longitude:
               type: string
+            point:
+              type: string
+              description: "A WKT point representation of the coordinates, e.g. \"POINT (-79.49 43.98)\"."
+            geometryType:
+              type: string
+              nullable: true
+              description: The type of the boundary geometry (e.g. Polygon, MultiPolygon), if a boundary is present.
             boundary:
               type: array
               items:
@@ -686,6 +714,22 @@ components:
           description: Human-readable display name for the location
         type:
           $ref: "components.yml#/components/schemas/LocationType"
+        subType:
+          type: string
+          nullable: true
+          description: A finer-grained classification within `type`, if applicable.
+        source:
+          type: string
+          nullable: true
+          description: "The source of this location record. Allowed values: MLS, UserDefined, LiveBy, PublicRecord."
+        liveById:
+          type: string
+          nullable: true
+          description: The identifier for this location in LiveBy, the demographic data provider, if source is LiveBy.
+        mlsId:
+          type: string
+          nullable: true
+          description: The identifier for this location in the originating MLS, if source is MLS.
         size:
           type: number
           format: float
@@ -704,6 +748,10 @@ components:
               type: string
               description: WKT (Well-Known Text) representation of the location's center point
               example: "POINT (-79.43510859999999 43.71805260000001)"
+            geometryType:
+              type: string
+              nullable: true
+              description: The type of the boundary geometry (e.g. Polygon, MultiPolygon), if a boundary is present.
             boundary:
               type: array
               description: |
@@ -714,6 +762,945 @@ components:
                   $ref: "#/components/schemas/Coordinate"
         address:
           $ref: "#/components/schemas/LocationAddress"
+        demographics:
+          description: Demographic statistics for this location, where available.
+          type: object
+          properties:
+            age:
+              description: Population counts by age bracket.
+              type: object
+              properties:
+                byCohort:
+                  description: Broken down by fine-grained bracket.
+                  type: object
+                  properties:
+                    between0To4:
+                      type: integer
+                    between5To9:
+                      type: integer
+                    between10To14:
+                      type: integer
+                    between15To19:
+                      type: integer
+                    between20To24:
+                      type: integer
+                    between25To29:
+                      type: integer
+                    between30To34:
+                      type: integer
+                    between35To39:
+                      type: integer
+                    between40To44:
+                      type: integer
+                    between45To49:
+                      type: integer
+                    between50To54:
+                      type: integer
+                    between55To59:
+                      type: integer
+                    between60To64:
+                      type: integer
+                    between65To69:
+                      type: integer
+                    between70To74:
+                      type: integer
+                    between75To79:
+                      type: integer
+                    between80To84:
+                      type: integer
+                    between85AndOver:
+                      type: integer
+                byLifeStage:
+                  description: Broken down by broad life-stage bracket.
+                  type: object
+                  properties:
+                    between0To9:
+                      type: integer
+                    between10To17:
+                      type: integer
+                    between18To24:
+                      type: integer
+                    between25To64:
+                      type: integer
+                    between65To74:
+                      type: integer
+                    between75AndOver:
+                      type: integer
+            rent:
+              description: Household counts by monthly rent bracket.
+              type: object
+              properties:
+                over999:
+                  type: integer
+                under499:
+                  type: integer
+                between500To749:
+                  type: integer
+                between750To999:
+                  type: integer
+            rooms:
+              description: Household counts by number of bedrooms.
+              type: object
+              properties:
+                studio:
+                  type: integer
+                oneBedroom:
+                  type: integer
+                twoBedrooms:
+                  type: integer
+                threeBedrooms:
+                  type: integer
+                fourBedroomsOrMore:
+                  type: integer
+            income:
+              description: Population counts by household income bracket.
+              type: object
+              properties:
+                byLevel:
+                  description: Broken down by income level bracket.
+                  type: object
+                  properties:
+                    over100000:
+                      type: integer
+                    between0To25000:
+                      type: integer
+                    between25000To35000:
+                      type: integer
+                    between35000To50000:
+                      type: integer
+                    between50000To75000:
+                      type: integer
+                    between75000To100000:
+                      type: integer
+                byCohort:
+                  description: Broken down by fine-grained bracket.
+                  type: object
+                  properties:
+                    over200k:
+                      type: integer
+                    between0To10k:
+                      type: integer
+                    between10kTo15k:
+                      type: integer
+                    between15kTo20k:
+                      type: integer
+                    between20kTo25k:
+                      type: integer
+                    between25kTo30k:
+                      type: integer
+                    between30kTo35k:
+                      type: integer
+                    between35kTo40k:
+                      type: integer
+                    between40kTo45k:
+                      type: integer
+                    between45kTo50k:
+                      type: integer
+                    between50kTo60k:
+                      type: integer
+                    between60kTo75k:
+                      type: integer
+                    between75kTo100k:
+                      type: integer
+                    between100kTo125k:
+                      type: integer
+                    between125kTo150k:
+                      type: integer
+                    between150kTo200k:
+                      type: integer
+            jobType:
+              description: Population counts by job type.
+              type: object
+              properties:
+                blueCollar:
+                  type: integer
+                whiteCollar:
+                  type: integer
+            metadata:
+              description: Metadata about the source of this demographic data.
+              type: object
+              properties:
+                source:
+                  type: string
+                attribution:
+                  type: string
+            education:
+              description: Population counts by highest level of education attained.
+              type: object
+              properties:
+                master:
+                  type: integer
+                bachelor:
+                  type: integer
+                noDegree:
+                  type: integer
+                doctorate:
+                  type: integer
+                highSchool:
+                  type: integer
+                collegeBelowBachelor:
+                  type: integer
+            homeValue:
+              description: Household counts by home value bracket.
+              type: object
+              properties:
+                above500000:
+                  type: integer
+                below100000:
+                  type: integer
+                between100000To150000:
+                  type: integer
+                between150000To200000:
+                  type: integer
+                between200000To300000:
+                  type: integer
+                between300000To500000:
+                  type: integer
+            jobSector:
+              description: Population counts by employment sector.
+              type: object
+              properties:
+                privateWorker:
+                  type: integer
+                governmentWorker:
+                  type: integer
+                notForProfitWorker:
+                  type: integer
+                selfEmployedWorker:
+                  type: integer
+                unpaidFamilyWorker:
+                  type: integer
+            medianAge:
+              type: integer
+              description: The median age of residents.
+            occupancy:
+              description: Household counts by occupancy status.
+              type: object
+              properties:
+                vacant:
+                  type: integer
+                absenteeOwner:
+                  type: integer
+                unitOccupiedOwner:
+                  type: integer
+                unitOccupiedRenter:
+                  type: integer
+            yearBuilt:
+              description: Household counts by the year their home was built.
+              type: object
+              properties:
+                after2019:
+                  type: integer
+                before1970:
+                  type: integer
+                between1970To1979:
+                  type: integer
+                between1980To1989:
+                  type: integer
+                between1990To1999:
+                  type: integer
+                between2000To2009:
+                  type: integer
+                between2010To2019:
+                  type: integer
+            confidence:
+              type: number
+              description: A confidence score for this demographic data.
+            enrollment:
+              description: Population counts by school/college enrollment status.
+              type: object
+              properties:
+                none:
+                  type: integer
+                publicSchool:
+                  type: integer
+                privateSchool:
+                  type: integer
+                publicCollege:
+                  type: integer
+                privateCollege:
+                  type: integer
+                publicPrePrimarySchool:
+                  type: integer
+                privatePrePrimarySchool:
+                  type: integer
+            occupation:
+              description: Population counts by occupation category.
+              type: object
+              properties:
+                sales:
+                  type: integer
+                trades:
+                  type: integer
+                management:
+                  type: integer
+                agriculture:
+                  type: integer
+                manufacturing:
+                  type: integer
+                notApplicable:
+                  type: integer
+                appliedScience:
+                  type: integer
+                artCultureSport:
+                  type: integer
+                businessFinanceAdmin:
+                  type: integer
+                educationLawSocialGovernment:
+                  type: integer
+            population:
+              type: integer
+              description: The total population.
+            commuteTime:
+              description: Population counts by commute time bracket.
+              type: object
+              properties:
+                over60Minutes:
+                  type: integer
+                under15Minutes:
+                  type: integer
+                between15To29Minutes:
+                  type: integer
+                between30To59Minutes:
+                  type: integer
+            percentMale:
+              type: number
+              description: The percentage of the population that is male.
+            averageRooms:
+              type: integer
+              description: The average number of rooms per household.
+            countMarried:
+              type: integer
+              description: The count of married residents.
+            medianIncome:
+              type: integer
+              description: The median household income.
+            maritalStatus:
+              description: Population counts by marital status.
+              type: object
+              properties:
+                single:
+                  type: integer
+                married:
+                  type: integer
+                widowed:
+                  type: integer
+                divorced:
+                  type: integer
+                separated:
+                  type: integer
+            percentFemale:
+              type: number
+              description: The percentage of the population that is female.
+            countUnmarried:
+              type: integer
+              description: The count of unmarried residents.
+            medianHouseValue:
+              type: integer
+              description: The median home value.
+            averageTravelTime:
+              type: string
+              description: The average commute time.
+            populationDensity:
+              type: number
+              description: The population density.
+            privateHouseholds:
+              type: integer
+              description: The count of private households.
+            transportationMode:
+              description: Population counts by primary mode of transportation to work.
+              type: object
+              properties:
+                other:
+                  type: integer
+                walked:
+                  type: integer
+                bicycle:
+                  type: integer
+                carSelf:
+                  type: integer
+                carAlone:
+                  type: integer
+                carDriver:
+                  type: integer
+                carCarpool:
+                  type: integer
+                publicTransit:
+                  type: integer
+            averageHouseholdSize:
+              type: integer
+              description: The average number of people per household.
+            educationClimateIndex:
+              type: number
+              description: An index summarizing the area's education climate.
+            medianMortgagePayment:
+              description: Household counts by monthly mortgage payment bracket.
+              type: object
+              properties:
+                over4000:
+                  type: integer
+                under500:
+                  type: integer
+                between500To1000:
+                  type: integer
+                between1000To2000:
+                  type: integer
+                between2000To3000:
+                  type: integer
+                between3000To4000:
+                  type: integer
+            medianRentMonthlyCost:
+              type: integer
+              description: The median monthly rent.
+            populationDensityUnit:
+              type: string
+              description: The unit populationDensity is measured in.
+            householdsWithChildren:
+              type: integer
+              description: The count of households with children.
+            annualResidentialTurnover:
+              type: integer
+              description: The annual residential turnover rate.
+            medianMortgageMonthlyCost:
+              type: integer
+              description: The median monthly mortgage payment.
+        resource:
+          type: string
+          nullable: true
+          description: The resource identifier this location relates to, if applicable.
+        school:
+          type: object
+          nullable: true
+          description: School data for this location. Present when type=school and source=LiveBy.
+          properties:
+            schoolName:
+              type: string
+              example: active
+            districtName:
+              type: string
+              example: draft
+            phone:
+              type: string
+              example: "555-0100"
+            website:
+              type: string
+              example: "https://example.com/resource/123"
+            metrics:
+              type: object
+              properties:
+                rankHistory:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      year:
+                        type: integer
+                        example: 42
+                      rank:
+                        type: integer
+                        example: 42
+                      rankOf:
+                        type: integer
+                        example: 42
+                      rankStars:
+                        type: integer
+                        example: 42
+                      rankLevel:
+                        type: string
+                        example: pending
+                schoolYearlyDetails:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      year:
+                        type: integer
+                        example: 42
+                      numberOfStudents:
+                        type: integer
+                        example: 42
+                      percentFreeDiscLunch:
+                        type: integer
+                        example: 42
+                      percentofAfricanAmericanStudents:
+                        type: number
+                        example: 42.5
+                      percentofAsianStudents:
+                        type: integer
+                        example: 42
+                      percentofHispanicStudents:
+                        type: number
+                        example: 42.5
+                      percentofIndianStudents:
+                        type: integer
+                        example: 42
+                      percentofPacificIslanderStudents:
+                        type: integer
+                        example: 42
+                      percentofWhiteStudents:
+                        type: number
+                        example: 42.5
+                      percentofTwoOrMoreRaceStudents:
+                        type: number
+                        example: 42.5
+                      percentofUnspecifiedRaceStudents:
+                        type: integer
+                        example: 42
+                      teachersFulltime:
+                        type: integer
+                        example: 42
+                      pupilTeacherRatio:
+                        type: integer
+                        example: 42
+                      numberofAfricanAmericanStudents:
+                        type: integer
+                        example: 42
+                      numberofAsianStudents:
+                        type: integer
+                        example: 42
+                      numberofHispanicStudents:
+                        type: integer
+                        example: 42
+                      numberofIndianStudents:
+                        type: integer
+                        example: 42
+                      numberofPacificIslanderStudents:
+                        type: integer
+                        example: 42
+                      numberofWhiteStudents:
+                        type: integer
+                        example: 42
+                      numberofTwoOrMoreRaceStudents:
+                        type: integer
+                        example: 42
+                      numberofUnspecifiedRaceStudents:
+                        type: integer
+                        example: 42
+            schoolType:
+              type: string
+              example: draft
+            lowGrade:
+              type: string
+              example: available
+            highGrade:
+              type: string
+              example: active
+            schoolLevel:
+              type: string
+              example: reviewed
+            isCharterSchool:
+              type: boolean
+              example: true
+            isMagnetSchool:
+              type: boolean
+              example: true
+            isVirtualSchool:
+              type: string
+            isPrivate:
+              type: boolean
+              example: true
+            isJJFacility:
+              type: boolean
+              example: true
+            privateSchoolAffiliation:
+              type: string
+            giftedAndTalented:
+              type: string
+            dualEnrollment:
+              type: string
+            creditRecovery:
+              type: string
+            singleSexClasses:
+              type: string
+            apCourse:
+              type: string
+            internationalBaccalaureate:
+              type: string
+            corporalPunishment:
+              type: string
+            interscholarAthletics:
+              type: string
+            offersKindergarten:
+              type: string
+            offersFullDayKindergarten:
+              type: string
+            apEnrollment:
+              type: string
+            expenditurePerStudent:
+              type: string
+            isTitleISchool:
+              type: string
+            isTitleISchoolwideSchool:
+              type: string
+            privateHours:
+              type: string
+            privateDays:
+              type: string
+            privateHasLibrary:
+              type: string
+            privateCoed:
+              type: string
+            isAssigned:
+              type: boolean
+              example: true
+            schoolDistrictLocationId:
+              type: string
+              example: sample
+        publicRecord:
+          type: object
+          nullable: true
+          description: Public-record parcel/property/ownership/tax data for this location. Present when type=property and source=PublicRecord.
+          properties:
+            sourceId:
+              type: string
+              example: active
+            fipsstate:
+              type: string
+              example: TX
+            fipscounty:
+              type: string
+              example: active
+            apn:
+              type: string
+              example: draft
+            ownerFullName:
+              type: string
+              example: Sam Smith
+            mailerAddress:
+              type: string
+              example: reviewed
+            mailingCity:
+              type: string
+              example: Austin
+            mailingState:
+              type: string
+              example: TX
+            mailingZip5:
+              type: string
+              example: "77002"
+            mailingZip4:
+              type: string
+              example: "77002"
+            owner1FirstName:
+              type: string
+              example: Jamie
+            owner1MiddleName:
+              type: string
+              example: reviewed
+            owner1LastName:
+              type: string
+              example: Rossi
+            owner2FirstName:
+              type: string
+            owner2MiddleName:
+              type: string
+            owner2LastName:
+              type: string
+            pastPriceTransfer:
+              type: string
+            pastSaleDateTransfer:
+              type: string
+            siteCensusTract:
+              type: string
+              example: available
+            legalDescriptionFull:
+              type: string
+              example: pending
+            subdivision:
+              type: string
+              example: draft
+            assessedValue:
+              type: string
+              example: "360011"
+            assessedYear:
+              type: string
+              example: "2005"
+            taxAmount:
+              type: string
+              example: "73783"
+            taxYear:
+              type: string
+              example: "1981"
+            neighborhoodCode:
+              type: string
+              example: draft
+            lotSizeAcres:
+              type: string
+              example: "2.07"
+            depthSqft:
+              type: string
+              example: "4844"
+            frontageSqft:
+              type: string
+              example: seller
+            lotSizeSqft:
+              type: string
+              example: "1490"
+            lotSizeArea:
+              type: string
+              example: pending
+            basementTypes:
+              type: string
+            totalBuildingSqft:
+              type: string
+              example: "1648"
+            wallType:
+              type: string
+              example: pending
+            fireplace:
+              type: string
+              example: active
+            floorCoverType:
+              type: string
+            foundationType:
+              type: string
+              example: available
+            numberOfGarages:
+              type: string
+              example: "3"
+            garageTypeParking:
+              type: string
+              example: sample
+            numberOfBuilding:
+              type: string
+              example: "1"
+            numberOfStories:
+              type: string
+              example: "5"
+            numberOfBaths:
+              type: string
+              example: "4"
+            numberOfBedroom:
+              type: string
+              example: "4"
+            pool:
+              type: string
+            roofCover:
+              type: string
+            roofConstruction:
+              type: string
+            constructionType:
+              type: string
+              example: draft
+            yearBuiltActual:
+              type: string
+              example: "1999"
+            zoningCode:
+              type: string
+            lenderName:
+              type: string
+            ownAddress:
+              type: string
+              example: draft
+            ownCity:
+              type: string
+              example: Houston
+            ownState:
+              type: string
+              example: TX
+            ownZipcode:
+              type: string
+              example: "77002"
+            residentalOwned:
+              type: string
+              example: available
+            commercialOwned:
+              type: string
+              example: active
+            parsedOwnerCode:
+              type: string
+              example: active
+            buyeridcode:
+              type: string
+            buyervestingcode:
+              type: string
+            lengthofresmths:
+              type: string
+            lengthofrescd:
+              type: string
+            ownershipStartDate:
+              type: string
+            saleBookLastTransfer:
+              type: string
+            salePageLastTransfer:
+              type: string
+            saleDocnbrLastTransfer:
+              type: string
+            saleDocTypeLastTransfer:
+              type: string
+            salePriceLastTransfer:
+              type: string
+            salePricecdLastTransfer:
+              type: string
+            transferRecordingDate:
+              type: string
+            reoDeedTransfer:
+              type: string
+            distressedDeedTransfer:
+              type: string
+            transferSaleDate:
+              type: string
+            saleBookLastSale:
+              type: string
+            salePageLastSale:
+              type: string
+            saleDocNbrLastSale:
+              type: string
+            saleDocTypeLastSale:
+              type: string
+            purchasePrice:
+              type: string
+            salePriceCdLastSale:
+              type: string
+            purchaseRecordingDate:
+              type: string
+            reoPurchaseSale:
+              type: string
+            distressedSale:
+              type: string
+            purchaseSaleDate:
+              type: string
+            pastBookTransfer:
+              type: string
+            pastPageTransfer:
+              type: string
+            pastDocNbrTransfer:
+              type: string
+            pastDocTypeTransfer:
+              type: string
+            pastPriceCdTransfer:
+              type: string
+            pastRecDateSale:
+              type: string
+            pastReoTransfer:
+              type: string
+            pastDistressedTransfer:
+              type: string
+            pastBookSale:
+              type: string
+            pastPageSale:
+              type: string
+            pastDocNbrSale:
+              type: string
+            pastDocTypeSale:
+              type: string
+            pastPriceSale:
+              type: string
+            pastPriceCdSale:
+              type: string
+            pastRecoDateSale:
+              type: string
+            pastReoSale:
+              type: string
+            pastDistressedSale:
+              type: string
+            priorSalesDate:
+              type: string
+            assessorSaleDocnbr:
+              type: string
+            assessorSaleBknbr:
+              type: string
+            assessorSalePgnbr:
+              type: string
+            assessorSaleRecdate:
+              type: string
+            assessorSaleDoctyp:
+              type: string
+            assessorSalePrice:
+              type: string
+              example: "763304"
+            assessorSalePricecd:
+              type: string
+            siteCarrierRoute:
+              type: string
+              example: reviewed
+            legalSectwnrgeMer:
+              type: string
+            block:
+              type: string
+              example: reviewed
+            lotNumber:
+              type: string
+              example: reviewed
+            cityTownMun:
+              type: string
+            district:
+              type: string
+            sectionValue:
+              type: string
+              example: "607734"
+            landLot:
+              type: string
+            lotCode:
+              type: string
+            phaseNumber:
+              type: string
+            tractNumber:
+              type: string
+            legalUnit:
+              type: string
+            assessedImprovement:
+              type: string
+              example: active
+            assessedLand:
+              type: string
+              example: pending
+            marketValueImprovement:
+              type: string
+              example: "639292"
+            marketValueLand:
+              type: string
+              example: "738835"
+            marketValue:
+              type: string
+              example: "463631"
+            marketValueYear:
+              type: string
+              example: "1990"
+            taxRateCodeArea:
+              type: string
+              example: sample
+            standardizedLandUse:
+              type: string
+              example: active
+            totalOpenLienCount:
+              type: string
+            totalOpenLienBalance:
+              type: string
+            totalFinHistoryCnt:
+              type: string
+              example: pending
+            ltvCurrEstComb:
+              type: string
+              example: sample
+            ltvCurrEstimatedRange:
+              type: string
+              example: sample
+            equityCurrEstimatedBal:
+              type: string
+              example: pending
+            equityCurrEstimatedRange:
+              type: string
+              example: available
+            purchaseLtv:
+              type: string
+              example: pending
+            foreclosureStatus:
+              type: string
+            fcRecordDate:
+              type: string
+            fcFilingDate:
+              type: string
+            caseNumber:
+              type: string
+            auctionDate:
+              type: string
+            siteId:
+              type: string
+              example: available
+            sitePropertyCount:
+              type: string
+              example: "1"
 
   responses:
     NotFound:

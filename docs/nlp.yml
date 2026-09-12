@@ -74,7 +74,7 @@ paths:
                   type: array
                   description: |
                     Specify which location sources to use when interpreting the prompt. This can help improve accuracy by providing the NLP model with the location data source most suitable for the query.
-                    - `MSL` - Locations sourced from MLS (Multiple Listing Service) data.
+                    - `MLS` - Locations sourced from MLS (Multiple Listing Service) data.
                     - `UserDefined` - Custom locations created and defined by users.
                     - `LiveBy` - Locations sourced from LiveBy, a third-party neighborhood and community data provider.
                     - `PublicRecord` - Locations sourced from Public Records Data.

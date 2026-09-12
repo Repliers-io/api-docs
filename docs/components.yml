@@ -84,7 +84,7 @@ components:
 
     LocationSource:
       type: string
-      enum: [MSL, UserDefined, LiveBy, PublicRecord]
+      enum: [MLS, UserDefined, LiveBy, PublicRecord]
       description: Location data source
 
     Error:
@@ -126,7 +126,7 @@ components:
       in: query
       description: |
         Filters locations by source:
-        - `MSL` - Locations sourced from MLS (Multiple Listing Service) data.
+        - `MLS` - Locations sourced from MLS (Multiple Listing Service) data.
         - `UserDefined` - Custom locations created and defined by users.
         - `LiveBy` - Locations sourced from LiveBy, a third-party neighborhood and community data provider.
         - `PublicRecord` - Locations sourced from Public Records Data.

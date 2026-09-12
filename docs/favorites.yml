@@ -49,6 +49,7 @@ paths:
                 properties:
                   favoriteId:
                     type: integer
+                    example: 5521
                     description: Unique identifier of the newly created favorite
         "400":
           $ref: components.yml#/components/responses/BadRequest
@@ -184,28 +185,36 @@ paths:
                           properties:
                             mlsNumber:
                               type: string
+                              example: C1234567
                               description: MLS listing number
                             resource:
                               type: string
+                              example: Property
                               description: Resource identifier
                             status:
                               type: string
+                              example: A
                               description: Current listing status code
                             class:
                               type: string
+                              example: ResidentialProperty
                               description: Property class
                             type:
                               type: string
+                              example: Sale
                               description: Listing type (e.g. Sale, Lease)
                             listPrice:
                               type: string
+                              example: "415000"
                               description: Listed price of the property
                             listDate:
                               type: string
                               format: date-time
+                              example: "2024-06-15T12:00:00.000Z"
                               description: Date the property was listed
                             lastStatus:
                               type: string
+                              example: New
                               description: Last known status of the listing
                             soldPrice:
                               type: [string, "null"]
@@ -215,6 +224,7 @@ paths:
                               description: Date the property was sold
                             originalPrice:
                               type: string
+                              example: "429000"
                               description: Original list price
                             assignment:
                               type: [string, "null"]
@@ -225,12 +235,15 @@ paths:
                               properties:
                                 area:
                                   type: [string, "null"]
+                                  example: Harris
                                   description: Geographical area or county
                                 city:
                                   type: [string, "null"]
+                                  example: Katy
                                   description: City name
                                 country:
                                   type: [string, "null"]
+                                  example: United States
                                   description: Country code
                                 district:
                                   type: [string, "null"]
@@ -240,27 +253,33 @@ paths:
                                   description: Nearest major intersection
                                 neighborhood:
                                   type: [string, "null"]
+                                  example: Cinco Ranch
                                   description: Neighborhood name
                                 streetDirection:
                                   type: [string, "null"]
                                   description: Street direction suffix
                                 streetName:
                                   type: string
+                                  example: Prairie Vista
                                   description: Street name
                                 streetNumber:
                                   type: string
+                                  example: "24506"
                                   description: Street number
                                 streetSuffix:
                                   type: [string, "null"]
+                                  example: Ln
                                   description: Street suffix (e.g. Ave, St)
                                 unitNumber:
                                   type: [string, "null"]
                                   description: Unit or suite number
                                 zip:
                                   type: string
+                                  example: "77002"
                                   description: Postal or ZIP code
                                 state:
                                   type: string
+                                  example: TX
                                   description: State or province code
                                 communityCode:
                                   type: [string, "null"]
@@ -270,6 +289,7 @@ paths:
                                   description: Street direction prefix
                                 addressKey:
                                   type: string
+                                  example: TX-Katy-24506-Prairie-Vista-Ln
                                   description: Unique address key identifier
                             map:
                               type: object
@@ -277,12 +297,15 @@ paths:
                               properties:
                                 latitude:
                                   type: string
+                                  example: "29.7858"
                                   description: Latitude coordinate
                                 longitude:
                                   type: string
+                                  example: "-95.8244"
                                   description: Longitude coordinate
                                 point:
                                   type: string
+                                  example: "POINT (-95.8244 29.7858)"
                                   description: WKT point representation
                             permissions:
                               type: object
@@ -290,23 +313,29 @@ paths:
                               properties:
                                 displayAddressOnInternet:
                                   type: string
+                                  example: "Y"
                                   description: Whether the address may be displayed on the internet
                                 displayPublic:
                                   type: string
+                                  example: "Y"
                                   description: Whether the listing may be displayed publicly
                                 displayInternetEntireListing:
                                   type: string
+                                  example: "Y"
                                   description: Whether the full listing may be displayed on the internet
                                 displayOnMap:
                                   type: string
+                                  example: "Y"
                                   description: Whether the listing may be shown on a map
                             images:
                               type: array
                               description: List of image file paths
                               items:
                                 type: string
+                                example: IMG-C1234567_1.jpg
                             photoCount:
                               type: integer
+                              example: 24
                               description: Total number of photos
                             details:
                               type: object
@@ -329,6 +358,7 @@ paths:
                                   description: Den description
                                 description:
                                   type: string
+                                  example: Beautifully updated 4-bedroom home with an open-concept kitchen and a large backyard.
                                   description: Full property description
                                 elevator:
                                   type: [string, "null"]
@@ -347,12 +377,15 @@ paths:
                                   description: Furnished status
                                 garage:
                                   type: [string, "null"]
+                                  example: Attached
                                   description: Garage type
                                 heating:
                                   type: [string, "null"]
+                                  example: Natural Gas
                                   description: Heating type
                                 numBathrooms:
                                   type: [string, "null"]
+                                  example: "3"
                                   description: Number of bathrooms
                                 numBathroomsPlus:
                                   type: [string, "null"]
@@ -362,6 +395,7 @@ paths:
                                   description: Number of half bathrooms
                                 numBedrooms:
                                   type: [string, "null"]
+                                  example: "4"
                                   description: Number of bedrooms
                                 numBedroomsPlus:
                                   type: [string, "null"]
@@ -395,27 +429,34 @@ paths:
                                   description: Patio description
                                 balcony:
                                   type: [string, "null"]
+                                  example: "Yes"
                                   description: Balcony availability
                                 propertyType:
                                   type: [string, "null"]
+                                  example: Detached
                                   description: Property type description
                                 sqft:
                                   type: [string, "null"]
+                                  example: "2450"
                                   description: Square footage
                                 sqftRange:
                                   type: [string, "null"]
                                   description: Square footage range
                                 style:
                                   type: [string, "null"]
+                                  example: 2-Storey
                                   description: Architectural style
                                 swimmingPool:
                                   type: [string, "null"]
+                                  example: In Ground
                                   description: Swimming pool availability
                                 virtualTourUrl:
                                   type: [string, "null"]
+                                  example: https://example.com/resource/123
                                   description: URL to the virtual tour
                                 yearBuilt:
                                   type: [string, "null"]
+                                  example: "1998"
                                   description: Year the property was built
                                 viewType:
                                   type: [string, "null"]
@@ -566,19 +607,24 @@ paths:
                                         description: Number of fixtures in the bathroom
                             daysOnMarket:
                               type: string
+                              example: "14"
                               description: Number of days the property has been on the market
                             simpleDaysOnMarket:
                               type: integer
+                              example: 14
                               description: Simplified days on market count
                             occupancy:
                               type: [string, "null"]
+                              example: Owner
                               description: Occupancy status
                             updatedOn:
                               type: [string, "null"]
                               format: date-time
+                              example: "2024-06-15T12:00:00.000Z"
                               description: Timestamp of the last listing update
                             coopCompensation:
                               type: [string, "null"]
+                              example: "2.5%"
                               description: Cooperating broker compensation
                             condominium:
                               type: object
@@ -589,6 +635,7 @@ paths:
                                   description: List of condominium amenities
                                   items:
                                     type: string
+                                    example: Gym
                                 buildingInsurance:
                                   type: [string, "null"]
                                   description: Building insurance details
@@ -600,12 +647,15 @@ paths:
                                   description: Condominium corporation number
                                 exposure:
                                   type: [string, "null"]
+                                  example: South
                                   description: Unit exposure direction
                                 lockerNumber:
                                   type: [string, "null"]
+                                  example: "42"
                                   description: Locker number
                                 locker:
                                   type: [string, "null"]
+                                  example: Owned
                                   description: Locker availability
                                 lockerUnitNumber:
                                   type: [string, "null"]
@@ -615,15 +665,18 @@ paths:
                                   description: Locker level
                                 parkingType:
                                   type: [string, "null"]
+                                  example: Owned
                                   description: Parking type
                                 pets:
                                   type: [string, "null"]
+                                  example: Restricted
                                   description: Pet policy
                                 propertyMgr:
                                   type: [string, "null"]
                                   description: Property manager name
                                 stories:
                                   type: [string, "null"]
+                                  example: "12"
                                   description: Number of stories in the building
                                 ensuiteLaundry:
                                   type: [string, "null"]
@@ -649,6 +702,7 @@ paths:
                                       description: Whether hydro/electricity is included
                                     maintenance:
                                       type: [string, "null"]
+                                      example: "450"
                                       description: Monthly maintenance fee amount
                                     parkingIncl:
                                       type: [string, "null"]
@@ -665,9 +719,11 @@ paths:
                               properties:
                                 acres:
                                   type: [string, "null"]
+                                  example: "0.25"
                                   description: Lot size in acres
                                 depth:
                                   type: [string, "null"]
+                                  example: "120"
                                   description: Lot depth
                                 irregular:
                                   type: [string, "null"]
@@ -677,12 +733,15 @@ paths:
                                   description: Legal description of the lot
                                 measurement:
                                   type: [string, "null"]
+                                  example: Feet
                                   description: Unit of lot measurement
                                 width:
                                   type: [string, "null"]
+                                  example: "60"
                                   description: Lot width
                                 size:
                                   type: [string, "null"]
+                                  example: "0.25 Acres"
                                   description: Lot size description
                                 source:
                                   type: [string, "null"]
@@ -711,12 +770,14 @@ paths:
                                   description: List of nearby amenities
                                   items:
                                     type: string
+                                    example: Park
                             office:
                               type: object
                               description: Listing office information
                               properties:
                                 brokerageName:
                                   type: string
+                                  example: Harbor Properties
                                   description: Name of the listing brokerage
                             openHouse:
                               type: array
@@ -726,22 +787,28 @@ paths:
                                 properties:
                                   date:
                                     type: [string, "null"]
+                                    example: "2024-07-20"
                                     description: Open house date
                                   startTime:
                                     type: [string, "null"]
+                                    example: "13:00"
                                     description: Open house start time
                                   endTime:
                                     type: [string, "null"]
+                                    example: "15:00"
                                     description: Open house end time
                                   type:
                                     type: [string, "null"]
+                                    example: Public
                                     description: Open house type (e.g. Public, Broker)
                                   status:
                                     type: [string, "null"]
+                                    example: Active
                                     description: Open house status
                                   dateValue:
                                     type: [string, "null"]
                                     format: date-time
+                                    example: "2024-07-20T13:00:00.000Z"
                                     description: ISO date-time of the open house
                             rooms:
                               type: array
@@ -751,9 +818,11 @@ paths:
                                 properties:
                                   description:
                                     type: string
+                                    example: Primary Bedroom
                                     description: Room type or name
                                   features:
                                     type: [string, "null"]
+                                    example: Walk-In Closet
                                     description: Primary room features
                                   features2:
                                     type: [string, "null"]
@@ -763,12 +832,15 @@ paths:
                                     description: Tertiary room features
                                   length:
                                     type: [string, "null"]
+                                    example: "14.5"
                                     description: Room length
                                   width:
                                     type: [string, "null"]
+                                    example: "12.2"
                                     description: Room width
                                   level:
                                     type: [string, "null"]
+                                    example: Second
                                     description: Floor level of the room
                             taxes:
                               type: object
@@ -776,9 +848,11 @@ paths:
                               properties:
                                 annualAmount:
                                   type: [string, "null"]
+                                  example: "9722"
                                   description: Annual tax amount
                                 assessmentYear:
                                   type: [string, "null"]
+                                  example: "2024"
                                   description: Tax assessment year
                             timestamps:
                               type: object
@@ -787,10 +861,12 @@ paths:
                                 idxUpdated:
                                   type: [string, "null"]
                                   format: date-time
+                                  example: "2024-06-15T12:00:00.000Z"
                                   description: Last IDX update timestamp
                                 listingUpdated:
                                   type: [string, "null"]
                                   format: date-time
+                                  example: "2024-06-15T12:00:00.000Z"
                                   description: Last listing update timestamp
                                 photosUpdated:
                                   type: [string, "null"]
@@ -827,6 +903,9 @@ paths:
                                   type: [string, "null"]
                                   format: date-time
                                   description: Last update timestamp in the Repliers system
+                                imageInsightsUpdatedOn:
+                                  type: [string, "null"]
+                                  description: The date/time AI image insights were last computed for this listing, if available.
                             agents:
                               type: array
                               description: Agents associated with the listing
@@ -835,33 +914,45 @@ paths:
                                 properties:
                                   agentId:
                                     type: string
+                                    example: "107306"
                                     description: Unique agent identifier
                                   boardAgentId:
                                     type: string
+                                    example: agent1
                                     description: Agent identifier assigned by the MLS board
                                   officeId:
                                     type: string
+                                    example: "20000000000000000001"
                                     description: Office identifier
                                   boardOfficeId:
                                     type: [string, "null"]
                                     description: Office identifier assigned by the MLS board
                                   updatedOn:
                                     type: [string, "null"]
+                                    example: "2024-06-15T12:00:00.000Z"
                                     description: Last update timestamp for the agent record
                                   name:
                                     type: string
+                                    example: Casey Smith
                                     description: Agent full name
                                   board:
                                     type: [string, "null"]
+                                    example: HAR
                                     description: MLS board the agent belongs to
                                   position:
                                     type: [string, "null"]
+                                    example: Sales Representative
                                     description: Agent position or role
+                                  email:
+                                    type: [string, "null"]
+                                    example: casey.smith@example.com
+                                    description: Agent email address
                                   phones:
                                     type: array
                                     description: Agent phone numbers
                                     items:
                                       type: string
+                                      example: "15555550100"
                                   social:
                                     type: array
                                     description: Agent social media profiles
@@ -889,6 +980,7 @@ paths:
                                     properties:
                                       name:
                                         type: [string, "null"]
+                                        example: Harbor Properties
                                         description: Brokerage name
                                       address:
                                         type: object
@@ -896,30 +988,38 @@ paths:
                                         properties:
                                           address1:
                                             type: [string, "null"]
+                                            example: 24506 Prairie Vista Ln
                                             description: Primary address line
                                           address2:
                                             type: [string, "null"]
                                             description: Secondary address line
                                           city:
                                             type: [string, "null"]
+                                            example: Katy
                                             description: City name
                                           state:
                                             type: [string, "null"]
+                                            example: TX
                                             description: State or province
                                           postal:
                                             type: [string, "null"]
+                                            example: "77002"
                                             description: Postal or ZIP code
                                           country:
                                             type: [string, "null"]
+                                            example: United States
                                             description: Country name
                                       officeBroker:
                                         type: [string, "null"]
+                                        example: Jordan Smith
                                         description: Office broker name
                                       officeBrokerKey:
                                         type: [string, "null"]
+                                        example: "20000000000000000001"
                                         description: Office broker key
                                       officeBrokerMlsId:
                                         type: [string, "null"]
+                                        example: MLS01
                                         description: Office broker MLS ID
                                       officeManager:
                                         type: [string, "null"]
@@ -932,9 +1032,11 @@ paths:
                                         description: Office manager MLS ID
                                       officeKey:
                                         type: [string, "null"]
+                                        example: "20000000000000000001"
                                         description: Office key
                                       officeMlsId:
                                         type: [string, "null"]
+                                        example: MLS01
                                         description: Office MLS ID
                                       mainOfficeKey:
                                         type: [string, "null"]
@@ -944,6 +1046,7 @@ paths:
                                         description: Main office MLS ID
                                       officeBrokerEmail:
                                         type: [string, "null"]
+                                        example: jordan.smith@example.com
                                         description: Office broker email address
                                       officeManagerEmail:
                                         type: [string, "null"]
@@ -955,9 +1058,51 @@ paths:
                                 type: object
                             comparables:
                               type: array
-                              description: Comparable listings
+                              description: Comparable sold/listed properties used for market comparison. Each item largely mirrors the shape of the parent favorited listing (address, details, condominium, images, timestamps).
                               items:
                                 type: object
+                                properties:
+                                  mlsNumber:
+                                    type: string
+                                    example: C1234568
+                                  type:
+                                    type: string
+                                    example: Sale
+                                  listPrice:
+                                    type: number
+                                    example: 429000
+                                  listDate:
+                                    type: string
+                                    example: "2024-06-15T12:00:00.000Z"
+                                  lastStatus:
+                                    type: string
+                                    example: New
+                                  soldPrice:
+                                    type: number
+                                    nullable: true
+                                  soldDate:
+                                    type: string
+                                    nullable: true
+                                  distance:
+                                    type: number
+                                    example: 0.4
+                                    description: Distance from the parent listing, in the units used elsewhere in the API.
+                                  address:
+                                    type: object
+                                    description: Same shape as the parent listing's `address`.
+                                  details:
+                                    type: object
+                                    description: Same shape as the parent listing's `details`.
+                                  condominium:
+                                    type: object
+                                    description: Same shape as the parent listing's `condominium`.
+                                  timestamps:
+                                    type: object
+                                    description: Same shape as the parent listing's `timestamps`.
+                                  images:
+                                    type: array
+                                    items:
+                                      type: string
                             estimate:
                               type: object
                               description: Automated valuation estimate
@@ -965,18 +1110,23 @@ paths:
                                 date:
                                   type: string
                                   format: date-time
+                                  example: "2024-06-15T12:00:00.000Z"
                                   description: Date the estimate was calculated
                                 high:
                                   type: number
+                                  example: 450000
                                   description: High end of the estimated value range
                                 low:
                                   type: number
+                                  example: 405000
                                   description: Low end of the estimated value range
                                 confidence:
                                   type: number
+                                  example: 0.82
                                   description: Confidence score of the estimate (0–1)
                                 value:
                                   type: number
+                                  example: 428000
                                   description: Estimated property value
                                 history:
                                   type: object
@@ -993,15 +1143,34 @@ paths:
                                             description: Estimated value for that month
                             boardId:
                               type: integer
+                              example: 1
                               description: MLS board ID the listing belongs to
+                            standardStatus:
+                              type: string
+                              nullable: true
+                              example: Active
+                              description: The listing's status, normalized to the RESO Data Dictionary standard values.
+                            raw:
+                              type: object
+                              nullable: true
+                              description: The raw, unmapped fields as provided by the source MLS. Field names and availability vary by board/MLS, so they aren't individually enumerated here.
+                              additionalProperties: true
+                            reso:
+                              type: object
+                              nullable: true
+                              description: The listing's fields mapped to the RESO Data Dictionary standard. Field names and availability vary by board/MLS, so they aren't individually enumerated here.
+                              additionalProperties: true
                             favoriteId:
                               type: integer
+                              example: 5521
                               description: Unique identifier of the favorite record
                             comments:
                               type: [string, "null"]
+                              example: I love the view in the backyard.
                               description: Client comments on the favorited listing
                             tags:
                               type: [string, "null"]
+                              example: must-see
                               description: Tags associated with the favorite
         "400":
           $ref: components.yml#/components/responses/BadRequest
@@ -1044,15 +1213,19 @@ paths:
                 properties:
                   clientId:
                     type: integer
+                    example: 190073
                     description: ID of the client who owns the favorite
                   mlsNumber:
                     type: string
+                    example: C1234567
                     description: MLS listing number of the favorited property
                   tags:
                     type: [string, "null"]
+                    example: must-see
                     description: Tags associated with the favorite
                   comments:
                     type: [string, "null"]
+                    example: I love the view in the backyard.
                     description: Client comments on the favorited listing
         "400":
           $ref: components.yml#/components/responses/BadRequest
