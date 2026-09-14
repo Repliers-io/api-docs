@@ -54,35 +54,89 @@ paths:
                           properties:
                             resource:
                               type: string
+                              example: "Office:1"
                               description: Resource identifier
+                            resourceId:
+                              type: [string, "null"]
+                              example: "1"
+                              description: Identifier of the resource this office record relates to.
                             officeId:
                               type: string
+                              example: "20000000000000000001"
                               description: Unique identifier for the office
                             name:
                               type: string
+                              example: Harbor Properties
                               description: Name of the office
+                            status:
+                              type: [string, "null"]
+                              example: Active
+                              description: The status of this office record (e.g. active, deleted).
                             address:
                               type: object
                               description: Address details for the office
                               properties:
                                 address1:
                                   type: [string, "null"]
+                                  example: "836 Maple Ave"
                                   description: Primary address line
                                 address2:
                                   type: [string, "null"]
                                   description: Secondary address line
                                 city:
                                   type: [string, "null"]
+                                  example: Katy
                                   description: City name
                                 state:
                                   type: [string, "null"]
+                                  example: TX
                                   description: State or province
                                 postal:
                                   type: [string, "null"]
+                                  example: "77002"
                                   description: Postal or ZIP code
                                 country:
                                   type: [string, "null"]
                                   description: Country name
+                            phone:
+                              type: [string, "null"]
+                              example: "15555550100"
+                              description: The office's phone number.
+                            website:
+                              type: [string, "null"]
+                              description: The office's website URL.
+                            officeBrokerKey:
+                              type: [string, "null"]
+                              example: "20000000000000000001"
+                              description: MLS-assigned key identifying the office's broker of record.
+                            officeBrokerMlsId:
+                              type: [string, "null"]
+                              example: MLS01
+                              description: MLS identifier for the office's broker of record.
+                            officeManagerKey:
+                              type: [string, "null"]
+                              description: MLS-assigned key identifying the office's manager.
+                            officeManagerMlsId:
+                              type: [string, "null"]
+                              description: MLS identifier for the office's manager.
+                            officeKey:
+                              type: [string, "null"]
+                              example: "20000000000000000001"
+                              description: MLS-assigned key identifying the office.
+                            officeMlsId:
+                              type: [string, "null"]
+                              example: MLS01
+                              description: MLS identifier for the office.
+                            mainOfficeKey:
+                              type: [string, "null"]
+                              description: MLS-assigned key identifying the office's main/parent office, if part of a multi-office brokerage.
+                            mainOfficeMlsId:
+                              type: [string, "null"]
+                              description: MLS identifier for the office's main/parent office, if part of a multi-office brokerage.
+                            mlsName:
+                              type: [string, "null"]
+                              example: HAR
+                              description: The name of the MLS/board this office record originates from.
         "400":
           $ref: components.yml#/components/responses/BadRequest
         "401":

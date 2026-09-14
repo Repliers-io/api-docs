@@ -1723,6 +1723,14 @@ paths:
                   - title: Version 2
                     type: object
                     properties:
+                      unrecognizedParams:
+                        type: array
+                        description: Any query parameters that weren't recognized by the API.
+                        items:
+                          type: string
+                      apiVersion:
+                        type: integer
+                        description: The API version that processed this request.
                       page:
                         type: integer
                         example: 1
@@ -1821,6 +1829,10 @@ paths:
                                 streetSuffix:
                                   type: string
                                   example: Circ
+                                addressKey:
+                                  type: string
+                                  example: milton-623-prossre-circ
+                                  description: A normalized, lowercased concatenation of the street address used to identify this address across endpoints (e.g. buildings, estimates).
                                 unitNumber: {}
                                 zip:
                                   type: string
@@ -1926,6 +1938,9 @@ paths:
                                   default: 0
                                 numRoomsPlus: {}
                                 patio: {}
+                                balcony:
+                                  type: string
+                                  example: Terrace
                                 propertyType:
                                   type: string
                                   example: /RAuhnwost/Ttoew
@@ -2023,6 +2038,16 @@ paths:
                             daysOnMarket:
                               type: integer
                               example: 1
+                            simpleDaysOnMarket:
+                              type: integer
+                              nullable: true
+                              example: 14
+                              description: Days on market, calculated using a simplified rule set (excludes status-change resets that `daysOnMarket` accounts for).
+                            standardStatus:
+                              type: string
+                              nullable: true
+                              example: Active
+                              description: The listing's status, normalized to the RESO Data Dictionary standard values.
                               default: 0
                             occupancy: {}
                             updatedOn:
@@ -2049,6 +2074,92 @@ paths:
                                   type: string
                                   example: "1.020"
                                 size: {}
+                                source:
+                                  type: string
+                                  nullable: true
+                                  description: The source of the lot size/dimensions data (e.g. "Appraisal District").
+                                dimensionsSource:
+                                  type: string
+                                  nullable: true
+                                  description: The source of the lot dimensions data.
+                                dimensions:
+                                  type: string
+                                  nullable: true
+                                  description: The lot's dimensions as a free-text string.
+                                squareFeet:
+                                  type: number
+                                  nullable: true
+                                  description: The lot size in square feet.
+                                features:
+                                  type: string
+                                  nullable: true
+                                  description: "Notable features of the lot, e.g. \"Subdivided\"."
+                                taxLot:
+                                  type: string
+                                  nullable: true
+                                  description: The tax lot identifier, if applicable.
+                            condominium:
+                              type: object
+                              description: Condominium-specific details, if applicable.
+                              properties:
+                                amenities:
+                                  type: array
+                                  items:
+                                    type: string
+                                    example: Gym
+                                buildingInsurance:
+                                  type: string
+                                condoCorp:
+                                  type: string
+                                condoCorpNum:
+                                  type: string
+                                exposure:
+                                  type: string
+                                  example: South
+                                lockerNumber:
+                                  type: string
+                                locker:
+                                  type: string
+                                  example: Owned
+                                parkingType:
+                                  type: string
+                                  example: Owned
+                                pets:
+                                  type: string
+                                  example: Restricted
+                                propertyMgr:
+                                  type: string
+                                stories:
+                                  type: string
+                                  example: "12"
+                                fees:
+                                  type: object
+                                  properties:
+                                    cableInlc:
+                                      type: string
+                                    heatIncl:
+                                      type: string
+                                    hydroIncl:
+                                      type: string
+                                    maintenance:
+                                      type: string
+                                      example: "450"
+                                    parkingIncl:
+                                      type: string
+                                    taxesIncl:
+                                      type: string
+                                    waterIncl:
+                                      type: string
+                                lockerUnitNumber:
+                                  type: string
+                                ensuiteLaundry:
+                                  type: string
+                                sharesPercentage:
+                                  type: string
+                                lockerLevel:
+                                  type: string
+                                unitNumber:
+                                  type: string
                             nearby:
                               type: object
                               properties:
@@ -2135,8 +2246,166 @@ paths:
                                 repliersUpdatedOn:
                                   type: string
                                   example: 21:2913Z.1121022242:--T2
+                                imageInsightsUpdatedOn:
+                                  type: string
+                                  nullable: true
+                                  example: "2024-06-15T12:00:00.000Z"
+                                  description: The date/time AI image insights were last computed for this listing, if available.
+                            estimate:
+                              type: object
+                              nullable: true
+                              description: An automated valuation estimate for this listing, if available.
+                              properties:
+                                value:
+                                  type: number
+                                  example: 428000
+                                high:
+                                  type: number
+                                  example: 450000
+                                low:
+                                  type: number
+                                  example: 405000
+                                date:
+                                  type: string
+                                  example: "2024-06-15T12:00:00.000Z"
+                                confidence:
+                                  type: number
+                                  example: 0.82
+                                history:
+                                  type: object
+                                  properties:
+                                    mth:
+                                      type: object
+                                      description: Monthly estimate history keyed by year-month.
+                                      additionalProperties:
+                                        type: object
+                                        properties:
+                                          value:
+                                            type: number
+                            imageInsights:
+                              type: object
+                              nullable: true
+                              description: AI-generated quality analysis of the listing's images.
+                              properties:
+                                summary:
+                                  type: object
+                                  properties:
+                                    quality:
+                                      type: object
+                                      properties:
+                                        qualitative:
+                                          type: object
+                                          properties:
+                                            features:
+                                              type: object
+                                              description: Qualitative quality rating per room type.
+                                              properties:
+                                                livingRoom:
+                                                  type: string
+                                                kitchen:
+                                                  type: string
+                                                diningRoom:
+                                                  type: string
+                                                bedroom:
+                                                  type: string
+                                                bathroom:
+                                                  type: string
+                                            overall:
+                                              type: string
+                                              example: Good
+                                        quantitative:
+                                          type: object
+                                          properties:
+                                            features:
+                                              type: object
+                                              description: Quantitative quality score per room type.
+                                              properties:
+                                                livingRoom:
+                                                  type: number
+                                                kitchen:
+                                                  type: number
+                                                diningRoom:
+                                                  type: number
+                                                bedroom:
+                                                  type: number
+                                                bathroom:
+                                                  type: number
+                                            overall:
+                                              type: number
+                                              example: 8.4
+                                images:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      image:
+                                        type: string
+                                        example: IMG-C1234567_1.jpg
+                                        description: The image URL/path this insight applies to.
+                                      classification:
+                                        type: object
+                                        properties:
+                                          imageOf:
+                                            type: string
+                                            example: kitchen
+                                            description: What the image was classified as depicting (e.g. kitchen, bedroom).
+                                          prediction:
+                                            type: number
+                                            example: 0.93
+                                            description: The classifier's confidence score for this classification.
+                                      quality:
+                                        type: string
+                                        nullable: true
                             agents:
                               type: array
+                              items:
+                                type: object
+                                properties:
+                                  agentId: {}
+                                  boardAgentId: {}
+                                  officeId: {}
+                                  updatedOn: {}
+                                  name: {}
+                                  board: {}
+                                  boardOfficeId: {}
+                                  position: {}
+                                  email: {}
+                                  phones:
+                                    type: array
+                                  social:
+                                    type: array
+                                  website: {}
+                                  photo:
+                                    type: object
+                                    properties:
+                                      small: {}
+                                      large: {}
+                                      updatedOn: {}
+                                  brokerage:
+                                    type: object
+                                    properties:
+                                      name: {}
+                                      address:
+                                        type: object
+                                        properties:
+                                          address1: {}
+                                          address2: {}
+                                          city: {}
+                                          state: {}
+                                          postal: {}
+                                          country: {}
+                                      officeBroker: {}
+                                      officeBrokerKey: {}
+                                      officeBrokerMlsId: {}
+                                      officeManager: {}
+                                      officeManagerKey: {}
+                                      officeManagerMlsId: {}
+                                      officeKey: {}
+                                      officeMlsId: {}
+                                      mainOfficeKey: {}
+                                      mainOfficeMlsId: {}
+                                      officeBrokerEmail: {}
+                                      officeManagerEmail: {}
                             boardId:
                               type: integer
                               example: 2
@@ -2144,6 +2413,14 @@ paths:
                   - title: Version 1
                     type: object
                     properties:
+                      unrecognizedParams:
+                        type: array
+                        description: Any query parameters that weren't recognized by the API.
+                        items:
+                          type: string
+                      apiVersion:
+                        type: integer
+                        description: The API version that processed this request.
                       page:
                         type: integer
                         example: 1
@@ -2244,6 +2521,10 @@ paths:
                                 streetSuffix:
                                   type: string
                                   example: St
+                                addressKey:
+                                  type: string
+                                  example: oakville-5114-nudsda-st
+                                  description: A normalized, lowercased concatenation of the street address used to identify this address across endpoints (e.g. buildings, estimates).
                                 unitNumber:
                                   type: string
                                   example: "240"
@@ -2520,6 +2801,16 @@ paths:
                             daysOnMarket:
                               type: string
                               example: "0"
+                            simpleDaysOnMarket:
+                              type: integer
+                              nullable: true
+                              example: 14
+                              description: Days on market, calculated using a simplified rule set (excludes status-change resets that `daysOnMarket` accounts for).
+                            standardStatus:
+                              type: string
+                              nullable: true
+                              example: Active
+                              description: The listing's status, normalized to the RESO Data Dictionary standard values.
                             occupancy:
                               type: string
                               example: immediate
@@ -2529,7 +2820,7 @@ paths:
                             condominium:
                               type: object
                               properties:
-                                ammenities:
+                                amenities:
                                   type: array
                                   items:
                                     type: string
@@ -2616,10 +2907,16 @@ paths:
                                 measurement: {}
                                 width: {}
                                 size: {}
+                                source: {}
+                                dimensionsSource: {}
+                                dimensions: {}
+                                squareFeet: {}
+                                features: {}
+                                taxLot: {}
                             nearby:
                               type: object
                               properties:
-                                ammenities:
+                                amenities:
                                   type: array
                             office:
                               type: object
@@ -3007,8 +3304,123 @@ paths:
                                 repliersUpdatedOn:
                                   type: string
                                   example: 212831.:1-5:4708-2522ZT1
+                                imageInsightsUpdatedOn: {}
+                            estimate:
+                              type: object
+                              nullable: true
+                              properties:
+                                value: {}
+                                high: {}
+                                low: {}
+                                date: {}
+                                confidence: {}
+                                history:
+                                  type: object
+                                  properties:
+                                    mth:
+                                      type: object
+                                      description: Monthly estimate history keyed by year-month.
+                                      additionalProperties:
+                                        type: object
+                                        properties:
+                                          value:
+                                            type: number
+                            imageInsights:
+                              type: object
+                              nullable: true
+                              properties:
+                                summary:
+                                  type: object
+                                  properties:
+                                    quality:
+                                      type: object
+                                      properties:
+                                        qualitative:
+                                          type: object
+                                          properties:
+                                            features:
+                                              type: object
+                                              properties:
+                                                livingRoom: {}
+                                                kitchen: {}
+                                                diningRoom: {}
+                                                bedroom: {}
+                                                bathroom: {}
+                                            overall: {}
+                                        quantitative:
+                                          type: object
+                                          properties:
+                                            features:
+                                              type: object
+                                              properties:
+                                                livingRoom: {}
+                                                kitchen: {}
+                                                diningRoom: {}
+                                                bedroom: {}
+                                                bathroom: {}
+                                            overall: {}
+                                images:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      image: {}
+                                      classification:
+                                        type: object
+                                        properties:
+                                          imageOf: {}
+                                          prediction: {}
+                                      quality: {}
                             agents:
                               type: array
+                              items:
+                                type: object
+                                properties:
+                                  agentId: {}
+                                  boardAgentId: {}
+                                  officeId: {}
+                                  updatedOn: {}
+                                  name: {}
+                                  board: {}
+                                  boardOfficeId: {}
+                                  position: {}
+                                  email: {}
+                                  phones:
+                                    type: array
+                                  social:
+                                    type: array
+                                  website: {}
+                                  photo:
+                                    type: object
+                                    properties:
+                                      small: {}
+                                      large: {}
+                                      updatedOn: {}
+                                  brokerage:
+                                    type: object
+                                    properties:
+                                      name: {}
+                                      address:
+                                        type: object
+                                        properties:
+                                          address1: {}
+                                          address2: {}
+                                          city: {}
+                                          state: {}
+                                          postal: {}
+                                          country: {}
+                                      officeBroker: {}
+                                      officeBrokerKey: {}
+                                      officeBrokerMlsId: {}
+                                      officeManager: {}
+                                      officeManagerKey: {}
+                                      officeManagerMlsId: {}
+                                      officeKey: {}
+                                      officeMlsId: {}
+                                      mainOfficeKey: {}
+                                      mainOfficeMlsId: {}
+                                      officeBrokerEmail: {}
+                                      officeManagerEmail: {}
                             boardId:
                               type: integer
                               example: 2
@@ -3053,7 +3465,7 @@ paths:
           in: query
           description: |
             Filters the locations returned by `locations=true` by source:
-            - `MSL` - Locations sourced from MLS (Multiple Listing Service) data.
+            - `MLS` - Locations sourced from MLS (Multiple Listing Service) data.
             - `UserDefined` - Custom locations created and defined by users.
             - `LiveBy` - Locations sourced from LiveBy, a third-party neighborhood and community data provider.
             - `PublicRecord` - Locations sourced from Public Records Data.
@@ -10530,6 +10942,10 @@ paths:
                           streetSuffix:
                             type: string
                             example: St
+                          addressKey:
+                            type: string
+                            example: oakville-4115-nasddu-st
+                            description: A normalized, lowercased concatenation of the street address used to identify this address across endpoints (e.g. buildings, estimates).
                           unitNumber:
                             type: string
                             example: "042"
@@ -10806,6 +11222,16 @@ paths:
                       daysOnMarket:
                         type: string
                         example: "0"
+                      simpleDaysOnMarket:
+                        type: integer
+                        nullable: true
+                        example: 14
+                        description: Days on market, calculated using a simplified rule set (excludes status-change resets that `daysOnMarket` accounts for).
+                      standardStatus:
+                        type: string
+                        nullable: true
+                        example: Active
+                        description: The listing's status, normalized to the RESO Data Dictionary standard values.
                       occupancy:
                         type: string
                         example: immediate
@@ -10815,7 +11241,7 @@ paths:
                       condominium:
                         type: object
                         properties:
-                          ammenities:
+                          amenities:
                             type: array
                             items:
                               type: string
@@ -10902,10 +11328,16 @@ paths:
                           measurement: {}
                           width: {}
                           size: {}
+                          source: {}
+                          dimensionsSource: {}
+                          dimensions: {}
+                          squareFeet: {}
+                          features: {}
+                          taxLot: {}
                       nearby:
                         type: object
                         properties:
-                          ammenities:
+                          amenities:
                             type: array
                       office:
                         type: object
@@ -11293,6 +11725,109 @@ paths:
                           repliersUpdatedOn:
                             type: string
                             example: "Z.2141:288215T2--127305:"
+                          imageInsightsUpdatedOn:
+                            type: string
+                            nullable: true
+                            description: The date/time AI image insights were last computed for this listing, if available.
+                      boardId:
+                        type: integer
+                        format: int32
+                        example: 2
+                      estimate:
+                        type: object
+                        nullable: true
+                        description: An automated valuation estimate for this listing, if available.
+                        properties:
+                          value:
+                            type: number
+                          high:
+                            type: number
+                          low:
+                            type: number
+                          date:
+                            type: string
+                          confidence:
+                            type: number
+                          history:
+                            type: object
+                            properties:
+                              mth:
+                                type: object
+                                description: Monthly estimate history keyed by year-month.
+                                additionalProperties:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: number
+                      imageInsights:
+                        type: object
+                        nullable: true
+                        description: AI-generated quality analysis of the listing's images.
+                        properties:
+                          summary:
+                            type: object
+                            properties:
+                              quality:
+                                type: object
+                                properties:
+                                  qualitative:
+                                    type: object
+                                    properties:
+                                      features:
+                                        type: object
+                                        description: Qualitative quality rating per room type.
+                                        properties:
+                                          livingRoom:
+                                            type: string
+                                          kitchen:
+                                            type: string
+                                          diningRoom:
+                                            type: string
+                                          bedroom:
+                                            type: string
+                                          bathroom:
+                                            type: string
+                                      overall:
+                                        type: string
+                                  quantitative:
+                                    type: object
+                                    properties:
+                                      features:
+                                        type: object
+                                        description: Quantitative quality score per room type.
+                                        properties:
+                                          livingRoom:
+                                            type: number
+                                          kitchen:
+                                            type: number
+                                          diningRoom:
+                                            type: number
+                                          bedroom:
+                                            type: number
+                                          bathroom:
+                                            type: number
+                                      overall:
+                                        type: number
+                          images:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                image:
+                                  type: string
+                                  description: The image URL/path this insight applies to.
+                                classification:
+                                  type: object
+                                  properties:
+                                    imageOf:
+                                      type: string
+                                      description: What the image was classified as depicting (e.g. kitchen, bedroom).
+                                    prediction:
+                                      type: number
+                                      description: The classifier's confidence score for this classification.
+                                quality:
+                                  type: string
+                                  nullable: true
                       agents:
                         type: array
                         items:
@@ -11349,6 +11884,18 @@ paths:
                                     state: {}
                                     postal: {}
                                     country: {}
+                                officeBroker: {}
+                                officeBrokerKey: {}
+                                officeBrokerMlsId: {}
+                                officeManager: {}
+                                officeManagerKey: {}
+                                officeManagerMlsId: {}
+                                officeKey: {}
+                                officeMlsId: {}
+                                mainOfficeKey: {}
+                                mainOfficeMlsId: {}
+                                officeBrokerEmail: {}
+                                officeManagerEmail: {}
                       history:
                         type: array
                       comparables:
@@ -11408,6 +11955,10 @@ paths:
                                 streetSuffix:
                                   type: string
                                   example: Dr
+                                addressKey:
+                                  type: string
+                                  example: oakville-533-bwehmoota-dr
+                                  description: A normalized, lowercased concatenation of the street address used to identify this address across endpoints (e.g. buildings, estimates).
                                 unitNumber:
                                   type: string
                                   example: "9102"
@@ -11657,7 +12208,7 @@ paths:
                             condominium:
                               type: object
                               properties:
-                                ammenities:
+                                amenities:
                                   type: array
                                 buildingInsurance:
                                   type: string
@@ -11833,6 +12384,10 @@ paths:
                           streetSuffix:
                             type: string
                             example: St
+                          addressKey:
+                            type: string
+                            example: oakville-4115-unsadd-st
+                            description: A normalized, lowercased concatenation of the street address used to identify this address across endpoints (e.g. buildings, estimates).
                           unitNumber:
                             type: string
                             example: "402"
@@ -12037,6 +12592,16 @@ paths:
                       daysOnMarket:
                         type: integer
                         example: 0
+                      simpleDaysOnMarket:
+                        type: integer
+                        nullable: true
+                        example: 14
+                        description: Days on market, calculated using a simplified rule set (excludes status-change resets that `daysOnMarket` accounts for).
+                      standardStatus:
+                        type: string
+                        nullable: true
+                        example: Active
+                        description: The listing's status, normalized to the RESO Data Dictionary standard values.
                         default: 0
                       occupancy:
                         type: string
@@ -12114,6 +12679,12 @@ paths:
                           measurement: {}
                           width: {}
                           size: {}
+                          source: {}
+                          dimensionsSource: {}
+                          dimensions: {}
+                          squareFeet: {}
+                          features: {}
+                          taxLot: {}
                       nearby:
                         type: object
                         properties:
@@ -12189,6 +12760,77 @@ paths:
                           repliersUpdatedOn:
                             type: string
                             example: 2310-:-5285872Z1T24:21.1
+                          imageInsightsUpdatedOn: {}
+                      boardId:
+                        type: integer
+                        format: int32
+                        example: 2
+                      estimate:
+                        type: object
+                        nullable: true
+                        properties:
+                          value: {}
+                          high: {}
+                          low: {}
+                          date: {}
+                          confidence: {}
+                          history:
+                            type: object
+                            properties:
+                              mth:
+                                type: object
+                                description: Monthly estimate history keyed by year-month.
+                                additionalProperties:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: number
+                      imageInsights:
+                        type: object
+                        nullable: true
+                        properties:
+                          summary:
+                            type: object
+                            properties:
+                              quality:
+                                type: object
+                                properties:
+                                  qualitative:
+                                    type: object
+                                    properties:
+                                      features:
+                                        type: object
+                                        properties:
+                                          livingRoom: {}
+                                          kitchen: {}
+                                          diningRoom: {}
+                                          bedroom: {}
+                                          bathroom: {}
+                                      overall: {}
+                                  quantitative:
+                                    type: object
+                                    properties:
+                                      features:
+                                        type: object
+                                        properties:
+                                          livingRoom: {}
+                                          kitchen: {}
+                                          diningRoom: {}
+                                          bedroom: {}
+                                          bathroom: {}
+                                      overall: {}
+                          images:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                image: {}
+                                classification:
+                                  type: object
+                                  properties:
+                                    imageOf: {}
+                                    prediction: {}
+                                quality: {}
                       agents:
                         type: array
                         items:
@@ -12241,6 +12883,18 @@ paths:
                                     state: {}
                                     postal: {}
                                     country: {}
+                                officeBroker: {}
+                                officeBrokerKey: {}
+                                officeBrokerMlsId: {}
+                                officeManager: {}
+                                officeManagerKey: {}
+                                officeManagerMlsId: {}
+                                officeKey: {}
+                                officeMlsId: {}
+                                mainOfficeKey: {}
+                                mainOfficeMlsId: {}
+                                officeBrokerEmail: {}
+                                officeManagerEmail: {}
                       history:
                         type: array
                       comparables:
@@ -12298,6 +12952,10 @@ paths:
                                 streetSuffix:
                                   type: string
                                   example: Dr
+                                addressKey:
+                                  type: string
+                                  example: oakville-353-wbooaetmh-dr
+                                  description: A normalized, lowercased concatenation of the street address used to identify this address across endpoints (e.g. buildings, estimates).
                                 unitNumber:
                                   type: string
                                   example: "1029"
@@ -12566,7 +13224,90 @@ paths:
             default: updatedOnDesc
       responses:
         "200":
-          $ref: components.yml#/components/responses/EmptySuccess
+          description: "200"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page:
+                    type: integer
+                  numPages:
+                    type: integer
+                  pageSize:
+                    type: integer
+                  count:
+                    type: integer
+                  similar:
+                    type: array
+                    description: "The similar listings. Confirmed against a live response to have the same shape as GET /listings/{mlsNumber} (address, details, lot, nearby, office, openHouse, rooms, taxes, timestamps, agents, condominium, permissions, images, etc. — see that endpoint for the full nested shape), plus the additional fields below."
+                    items:
+                      type: object
+                      properties:
+                        mlsNumber:
+                          type: string
+                          example: C1234568
+                        distance:
+                          type: number
+                          example: 0.4
+                          description: The distance from the source listing.
+                        listPriceLog:
+                          type: array
+                          description: A history of list price changes for this listing.
+                          items:
+                            type: object
+                            properties:
+                              updatedOn:
+                                type: string
+                                example: "2024-06-15T12:00:00.000Z"
+                              type:
+                                type: string
+                                example: reduced
+                              currentListPrice:
+                                type: string
+                                example: "415000"
+                              previousListPrice:
+                                type: string
+                                example: "429000"
+                        lastPriceChangeType:
+                          type: string
+                          nullable: true
+                          example: reduced
+                        estimate:
+                          type: object
+                          nullable: true
+                          description: An automated valuation estimate for this listing, if available.
+                          properties:
+                            value:
+                              type: number
+                              example: 428000
+                            high:
+                              type: number
+                              example: 450000
+                            low:
+                              type: number
+                              example: 405000
+                            date:
+                              type: string
+                              example: "2024-06-15T12:00:00.000Z"
+                            confidence:
+                              type: number
+                              example: 0.82
+                            history:
+                              type: object
+                              properties:
+                                mth:
+                                  type: object
+                                  description: Monthly estimate history keyed by year-month.
+                                  additionalProperties:
+                                    type: object
+                                    properties:
+                                      value:
+                                        type: number
+                        boardId:
+                          type: integer
+                          format: int32
+                          example: 2
         "400":
           $ref: components.yml#/components/responses/BadRequest
         "401":
@@ -12645,7 +13386,163 @@ paths:
             default: false
       responses:
         "200":
-          $ref: components.yml#/components/responses/EmptySuccess
+          description: "200"
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Address history for the matched property (echoes the address components, plus a history of listings recorded at that address).
+                properties:
+                  state:
+                    type: string
+                  zip:
+                    type: string
+                  streetNumber:
+                    type: string
+                  streetName:
+                    type: string
+                  streetSuffix:
+                    type: string
+                    nullable: true
+                  streetDirection:
+                    type: string
+                    nullable: true
+                  unitNumber:
+                    type: string
+                    nullable: true
+                  city:
+                    type: string
+                  neighborhood:
+                    type: string
+                    nullable: true
+                  district:
+                    type: string
+                    nullable: true
+                  communityCode:
+                    type: string
+                    nullable: true
+                  lat:
+                    type: number
+                  long:
+                    type: number
+                  sqft:
+                    type: string
+                    nullable: true
+                  beds:
+                    type: integer
+                    nullable: true
+                  baths:
+                    type: integer
+                    nullable: true
+                  style:
+                    type: string
+                    nullable: true
+                  propertyType:
+                    type: string
+                    nullable: true
+                  history:
+                    type: array
+                    description: The listings recorded at this address, most recent first.
+                    items:
+                      type: object
+                      properties:
+                        mlsNumber:
+                          type: string
+                        boardId:
+                          type: integer
+                          format: int32
+                        unitNumber:
+                          type: string
+                          nullable: true
+                        type:
+                          type: string
+                        beds:
+                          type: integer
+                          nullable: true
+                        baths:
+                          type: integer
+                          nullable: true
+                        sqft:
+                          type: string
+                          nullable: true
+                        style:
+                          type: string
+                          nullable: true
+                        propertyType:
+                          type: string
+                          nullable: true
+                        listPrice:
+                          type: integer
+                        listDate:
+                          type: string
+                        lastStatus:
+                          type: string
+                        soldPrice:
+                          type: integer
+                          nullable: true
+                        soldDate:
+                          type: string
+                          nullable: true
+                        office:
+                          type: object
+                          properties:
+                            brokerageName:
+                              type: string
+                        permissions:
+                          type: object
+                          properties:
+                            displayAddressOnInternet:
+                              type: string
+                            displayPublic:
+                              type: string
+                            displayInternetEntireListing:
+                              type: string
+                        timestamps:
+                          type: object
+                          properties:
+                            idxUpdated:
+                              type: string
+                            listingUpdated:
+                              type: string
+                            photosUpdated:
+                              type: string
+                            conditionalExpiryDate:
+                              type: string
+                              nullable: true
+                            terminatedDate:
+                              type: string
+                              nullable: true
+                            suspendedDate:
+                              type: string
+                              nullable: true
+                            listingEntryDate:
+                              type: string
+                              nullable: true
+                            closedDate:
+                              type: string
+                              nullable: true
+                            unavailableDate:
+                              type: string
+                              nullable: true
+                            expiryDate:
+                              type: string
+                              nullable: true
+                            extensionEntryDate:
+                              type: string
+                              nullable: true
+                        photoCount:
+                          type: integer
+                        taxes:
+                          type: object
+                          properties:
+                            annualAmount:
+                              type: integer
+                            assessmentYear:
+                              type: string
+                        images:
+                          type: array
+                          items:
+                            type: string
         "400":
           $ref: components.yml#/components/responses/BadRequest
         "401":
@@ -12677,160 +13574,94 @@ paths:
             format: date
       responses:
         "200":
-          $ref: components.yml#/components/responses/EmptySuccess
+          description: "200"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page:
+                    type: integer
+                  numPages:
+                    type: integer
+                  pageSize:
+                    type: integer
+                  count:
+                    type: integer
+                  listings:
+                    type: array
+                    description: The deleted listings matching the given filters.
+                    items:
+                      type: object
+                      properties:
+                        boardId:
+                          type: integer
+                          format: int32
+                          example: 2
+                        mlsNumber:
+                          type: string
+                          example: C1234567
+                        resource:
+                          type: string
+                          example: Property
+                        address:
+                          type: object
+                          properties:
+                            area:
+                              type: string
+                              nullable: true
+                              example: Harris
+                            city:
+                              type: string
+                              example: Katy
+                            country:
+                              type: string
+                              nullable: true
+                              example: United States
+                            district:
+                              type: string
+                              nullable: true
+                            majorIntersection:
+                              type: string
+                              nullable: true
+                            neighborhood:
+                              type: string
+                              nullable: true
+                              example: Cinco Ranch
+                            streetDirection:
+                              type: string
+                              nullable: true
+                            streetName:
+                              type: string
+                              example: Prairie Vista
+                            streetNumber:
+                              type: string
+                              example: "24506"
+                            streetSuffix:
+                              type: string
+                              nullable: true
+                              example: Ln
+                            unitNumber:
+                              type: string
+                              nullable: true
+                            zip:
+                              type: string
+                              example: "77002"
+                            state:
+                              type: string
+                              example: TX
+                            communityCode:
+                              type: string
+                              nullable: true
+                        timestamps:
+                          type: object
+                          properties:
+                            listingUpdated:
+                              type: string
+                              example: "2024-06-15T12:00:00.000Z"
+                              description: The date/time the listing was deleted/last updated.
         "400":
           $ref: components.yml#/components/responses/BadRequest
         "401":
           $ref: components.yml#/components/responses/Unauthorized
       deprecated: false
-  /listings/locations:
-    get:
-      summary: Areas, cities and neighborhoods (Deprecated)
-      description: "**Deprecated.** Use [GET /locations](/reference/get_locations) instead.<br/><br/>Use this endpoint to list geographical location data such as areas, cities and neighborhoods."
-      operationId: locations
-      parameters:
-        - name: area
-          in: query
-          description: Limits location metadata to areas, cities and neighborhoods whose area matches the supplied valued.
-          schema:
-            type: string
-        - name: city
-          in: query
-          description: Limits location metadata to areas, cities and neighborhoods whose city matches the supplied valued.
-          schema:
-            type: string
-        - name: class
-          in: query
-          description: Limits location metadata to areas, cities and neighborhoods whose class matches the supplied valued.
-          schema:
-            type: string
-            enum:
-              - residential
-              - condo
-              - commercial
-        - name: neighborhood
-          in: query
-          description: Limits location metadata to areas, cities and neighborhoods whose neighborhood matches the supplied valued.
-          schema:
-            type: string
-        - name: search
-          in: query
-          description: If a value is supplied, limits location meta data to areas, cities or neighborhoods that match or partially match the supplied value.
-          schema:
-            type: string
-      responses:
-        "200":
-          $ref: components.yml#/components/responses/EmptySuccess
-        "400":
-          $ref: components.yml#/components/responses/BadRequest
-        "401":
-          $ref: components.yml#/components/responses/Unauthorized
-      deprecated: true
-  /listings/property-types: {}
-  /listings/buildings:
-    get:
-      summary: Buildings (Deprecated)
-      description: "**Deprecated.** Use [POST /buildings](/reference/post_buildings) instead."
-      operationId: buildings
-      deprecated: true
-      parameters:
-        - name: pageNum
-          in: query
-          description: The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200.
-          schema:
-            type: integer
-            format: int32
-            default: 1
-        - name: resultsPerPage
-          in: query
-          description: The number of buildings to return per page.
-          schema:
-            type: integer
-            format: int32
-            default: 100
-        - name: city
-          in: query
-          description: Filters buildings by one or more cities
-          schema:
-            type: array
-            items:
-              type: string
-        - name: neighborhood
-          in: query
-          description: Filter by one more geographical neighborhoods that the building is situated in. For example GET /listings/buildings?city=Vaughan&neighborhood=Sonoma Heights&neighborhood=Vellore Village
-          schema:
-            type: array
-            items:
-              type: string
-        - name: map
-          in: query
-          description: An array of polygons arrays with arrays of longitude/latitude shapes to be used as a filter for building results.  Note - if the map is too large for a get request you may send it in the body of the request. The method will need to be POST instead of GET .  Example usage:[[[-79.14121,43.79041],[-79.132627,43.773059],[-79.188932,43.886988],[-79.200605,43.877832],[-79.236654,43.869665],[-79.265836,43.860011],[-79.281972,43.856051],[-79.322828,43.84689],[-79.368146,43.839214],[-79.386021,43.836139],[-79.41486,43.838616],[-79.423787,43.836635],[-79.475285,43.82227],[-79.480092,43.813352],[-79.480778,43.803441],[-79.485585,43.79799],[-79.493825,43.794025],[-79.556996,43.779649],[-79.601628,43.761303],[-79.61611,43.758572],[-79.629934,43.750141],[-79.625471,43.728064],[-79.616888,43.713177],[-79.606245,43.695555],[-79.601095,43.685873],[-79.593885,43.681156],[-79.590109,43.672465],[-79.582212,43.671224],[-79.574659,43.670975],[-79.535177,43.58325],[-79.424627,43.619052],[-79.385488,43.602645],[-79.315451,43.612092],[-79.14121,43.79041]]]
-          schema:
-            type: string
-            format: json
-        - name: class
-          in: query
-          description: "The class of listing to filter the search results by. Allowed values: <code>condo</code>, <code>residential</code>, <code>commercial</code>"
-          schema:
-            type: array
-            items:
-              type: string
-        - name: minPrice
-          in: query
-          schema:
-            type: integer
-            format: int32
-        - name: maxPrice
-          in: query
-          schema:
-            type: integer
-            format: int32
-        - name: minBeds
-          in: query
-          schema:
-            type: integer
-            format: int32
-        - name: maxBeds
-          in: query
-          schema:
-            type: integer
-            format: int32
-        - name: propertyType
-          in: query
-          description: Filters buildings by one or more property types.
-          schema:
-            type: array
-            items:
-              type: string
-        - name: type
-          in: query
-          description: "Used to filter properties that are for sale or for lease. If not specified, will return listings of all types.  Allowed values:  <code>Sale</code>, <code>Lease</code>"
-          schema:
-            type: string
-        - name: streetName
-          in: query
-          description: Filter by the street name of the building (excluding the street suffix and direction, for example "Yonge")
-          schema:
-            type: string
-        - name: streetNumber
-          in: query
-          description: Filter by the street number of the building.
-          schema:
-            type: string
-        - name: sortBy
-          in: query
-          description: "The attribute that the buildings will be sorted by.<br/><BR/> Allowed values: <br/><BR/> <strong> <code>numUnitsDesc</code></strong>"
-          schema:
-            type: string
-        - name: displayPublic
-          in: query
-          description: "If not specified, returns both listings that may be displayed publicly (Y) and those that should be password protected (N)  Allowed values: <code>Y</code>, <code>N</code>"
-          schema:
-            type: string
-      responses:
-        "200":
-          $ref: components.yml#/components/responses/EmptySuccess
-        "400":
-          $ref: components.yml#/components/responses/BadRequest
-        "401":
-          $ref: components.yml#/components/responses/Unauthorized

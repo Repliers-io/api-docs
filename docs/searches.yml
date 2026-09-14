@@ -308,136 +308,7 @@ paths:
                       "pets": []
                     }
               schema:
-                type: object
-                properties:
-                  searchId:
-                    type: integer
-                    example: 73030
-                    default: 0
-                  name: {}
-                  createdOn:
-                    type: string
-                    example: "2025-05-22T22:05:01.000Z"
-                  agentId:
-                    type: integer
-                    example: 106715
-                    default: 0
-                  minBeds:
-                    type: integer
-                    example: 2
-                    default: 0
-                  maxBeds:
-                    type: integer
-                    example: 3
-                    default: 0
-                  minBaths:
-                    type: integer
-                    example: 2
-                    default: 0
-                  maxBaths: {}
-                  minPrice:
-                    type: integer
-                    example: 400000
-                    default: 0
-                  maxPrice:
-                    type: integer
-                    example: 1000000
-                    default: 0
-                  maxMaintenanceFee: {}
-                  minGarageSpaces: {}
-                  minParkingSpaces: {}
-                  minKitchens: {}
-                  minSqft: {}
-                  maxSqft: {}
-                  minYearBuilt: {}
-                  maxYearBuilt: {}
-                  minStories: {}
-                  maxStories: {}
-                  maxCoveredSpaces: {}
-                  minCoveredSpaces: {}
-                  status:
-                    type: boolean
-                    example: true
-                    default: true
-                  type:
-                    type: string
-                    example: sale
-                  clientId:
-                    type: integer
-                    example: 147150
-                    default: 0
-                  streetNumbers:
-                    type: array
-                  streetNames:
-                    type: array
-                  cities:
-                    type: array
-                    items:
-                      type: string
-                      example: <city>
-                  neighborhoods:
-                    type: array
-                    items:
-                      type: string
-                      example: <neighborhood>
-                  propertyTypes:
-                    type: array
-                  styles:
-                    type: array
-                  areas:
-                    type: array
-                    items:
-                      type: string
-                      example: <area>
-                  map:
-                    type: array
-                  class:
-                    type: array
-                    items:
-                      type: string
-                      example: residential
-                  basement:
-                    type: array
-                  client:
-                    type: object
-                    properties:
-                      fname:
-                        type: string
-                        example: FirstName
-                      lname:
-                        type: string
-                        example: LastName
-                      email:
-                        type: string
-                        example: client@example.com
-                      phone:
-                        type: string
-                        example: "1234567890"
-                  notificationFrequency:
-                    type: string
-                    example: instant
-                  soldNotifications:
-                    type: boolean
-                    example: false
-                    default: true
-                  priceChangeNotifications:
-                    type: boolean
-                    example: false
-                    default: true
-                  sewer:
-                    type: array
-                  waterSource:
-                    type: array
-                  heating:
-                    type: array
-                  swimmingPool:
-                    type: array
-                  amenities:
-                    type: array
-                  keywords:
-                    type: array
-                  pets:
-                    type: array
+                $ref: "#/components/schemas/Search"
         "400":
           $ref: components.yml#/components/responses/BadRequest
         "401":
@@ -490,7 +361,24 @@ paths:
             type: boolean
       responses:
         "200":
-          $ref: components.yml#/components/responses/EmptySuccess
+          description: "200"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page:
+                    type: integer
+                  numPages:
+                    type: integer
+                  pageSize:
+                    type: integer
+                  count:
+                    type: integer
+                  searches:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Search"
         "400":
           $ref: components.yml#/components/responses/BadRequest
         "401":
@@ -752,7 +640,11 @@ paths:
           required: true
       responses:
         "200":
-          $ref: components.yml#/components/responses/EmptySuccess
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Search"
         "400":
           $ref: components.yml#/components/responses/BadRequest
         "401":
@@ -824,7 +716,27 @@ paths:
             type: string
       responses:
         "200":
-          $ref: components.yml#/components/responses/EmptySuccess
+          description: "200"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page:
+                    type: integer
+                  numPages:
+                    type: integer
+                  pageSize:
+                    type: integer
+                  count:
+                    type: integer
+                  viewed:
+                    type: boolean
+                    description: Echoes back a `viewed` filter, if one was applied.
+                  matches:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Match"
         "400":
           $ref: components.yml#/components/responses/BadRequest
         "401":
@@ -850,7 +762,11 @@ paths:
           required: true
       responses:
         "200":
-          $ref: components.yml#/components/responses/EmptySuccess
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Match"
         "400":
           $ref: components.yml#/components/responses/BadRequest
         "401":
@@ -893,3 +809,362 @@ paths:
         "401":
           $ref: components.yml#/components/responses/Unauthorized
       deprecated: false
+components:
+  schemas:
+    Search:
+      type: object
+      properties:
+        searchId:
+          type: integer
+          example: 73030
+        name:
+          type: string
+          nullable: true
+          example: Downtown Condo Search
+          description: An optional label for this saved search.
+        createdOn:
+          type: string
+          example: "2025-05-22T22:05:01.000Z"
+        agentId:
+          type: integer
+          example: 106715
+        minBeds:
+          type: integer
+          nullable: true
+          example: 2
+        maxBeds:
+          type: integer
+          nullable: true
+          example: 3
+        minBaths:
+          type: integer
+          nullable: true
+          example: 2
+        maxBaths:
+          type: integer
+          nullable: true
+          example: 3
+        minPrice:
+          type: integer
+          nullable: true
+          example: 400000
+        maxPrice:
+          type: integer
+          nullable: true
+          example: 1000000
+        maxMaintenanceFee:
+          type: number
+          nullable: true
+          example: 600
+        minGarageSpaces:
+          type: integer
+          nullable: true
+          example: 1
+        minParkingSpaces:
+          type: integer
+          nullable: true
+          example: 2
+        minKitchens:
+          type: integer
+          nullable: true
+          example: 1
+        minSqft:
+          type: integer
+          nullable: true
+          example: 1200
+        maxSqft:
+          type: integer
+          nullable: true
+          example: 3000
+        minYearBuilt:
+          type: integer
+          nullable: true
+          example: 1990
+        maxYearBuilt:
+          type: integer
+          nullable: true
+          example: 2024
+        minLotSizeSqft:
+          type: integer
+          nullable: true
+          example: 5000
+        maxLotSizeSqft:
+          type: integer
+          nullable: true
+          example: 10000
+        minOpenHouseDate:
+          type: string
+          nullable: true
+          example: "2024-06-15"
+          description: Filters matches to listings with an open house on or after this date.
+        maxOpenHouseDate:
+          type: string
+          nullable: true
+          example: "2024-07-15"
+          description: Filters matches to listings with an open house on or before this date.
+        minStories:
+          type: integer
+          nullable: true
+          example: 1
+        maxStories:
+          type: integer
+          nullable: true
+          example: 2
+        maxCoveredSpaces:
+          type: integer
+          nullable: true
+          example: 2
+        minCoveredSpaces:
+          type: integer
+          nullable: true
+          example: 1
+        status:
+          type: boolean
+          example: true
+        type:
+          type: string
+          example: sale
+        clientId:
+          type: integer
+          example: 147150
+        streetNumbers:
+          type: array
+          items:
+            type: string
+            example: "12103"
+        streetNames:
+          type: array
+          items:
+            type: string
+            example: Cypresswood
+        cities:
+          type: array
+          items:
+            type: string
+            example: <city>
+        neighborhoods:
+          type: array
+          items:
+            type: string
+            example: <neighborhood>
+        propertyTypes:
+          type: array
+          items:
+            type: string
+            example: Detached
+        styles:
+          type: array
+          items:
+            type: string
+            example: 2-Storey
+        areas:
+          type: array
+          items:
+            type: string
+            example: <area>
+        map:
+          type: array
+          description: A GeoJSON polygon/multi-polygon boundary used to filter matches geographically, in the same format as the `map` parameter on [POST /listings](/reference/post_listings).
+        mapType:
+          type: string
+          nullable: true
+          example: polygon
+          description: The type of the `map` boundary (e.g. polygon, multipolygon), if set.
+        class:
+          type: array
+          items:
+            type: string
+            example: residential
+        basement:
+          type: array
+          items:
+            type: string
+            example: Finished
+        client:
+          type: object
+          properties:
+            fname:
+              type: string
+              example: FirstName
+            lname:
+              type: string
+              example: LastName
+            email:
+              type: string
+              example: client@example.com
+            phone:
+              type: string
+              example: "1234567890"
+        notificationFrequency:
+          type: string
+          example: instant
+        soldNotifications:
+          type: boolean
+          example: false
+        priceChangeNotifications:
+          type: boolean
+          example: false
+        sewer:
+          type: array
+          items:
+            type: string
+            example: Public Sewer
+        waterSource:
+          type: array
+          items:
+            type: string
+            example: Public
+        heating:
+          type: array
+          items:
+            type: string
+            example: Natural Gas
+        swimmingPool:
+          type: array
+          items:
+            type: string
+            example: In Ground
+        amenities:
+          type: array
+          items:
+            type: string
+            example: Gym
+        keywords:
+          type: array
+          items:
+            type: string
+            example: waterfront
+        pets:
+          type: array
+          items:
+            type: string
+            example: Restricted
+        standardStatus:
+          type: string
+          nullable: true
+          example: Active
+          description: The standardized status filter applied to matches, if set.
+    Match:
+      type: object
+      description: A listing that matched a saved search's criteria.
+      properties:
+        matchId:
+          type: integer
+          format: int32
+          example: 8842
+          description: The unique identifier of this match.
+        searchId:
+          type: integer
+          format: int32
+          example: 73030
+          description: The searchId of the saved search this match belongs to.
+        viewed:
+          type: boolean
+          example: true
+          description: Whether the client has viewed this match.
+        viewedOn:
+          type: string
+          nullable: true
+          description: The date/time the client viewed this match, if viewed.
+        liked:
+          type: boolean
+          nullable: true
+          description: Whether the client has liked this match, if set.
+        likedOn:
+          type: string
+          nullable: true
+          description: The date/time the client liked this match, if liked.
+        dateTime:
+          type: string
+          example: "2024-06-15T12:00:00.000Z"
+          description: The date/time this match was created.
+        updatedOn:
+          type: string
+          nullable: true
+          description: The date/time this match was last updated, if ever.
+        listing:
+          type: object
+          description: A summary of the matched listing. See [GET /listings/{mlsNumber}](/reference/get_listings_mlsnumber) for the full listing object.
+          properties:
+            mlsNumber:
+              type: string
+              example: C1234567
+            listPrice:
+              type: number
+              example: 415000
+            status:
+              type: string
+              example: A
+            lastStatus:
+              type: string
+              example: New
+            soldPrice:
+              type: number
+              nullable: true
+            soldDate:
+              type: string
+              nullable: true
+            listDate:
+              type: string
+              example: "2024-06-15T12:00:00.000Z"
+            map:
+              type: object
+              properties:
+                latitude:
+                  type: number
+                  example: 29.7858
+                longitude:
+                  type: number
+                  example: -95.8244
+                point:
+                  type: string
+                  example: "POINT (-95.8244 29.7858)"
+            address:
+              type: object
+              properties:
+                city:
+                  type: string
+                  example: Katy
+                neighborhood:
+                  type: string
+                  nullable: true
+                  example: Cinco Ranch
+                streetName:
+                  type: string
+                  example: Prairie Vista
+                streetNumber:
+                  type: string
+                  example: "24506"
+                streetSuffix:
+                  type: string
+                  nullable: true
+                  example: Ln
+                unitNumber:
+                  type: string
+                  nullable: true
+                state:
+                  type: string
+                  example: TX
+            details:
+              type: object
+              properties:
+                numBathrooms:
+                  type: integer
+                  example: 3
+                numBedrooms:
+                  type: integer
+                  example: 4
+                sqft:
+                  type: string
+                  example: "2450"
+            office:
+              type: object
+              properties:
+                brokerageName:
+                  type: string
+                  example: Harbor Properties
+            images:
+              type: array
+              items:
+                type: string
+                example: IMG-C1234567_1.jpg

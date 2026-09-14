@@ -12,3 +12,4 @@ coverage
 .history
 test-results
 .docs
+scripts/.output

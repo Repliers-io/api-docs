@@ -105,7 +105,13 @@ paths:
       operationId: list-subscriptions
       responses:
         "200":
-          $ref: components.yml#/components/responses/EmptySuccess
+          description: "200"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Webhook"
         "400":
           $ref: components.yml#/components/responses/BadRequest
         "401":
@@ -179,7 +185,11 @@ paths:
           required: true
       responses:
         "200":
-          $ref: components.yml#/components/responses/EmptySuccess
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Webhook"
         "400":
           $ref: components.yml#/components/responses/BadRequest
         "401":
@@ -195,9 +205,91 @@ paths:
       operationId: list-events
       responses:
         "200":
-          $ref: components.yml#/components/responses/EmptySuccess
+          description: "200"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: message.created
+                      description: "The event name, e.g. agent.created (see the event list on POST /webhooks)."
+                    description:
+                      type: string
+                      example: Fires when a new message is sent.
+                      description: A human-readable description of when this event fires.
+                    samplePayload:
+                      type: object
+                      description: An example of the payload delivered to your target_url when this event fires.
+                      properties:
+                        data:
+                          type: object
+                          description: The resource data for this event. Its shape depends on the event — e.g. an agent.* event's data looks like an Agent object, a message.* event's looks like a Message object.
+                        hook:
+                          type: object
+                          description: Metadata about the webhook subscription that produced this delivery.
+                          properties:
+                            id:
+                              type: integer
+                              format: int32
+                              example: 438
+                              description: The subscription's webhookId.
+                            event:
+                              type: string
+                              example: message.created
+                              description: The event name this subscription is subscribed to.
+                            header:
+                              type: string
+                              example: X-Hook-Secret
+                              description: The header name used for the verification handshake (X-Hook-Secret).
+                            secret:
+                              type: string
+                              example: a1b2c3d4e5f6
+                              description: The secret value used for the verification handshake.
+                            target_url:
+                              type: string
+                              example: https://webhook-repliers.com
+                              description: The subscription's target_url.
         "400":
           $ref: components.yml#/components/responses/BadRequest
         "401":
           $ref: components.yml#/components/responses/Unauthorized
       deprecated: false
+components:
+  schemas:
+    Webhook:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: 438
+          description: The unique identifier of the webhook subscription (webhookId).
+        target_url:
+          type: string
+          example: https://webhook-repliers.com
+          description: The URL that event notifications are delivered to.
+        event:
+          type: string
+          example: listing.created
+          description: "The event this subscription is subscribed to. Allowed values: <br/><br/> <code>agent.created</code>, <code>agent.updated</code>, <code>agent.deleted</code>, <code>client.created</code>, <code>client.updated</code>, <code>client.deleted</code>, <code>search.created</code>, <code>search.updated</code>, <code>search.deleted</code>, <code>search.match.created</code>, <code>search.match.updated</code>, <code>message.created</code>, <code>message.updated</code>, <code>message.deleted</code>, <code>listing.created</code>, <code>listing.updated</code>, <code>listing.deleted</code>, <code>favorite.created</code>, <code>favorite.deleted</code>"
+        configuration:
+          type: object
+          description: Configuration options for the webhook, such as delivery filters.
+          properties:
+            filters:
+              type: array
+              items:
+                type: object
+                properties:
+                  field:
+                    type: string
+                    example: address.city
+                  values:
+                    type: array
+                    items:
+                      type: string
+                      example: Toronto

@@ -132,7 +132,16 @@ paths:
             type: string
       responses:
         "200":
-          $ref: components.yml#/components/responses/EmptySuccess
+          description: "200"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  agents:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Agent"
         "400":
           $ref: components.yml#/components/responses/BadRequest
         "401":
@@ -237,7 +246,11 @@ paths:
           required: true
       responses:
         "200":
-          $ref: components.yml#/components/responses/EmptySuccess
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Agent"
         "400":
           $ref: components.yml#/components/responses/BadRequest
         "401":
@@ -279,3 +292,61 @@ paths:
         "401":
           $ref: components.yml#/components/responses/Unauthorized
       deprecated: false
+components:
+  schemas:
+    Agent:
+      type: object
+      properties:
+        agentId:
+          type: integer
+          format: int32
+          example: 107306
+          description: The unique identifier of the agent.
+        status:
+          type: boolean
+          example: true
+          description: If false, all operations for the agent are disabled.
+        fname:
+          type: string
+          example: Casey
+          description: The first name of the agent.
+        lname:
+          type: string
+          example: Smith
+          description: The last name of the agent.
+        phone:
+          type: string
+          example: "15555550100"
+          description: The mobile phone number of the agent.
+        email:
+          type: string
+          example: casey.smith@example.com
+          description: The email address of the agent.
+        proxyPhone:
+          type: string
+          nullable: true
+          description: A proxy phone number used to mask the agent's direct number, if configured.
+        proxyEmail:
+          type: string
+          nullable: true
+          example: riley.rossi@example.com
+          description: A proxy email address used to mask the agent's direct email, if configured.
+        avatar:
+          type: string
+          nullable: true
+          description: A URL/path to an avatar/picture of this agent.
+        brokerage:
+          type: string
+          example: Harbor Properties
+          description: The name of the Brokerage/Office that this agent is registered with.
+        designation:
+          type: string
+          example: Sales Representative
+          description: This agent's designation. For example, "Sales Representative"
+        externalId:
+          type: string
+          nullable: true
+          description: The externalId is intended for storing agent identifiers from external systems (such as CRMs) for reference purposes.
+        data:
+          nullable: true
+          description: Additional metadata associated with the agent. Observed as null in testing — exact shape unconfirmed.

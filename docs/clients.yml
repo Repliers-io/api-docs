@@ -172,7 +172,24 @@ paths:
             type: string
       responses:
         "200":
-          $ref: components.yml#/components/responses/EmptySuccess
+          description: "200"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page:
+                    type: integer
+                  numPages:
+                    type: integer
+                  pageSize:
+                    type: integer
+                  count:
+                    type: integer
+                  clients:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Client"
         "400":
           $ref: components.yml#/components/responses/BadRequest
         "401":
@@ -282,7 +299,11 @@ paths:
           required: true
       responses:
         "200":
-          $ref: components.yml#/components/responses/EmptySuccess
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Client"
         "400":
           $ref: components.yml#/components/responses/BadRequest
         "401":
@@ -295,7 +316,16 @@ paths:
       operationId: get-tags
       responses:
         "200":
-          $ref: components.yml#/components/responses/EmptySuccess
+          description: "200"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tags:
+                    type: object
+                    description: An object keyed by tag name. Observed empty in testing (no tags assigned) — value shape unconfirmed.
+                    additionalProperties: true
         "400":
           $ref: components.yml#/components/responses/BadRequest
         "401":
@@ -332,3 +362,165 @@ paths:
         "401":
           $ref: components.yml#/components/responses/Unauthorized
       deprecated: false
+components:
+  schemas:
+    Client:
+      type: object
+      properties:
+        clientId:
+          type: integer
+          format: int32
+          example: 190073
+          description: The unique identifier of the client.
+        agentId:
+          type: integer
+          format: int32
+          example: 107306
+          description: The agentId of the agent that this client is assigned to.
+        fname:
+          type: string
+          example: Taylor
+          description: The first name of this client.
+        lname:
+          type: string
+          example: Brown
+          description: The last name of this client.
+        phone:
+          type: string
+          example: "15555550101"
+          description: The mobile phone number of this client.
+        email:
+          type: string
+          example: taylor.brown@example.com
+          description: The email address of this client.
+        proxyEmail:
+          type: string
+          nullable: true
+          example: jordan.brown@example.com
+          description: A proxy email address used to mask the client's direct email, if configured.
+        status:
+          type: boolean
+          example: true
+          description: If false, all operations for the client are disabled.
+        lastActivity:
+          type: string
+          nullable: true
+          description: The date/time of the client's last recorded activity, if any.
+        tags:
+          type: array
+          nullable: true
+          items:
+            type: string
+            example: Buyer
+          description: Tags assigned to this client for filtering and list-building purposes.
+        preferences:
+          type: object
+          properties:
+            email:
+              type: boolean
+              example: true
+              description: If false, the client will not receive messages via email.
+            sms:
+              type: boolean
+              example: true
+              description: If false, the client will not receive messages via sms (text).
+            unsubscribe:
+              type: boolean
+              example: false
+              description: If true, the client is unsubscribed from all forms of communication.
+            whatsapp:
+              type: boolean
+              example: true
+              description: If false, the client will not receive messages via WhatsApp.
+        expiryDate:
+          type: string
+          nullable: true
+          description: The date/time this client record expires, if applicable.
+        searches:
+          type: array
+          description: A summary of this client's saved searches. See [GET /searches](/reference/get_searches) for the full saved search object.
+          items:
+            type: object
+            properties:
+              searchId:
+                type: integer
+                format: int32
+                example: 107167
+              type:
+                type: string
+                example: sale
+              status:
+                type: integer
+                example: 1
+              maxBeds:
+                type: integer
+                example: 4
+              minBeds:
+                type: integer
+                example: 2
+              maxBaths:
+                type: integer
+                example: 3
+              minBaths:
+                type: integer
+                example: 1
+              maxPrice:
+                type: integer
+                example: 750000
+              minPrice:
+                type: integer
+                example: 400000
+              classes:
+                type: array
+                items:
+                  type: string
+                  example: residential
+              areas:
+                type: array
+                items:
+                  type: string
+                  example: Harris
+              cities:
+                type: array
+                items:
+                  type: string
+                  example: Houston
+              styles:
+                type: array
+                nullable: true
+                items:
+                  type: string
+              streetNames:
+                type: array
+                nullable: true
+                items:
+                  type: string
+              streetNumbers:
+                type: array
+                nullable: true
+                items:
+                  type: string
+              neighborhoods:
+                type: array
+                nullable: true
+                items:
+                  type: string
+              propertyTypes:
+                type: array
+                nullable: true
+                items:
+                  type: string
+              maps:
+                nullable: true
+                description: Map/geo-boundary filter for this saved search, if set. Observed as null in testing — exact shape unconfirmed.
+        createdOn:
+          type: string
+          example: "2024-06-15T12:00:00.000Z"
+          description: The date/time this client was created.
+        externalId:
+          type: string
+          nullable: true
+          description: The externalId is intended for storing client identifiers from external systems (such as CRMs) for reference purposes.
+        data:
+          nullable: true
+          description: Additional metadata associated with the client. Observed as null in testing — exact shape unconfirmed.

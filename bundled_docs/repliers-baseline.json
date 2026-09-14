@@ -6614,7 +6614,7 @@
               "items": {
                 "type": "string",
                 "enum": [
-                  "MSL",
+                  "MLS",
                   "UserDefined"
                 ]
               }

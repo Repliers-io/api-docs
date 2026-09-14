@@ -31,9 +31,227 @@ paths:
             type: boolean
       responses:
         "200":
-          $ref: components.yml#/components/responses/EmptySuccess
+          description: "200"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  schools:
+                    type: array
+                    items:
+                      allOf:
+                        - $ref: "#/components/schemas/Place"
+                        - type: object
+                          properties:
+                            grade_level:
+                              type: string
+                              nullable: true
+                            grades_offered:
+                              type: array
+                              items:
+                                type: string
+                            additional_details:
+                              type: array
+                              items: {}
+                            language:
+                              type: string
+                              nullable: true
+                            affiliation:
+                              type: string
+                              nullable: true
+                            orientation:
+                              type: string
+                              nullable: true
+                            school_board:
+                              type: string
+                              nullable: true
+                            type:
+                              type: string
+                              nullable: true
+                            score:
+                              nullable: true
+                              description: A school quality/rating score, if available. Exact scale unconfirmed.
+                            has_catchment:
+                              type: boolean
+                              nullable: true
+                            special_programs:
+                              type: array
+                              items: {}
+                            neighbourhoods_served:
+                              type: array
+                              description: Neighbourhoods within this school's catchment.
+                              items:
+                                type: object
+                                properties:
+                                  id:
+                                    type: string
+                                  name:
+                                    type: string
+                                  slug:
+                                    type: string
+                  parks:
+                    type: array
+                    items:
+                      allOf:
+                        - $ref: "#/components/schemas/Place"
+                        - type: object
+                          properties:
+                            major_park:
+                              type: boolean
+                              description: Whether this is classified as a major park.
+                            facilities:
+                              type: array
+                              items:
+                                type: string
+                            phone_number:
+                              type: string
+                              nullable: true
+                  transit_stops:
+                    type: array
+                    items:
+                      allOf:
+                        - $ref: "#/components/schemas/Place"
+                        - type: object
+                          properties:
+                            type:
+                              type: string
+                              description: The type of transit stop (e.g. bus, subway).
+                            walking_time:
+                              nullable: true
+                              description: Estimated walking time from the queried point, if available. Exact unit/shape unconfirmed.
+                  safety_places:
+                    type: array
+                    items:
+                      allOf:
+                        - $ref: "#/components/schemas/Place"
+                        - type: object
+                          properties:
+                            type:
+                              type: string
+                              description: The type of safety place (e.g. police, fire station, hospital).
         "400":
           $ref: components.yml#/components/responses/BadRequest
         "401":
           $ref: components.yml#/components/responses/Unauthorized
       deprecated: false
+components:
+  schemas:
+    Place:
+      type: object
+      description: Fields common to every place category (schools, parks, transit_stops, safety_places).
+      properties:
+        id:
+          type: string
+          example: "12345"
+          description: The unique identifier of this place.
+        name:
+          type: string
+          example: Lincoln Elementary School
+          description: The name of this place.
+        slug:
+          type: string
+          example: lincoln-elementary-school
+          description: A URL-friendly identifier for this place.
+        full_slug:
+          type: string
+          example: tx/houston/lincoln-elementary-school
+          description: A fully-qualified URL-friendly identifier for this place.
+        description:
+          type: string
+          nullable: true
+          description: A description of this place, if available.
+        url:
+          type: string
+          nullable: true
+          example: https://example.com/resource/123
+          description: A URL with more information about this place, if available.
+        features:
+          type: object
+          description: A dynamic map of category-specific attributes (e.g. contact info, classification codes). Keys and value types vary by place and category, so they aren't individually enumerated here.
+          additionalProperties: true
+        country:
+          type: string
+          nullable: true
+          example: United States
+        state_province:
+          type: string
+          nullable: true
+          example: TX
+        city:
+          type: object
+          nullable: true
+          properties:
+            id:
+              type: string
+              example: "1"
+            name:
+              type: string
+              example: Houston
+            slug:
+              type: string
+              example: houston
+        county:
+          type: object
+          nullable: true
+          properties:
+            id:
+              type: string
+              example: "1"
+            name:
+              type: string
+              example: Harris
+            slug:
+              type: string
+              example: harris
+        neighbourhood:
+          type: object
+          nullable: true
+          properties:
+            id:
+              type: string
+              example: "1"
+            name:
+              type: string
+              example: Lakewood Forest
+            slug:
+              type: string
+              example: lakewood-forest
+        place_type:
+          type: string
+          example: school
+          description: The category of place (e.g. school, park, transit_stop, safety_place).
+        distance:
+          type: number
+          example: 0.8
+          description: The distance from the queried lat/long to this place.
+        point:
+          type: object
+          description: The lat/long coordinates of this place.
+          properties:
+            lat:
+              type: number
+              example: 29.98234
+            lng:
+              type: number
+              example: -95.603577
+        geometry:
+          type: object
+          nullable: true
+          description: A GeoJSON boundary polygon for this place, if one exists.
+          properties:
+            type:
+              type: string
+              example: Polygon
+            coordinates:
+              type: array
+              items:
+                type: array
+                items:
+                  type: array
+                  items:
+                    type: number
+        inputInsidePolygon:
+          type: boolean
+          example: true
+          description: Present only when the `inputInsidePolygon` request parameter is true and this place has a boundary polygon. Indicates whether the queried lat/long falls inside it.

@@ -39,12 +39,6 @@
         "/listings/deleted": {
             "$ref": "listings.yml#/paths/~1listings~1deleted"
         },
-        "/listings/locations": {
-            "$ref": "listings.yml#/paths/~1listings~1locations"
-        },
-        "/listings/property-types": {
-            "$ref": "listings.yml#/paths/~1listings~1property-types"
-        },
         "/locations": {
             "$ref": "locations.yml#/paths/~1locations"
         },
@@ -59,9 +53,6 @@
         },
         "/members": {
             "$ref": "members.yml#/paths/~1members"
-        },
-        "/listings/buildings": {
-            "$ref": "listings.yml#/paths/~1listings~1buildings"
         },
         "/places": {
             "$ref": "places.yml#/paths/~1places"
