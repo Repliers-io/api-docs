@@ -38,6 +38,24 @@ paths:
           description: If true, when both "aggregates" and "statistics" parameters are used, the requested statistics will be grouped by the requested aggregates.
           schema:
             type: boolean
+        - name: aggregatesListPriceSaleBucketSize
+          in: query
+          description: Sets the bucket size (price range width) for sale listings when "aggregates=listPrice" is used. Buckets cover the range from 0 to 5,000,000. Default is 100000.
+          schema:
+            type: integer
+            minimum: 25000
+            maximum: 5000000
+            default: 100000
+          example: 50000
+        - name: aggregatesListPriceLeaseBucketSize
+          in: query
+          description: Sets the bucket size (price range width) for lease listings when "aggregates=listPrice" is used. Buckets cover the range from 0 to 10,000. Default is 500.
+          schema:
+            type: integer
+            minimum: 50
+            maximum: 10000
+            default: 500
+          example: 250
         - name: amenities
           in: query
           description: Filters listings by one or more amenity values. Use the aggregates parameter to retrieve available values. Supports multiple values, for example ?amenities=Gym&amenities=Swimming Pool
