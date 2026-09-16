@@ -839,6 +839,8 @@ paths:
                 - sd-soldPrice
                 - avg-priceSqft
                 - med-priceSqft
+                - min-priceSqft
+                - max-priceSqft
                 - avg-tax
                 - med-tax
                 - avg-maintenanceFee
