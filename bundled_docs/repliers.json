@@ -1110,10 +1110,25 @@
           {
             "name": "radius",
             "in": "query",
-            "description": "Accepts a value for radius in KM. Must be used with lat and long parameters to return listings within a certain radius of a given latitude and longitude.",
+            "description": "Accepts a value for radius, expressed in the unit set by radiusUnit (KM by default). Must be used with lat and long parameters to return listings within a certain radius of a given latitude and longitude.",
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "radiusUnit",
+            "in": "query",
+            "description": "Sets the unit of measurement for the `radius` parameter. Can only be used together with `radius`.\n\nAllowed values:\n\n- `km` — kilometers (default)\n- `m` — meters\n- `mi` — miles\n- `yd` — yards",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "m",
+                "km",
+                "mi",
+                "yd"
+              ],
+              "default": "km"
             }
           },
           {
@@ -7039,10 +7054,25 @@
           {
             "name": "radius",
             "in": "query",
-            "description": "If specified, will show similar listings within the specified radius (km). If not specified, defaults to showing listings in the same neighborhood.",
+            "description": "If specified, will show similar listings within the specified radius, expressed in the unit set by radiusUnit (KM by default). If not specified, defaults to showing listings in the same neighborhood.",
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "radiusUnit",
+            "in": "query",
+            "description": "Sets the unit of measurement for the `radius` parameter. Can only be used together with `radius`.\n\nAllowed values:\n\n- `km` — kilometers (default)\n- `m` — meters\n- `mi` — miles\n- `yd` — yards",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "m",
+                "km",
+                "mi",
+                "yd"
+              ],
+              "default": "km"
             }
           },
           {
@@ -7987,12 +8017,28 @@
           {
             "name": "radius",
             "in": "query",
-            "description": "Accepts a value for radius in KM. Must be used with `lat` and `long` parameters to return locations within the specified radius of a given latitude and longitude.\n",
+            "description": "Accepts a value for radius, expressed in the unit set by `radiusUnit` (KM by default). Must be used with `lat` and `long` parameters to return locations within the specified radius of a given latitude and longitude.\n",
             "required": false,
             "schema": {
               "type": "number",
               "format": "float",
               "exclusiveMinimum": 0
+            }
+          },
+          {
+            "name": "radiusUnit",
+            "in": "query",
+            "description": "Sets the unit of measurement for the `radius` parameter. Can only be used together with `radius`.\n\nAllowed values:\n\n- `km` — kilometers (default)\n- `m` — meters\n- `mi` — miles\n- `yd` — yards\n",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "m",
+                "km",
+                "mi",
+                "yd"
+              ],
+              "default": "km"
             }
           },
           {
@@ -9912,12 +9958,28 @@
           {
             "name": "radius",
             "in": "query",
-            "description": "Accepts a value for radius in KM. Must be used with `lat` and `long` parameters to return locations within the specified radius of a given latitude and longitude.\n",
+            "description": "Accepts a value for radius, expressed in the unit set by `radiusUnit` (KM by default). Must be used with `lat` and `long` parameters to return locations within the specified radius of a given latitude and longitude.\n",
             "required": false,
             "schema": {
               "type": "number",
               "format": "float",
               "exclusiveMinimum": 0
+            }
+          },
+          {
+            "name": "radiusUnit",
+            "in": "query",
+            "description": "Sets the unit of measurement for the `radius` parameter. Can only be used together with `radius`.\n\nAllowed values:\n\n- `km` — kilometers (default)\n- `m` — meters\n- `mi` — miles\n- `yd` — yards\n",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "m",
+                "km",
+                "mi",
+                "yd"
+              ],
+              "default": "km"
             }
           },
           {
@@ -18412,11 +18474,27 @@
           {
             "name": "radius",
             "in": "query",
-            "description": "Accepts a value for radius in KM. Must be used with `lat` and `long` parameters to return buildings within the specified radius of a given latitude and longitude.",
+            "description": "Accepts a value for radius, expressed in the unit set by `radiusUnit` (KM by default). Must be used with `lat` and `long` parameters to return buildings within the specified radius of a given latitude and longitude.",
             "schema": {
               "type": "number",
               "format": "float",
               "minimum": 1
+            }
+          },
+          {
+            "name": "radiusUnit",
+            "in": "query",
+            "description": "Sets the unit of measurement for the `radius` parameter. Can only be used together with `radius`.\n\nAllowed values:\n\n- `km` — kilometers (default)\n- `m` — meters\n- `mi` — miles\n- `yd` — yards\n",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "m",
+                "km",
+                "mi",
+                "yd"
+              ],
+              "default": "km"
             }
           },
           {
