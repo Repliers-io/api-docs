@@ -727,10 +727,29 @@ paths:
               type: string
         - name: radius
           in: query
-          description: Accepts a value for radius in KM. Must be used with lat and long parameters to return listings within a certain radius of a given latitude and longitude.
+          description: Accepts a value for radius, expressed in the unit set by radiusUnit (KM by default). Must be used with lat and long parameters to return listings within a certain radius of a given latitude and longitude.
           schema:
             type: integer
             format: int32
+        - name: radiusUnit
+          in: query
+          description: |-
+            Sets the unit of measurement for the `radius` parameter. Can only be used together with `radius`.
+
+            Allowed values:
+
+            - `km` — kilometers (default)
+            - `m` — meters
+            - `mi` — miles
+            - `yd` — yards
+          schema:
+            type: string
+            enum:
+              - m
+              - km
+              - mi
+              - yd
+            default: km
         - name: resultsPerPage
           in: query
           description: The number of listings to return per page.
@@ -13232,10 +13251,29 @@ paths:
             format: int32
         - name: radius
           in: query
-          description: If specified, will show similar listings within the specified radius (km). If not specified, defaults to showing listings in the same neighborhood.
+          description: If specified, will show similar listings within the specified radius, expressed in the unit set by radiusUnit (KM by default). If not specified, defaults to showing listings in the same neighborhood.
           schema:
             type: integer
             format: int32
+        - name: radiusUnit
+          in: query
+          description: |-
+            Sets the unit of measurement for the `radius` parameter. Can only be used together with `radius`.
+
+            Allowed values:
+
+            - `km` — kilometers (default)
+            - `m` — meters
+            - `mi` — miles
+            - `yd` — yards
+          schema:
+            type: string
+            enum:
+              - m
+              - km
+              - mi
+              - yd
+            default: km
         - name: sortBy
           in: query
           description: Allowed values:<br/><br/><code>updatedOnDesc</code>,<code>updatedOnAsc</code>,<code>createdOnAsc</code>,<code>createdOnDesc</code>

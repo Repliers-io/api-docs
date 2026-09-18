@@ -187,12 +187,33 @@ paths:
         - name: radius
           in: query
           description: |
-            Accepts a value for radius in KM. Must be used with `lat` and `long` parameters to return locations within the specified radius of a given latitude and longitude.
+            Accepts a value for radius, expressed in the unit set by `radiusUnit` (KM by default). Must be used with `lat` and `long` parameters to return locations within the specified radius of a given latitude and longitude.
           required: false
           schema:
             type: number
             format: float
             exclusiveMinimum: 0
+
+        - name: radiusUnit
+          in: query
+          description: |
+            Sets the unit of measurement for the `radius` parameter. Can only be used together with `radius`.
+
+            Allowed values:
+
+            - `km` — kilometers (default)
+            - `m` — meters
+            - `mi` — miles
+            - `yd` — yards
+          required: false
+          schema:
+            type: string
+            enum:
+              - m
+              - km
+              - mi
+              - yd
+            default: km
 
         - name: lat
           in: query
@@ -460,12 +481,33 @@ paths:
         - name: radius
           in: query
           description: |
-            Accepts a value for radius in KM. Must be used with `lat` and `long` parameters to return locations within the specified radius of a given latitude and longitude.
+            Accepts a value for radius, expressed in the unit set by `radiusUnit` (KM by default). Must be used with `lat` and `long` parameters to return locations within the specified radius of a given latitude and longitude.
           required: false
           schema:
             type: number
             format: float
             exclusiveMinimum: 0
+
+        - name: radiusUnit
+          in: query
+          description: |
+            Sets the unit of measurement for the `radius` parameter. Can only be used together with `radius`.
+
+            Allowed values:
+
+            - `km` — kilometers (default)
+            - `m` — meters
+            - `mi` — miles
+            - `yd` — yards
+          required: false
+          schema:
+            type: string
+            enum:
+              - m
+              - km
+              - mi
+              - yd
+            default: km
 
         - name: lat
           in: query
