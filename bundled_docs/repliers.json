@@ -17843,6 +17843,11 @@
                     "default": false,
                     "description": "If `true`, the endpoint will return listings according to the generated urlQueryString parameters, the same way as GET /lisitngs endpoint would treat those parameters. Default is `false`.\n"
                   },
+                  "boardId": {
+                    "type": "integer",
+                    "description": "Restricts the prompt to a single board. Only relevant for API keys with access to multiple boards.\n\nThe NLP model uses the acceptable values (aggregates) of the boards available to your API key when translating a prompt. On a multi-board key, values from several boards are combined, which can result in a generated query that uses a value belonging to a different board. Supplying `boardId` narrows the model to that one board, so the values it produces are always valid for it.\n\nIf the supplied `boardId` is not accessible with your API key, a `403` response is returned.\n",
+                    "example": 2
+                  },
                   "fields": {
                     "type": "string",
                     "description": "Use if you want to limit the `listings` response object to containing certain fields only. For example: `fields=listPrice,soldPrice` would limit the response to contain `listPrice` and `soldPrice` only. You can also specify the amount of images to return, for example if a listing has 40 images total and you specify `fields=images[5]` it will only return the first 5 images.\n"
@@ -18018,6 +18023,9 @@
           },
           "401": {
             "$ref": "#/paths/~1nlp/get/responses/401"
+          },
+          "403": {
+            "description": "Forbidden - returned when either:\n\n- your account does not have access to the NLP feature, or\n- the supplied `boardId` is not accessible with your API key."
           },
           "406": {
             "description": "Not accepted - If the input is not relevant to a listings search a 406 response will be returned. For example, \"why is the sky blue\" would return a 406 response."

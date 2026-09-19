@@ -61,6 +61,15 @@ paths:
                   default: false
                   description: |
                     If `true`, the endpoint will return listings according to the generated urlQueryString parameters, the same way as GET /lisitngs endpoint would treat those parameters. Default is `false`.
+                boardId:
+                  type: integer
+                  description: |
+                    Restricts the prompt to a single board. Only relevant for API keys with access to multiple boards.
+
+                    The NLP model uses the acceptable values (aggregates) of the boards available to your API key when translating a prompt. On a multi-board key, values from several boards are combined, which can result in a generated query that uses a value belonging to a different board. Supplying `boardId` narrows the model to that one board, so the values it produces are always valid for it.
+
+                    If the supplied `boardId` is not accessible with your API key, a `403` response is returned.
+                  example: 2
                 fields:
                   type: string
                   description: |
@@ -97,6 +106,12 @@ paths:
           description: Bad Request - Invalid input.
         "401":
           $ref: components.yml#/components/responses/Unauthorized
+        "403":
+          description: |-
+            Forbidden - returned when either:
+
+            - your account does not have access to the NLP feature, or
+            - the supplied `boardId` is not accessible with your API key.
         "406":
           description: Not accepted - If the input is not relevant to a listings search a 406 response will be returned. For example, "why is the sky blue" would return a 406 response.
         "500":
