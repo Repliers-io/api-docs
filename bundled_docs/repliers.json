@@ -431,6 +431,19 @@
             }
           },
           {
+            "name": "imagesOrder",
+            "in": "query",
+            "description": "Controls the order of the images array when an image parameter (<code>coverImage</code> or <code>imageSearchItems</code>) is used. <code>score</code> (default) places the matched photo first. <code>original</code> keeps the natural MLS order, the same as a request with no image parameter. Returns a 400 error if used without <code>coverImage</code> or <code>imageSearchItems</code>.<br/><br/>Allowed values: <code>score</code>, <code>original</code>",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "score",
+                "original"
+              ],
+              "default": "score"
+            }
+          },
+          {
             "name": "lastPriceChangeType",
             "in": "query",
             "description": "Allows you to find listings that have either increased or decreased in price.",
