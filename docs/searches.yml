@@ -233,6 +233,16 @@ paths:
                       - Pending
                       - Canceled
                       - Incomplete
+                fields:
+                  type: object
+                  description: 'An object of raw MLS field filters to be used for this search. Each key is a raw field name and each value is an array of possible values for that field. Raw field names must be prefixed with <code>raw.</code>, for example <code>raw.Room13level</code> or <code>raw.PropertyUse</code>. Supports up to 50 fields and up to 50 values per field.<br/><br/>Example: <code>{"raw.Room13level": ["Main"]}</code>'
+                  additionalProperties:
+                    type: array
+                    items:
+                      type: string
+                  example:
+                    raw.Room13level:
+                      - Main
             examples:
               Request Example:
                 value:
@@ -600,6 +610,16 @@ paths:
                       - Pending
                       - Canceled
                       - Incomplete
+                fields:
+                  type: object
+                  description: 'An object of raw MLS field filters to be used for this search. Each key is a raw field name and each value is an array of possible values for that field. Raw field names must be prefixed with <code>raw.</code>, for example <code>raw.Room13level</code> or <code>raw.PropertyUse</code>. Supports up to 50 fields and up to 50 values per field.<br/><br/>Only the fields supplied are updated. The values supplied for a field replace its existing values, and fields that are not supplied are left unchanged. Set a field to <code>null</code> to remove it, or set <code>fields</code> to <code>null</code> to remove all raw field filters.<br/><br/>Example: <code>{"raw.Room13level": ["Main"]}</code>'
+                  additionalProperties:
+                    type: array
+                    items:
+                      type: string
+                  example:
+                    raw.Room13level:
+                      - Main
       responses:
         "200":
           $ref: components.yml#/components/responses/EmptySuccess
@@ -1044,6 +1064,17 @@ components:
           nullable: true
           example: Active
           description: The standardized status filter applied to matches, if set.
+        fields:
+          type: object
+          nullable: true
+          description: The raw MLS field filters applied to this search, if set. Each key is a raw field name prefixed with <code>raw.</code> and each value is an array of values for that field. Returns <code>null</code> when no raw field filters are set.
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          example:
+            raw.Room13level:
+              - Main
     Match:
       type: object
       description: A listing that matched a saved search's criteria.
