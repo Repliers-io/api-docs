@@ -212,6 +212,14 @@ paths:
                   type: integer
                   format: int32
                   description: The maximum lot size in square feet to be used as a filter for this search.
+                minLotWidth:
+                  type: number
+                  format: float
+                  description: The minimum lot width to be used as a filter for this search. If specified, matches only listings whose lot width is >= the supplied value. Must be greater than 0 and cannot be greater than maxLotWidth. The unit of measurement is the same as the one the MLS board provides in its data.
+                maxLotWidth:
+                  type: number
+                  format: float
+                  description: The maximum lot width to be used as a filter for this search. If specified, matches only listings whose lot width is <= the supplied value. Must be greater than 0 and cannot be less than minLotWidth. The unit of measurement is the same as the one the MLS board provides in its data.
                 minOpenHouseDate:
                   description: "Indicates whether the search is for properties that have an Open House on or after the supplied date. Date format: <code>YYYY-MM-DD</code>"
                   type: string
@@ -589,6 +597,14 @@ paths:
                   type: integer
                   format: int32
                   description: The maximum lot size in square feet to be used as a filter for this search.
+                minLotWidth:
+                  type: number
+                  format: float
+                  description: The minimum lot width to be used as a filter for this search. If specified, matches only listings whose lot width is >= the supplied value. Must be greater than 0 and cannot be greater than maxLotWidth. The unit of measurement is the same as the one the MLS board provides in its data.
+                maxLotWidth:
+                  type: number
+                  format: float
+                  description: The maximum lot width to be used as a filter for this search. If specified, matches only listings whose lot width is <= the supplied value. Must be greater than 0 and cannot be less than minLotWidth. The unit of measurement is the same as the one the MLS board provides in its data.
                 minOpenHouseDate:
                   description: "Indicates whether the search is for properties that have an Open House on or after the supplied date. Date format: <code>YYYY-MM-DD</code>"
                   type: string
@@ -912,6 +928,18 @@ components:
           type: integer
           nullable: true
           example: 10000
+        minLotWidth:
+          type: number
+          format: float
+          nullable: true
+          example: 20
+          description: The minimum lot width filter applied to this search, if set. The unit of measurement is the same as the one the MLS board provides in its data.
+        maxLotWidth:
+          type: number
+          format: float
+          nullable: true
+          example: 50
+          description: The maximum lot width filter applied to this search, if set. The unit of measurement is the same as the one the MLS board provides in its data.
         minOpenHouseDate:
           type: string
           nullable: true

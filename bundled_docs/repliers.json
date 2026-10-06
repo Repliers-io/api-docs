@@ -12857,6 +12857,16 @@
                     "format": "int32",
                     "description": "The maximum lot size in square feet to be used as a filter for this search."
                   },
+                  "minLotWidth": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "The minimum lot width to be used as a filter for this search. If specified, matches only listings whose lot width is >= the supplied value. Must be greater than 0 and cannot be greater than maxLotWidth. The unit of measurement is the same as the one the MLS board provides in its data."
+                  },
+                  "maxLotWidth": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "The maximum lot width to be used as a filter for this search. If specified, matches only listings whose lot width is <= the supplied value. Must be greater than 0 and cannot be less than minLotWidth. The unit of measurement is the same as the one the MLS board provides in its data."
+                  },
                   "minOpenHouseDate": {
                     "description": "Indicates whether the search is for properties that have an Open House on or after the supplied date. Date format: <code>YYYY-MM-DD</code>",
                     "type": "string",
@@ -12880,6 +12890,21 @@
                         "Pending",
                         "Canceled",
                         "Incomplete"
+                      ]
+                    }
+                  },
+                  "fields": {
+                    "type": "object",
+                    "description": "An object of raw MLS field filters to be used for this search. Each key is a raw field name and each value is an array of possible values for that field. Raw field names must be prefixed with <code>raw.</code>, for example <code>raw.Room13level</code> or <code>raw.PropertyUse</code>. Supports up to 50 fields and up to 50 values per field.<br/><br/>Example: <code>{\"raw.Room13level\": [\"Main\"]}</code>",
+                    "additionalProperties": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "example": {
+                      "raw.Room13level": [
+                        "Main"
                       ]
                     }
                   }
@@ -13015,6 +13040,20 @@
                       "type": "integer",
                       "nullable": true,
                       "example": 10000
+                    },
+                    "minLotWidth": {
+                      "type": "number",
+                      "format": "float",
+                      "nullable": true,
+                      "example": 20,
+                      "description": "The minimum lot width filter applied to this search, if set. The unit of measurement is the same as the one the MLS board provides in its data."
+                    },
+                    "maxLotWidth": {
+                      "type": "number",
+                      "format": "float",
+                      "nullable": true,
+                      "example": 50,
+                      "description": "The maximum lot width filter applied to this search, if set. The unit of measurement is the same as the one the MLS board provides in its data."
                     },
                     "minOpenHouseDate": {
                       "type": "string",
@@ -13220,6 +13259,22 @@
                       "nullable": true,
                       "example": "Active",
                       "description": "The standardized status filter applied to matches, if set."
+                    },
+                    "fields": {
+                      "type": "object",
+                      "nullable": true,
+                      "description": "The raw MLS field filters applied to this search, if set. Each key is a raw field name prefixed with <code>raw.</code> and each value is an array of values for that field. Returns <code>null</code> when no raw field filters are set.",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "example": {
+                        "raw.Room13level": [
+                          "Main"
+                        ]
+                      }
                     }
                   }
                 }
@@ -13600,6 +13655,16 @@
                     "format": "int32",
                     "description": "The maximum lot size in square feet to be used as a filter for this search."
                   },
+                  "minLotWidth": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "The minimum lot width to be used as a filter for this search. If specified, matches only listings whose lot width is >= the supplied value. Must be greater than 0 and cannot be greater than maxLotWidth. The unit of measurement is the same as the one the MLS board provides in its data."
+                  },
+                  "maxLotWidth": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "The maximum lot width to be used as a filter for this search. If specified, matches only listings whose lot width is <= the supplied value. Must be greater than 0 and cannot be less than minLotWidth. The unit of measurement is the same as the one the MLS board provides in its data."
+                  },
                   "minOpenHouseDate": {
                     "description": "Indicates whether the search is for properties that have an Open House on or after the supplied date. Date format: <code>YYYY-MM-DD</code>",
                     "type": "string",
@@ -13623,6 +13688,21 @@
                         "Pending",
                         "Canceled",
                         "Incomplete"
+                      ]
+                    }
+                  },
+                  "fields": {
+                    "type": "object",
+                    "description": "An object of raw MLS field filters to be used for this search. Each key is a raw field name and each value is an array of possible values for that field. Raw field names must be prefixed with <code>raw.</code>, for example <code>raw.Room13level</code> or <code>raw.PropertyUse</code>. Supports up to 50 fields and up to 50 values per field.<br/><br/>Only the fields supplied are updated. The values supplied for a field replace its existing values, and fields that are not supplied are left unchanged. Set a field to <code>null</code> to remove it, or set <code>fields</code> to <code>null</code> to remove all raw field filters.<br/><br/>Example: <code>{\"raw.Room13level\": [\"Main\"]}</code>",
+                    "additionalProperties": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "example": {
+                      "raw.Room13level": [
+                        "Main"
                       ]
                     }
                   }

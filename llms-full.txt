@@ -993,6 +993,8 @@ Use this endpoint to create a saved search for a client.Important - When a saved
 | waterSource | array[string] | no | An array of water source values to be used as a filter for this search. |
 | minLotSizeSqft | integer (int32) | no | The minimum lot size in square feet to be used as a filter for this search. |
 | maxLotSizeSqft | integer (int32) | no | The maximum lot size in square feet to be used as a filter for this search. |
+| minLotWidth | number (float) | no | The minimum lot width to be used as a filter for this search. If specified, matches only listings whose lot width is >= the supplied value. Must be greater than 0 and cannot be greater than maxLotWidth. The unit of measurement is the same as the one the MLS board provides in its data. |
+| maxLotWidth | number (float) | no | The maximum lot width to be used as a filter for this search. If specified, matches only listings whose lot width is <= the supplied value. Must be greater than 0 and cannot be less than minLotWidth. The unit of measurement is the same as the one the MLS board provides in its data. |
 | minOpenHouseDate | string (date) | no | Indicates whether the search is for properties that have an Open House on or after the supplied date. Date format: YYYY-MM-DD |
 | maxOpenHouseDate | string (date) | no | Indicates whether the search is for properties that have an Open House on or before the supplied date. Date format: YYYY-MM-DD. It's not recommended to use it unless you have a very good reason to set it. |
 | standardStatus | array[string] enum: Active, Active Under Contract, Closed, Expired, Pending, Canceled, Incomplete | no | Indicates what Standard Status of property to search for. Allowed values: Active, Active Under Contract, Closed, Expired, Pending, Canceled, Incomplete |
@@ -1022,6 +1024,8 @@ Use this endpoint to create a saved search for a client.Important - When a saved
 | maxYearBuilt | integer |  |
 | minLotSizeSqft | integer |  |
 | maxLotSizeSqft | integer |  |
+| minLotWidth | number (float) | The minimum lot width filter applied to this search, if set. The unit of measurement is the same as the one the MLS board provides in its data. |
+| maxLotWidth | number (float) | The maximum lot width filter applied to this search, if set. The unit of measurement is the same as the one the MLS board provides in its data. |
 | minOpenHouseDate | string | Filters matches to listings with an open house on or after this date. |
 | maxOpenHouseDate | string | Filters matches to listings with an open house on or before this date. |
 | minStories | integer |  |
@@ -1147,6 +1151,8 @@ Use this endpoint to update a saved search. Important - When a saved search is u
 | waterSource | array[string] | no | An array of water source values to be used as a filter for this search. |
 | minLotSizeSqft | integer (int32) | no | The minimum lot size in square feet to be used as a filter for this search. |
 | maxLotSizeSqft | integer (int32) | no | The maximum lot size in square feet to be used as a filter for this search. |
+| minLotWidth | number (float) | no | The minimum lot width to be used as a filter for this search. If specified, matches only listings whose lot width is >= the supplied value. Must be greater than 0 and cannot be greater than maxLotWidth. The unit of measurement is the same as the one the MLS board provides in its data. |
+| maxLotWidth | number (float) | no | The maximum lot width to be used as a filter for this search. If specified, matches only listings whose lot width is <= the supplied value. Must be greater than 0 and cannot be less than minLotWidth. The unit of measurement is the same as the one the MLS board provides in its data. |
 | minOpenHouseDate | string (date) | no | Indicates whether the search is for properties that have an Open House on or after the supplied date. Date format: YYYY-MM-DD |
 | maxOpenHouseDate | string (date) | no | Indicates whether the search is for properties that have an Open House on or before the supplied date. Date format: YYYY-MM-DD. It's not recommended to use it unless you have a very good reason to set it. |
 | standardStatus | array[string] enum: Active, Active Under Contract, Closed, Expired, Pending, Canceled, Incomplete | no | Indicates what Standard Status of property to search for. Allowed values: Active, Active Under Contract, Closed, Expired, Pending, Canceled, Incomplete |
