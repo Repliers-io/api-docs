@@ -760,7 +760,7 @@ Transfers all clients from one agent to another. Useful when an agent leaves you
 
 ### POST /clients
 
-Use this endpoint to create a client. When creating saved searches, messages or favorites a client needs to be specified.
+Use this endpoint to create a client. When creating saved searches, messages or favorites a client needs to be specified. Important - at least one of phone or email must be provided. A request that contains neither is rejected with a 400 error.
 
 **Request Body:**
 
@@ -769,8 +769,8 @@ Use this endpoint to create a client. When creating saved searches, messages or 
 | agentId | integer (int32) | yes | The agentId of the agent that this client is assigned to. Each client must be assigned to an agent. |
 | fname | string | no | The first name of this client |
 | lname | string | no | The last name of this client. |
-| phone | string | no | The mobile phone number of this client (May be used to deliver text messages). Must be 11 digits in length. Regex pattern: ^(1)([0-9]{10})$ |
-| email | string | no | The email address of this client (May be used to send emails). Regex pattern: ^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)\|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])\|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})) |
+| phone | string | no | The mobile phone number of this client (May be used to deliver text messages). Must be 11 digits in length. Required if email is not provided. Regex pattern: ^(1)([0-9]{10})$ |
+| email | string | no | The email address of this client (May be used to send emails). Required if phone is not provided. Regex pattern: ^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)\|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])\|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})) |
 | status | boolean default: true | no | If false, disables all operations for the client. |
 | preferences | object | no |  |
 | tags | array[string] | no | You may categorize this client using tags. Tags are useful for filtering purposes and building lists of specific clients. For example, if this client is a buyer from Toronto, you may want to create tags for "Buyer" and "Toronto". |
