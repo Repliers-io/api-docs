@@ -8,7 +8,7 @@ paths:
   /webhooks:
     post:
       summary: Create a subscription
-      description: Use this endpoint to subscribe to a webhook.
+      description: "Use this endpoint to subscribe to a webhook.<br/><br/><strong>Verification handshake</strong> - when a subscription is created, the API sends a POST request to the <code>target_url</code> with an <code>X-Hook-Secret</code> header. Your endpoint must respond with the same <code>X-Hook-Secret</code> header and value. If the secret is not echoed back the request fails with a 401 error, and if the target_url cannot be reached it fails with a 400 error.<br/><br/>A <code>target_url</code> that is already used by another subscription is rejected with a 409 error. Sandbox API keys cannot create subscriptions and receive a 403 error."
       externalDocs:
         description: How to Subscribe to Events
         url: https://help.repliers.com/en/article/webhooks-implementation-guide-oimchm/#3-how-to-subscribe-to-events
@@ -125,6 +125,10 @@ paths:
           $ref: components.yml#/components/responses/BadRequest
         "401":
           $ref: components.yml#/components/responses/Unauthorized
+        "403":
+          description: Webhooks are not enabled for this API key, or the API key is a sandbox key. Contact the Repliers support team to enable the feature.
+        "409":
+          description: The target_url is already used by another webhook subscription.
       deprecated: false
     get:
       summary: List subscriptions
@@ -143,20 +147,23 @@ paths:
           $ref: components.yml#/components/responses/BadRequest
         "401":
           $ref: components.yml#/components/responses/Unauthorized
+        "403":
+          description: Webhooks are not enabled for this API key. Contact the Repliers support team to enable the feature.
       deprecated: false
   /webhooks/{webhookId}:
     patch:
       summary: Update a subscription
-      description: Use this endpoint to update an existing webhook subscription.
+      description: Use this endpoint to update an existing webhook subscription. The request body must contain at least one property, and unknown properties are rejected with a 400 error. PUT /webhooks/{webhookId} behaves identically.
       operationId: update-a-subscription
-      parameters:
+      parameters: &WebhookUpdateParams
         - name: webhookId
           in: path
           schema:
             type: integer
             format: int32
           required: true
-      requestBody:
+      requestBody: &WebhookUpdateBody
+        required: true
         content:
           application/json:
             schema:
@@ -199,13 +206,23 @@ paths:
                             description: The values to match against.
                             items:
                               type: string
-      responses:
+      responses: &WebhookUpdateResponses
         "200":
           $ref: components.yml#/components/responses/EmptySuccess
         "400":
           $ref: components.yml#/components/responses/BadRequest
         "401":
           $ref: components.yml#/components/responses/Unauthorized
+        "403":
+          description: Webhooks are not enabled for this API key. Contact the Repliers support team to enable the feature.
+      deprecated: false
+    put:
+      summary: Update a subscription (PUT)
+      description: Identical to PATCH /webhooks/{webhookId}. Updates an existing webhook subscription. The request body must contain at least one property, and unknown properties are rejected with a 400 error.
+      operationId: update-a-subscription-put
+      parameters: *WebhookUpdateParams
+      requestBody: *WebhookUpdateBody
+      responses: *WebhookUpdateResponses
       deprecated: false
     delete:
       summary: Delete a subscription
@@ -225,6 +242,8 @@ paths:
           $ref: components.yml#/components/responses/BadRequest
         "401":
           $ref: components.yml#/components/responses/Unauthorized
+        "403":
+          description: Webhooks are not enabled for this API key. Contact the Repliers support team to enable the feature.
       deprecated: false
     get:
       summary: Get a subscription
@@ -248,6 +267,8 @@ paths:
           $ref: components.yml#/components/responses/BadRequest
         "401":
           $ref: components.yml#/components/responses/Unauthorized
+        "403":
+          description: Webhooks are not enabled for this API key. Contact the Repliers support team to enable the feature.
       deprecated: false
   /webhooks/events:
     get:
@@ -264,7 +285,7 @@ paths:
             application/json:
               schema:
                 type: array
-                items:
+                items: &WebhookEvent
                   type: object
                   properties:
                     name:
@@ -311,6 +332,35 @@ paths:
           $ref: components.yml#/components/responses/BadRequest
         "401":
           $ref: components.yml#/components/responses/Unauthorized
+        "403":
+          description: Webhooks are not enabled for this API key. Contact the Repliers support team to enable the feature.
+      deprecated: false
+  /webhooks/events/{name}:
+    get:
+      summary: Get an event
+      description: Use this endpoint to retrieve the details of a single webhook event that you may subscribe to, including a sample payload.
+      operationId: get-an-event
+      parameters:
+        - name: name
+          in: path
+          description: The event name, for example listing.created. See the event list on POST /webhooks.
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema: *WebhookEvent
+        "400":
+          $ref: components.yml#/components/responses/BadRequest
+        "401":
+          $ref: components.yml#/components/responses/Unauthorized
+        "403":
+          description: Webhooks are not enabled for this API key. Contact the Repliers support team to enable the feature.
+        "404":
+          description: No event with the supplied name exists.
       deprecated: false
 components:
   schemas:

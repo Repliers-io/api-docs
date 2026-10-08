@@ -8,7 +8,7 @@ paths:
   /agents:
     post:
       summary: Create an agent
-      description: Use this endpoint to create an agent. Each client that you create needs to be associated with an agent, therefore it's necessary to create at least one agent before you start creating clients.
+      description: Use this endpoint to create an agent. Each client that you create needs to be associated with an agent, therefore it's necessary to create at least one agent before you start creating clients.<br/><br/><strong>Important</strong> - email and phone must be unique across all agents and clients in your account. A duplicate is rejected with a 409 error. Email matching is case-insensitive.
       externalDocs:
         description: "Step 1: Create an Agent"
         url: https://help.repliers.com/en/article/implementation-guide-for-agents-and-clients-of4k3i/#2-step-1-create-an-agent
@@ -79,6 +79,8 @@ paths:
           $ref: components.yml#/components/responses/BadRequest
         "401":
           $ref: components.yml#/components/responses/Unauthorized
+        "409":
+          description: The email or phone number is already in use by another agent or client in your account.
       deprecated: false
     get:
       summary: Filter agents
@@ -157,7 +159,7 @@ paths:
   /agents/{agentId}:
     patch:
       summary: Update an agent
-      description: Updates one or more fields for an existing agent. Only include the fields you wish to change — omitted fields retain their current values.
+      description: Updates one or more fields for an existing agent. Only include the fields you wish to change — omitted fields retain their current values.<br/><br/><strong>Important</strong> - email and phone must be unique across all agents and clients in your account. A duplicate is rejected with a 409 error.
       externalDocs:
         description: Update a Client or Agent
         url: https://help.repliers.com/en/article/implementation-guide-for-agents-and-clients-of4k3i/#2-step-4-update-a-client-or-agent
@@ -228,6 +230,8 @@ paths:
           $ref: components.yml#/components/responses/BadRequest
         "401":
           $ref: components.yml#/components/responses/Unauthorized
+        "409":
+          description: The email or phone number is already in use by another agent or client in your account.
       deprecated: false
     delete:
       summary: Delete an agent

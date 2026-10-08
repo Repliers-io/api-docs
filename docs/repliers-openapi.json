@@ -90,6 +90,9 @@
         "/searches/{searchId}/matches/{matchId}": {
             "$ref": "searches.yml#/paths/~1searches~1{searchId}~1matches~1{matchId}"
         },
+        "/searches/matches": {
+            "$ref": "searches.yml#/paths/~1searches~1matches"
+        },
         "/estimates": {
             "$ref": "estimates.yml#/paths/~1estimates"
         },
@@ -116,6 +119,9 @@
         },
         "/webhooks/events": {
             "$ref": "webhooks.yml#/paths/~1webhooks~1events"
+        },
+        "/webhooks/events/{name}": {
+            "$ref": "webhooks.yml#/paths/~1webhooks~1events~1{name}"
         },
         "/nlp": {
             "$ref": "nlp.yml#/paths/~1nlp"

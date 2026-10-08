@@ -8,7 +8,7 @@ paths:
   /estimates:
     post:
       summary: Create an estimate
-      description: Use this endpoint to estimate a property's value by providing us with the property's attributes. <a target="_blank" href="https://help.repliers.com/en/article/ai-powered-property-estimates-implementation-guide-6gdbvp/">More info</a>.
+      description: "Use this endpoint to estimate a property's value by providing us with the property's attributes. <a target=\"_blank\" href=\"https://help.repliers.com/en/article/ai-powered-property-estimates-implementation-guide-6gdbvp/\">More info</a>.<br/><br/><strong>Important</strong> - the estimates feature must be enabled on your account; every /estimates endpoint returns a 403 error otherwise.<br/><br/><strong>Validation rules</strong><br/><br/>Only one estimate may be stored per client and address; creating a second one for the same clientId and address returns a 400 error.<br/><code>details.propertyType</code>, <code>details.style</code>, <code>details.basement1</code> and <code>details.basement2</code> must be values that exist in your MLS data (see GET /listings?listings=false&aggregates=details.propertyType,details.style,details.basement1,details.basement2).<br/><code>details.yearBuilt</code> must be a valid year or a value that exists in your MLS data.<br/><code>details.sqft</code> must be numeric.<br/>No value in the request body may contain a newline character."
       externalDocs:
         description: Create an Estimate
         url: https://help.repliers.com/en/article/building-a-step-by-step-property-estimate-tool-for-homeowners-and-sellers-tlblmn/#3-create-an-estimate
@@ -76,14 +76,28 @@ paths:
                       format: int32
                     propertyType:
                       type: string
+                      description: Must be a property type value that exists in your MLS data. For a list of supported values, make a GET /listings?listings=false&aggregates=details.propertyType request.
                     sqft:
                       type: integer
                       format: int32
+                      description: The square footage of the property. Must be numeric.
                     style:
                       type: string
+                      description: Must be a style value that exists in your MLS data. For a list of supported values, make a GET /listings?listings=false&aggregates=details.style request.
                     yearBuilt:
                       type: integer
                       format: int32
+                      description: Must be a valid year, or a year-built value that exists in your MLS data.
+                    numFireplaces:
+                      type: integer
+                      nullable: true
+                      minimum: 0
+                      description: The number of fireplaces. The strings "y" and "n" are also accepted and mapped to 1 and 0.
+                    extras:
+                      type: array
+                      description: Additional property features. Accepts an array of strings or a single string.
+                      items:
+                        type: string
                   required:
                     - numBathrooms
                     - numBedrooms
@@ -124,8 +138,16 @@ paths:
                   format: int32
                 boardId:
                   type: integer
-                  description: Required when using an API key that has access to multiple boards.
+                  description: Required when using an API key that has access to multiple boards, unless <code>resource</code> is supplied. A boardId that your API key does not have access to is rejected with a 400 error.
                   format: int32
+                resource:
+                  type: string
+                  description: The MLS resource identifier of the board, as an alternative to <code>boardId</code>. Must be a resource that your API key has access to.
+                listDate:
+                  type: string
+                  format: date-time
+                  description: "The date the property was listed, if known. Format: <code>YYYY-MM-DDTHH:mm:ss.sssZ</code>"
+                  example: "2024-06-15T00:00:00.000Z"
       responses:
         "200":
           $ref: components.yml#/components/responses/EmptySuccess
@@ -133,6 +155,8 @@ paths:
           $ref: components.yml#/components/responses/BadRequest
         "401":
           $ref: components.yml#/components/responses/Unauthorized
+        "403":
+          description: Estimates are not enabled for this API key. Contact the Repliers support team to enable the feature.
       deprecated: false
     get:
       summary: Get Estimates
@@ -163,6 +187,24 @@ paths:
           schema:
             type: integer
             format: int32
+            default: 100
+        - name: sortBy
+          in: query
+          description: Sorts the results by creation or last update date. If not specified, no particular order is applied.
+          schema:
+            type: string
+            enum:
+              - createdOnDesc
+              - createdOnAsc
+              - updatedOnDesc
+              - updatedOnAsc
+        - name: ulid
+          in: query
+          description: If specified, filters estimates by their ULID. Must be exactly 26 characters.
+          schema:
+            type: string
+            minLength: 26
+            maxLength: 26
       responses:
         "200":
           description: "200"
@@ -182,7 +224,7 @@ paths:
                   estimates:
                     type: array
                     description: The list of matching estimates.
-                    items:
+                    items: &Estimate
                       type: object
                       properties:
                         estimateId:
@@ -315,6 +357,8 @@ paths:
           $ref: components.yml#/components/responses/BadRequest
         "401":
           $ref: components.yml#/components/responses/Unauthorized
+        "403":
+          description: Estimates are not enabled for this API key. Contact the Repliers support team to enable the feature.
       deprecated: false
   /estimates/{estimateId}:
     patch:
@@ -433,6 +477,8 @@ paths:
           $ref: components.yml#/components/responses/BadRequest
         "401":
           $ref: components.yml#/components/responses/Unauthorized
+        "403":
+          description: Estimates are not enabled for this API key. Contact the Repliers support team to enable the feature.
       deprecated: false
     delete:
       summary: Delete an estimate
@@ -452,4 +498,32 @@ paths:
           $ref: components.yml#/components/responses/BadRequest
         "401":
           $ref: components.yml#/components/responses/Unauthorized
+        "403":
+          description: Estimates are not enabled for this API key. Contact the Repliers support team to enable the feature.
+      deprecated: false
+    get:
+      summary: Get an estimate
+      description: Returns a single estimate by its estimateId, including the property attributes it was created with and its value history.
+      operationId: get-an-estimate
+      parameters:
+        - name: estimateId
+          in: path
+          schema:
+            type: integer
+            format: int32
+          required: true
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema: *Estimate
+        "400":
+          $ref: components.yml#/components/responses/BadRequest
+        "401":
+          $ref: components.yml#/components/responses/Unauthorized
+        "403":
+          description: Estimates are not enabled for this API key. Contact the Repliers support team to enable the feature.
+        "404":
+          description: No estimate with the supplied estimateId exists in your account.
       deprecated: false

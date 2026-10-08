@@ -140,6 +140,8 @@ paths:
           $ref: components.yml#/components/responses/BadRequest
         "401":
           $ref: components.yml#/components/responses/Unauthorized
+        "403":
+          description: Places are not enabled for this API key, or the supplied point is outside the geographic area covered by your account's boards.
       deprecated: false
 components:
   schemas:

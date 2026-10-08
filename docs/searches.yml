@@ -11,7 +11,7 @@ paths:
       externalDocs:
         description: Key Features
         url: https://help.repliers.com/en/article/saved-search-implementation-guide-1pomr3h/#1-key-features
-      description: Use this endpoint to create a saved search for a client.<strong>Important</strong> - When a saved search is updated the filters must be specific enough so that the initial matches do not exceed 100 listings otherwise a 406 (not accepted) response will be received.
+      description: "Use this endpoint to create a saved search for a client.<br/><br/><strong>Important</strong> - the filters must be specific enough so that the initial matches do not exceed 100 listings (the default, which may be configured per account), otherwise a 406 (not accepted) response will be received. A client may have at most 5 saved searches by default (also configurable per account); exceeding that limit returns a 406.<br/><br/><strong>Validation rules</strong><br/><br/><code>clientId</code> must belong to your account, and <code>agentId</code> (if supplied) must be an agent in your account that the client is assigned to.<br/><code>cities</code> and <code>areas</code> must match values that exist on listings in your MLS data (case-insensitive).<br/><code>propertyTypes</code> and <code>styles</code> must be values returned by GET /listings?listings=false&aggregates=details.propertyType,details.style.<br/>For every min/max pair (price, beds, baths, sqft, yearBuilt, stories, coveredSpaces, lotSizeSqft, lotWidth) the minimum cannot be greater than the maximum.<br/><code>map</code> polygons must contain at least 3 distinct coordinates."
       operationId: create-a-saved-search
       requestBody:
         content:
@@ -38,7 +38,7 @@ paths:
                     type: string
                 areas:
                   type: array
-                  description: An array of areas to be used as a filter for this search. Required, together with cities, if a value for map is not provided.
+                  description: An array of areas to be used as a filter for this search. Required, together with cities, if neither map nor locationIds is provided.
                   items:
                     type: string
                 basement:
@@ -48,7 +48,7 @@ paths:
                     type: string
                 cities:
                   type: array
-                  description: An array of cities to be used as a filter for this search. Required, together with areas, if a value for map is not provided.
+                  description: An array of cities to be used as a filter for this search. Required, together with areas, if neither map nor locationIds is provided.
                   items:
                     type: string
                 class:
@@ -76,7 +76,7 @@ paths:
                   default: instant
                 map:
                   type: string
-                  description: An array of polygons arrays with arrays of longitude/latitude shapes to be used as a filter for this search. If used, only listings that area geographically located within these shapes will be matched. Required if values for both areas and cities are not provided.
+                  description: An array of polygons arrays with arrays of longitude/latitude shapes to be used as a filter for this search. If used, only listings that area geographically located within these shapes will be matched. Required if neither locationIds nor both areas and cities are provided.
                   format: json
                 maxBaths:
                   type: integer
@@ -243,6 +243,17 @@ paths:
                   example:
                     raw.Room13level:
                       - Main
+                locationIds:
+                  type: array
+                  description: An array of locationIds (see GET /locations) to be used as a filter for this search. If provided, map, areas and cities are not required. Values must be alphanumeric. Duplicates are removed.
+                  items:
+                    type: string
+                    maxLength: 100
+                    pattern: "^[A-Za-z0-9]+$"
+                agentId:
+                  type: integer
+                  description: The agentId of the agent that the search is assigned to. Must be an agent in your account that the client is assigned to. If not specified, defaults to the agent assigned to the client.
+                  format: int32
             examples:
               Request Example:
                 value:
@@ -369,6 +380,14 @@ paths:
           in: query
           schema:
             type: boolean
+        - name: sortBy
+          in: query
+          description: Sorts the results. <code>updated</code> orders by last update date (newest first), <code>created</code> orders by creation date (newest first). If not specified, results are ordered by searchId descending.
+          schema:
+            type: string
+            enum:
+              - updated
+              - created
       responses:
         "200":
           description: "200"
@@ -400,7 +419,9 @@ paths:
       description: |-
         Use this endpoint to update a saved search.
 
-        <strong>Important</strong> - When a saved search is updated the filters must be specific enough so that the initial matches do not exceed 100 listings otherwise a 406 (not accepted) response will be received.
+        <strong>Important</strong> - When a saved search is updated the filters must be specific enough so that the initial matches do not exceed 100 listings (the default, which may be configured per account) otherwise a 406 (not accepted) response will be received.
+
+        <strong>Validation rules</strong> - the same rules as POST /searches apply, and min/max range checks are evaluated against the stored values as well as the supplied ones. For example, sending only a <code>minPrice</code> that is greater than the stored <code>maxPrice</code> returns a 400 error. Supplied <code>areas</code>, <code>cities</code> and <code>map</code> values are combined with the stored search; a search cannot be updated so that it ends up with neither a map nor both areas and cities, unless it has <code>locationIds</code>.
       operationId: update-a-saved-search
       parameters:
         - name: searchId
@@ -428,7 +449,7 @@ paths:
                     type: string
                 areas:
                   type: array
-                  description: An array of areas to be used as a filter for this search. Required, together with cities, if a value for map is not provided.
+                  description: An array of areas to be used as a filter for this search. Required, together with cities, if neither map nor locationIds is provided.
                   items:
                     type: string
                 basement:
@@ -438,7 +459,7 @@ paths:
                     type: string
                 cities:
                   type: array
-                  description: An array of cities to be used as a filter for this search. Required, together with areas, if a value for map is not provided.
+                  description: An array of cities to be used as a filter for this search. Required, together with areas, if neither map nor locationIds is provided.
                   items:
                     type: string
                 class:
@@ -465,7 +486,7 @@ paths:
                   description: Sets the frequency that clients will be notified of listings that match their search criteria.<br/><br/>Allowed values:<br/><br/><code>instant</code>, <code>daily</code>, <code>weekly</code>, <code>monthly</code>
                 map:
                   type: string
-                  description: An array of polygons arrays with arrays of longitude/latitude shapes to be used as a filter for this search. If used, only listings that area geographically located within these shapes will be matched. Required if values for both areas and cities are not provided.
+                  description: An array of polygons arrays with arrays of longitude/latitude shapes to be used as a filter for this search. If used, only listings that area geographically located within these shapes will be matched. Required if neither locationIds nor both areas and cities are provided.
                   format: json
                 maxBaths:
                   type: integer
@@ -628,6 +649,17 @@ paths:
                   example:
                     raw.Room13level:
                       - Main
+                locationIds:
+                  type: array
+                  description: An array of locationIds (see GET /locations) to be used as a filter for this search. If provided, map, areas and cities are not required. Values must be alphanumeric. Duplicates are removed.
+                  items:
+                    type: string
+                    maxLength: 100
+                    pattern: "^[A-Za-z0-9]+$"
+                agentId:
+                  type: integer
+                  description: The agentId of the agent that the search is assigned to. Must be an agent in your account. When changing the agent, the search's client must be assigned to the new agent, otherwise a 400 error is returned.
+                  format: int32
       responses:
         "200":
           $ref: components.yml#/components/responses/EmptySuccess
@@ -728,6 +760,11 @@ paths:
           description: If true filters search matches that were liked, if false filters search matches that were disliked. If not specified, returns all search matches.
           schema:
             type: boolean
+        - name: viewed
+          in: query
+          description: If true filters search matches that the client has viewed, if false filters search matches that have not been viewed. If not specified, returns all search matches.
+          schema:
+            type: boolean
         - name: matchId
           in: query
           schema:
@@ -744,7 +781,7 @@ paths:
           description: If not specified returns both available and unavailable listings. If specified limits results to specified status.<br/><br/>Allowed values:<br/><br/><code>A</code>,<code>U</code>
           schema:
             type: string
-      responses:
+      responses: &MatchesListResponses
         "200":
           description: "200"
           content:
@@ -830,7 +867,8 @@ paths:
                   description: If true, indicates that the match was viewed by the client. Useful for keeping track of what matches clients have viewed.
                 liked:
                   type: boolean
-                  description: If true, indicates that the client liked the match. Useful for keeping track of what matches clients like.
+                  nullable: true
+                  description: If true, indicates that the client liked the match, if false that they disliked it. Useful for keeping track of what matches clients like. Set to <code>null</code> to clear the liked state.
       responses:
         "200":
           $ref: components.yml#/components/responses/EmptySuccess
@@ -838,6 +876,98 @@ paths:
           $ref: components.yml#/components/responses/BadRequest
         "401":
           $ref: components.yml#/components/responses/Unauthorized
+      deprecated: false
+  /searches/matches:
+    get:
+      summary: Filter matches across searches
+      description: Use this endpoint to lookup matches across all saved searches in your account, or across the saved searches of a specific client. Matches are listings that met a saved search's criteria. To list the matches of a single saved search, use GET /searches/{searchId}/matches.
+      operationId: filter-all-matches
+      parameters:
+        - name: searchId
+          in: query
+          description: Limits results to the specified saved searches. Repeat the parameter to supply multiple searchIds.
+          schema:
+            type: array
+            items:
+              type: integer
+              format: int32
+              minimum: 1
+        - name: clientId
+          in: query
+          description: Limits results to matches for the saved searches of the specified client.
+          schema:
+            type: integer
+            format: int32
+            minimum: 1
+        - name: pageNum
+          in: query
+          description: The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200.
+          schema:
+            type: integer
+            format: int32
+            minimum: 1
+            default: 1
+        - name: resultsPerPage
+          in: query
+          description: The number of matches to return per page.
+          schema:
+            type: integer
+            format: int32
+            minimum: 1
+            maximum: 100
+            default: 100
+        - name: startDate
+          in: query
+          description: "If specified filters matches whose match date is >= the supplied value. Format: <code>YYYY-MM-DDTHH:mm:ss.sssZ</code>"
+          schema:
+            type: string
+            format: date-time
+            example: "2024-06-15T00:00:00.000Z"
+        - name: endDate
+          in: query
+          description: "If specified filters matches whose match date is <= the supplied value. Format: <code>YYYY-MM-DDTHH:mm:ss.sssZ</code>"
+          schema:
+            type: string
+            format: date-time
+            example: "2024-06-15T23:59:59.000Z"
+        - name: matchId
+          in: query
+          description: If specified, returns only the match with this matchId.
+          schema:
+            type: integer
+            format: int32
+            minimum: 1
+        - name: mlsNumber
+          in: query
+          description: If specified, returns only matches for the listing with this mlsNumber.
+          schema:
+            type: string
+        - name: liked
+          in: query
+          description: If true filters search matches that were liked, if false filters search matches that were disliked. If not specified, returns all search matches.
+          schema:
+            type: boolean
+        - name: viewed
+          in: query
+          description: If true filters search matches that the client has viewed, if false filters search matches that have not been viewed. If not specified, returns all search matches.
+          schema:
+            type: boolean
+        - name: status
+          in: query
+          description: If not specified returns both available and unavailable listings. If specified limits results to specified status.<br/><br/>Allowed values:<br/><br/><code>A</code>,<code>U</code>
+          schema:
+            type: string
+            enum:
+              - A
+              - U
+        - name: lastStatus
+          in: query
+          description: If specified filters matches whose last status is one of the supplied values. Repeat the parameter to supply multiple values.<br/><br/>Allowed values:<br/><br/><code>Sus</code>, <code>Exp</code>, <code>Sld</code>, <code>Ter</code>, <code>Dft</code>, <code>Lsd</code>, <code>Sc</code>, <code>Lc</code>, <code>Pc</code>, <code>Ext</code>, <code>New</code>, <code>Sce</code>, <code>Cs</code>, <code>Lce</code>, <code>Inc</code>
+          schema:
+            type: array
+            items:
+              type: string
+      responses: *MatchesListResponses
       deprecated: false
 components:
   schemas:

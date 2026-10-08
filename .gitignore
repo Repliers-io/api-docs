@@ -13,3 +13,5 @@ coverage
 test-results
 .docs
 scripts/.output
+.claude/memory
+.claude/session

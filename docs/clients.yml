@@ -8,7 +8,7 @@ paths:
   /clients:
     post:
       summary: Create a client
-      description: Use this endpoint to create a client. When creating saved searches, messages or favorites a client needs to be specified.<br/><br/><strong>Important</strong> - at least one of <code>phone</code> or <code>email</code> must be provided. A request that contains neither is rejected with a 400 error.
+      description: Use this endpoint to create a client. When creating saved searches, messages or favorites a client needs to be specified.<br/><br/><strong>Important</strong> - at least one of <code>phone</code> or <code>email</code> must be provided. A request that contains neither is rejected with a 400 error.<br/><br/>Email and phone must be unique across all clients and agents in your account. A duplicate is rejected with a 409 error. Email matching is case-insensitive.
       externalDocs:
         description: "Step 2: Create a Client"
         url: https://help.repliers.com/en/article/implementation-guide-for-agents-and-clients-of4k3i/#2-step-2-create-a-client
@@ -23,7 +23,7 @@ paths:
               properties:
                 agentId:
                   type: integer
-                  description: The agentId of the agent that this client is assigned to. Each client must be assigned to an agent.
+                  description: The agentId of the agent that this client is assigned to. Each client must be assigned to an agent. Must be an existing agent in your account, otherwise a 400 error is returned.
                   format: int32
                 fname:
                   type: string
@@ -73,12 +73,7 @@ paths:
         "401":
           $ref: components.yml#/components/responses/Unauthorized
         "409":
-          description: "409"
-          content:
-            text/plain:
-              examples:
-                Result:
-                  value: " "
+          description: The email or phone number is already in use by another client or agent in your account.
       deprecated: false
     get:
       summary: Filter clients
@@ -217,7 +212,7 @@ paths:
               properties:
                 agentId:
                   type: integer
-                  description: The agentId of the agent that this client is assigned to. Each client must be assigned to an agent.
+                  description: The agentId of the agent that this client is assigned to. Each client must be assigned to an agent. Must be an existing agent in your account, otherwise a 400 error is returned.
                   format: int32
                 fname:
                   type: string
@@ -262,6 +257,8 @@ paths:
           $ref: components.yml#/components/responses/BadRequest
         "401":
           $ref: components.yml#/components/responses/Unauthorized
+        "409":
+          description: The email or phone number is already in use by another client or agent in your account.
       deprecated: false
     delete:
       summary: Delete a client

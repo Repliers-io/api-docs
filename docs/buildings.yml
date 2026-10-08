@@ -19,7 +19,7 @@ paths:
       description: Searches for buildings based on location, price, property type, and other criteria. A building represents a unique address and groups together all current and historical listings at that address, making it useful for building directory pages and pre-construction research.
       tags:
         - Buildings
-      parameters:
+      parameters: &BuildingsSearchParams
         - name: area
           in: query
           description: Filters buildings by geographical area (also referred to as region or county).
@@ -217,6 +217,17 @@ paths:
           schema:
             $ref: "components.yml#/components/schemas/ListingType"
 
+        - name: status
+          in: query
+          description: Filters buildings by the status of their listings. A returns buildings with available listings, U returns buildings with unavailable listings. Values are case-insensitive. Repeat the parameter to supply both.
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - A
+                - U
+
       requestBody:
         description: |
           Optional request body for complex geographical filtering using GeoJSON polygons.
@@ -230,7 +241,7 @@ paths:
                 map:
                   $ref: "components.yml#/components/schemas/GeoJSONPolygon"
 
-      responses:
+      responses: &BuildingsSearchResponses
         "200":
           description: Successful response containing list of buildings
           content:
@@ -254,6 +265,14 @@ paths:
           $ref: "#/components/responses/Forbidden"
         "500":
           $ref: "#/components/responses/InternalServerError"
+
+    get:
+      summary: Buildings Search (GET)
+      description: Identical to POST /buildings and accepts the same query parameters. Use this method when the map boundary is small enough to fit in the query string. For large polygons or multipolygons, use POST /buildings and send the map data in the request body.
+      tags:
+        - Buildings
+      parameters: *BuildingsSearchParams
+      responses: *BuildingsSearchResponses
 
   /buildings/{addressKey}:
     get:

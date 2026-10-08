@@ -40,7 +40,7 @@ paths:
                   format: int32
                 clientId:
                   type: integer
-                  description: The clientId of the client that's either receiving or sending the message.
+                  description: The clientId of the client that's either receiving or sending the message. The client must be assigned to the agent specified by <code>agentId</code>, otherwise a 400 error is returned.
                   format: int32
                 content:
                   properties:
@@ -196,6 +196,29 @@ paths:
           $ref: components.yml#/components/responses/BadRequest
         "401":
           $ref: components.yml#/components/responses/Unauthorized
+      deprecated: false
+    delete:
+      summary: Cancel a scheduled message
+      description: Use this endpoint to cancel a message that is scheduled for the future. Messages that have already been sent cannot be deleted; attempting to delete one returns a 403 error.
+      operationId: cancel-a-message
+      parameters:
+        - name: messageId
+          in: path
+          schema:
+            type: integer
+            format: int32
+          required: true
+      responses:
+        "200":
+          $ref: components.yml#/components/responses/EmptySuccess
+        "400":
+          $ref: components.yml#/components/responses/BadRequest
+        "401":
+          $ref: components.yml#/components/responses/Unauthorized
+        "403":
+          description: The message has already been sent and cannot be deleted.
+        "404":
+          description: No message with the supplied messageId exists in your account.
       deprecated: false
 components:
   schemas:

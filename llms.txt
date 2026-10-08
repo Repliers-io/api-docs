@@ -16,11 +16,13 @@ Auth: API key via `REPLIERS-API-KEY` header
 ## Locations
 
 - GET /locations: Search locations
+- POST /locations: Search locations (POST)
 - GET /locations/autocomplete: Locations autocomplete
 
 ## Buildings
 
 - POST /buildings: Buildings Search
+- GET /buildings: Buildings Search (GET)
 - GET /buildings/{addressKey}: Get a single building
 
 ## Nlp
@@ -58,6 +60,7 @@ Auth: API key via `REPLIERS-API-KEY` header
 - GET /searches/{searchId}/matches: Filter matches
 - GET /searches/{searchId}/matches/{matchId}: Get a match
 - PATCH /searches/{searchId}/matches/{matchId}: Update a match
+- GET /searches/matches: Filter matches across searches
 
 ## Estimates
 
@@ -65,12 +68,14 @@ Auth: API key via `REPLIERS-API-KEY` header
 - GET /estimates: Get Estimates
 - PATCH /estimates/{estimateId}: Update an estimate
 - DELETE /estimates/{estimateId}: Delete an estimate
+- GET /estimates/{estimateId}: Get an estimate
 
 ## Messages
 
 - POST /messages: Send a message
 - GET /messages: Filter messages
 - GET /messages/{messageId}: Get a message
+- DELETE /messages/{messageId}: Cancel a scheduled message
 
 ## Favorites
 
@@ -84,9 +89,11 @@ Auth: API key via `REPLIERS-API-KEY` header
 - POST /webhooks: Create a subscription
 - GET /webhooks: List subscriptions
 - PATCH /webhooks/{webhookId}: Update a subscription
+- PUT /webhooks/{webhookId}: Update a subscription (PUT)
 - DELETE /webhooks/{webhookId}: Delete a subscription
 - GET /webhooks/{webhookId}: Get a subscription
 - GET /webhooks/events: List events
+- GET /webhooks/events/{name}: Get an event
 
 ## Members
 

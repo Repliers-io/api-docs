@@ -137,6 +137,23 @@ paths:
           required: false
           schema:
             type: string
+        - name: pageNum
+          in: query
+          description: The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: resultsPerPage
+          in: query
+          description: The number of prompts to return per page.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 100
       responses:
         "200":
           description: Successful response with NLP session data.

@@ -34,6 +34,7 @@ paths:
                   description: Comments may be associated with a favorite, for example "I love the view in the backyard".
                 mlsNumber:
                   type: string
+                  description: The mlsNumber of the listing to favorite. Must be an existing listing on the board, otherwise a 400 error is returned.
                 tags:
                   type: array
                   description: Tags may be added to favorites. This is a useful feature if you want to allow your users to filter their favorites.
@@ -55,6 +56,10 @@ paths:
           $ref: components.yml#/components/responses/BadRequest
         "401":
           $ref: components.yml#/components/responses/Unauthorized
+        "403":
+          description: The listing has already been saved to this client's favorites.
+        "404":
+          description: No client with the supplied clientId exists in your account.
       deprecated: false
     get:
       summary: Get favorites
@@ -86,7 +91,7 @@ paths:
             type: string
         - name: lastStatus
           in: query
-          description: Filters favorites by the last status of the favorited listing.
+          description: Filters favorites by the last status of the favorited listing. Cannot be combined with <code>standardStatus</code>.
           schema:
             type: array
             items:
@@ -105,9 +110,19 @@ paths:
             format: int32
         - name: status
           in: query
-          description: Filters favorites by the current status of the favorited listing.
+          description: Filters favorites by the current status of the favorited listing. Cannot be combined with <code>standardStatus</code>.<br/><br/>Allowed values:<br/><br/><code>A</code>, <code>U</code>
           schema:
             type: string
+            enum:
+              - A
+              - U
+        - name: standardStatus
+          in: query
+          description: Filters favorites by the Standard Status of the favorited listing. Cannot be combined with <code>status</code> or <code>lastStatus</code>; doing so returns a 400 error. Repeat the parameter to supply multiple values.
+          schema:
+            type: array
+            items:
+              type: string
         - name: tags
           in: query
           description: Allows you to search tags within favorites, accepts a comma-separated string, for example "needs work, turn-key"
@@ -1205,7 +1220,8 @@ paths:
               properties:
                 comments:
                   type: string
-                  description: Updated comments for the favorite.
+                  nullable: true
+                  description: Updated comments for the favorite. Set to <code>null</code> to remove the existing comments.
                 tags:
                   type: array
                   description: Updated tags for the favorite.

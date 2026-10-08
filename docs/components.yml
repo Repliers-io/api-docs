@@ -130,6 +130,8 @@ components:
         - `UserDefined` - Custom locations created and defined by users.
         - `LiveBy` - Locations sourced from LiveBy, a third-party neighborhood and community data provider.
         - `PublicRecord` - Locations sourced from Public Records Data.
+
+        `UserDefined`, `LiveBy` and `PublicRecord` require the corresponding data to be enabled on your account. Requesting a source that is not enabled for your account returns a 400 error.
       required: false
       schema:
         type: array

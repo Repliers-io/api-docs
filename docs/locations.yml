@@ -21,7 +21,7 @@ paths:
         url: https://help.repliers.com/en/article/locations-api-implementation-guide-s4c68b/#2-get-locations
       tags:
         - Locations
-      parameters:
+      parameters: &LocationsSearchParams
         - $ref: "components.yml#/components/parameters/LocationSourceFilter"
 
         - $ref: "components.yml#/components/parameters/LocationTypeFilter"
@@ -106,23 +106,22 @@ paths:
 
         - name: aggregates
           in: query
-          description: Aggregates values and counts for specified fields. Aggregates have many use cases, they're particularly useful for grouping and displaying acceptable values for fields that are used in filters. For more information refer to <a target="_blank" href="https://help.repliers.com/en/article/using-aggregates-to-determine-acceptable-values-for-filters-c88csc">Using Aggregates To Determine Acceptable Values For Filters</a>.
+          description: "Aggregates values and counts for specified fields. Aggregates have many use cases, they're particularly useful for grouping and displaying acceptable values for fields that are used in filters. For more information refer to <a target=\"_blank\" href=\"https://help.repliers.com/en/article/using-aggregates-to-determine-acceptable-values-for-filters-c88csc\">Using Aggregates To Determine Acceptable Values For Filters</a>.<br/><br/>Comma-separate multiple fields. Only the following fields may be aggregated; any other value is rejected with a 400 error:<br/><br/><code>type</code>, <code>subType</code>, <code>classification</code>, <code>source</code>, <code>address.state</code>, <code>address.area</code>, <code>address.city</code>, <code>address.neighborhood</code>, <code>school.districtName</code>, <code>school.schoolType</code>, <code>school.lowGrade</code>, <code>school.highGrade</code>, <code>school.schoolLevel</code>, <code>school.isCharterSchool</code>, <code>school.isMagnetSchool</code>, <code>school.isVirtualSchool</code>, <code>school.isPrivate</code>, <code>school.isJJFacility</code>, <code>school.privateSchoolAffiliation</code>, <code>school.giftedAndTalented</code>, <code>school.dualEnrollment</code>, <code>school.creditRecovery</code>, <code>school.singleSexClasses</code>, <code>school.apCourse</code>, <code>school.internationalBaccalaureate</code>, <code>school.corporalPunishment</code>, <code>school.interscholarAthletics</code>, <code>school.offersKindergarten</code>, <code>school.offersFullDayKindergarten</code>, <code>school.apEnrollment</code>, <code>school.expenditurePerStudent</code>, <code>school.isTitleISchool</code>, <code>school.isTitleISchoolwideSchool</code>, <code>school.privateHours</code>, <code>school.privateDays</code>, <code>school.privateHasLibrary</code>, <code>school.privateCoed</code>, <code>school.isAssigned</code>"
           schema:
             type: string
 
         - name: resultsPerPage
           in: query
-          description: The number of locations to return per page.
+          description: The number of locations to return per page. Values above 300 (or above the limit configured for your account) are not rejected; they are capped to that limit.
           required: false
           schema:
             type: integer
             minimum: 1
-            maximum: 300
             default: 100
 
         - name: pageNum
           in: query
-          description: The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200.
+          description: The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200. Paging is limited to the first 100,000 results, so pageNum multiplied by resultsPerPage must not exceed 100,000. A pageNum more than one page past the last page of results is rejected with a 400 error.
           required: false
           schema:
             type: integer
@@ -291,12 +290,14 @@ paths:
 
         - name: subType
           in: query
-          description: Filters locations by sub-type.
+          description: Filters locations by sub-type. Values are case-insensitive.<br/><br/>Allowed values:<br/><br/><code>village</code>
           required: false
           schema:
             type: array
             items:
               type: string
+              enum:
+                - village
 
         - name: name
           in: query
@@ -342,7 +343,7 @@ paths:
             items:
               type: string
 
-      responses:
+      responses: &LocationsSearchResponses
         "200":
           description: Successful response
           content:
@@ -372,6 +373,24 @@ paths:
         "500":
           $ref: "#/components/responses/InternalServerError"
 
+    post:
+      summary: Search locations (POST)
+      description: Identical to GET /locations and accepts the same query parameters. Use this method when the map boundary is too large to fit in the query string, and send the map data in the request body instead of the map query parameter.
+      tags:
+        - Locations
+      parameters: *LocationsSearchParams
+      requestBody:
+        description: Optional request body for complex geographical filtering using GeoJSON polygons. Use this for large polygon data that exceeds query parameter size limits.
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                map:
+                  $ref: "components.yml#/components/schemas/GeoJSONPolygon"
+      responses: *LocationsSearchResponses
+
   /locations/autocomplete:
     get:
       summary: Locations autocomplete
@@ -393,6 +412,17 @@ paths:
             minLength: 3
             maxLength: 100
             example: "Sacrame"
+
+        - name: locationId
+          in: query
+          description: Limits results to the specified locationIds. Repeat the parameter to supply multiple values, up to 50.
+          required: false
+          schema:
+            type: array
+            maxItems: 50
+            items:
+              type: string
+              maxLength: 30
 
         - $ref: "components.yml#/components/parameters/LocationSourceFilter"
 
@@ -611,12 +641,14 @@ paths:
 
         - name: subType
           in: query
-          description: Filters locations by sub-type.
+          description: Filters locations by sub-type. Values are case-insensitive.<br/><br/>Allowed values:<br/><br/><code>village</code>
           required: false
           schema:
             type: array
             items:
               type: string
+              enum:
+                - village
 
       responses:
         "200":

@@ -25,6 +25,7 @@ Always run `npm run docs-validate` after making changes to verify the spec is va
 - `bundled_docs/` — generated output, don't edit manually
 - `llms.txt` — generated compact endpoint index, don't edit manually
 - `llms-full.txt` — generated detailed API reference with all params, don't edit manually
+- `.docs/` — gitignored folder for Markdown notes (audit backlogs, plans, reference articles). **Any `.md` note goes here, never in `docs/`**, which holds only OpenAPI source files. Current backlog of known doc gaps: `.docs/api-docs-audit-backlog.md`
 
 ## Editing Conventions
 
