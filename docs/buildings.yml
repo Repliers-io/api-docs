@@ -54,7 +54,7 @@ paths:
 
         - name: displayPublic
           in: query
-          description: Filters buildings by public display status. Y returns buildings that may be displayed publicly, N returns buildings that should be password protected.
+          description: Filters buildings by public display status. Y returns buildings that may be displayed publicly, N returns buildings that should be password protected. Note - this parameter is currently validated but has no effect on the results.
           schema:
             type: string
             enum:
@@ -191,7 +191,7 @@ paths:
 
         - name: sortBy
           in: query
-          description: Sorts results by the specified field.
+          description: Sorts results by the specified field. Note - this parameter is currently validated but has no effect on the order of the results.
           schema:
             $ref: "components.yml#/components/schemas/BuildingsSortBy"
 

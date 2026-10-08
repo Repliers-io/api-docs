@@ -16,16 +16,23 @@ paths:
           description: Page number for paginated results.
           schema:
             type: integer
+            minimum: 1
+            default: 1
         - name: resultsPerPage
           in: query
           description: Number of results to return per page.
           schema:
             type: integer
+            minimum: 1
+            default: 100
         - name: officeId
           in: query
-          description: If supplied, finds office by officeId using exact match criteria.
+          description: If supplied, finds offices by officeId using exact (case-insensitive) match criteria. Repeat the parameter to supply multiple values.
           schema:
-            type: string
+            type: array
+            items:
+              type: string
+              maxLength: 50
         - name: keywords
           in: query
           description: If supplied, filters offices by the supplied value.

@@ -287,6 +287,7 @@ paths:
             type: array
             items:
               type: string
+              maxLength: 100
 
         - name: subType
           in: query
@@ -301,11 +302,13 @@ paths:
 
         - name: name
           in: query
-          description: Filters locations by exact name (case-insensitive).
+          description: Filters locations by exact name. Repeat the parameter to supply multiple names.
           required: false
           schema:
-            type: string
-            maxLength: 100
+            type: array
+            items:
+              type: string
+              maxLength: 100
 
         - name: schoolType
           in: query
@@ -315,6 +318,7 @@ paths:
             type: array
             items:
               type: string
+              maxLength: 100
 
         - name: schoolLevel
           in: query
@@ -324,6 +328,7 @@ paths:
             type: array
             items:
               type: string
+              maxLength: 100
 
         - name: privateSchoolAffiliation
           in: query
@@ -333,6 +338,7 @@ paths:
             type: array
             items:
               type: string
+              maxLength: 100
 
         - name: schoolDistrictName
           in: query
@@ -342,6 +348,7 @@ paths:
             type: array
             items:
               type: string
+              maxLength: 100
 
       responses: &LocationsSearchResponses
         "200":
@@ -638,6 +645,7 @@ paths:
             type: array
             items:
               type: string
+              maxLength: 100
 
         - name: subType
           in: query

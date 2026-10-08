@@ -8140,7 +8140,8 @@
             "schema": {
               "type": "array",
               "items": {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               }
             }
           },
@@ -8162,11 +8163,14 @@
           {
             "name": "name",
             "in": "query",
-            "description": "Filters locations by exact name (case-insensitive).",
+            "description": "Filters locations by exact name. Repeat the parameter to supply multiple names.",
             "required": false,
             "schema": {
-              "type": "string",
-              "maxLength": 100
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 100
+              }
             }
           },
           {
@@ -8177,7 +8181,8 @@
             "schema": {
               "type": "array",
               "items": {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               }
             }
           },
@@ -8189,7 +8194,8 @@
             "schema": {
               "type": "array",
               "items": {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               }
             }
           },
@@ -8201,7 +8207,8 @@
             "schema": {
               "type": "array",
               "items": {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               }
             }
           },
@@ -8213,7 +8220,8 @@
             "schema": {
               "type": "array",
               "items": {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               }
             }
           }
@@ -10175,7 +10183,8 @@
             "schema": {
               "type": "array",
               "items": {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               }
             }
           },
@@ -10197,11 +10206,14 @@
           {
             "name": "name",
             "in": "query",
-            "description": "Filters locations by exact name (case-insensitive).",
+            "description": "Filters locations by exact name. Repeat the parameter to supply multiple names.",
             "required": false,
             "schema": {
-              "type": "string",
-              "maxLength": 100
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 100
+              }
             }
           },
           {
@@ -10212,7 +10224,8 @@
             "schema": {
               "type": "array",
               "items": {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               }
             }
           },
@@ -10224,7 +10237,8 @@
             "schema": {
               "type": "array",
               "items": {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               }
             }
           },
@@ -10236,7 +10250,8 @@
             "schema": {
               "type": "array",
               "items": {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               }
             }
           },
@@ -10248,7 +10263,8 @@
             "schema": {
               "type": "array",
               "items": {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               }
             }
           }
@@ -12198,7 +12214,8 @@
             "schema": {
               "type": "array",
               "items": {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               }
             }
           },
@@ -12283,7 +12300,9 @@
             "in": "query",
             "description": "Page number for paginated results.",
             "schema": {
-              "type": "integer"
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
             }
           },
           {
@@ -12291,7 +12310,9 @@
             "in": "query",
             "description": "Number of results to return per page.",
             "schema": {
-              "type": "integer"
+              "type": "integer",
+              "minimum": 1,
+              "default": 100
             }
           },
           {
@@ -12376,7 +12397,9 @@
             "in": "query",
             "description": "Page number for paginated results.",
             "schema": {
-              "type": "integer"
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
             }
           },
           {
@@ -12384,15 +12407,21 @@
             "in": "query",
             "description": "Number of results to return per page.",
             "schema": {
-              "type": "integer"
+              "type": "integer",
+              "minimum": 1,
+              "default": 100
             }
           },
           {
             "name": "officeId",
             "in": "query",
-            "description": "If supplied, finds office by officeId using exact match criteria.",
+            "description": "If supplied, finds offices by officeId using exact (case-insensitive) match criteria. Repeat the parameter to supply multiple values.",
             "schema": {
-              "type": "string"
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 50
+              }
             }
           },
           {
@@ -12641,17 +12670,25 @@
           {
             "name": "agentId",
             "in": "query",
-            "description": "Filters members by agent ID using exact match.",
+            "description": "Filters members by agent ID using exact match. Repeat the parameter to supply multiple values (OR).",
             "schema": {
-              "type": "string"
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 50
+              }
             }
           },
           {
             "name": "agentName",
             "in": "query",
-            "description": "Filters members by agent name using exact match.",
+            "description": "Filters members by agent name using exact match. Repeat the parameter to supply multiple values (OR).",
             "schema": {
-              "type": "string"
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 100
+              }
             }
           },
           {
@@ -12681,33 +12718,46 @@
           {
             "name": "brokerage",
             "in": "query",
-            "description": "Filters members by brokerage name using partial match.",
+            "description": "Filters members by brokerage name using partial match. Repeat the parameter to supply multiple values.",
             "schema": {
-              "type": "string"
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 100
+              }
             }
           },
           {
             "name": "officeId",
             "in": "query",
-            "description": "Filters members by the ID of the office they belong to.",
+            "description": "Filters members by the ID of the office they belong to. Repeat the parameter to supply multiple values (OR).",
             "schema": {
-              "type": "string"
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 100
+              }
             }
           },
           {
             "name": "position",
             "in": "query",
-            "description": "Filters members by their position or role.",
+            "description": "Filters members by their position or role. Repeat the parameter to supply multiple values (OR).",
             "schema": {
-              "type": "string"
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 100
+              }
             }
           },
           {
             "name": "keywords",
             "in": "query",
-            "description": "Searches members by keyword across multiple fields.",
+            "description": "Searches members by keyword across multiple fields. Maximum 100 characters.",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "maxLength": 100
             }
           },
           {
@@ -12718,6 +12768,7 @@
               "type": "integer",
               "format": "int32",
               "default": 1,
+              "minimum": 1,
               "maximum": 10000
             }
           },
@@ -12729,6 +12780,7 @@
               "type": "integer",
               "format": "int32",
               "default": 100,
+              "minimum": 1,
               "maximum": 1000
             }
           }
@@ -13527,7 +13579,8 @@
                   },
                   "externalId": {
                     "type": "string",
-                    "description": "The externalId is intended for storing agent identifiers from external systems (such as CRMs) for reference purposes."
+                    "maxLength": 255,
+                    "description": "The externalId is intended for storing agent identifiers from external systems (such as CRMs) for reference purposes. Maximum 255 characters."
                   }
                 }
               }
@@ -13764,7 +13817,8 @@
                   },
                   "externalId": {
                     "type": "string",
-                    "description": "The externalId is intended for storing agent identifiers from external systems (such as CRMs) for reference purposes."
+                    "maxLength": 255,
+                    "description": "The externalId is intended for storing agent identifiers from external systems (such as CRMs) for reference purposes. Maximum 255 characters."
                   }
                 }
               }
@@ -13780,6 +13834,9 @@
           },
           "401": {
             "$ref": "#/paths/~1nlp/get/responses/401"
+          },
+          "404": {
+            "description": "No agent with the supplied agentId exists in your account."
           },
           "409": {
             "description": "The email or phone number is already in use by another agent or client in your account."
@@ -13814,6 +13871,9 @@
           },
           "403": {
             "description": "Clients are still assigned to this agent. Reassign them before deleting the agent."
+          },
+          "404": {
+            "description": "No agent with the supplied agentId exists in your account."
           }
         },
         "deprecated": false
@@ -13917,6 +13977,9 @@
           },
           "401": {
             "$ref": "#/paths/~1nlp/get/responses/401"
+          },
+          "404": {
+            "description": "No agent with the supplied agentId exists in your account."
           }
         },
         "deprecated": false
@@ -13971,6 +14034,9 @@
           },
           "401": {
             "$ref": "#/paths/~1nlp/get/responses/401"
+          },
+          "404": {
+            "description": "No agent with the supplied agentId exists in your account."
           }
         },
         "deprecated": false
@@ -14084,7 +14150,8 @@
             "description": "Filters clients by the ID of their assigned agent.",
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int32",
+              "minimum": 1
             }
           },
           {
@@ -14093,7 +14160,8 @@
             "description": "Filters clients by their unique ID.",
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int32",
+              "minimum": 1
             }
           },
           {
@@ -14147,18 +14215,26 @@
           {
             "name": "condition",
             "in": "query",
-            "description": "Determines the search condition applied to the filters. If EXACT, requires that the given value for one or more params is an exact match of the stored value. If CONTAINS, requires that the given value for one or more params is contained within the stored value. <br/><br/> Allowed values: <br/><br/> <code>EXACT</code>, <code>CONTAINS</code>",
+            "description": "Determines the search condition applied to the filters. If EXACT, requires that the given value for one or more params is an exact match of the stored value. If CONTAINS, requires that the given value for one or more params is contained within the stored value. Values are case-insensitive. <br/><br/> Allowed values: <br/><br/> <code>EXACT</code>, <code>CONTAINS</code>",
             "schema": {
               "type": "string",
+              "enum": [
+                "EXACT",
+                "CONTAINS"
+              ],
               "default": "EXACT"
             }
           },
           {
             "name": "operator",
             "in": "query",
-            "description": "Determines the search logic applied to the filters. If OR, requires that one or more params contain/equal the given value. If AND, requires that all params contain/equal the given value. <br/><br/> Allowed values: <br/><br/> <code>OR</code>, <code>AND</code>",
+            "description": "Determines the search logic applied to the filters. If OR, requires that one or more params contain/equal the given value. If AND, requires that all params contain/equal the given value. Values are case-insensitive. <br/><br/> Allowed values: <br/><br/> <code>OR</code>, <code>AND</code>",
             "schema": {
               "type": "string",
+              "enum": [
+                "OR",
+                "AND"
+              ],
               "default": "OR"
             }
           },
@@ -14169,6 +14245,7 @@
             "schema": {
               "type": "integer",
               "format": "int32",
+              "minimum": 1,
               "default": 1
             }
           },
@@ -14179,6 +14256,7 @@
             "schema": {
               "type": "integer",
               "format": "int32",
+              "minimum": 1,
               "default": 100
             }
           },
@@ -14344,6 +14422,9 @@
           "401": {
             "$ref": "#/paths/~1nlp/get/responses/401"
           },
+          "404": {
+            "description": "No client with the supplied clientId exists in your account."
+          },
           "409": {
             "description": "The email or phone number is already in use by another client or agent in your account."
           }
@@ -14378,6 +14459,9 @@
           },
           "401": {
             "$ref": "#/paths/~1nlp/get/responses/401"
+          },
+          "404": {
+            "description": "No client with the supplied clientId exists in your account."
           }
         },
         "deprecated": false
@@ -14622,6 +14706,9 @@
           },
           "401": {
             "$ref": "#/paths/~1nlp/get/responses/401"
+          },
+          "404": {
+            "description": "No client with the supplied clientId exists in your account."
           }
         },
         "deprecated": false
@@ -14703,6 +14790,9 @@
           },
           "401": {
             "$ref": "#/paths/~1nlp/get/responses/401"
+          },
+          "404": {
+            "description": "No tag with the supplied name exists."
           }
         },
         "deprecated": false
@@ -14737,7 +14827,8 @@
                   },
                   "name": {
                     "type": "string",
-                    "description": "You can specify a name for the saved search. This is useful in cases where users have multiple saved searches, to help them distinguish between saved searches."
+                    "maxLength": 50,
+                    "description": "You can specify a name for the saved search. This is useful in cases where users have multiple saved searches, to help them distinguish between saved searches. Maximum 50 characters."
                   },
                   "amenities": {
                     "type": "array",
@@ -14770,7 +14861,12 @@
                     "type": "array",
                     "description": "Indicates what class of property to search for.<br/><br/>Allowed values:<br/><br/><code>residential</code>,<code>condo</code>,<code>commercial</code>",
                     "items": {
-                      "type": "string"
+                      "type": "string",
+                      "enum": [
+                        "residential",
+                        "condo",
+                        "commercial"
+                      ]
                     }
                   },
                   "heating": {
@@ -14796,6 +14892,12 @@
                   "notificationFrequency": {
                     "type": "string",
                     "description": "Sets the frequency that clients will be notified of listings that match their search criteria.<br/><br/>Allowed values:<br/><br/><code>instant</code>, <code>daily</code>, <code>weekly</code>, <code>monthly</code>",
+                    "enum": [
+                      "instant",
+                      "daily",
+                      "weekly",
+                      "monthly"
+                    ],
                     "default": "instant"
                   },
                   "map": {
@@ -14811,7 +14913,9 @@
                   "maxBeds": {
                     "type": "integer",
                     "description": "The maximum amount of bedrooms to be used as a filter for this search.",
-                    "format": "int32"
+                    "format": "int32",
+                    "minimum": 1,
+                    "maximum": 32767
                   },
                   "maxCoveredSpaces": {
                     "type": "integer",
@@ -14821,7 +14925,9 @@
                   "minParkingSpaces": {
                     "type": "integer",
                     "description": "If specified, matches only listings whose parking space count is >= the supplied value.",
-                    "format": "int32"
+                    "format": "int32",
+                    "minimum": 1,
+                    "maximum": 32767
                   },
                   "maxPrice": {
                     "type": "integer",
@@ -14838,7 +14944,9 @@
                   },
                   "maxYearBuilt": {
                     "type": "integer",
-                    "format": "int32"
+                    "format": "int32",
+                    "minimum": 1,
+                    "maximum": 32767
                   },
                   "minBaths": {
                     "type": "integer",
@@ -14848,7 +14956,9 @@
                   "minBeds": {
                     "type": "integer",
                     "description": "The minimum amount of bedrooms to be used as a filter for this search.",
-                    "format": "int32"
+                    "format": "int32",
+                    "minimum": 1,
+                    "maximum": 32767
                   },
                   "minCoveredSpaces": {
                     "type": "integer",
@@ -14858,12 +14968,16 @@
                   "minGarageSpaces": {
                     "type": "integer",
                     "description": "If specified, matches only listings whose garage space count is >= the supplied value.",
-                    "format": "int32"
+                    "format": "int32",
+                    "minimum": 1,
+                    "maximum": 32767
                   },
                   "minKitchens": {
                     "type": "integer",
                     "description": "If specified, matches only listings whose kitchen count is >= the supplied value.",
-                    "format": "int32"
+                    "format": "int32",
+                    "minimum": 1,
+                    "maximum": 32767
                   },
                   "maxMaintenanceFee": {
                     "type": "integer",
@@ -14885,10 +14999,16 @@
                   },
                   "minYearBuilt": {
                     "type": "integer",
-                    "format": "int32"
+                    "format": "int32",
+                    "minimum": 1,
+                    "maximum": 32767
                   },
                   "pets": {
-                    "type": "string"
+                    "type": "array",
+                    "description": "An array of pet policy values to be used as a filter for this search.",
+                    "items": {
+                      "type": "string"
+                    }
                   },
                   "priceChangeNotifications": {
                     "type": "boolean",
@@ -14949,7 +15069,11 @@
                   },
                   "type": {
                     "type": "string",
-                    "description": "Indicates whether the search is for a property that's for sale or for lease.<br/></br>Allowed values:<br/><br/><code>sale</code>,<code>lease</code>"
+                    "description": "Indicates whether the search is for a property that's for sale or for lease.<br/></br>Allowed values:<br/><br/><code>sale</code>,<code>lease</code>",
+                    "enum": [
+                      "sale",
+                      "lease"
+                    ]
                   },
                   "waterSource": {
                     "type": "array",
@@ -15413,12 +15537,15 @@
             "$ref": "#/paths/~1nlp/get/responses/401"
           },
           "406": {
-            "description": "406",
+            "description": "Not accepted. Returned in two cases - the filters are not specific enough and the initial matches exceed 100 listings (the default, configurable per account), or the client has already reached the maximum number of saved searches allowed for your account (5 by default, configurable per account).",
             "content": {
               "text/plain": {
                 "examples": {
-                  "Result": {
+                  "Too many matches": {
                     "value": "When a saved search is created the filters must be specific enough so that the initial matches do not exceed 100 listings otherwise a 406 (not accepted) response will be received."
+                  },
+                  "Saved search limit": {
+                    "value": "A client can have a maximum of 5 searches."
                   }
                 }
               }
@@ -15465,6 +15592,8 @@
             "schema": {
               "type": "integer",
               "format": "int32",
+              "minimum": 1,
+              "maximum": 100,
               "default": 100
             }
           },
@@ -15566,7 +15695,8 @@
                   },
                   "name": {
                     "type": "string",
-                    "description": "You can specify a name for the saved search. This is useful in cases where users have multiple saved searches, to help them distinguish between saved searches."
+                    "maxLength": 50,
+                    "description": "You can specify a name for the saved search. This is useful in cases where users have multiple saved searches, to help them distinguish between saved searches. Maximum 50 characters."
                   },
                   "amenities": {
                     "type": "array",
@@ -15599,7 +15729,12 @@
                     "type": "array",
                     "description": "Indicates what class of property to search for.<br/><br/>Allowed values:<br/><br/><code>residential</code>,<code>condo</code>,<code>commercial</code>",
                     "items": {
-                      "type": "string"
+                      "type": "string",
+                      "enum": [
+                        "residential",
+                        "condo",
+                        "commercial"
+                      ]
                     }
                   },
                   "heating": {
@@ -15624,7 +15759,13 @@
                   },
                   "notificationFrequency": {
                     "type": "string",
-                    "description": "Sets the frequency that clients will be notified of listings that match their search criteria.<br/><br/>Allowed values:<br/><br/><code>instant</code>, <code>daily</code>, <code>weekly</code>, <code>monthly</code>"
+                    "description": "Sets the frequency that clients will be notified of listings that match their search criteria.<br/><br/>Allowed values:<br/><br/><code>instant</code>, <code>daily</code>, <code>weekly</code>, <code>monthly</code>",
+                    "enum": [
+                      "instant",
+                      "daily",
+                      "weekly",
+                      "monthly"
+                    ]
                   },
                   "map": {
                     "type": "string",
@@ -15639,7 +15780,9 @@
                   "maxBeds": {
                     "type": "integer",
                     "description": "The maximum amount of bedrooms to be used as a filter for this search.",
-                    "format": "int32"
+                    "format": "int32",
+                    "minimum": 1,
+                    "maximum": 32767
                   },
                   "maxCoveredSpaces": {
                     "type": "integer",
@@ -15648,7 +15791,9 @@
                   "minParkingSpaces": {
                     "type": "integer",
                     "description": "If specified, matches only listings whose parking space count is >= the supplied value.",
-                    "format": "int32"
+                    "format": "int32",
+                    "minimum": 1,
+                    "maximum": 32767
                   },
                   "maxPrice": {
                     "type": "integer",
@@ -15661,7 +15806,9 @@
                   },
                   "maxYearBuilt": {
                     "type": "integer",
-                    "format": "int32"
+                    "format": "int32",
+                    "minimum": 1,
+                    "maximum": 32767
                   },
                   "maxStories": {
                     "type": "integer",
@@ -15675,7 +15822,9 @@
                   "minBeds": {
                     "type": "integer",
                     "description": "The minimum amount of bedrooms to be used as a filter for this search.",
-                    "format": "int32"
+                    "format": "int32",
+                    "minimum": 1,
+                    "maximum": 32767
                   },
                   "minCoveredSpaces": {
                     "type": "integer",
@@ -15684,12 +15833,16 @@
                   "minGarageSpaces": {
                     "type": "integer",
                     "description": "If specified, matches only listings whose garage space count is >= the supplied value.",
-                    "format": "int32"
+                    "format": "int32",
+                    "minimum": 1,
+                    "maximum": 32767
                   },
                   "minKitchens": {
                     "type": "integer",
                     "description": "If specified, matches only listings whose kitchen count is >= the supplied value.",
-                    "format": "int32"
+                    "format": "int32",
+                    "minimum": 1,
+                    "maximum": 32767
                   },
                   "maxMaintenanceFee": {
                     "type": "integer",
@@ -15707,14 +15860,20 @@
                   },
                   "minYearBuilt": {
                     "type": "integer",
-                    "format": "int32"
+                    "format": "int32",
+                    "minimum": 1,
+                    "maximum": 32767
                   },
                   "minStories": {
                     "type": "integer",
                     "format": "int32"
                   },
                   "pets": {
-                    "type": "string"
+                    "type": "array",
+                    "description": "An array of pet policy values to be used as a filter for this search.",
+                    "items": {
+                      "type": "string"
+                    }
                   },
                   "priceChangeNotifications": {
                     "type": "boolean",
@@ -15773,7 +15932,11 @@
                   },
                   "type": {
                     "type": "string",
-                    "description": "Indicates whether the search is for a property that's for sale or for lease.<br/></br>Allowed values:<br/><br/><code>sale</code>,<code>lease</code>"
+                    "description": "Indicates whether the search is for a property that's for sale or for lease.<br/></br>Allowed values:<br/><br/><code>sale</code>,<code>lease</code>",
+                    "enum": [
+                      "sale",
+                      "lease"
+                    ]
                   },
                   "waterSource": {
                     "type": "array",
@@ -15871,6 +16034,9 @@
           },
           "401": {
             "$ref": "#/paths/~1nlp/get/responses/401"
+          },
+          "404": {
+            "description": "No saved search with the supplied searchId exists in your account."
           }
         },
         "deprecated": false
@@ -15899,6 +16065,9 @@
           },
           "401": {
             "$ref": "#/paths/~1nlp/get/responses/401"
+          },
+          "404": {
+            "description": "No saved search with the supplied searchId exists in your account."
           }
         },
         "deprecated": false
@@ -15934,6 +16103,9 @@
           },
           "401": {
             "$ref": "#/paths/~1nlp/get/responses/401"
+          },
+          "404": {
+            "description": "No saved search with the supplied searchId exists in your account."
           }
         },
         "deprecated": false
@@ -15962,6 +16134,8 @@
             "schema": {
               "type": "integer",
               "format": "int32",
+              "minimum": 1,
+              "maximum": 100,
               "default": 100
             }
           },
@@ -15997,9 +16171,29 @@
           {
             "name": "lastStatus",
             "in": "query",
-            "description": "If specified filters matches whose last status is the supplied value.<br/><br/>Allowed values:<br/><br/><code>Sus</code>, <code>Exp</code>, <code>Sld</code>, <code>Ter</code>, <code>Dft</code>, <code>Lsd</code>, <code>Sc</code>, <code>Lc</code>, <code>Pc</code>, <code>Ext</code>, <code>New</code>",
+            "description": "If specified filters matches whose last status is one of the supplied values. Repeat the parameter to supply multiple values.<br/><br/>Allowed values:<br/><br/><code>Sus</code>, <code>Exp</code>, <code>Sld</code>, <code>Ter</code>, <code>Dft</code>, <code>Lsd</code>, <code>Sc</code>, <code>Lc</code>, <code>Pc</code>, <code>Ext</code>, <code>New</code>, <code>Sce</code>, <code>Cs</code>, <code>Lce</code>, <code>Inc</code>",
             "schema": {
-              "type": "string"
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "Sus",
+                  "Exp",
+                  "Sld",
+                  "Ter",
+                  "Dft",
+                  "Lsd",
+                  "Sc",
+                  "Lc",
+                  "Pc",
+                  "Ext",
+                  "New",
+                  "Sce",
+                  "Cs",
+                  "Lce",
+                  "Inc"
+                ]
+              }
             }
           },
           {
@@ -16029,10 +16223,14 @@
           {
             "name": "sortBy",
             "in": "query",
-            "description": "Allowed values:<br/><br/><code>updatedOnDesc</code>,<code>createdOnDesc</code>",
+            "description": "Sorts the matches by creation or last update date, newest first.<br/><br/>Allowed values:<br/><br/><code>createdOnDesc</code>,<code>updatedOnDesc</code>",
             "schema": {
               "type": "string",
-              "default": "updatedOnDesc"
+              "enum": [
+                "createdOnDesc",
+                "updatedOnDesc"
+              ],
+              "default": "createdOnDesc"
             }
           },
           {
@@ -16294,6 +16492,9 @@
           },
           "401": {
             "$ref": "#/paths/~1nlp/get/responses/401"
+          },
+          "404": {
+            "description": "No match with the supplied searchId and matchId exists in your account."
           }
         },
         "deprecated": false
@@ -16351,6 +16552,9 @@
           },
           "401": {
             "$ref": "#/paths/~1nlp/get/responses/401"
+          },
+          "404": {
+            "description": "No match with the supplied searchId and matchId exists in your account."
           }
         },
         "deprecated": false
@@ -16481,7 +16685,24 @@
             "schema": {
               "type": "array",
               "items": {
-                "type": "string"
+                "type": "string",
+                "enum": [
+                  "Sus",
+                  "Exp",
+                  "Sld",
+                  "Ter",
+                  "Dft",
+                  "Lsd",
+                  "Sc",
+                  "Lc",
+                  "Pc",
+                  "Ext",
+                  "New",
+                  "Sce",
+                  "Cs",
+                  "Lce",
+                  "Inc"
+                ]
               }
             }
           }
@@ -17470,7 +17691,11 @@
                 "properties": {
                   "sender": {
                     "type": "string",
-                    "description": "Indicates whether the agent is sending the message or the client.<br/><br/>Allowed values:<br/><br/><code>agent</code>,<code>client</code>"
+                    "description": "Indicates whether the agent is sending the message or the client.<br/><br/>Allowed values:<br/><br/><code>agent</code>,<code>client</code>",
+                    "enum": [
+                      "agent",
+                      "client"
+                    ]
                   },
                   "agentId": {
                     "type": "integer",
@@ -17505,7 +17730,8 @@
                       },
                       "subject": {
                         "type": "string",
-                        "description": "If specified, changes the email subject from the default"
+                        "maxLength": 100,
+                        "description": "If specified, changes the email subject from the default. Maximum 100 characters."
                       },
                       "links": {
                         "type": "array",
@@ -17608,6 +17834,7 @@
             "schema": {
               "type": "integer",
               "format": "int32",
+              "minimum": 1,
               "default": 1
             }
           },
@@ -17618,15 +17845,24 @@
             "schema": {
               "type": "integer",
               "format": "int32",
+              "minimum": 1,
+              "maximum": 100,
               "default": 100
             }
           },
           {
             "name": "sender",
             "in": "query",
-            "description": "Allowed values:<br/><br/><code>agent</code>,<code>client</code>",
+            "description": "Filters messages by who sent them. Repeat the parameter to supply both values.<br/><br/>Allowed values:<br/><br/><code>agent</code>,<code>client</code>",
             "schema": {
-              "type": "string"
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "agent",
+                  "client"
+                ]
+              }
             }
           },
           {
@@ -17634,14 +17870,20 @@
             "in": "query",
             "description": "Allowed values:<br/><br/><code>sent</code>,<code>pending</code>",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "sent",
+                "pending"
+              ]
             }
           },
           {
             "name": "token",
             "in": "query",
+            "description": "Filters messages by their token. Must be a valid GUID.",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -17820,6 +18062,9 @@
           },
           "401": {
             "$ref": "#/paths/~1nlp/get/responses/401"
+          },
+          "404": {
+            "description": "No message with the supplied messageId exists in your account."
           }
         },
         "deprecated": false
@@ -17982,11 +18227,28 @@
           {
             "name": "lastStatus",
             "in": "query",
-            "description": "Filters favorites by the last status of the favorited listing. Cannot be combined with <code>standardStatus</code>.",
+            "description": "Filters favorites by the last status of the favorited listing. Cannot be combined with <code>standardStatus</code>. Repeat the parameter to supply multiple values.<br/><br/>Allowed values:<br/><br/><code>Sus</code>, <code>Exp</code>, <code>Sld</code>, <code>Ter</code>, <code>Dft</code>, <code>Lsd</code>, <code>Sc</code>, <code>Lc</code>, <code>Pc</code>, <code>Ext</code>, <code>New</code>, <code>Sce</code>, <code>Cs</code>, <code>Lce</code>, <code>Inc</code>",
             "schema": {
               "type": "array",
               "items": {
-                "type": "string"
+                "type": "string",
+                "enum": [
+                  "Sus",
+                  "Exp",
+                  "Sld",
+                  "Ter",
+                  "Dft",
+                  "Lsd",
+                  "Sc",
+                  "Lc",
+                  "Pc",
+                  "Ext",
+                  "New",
+                  "Sce",
+                  "Cs",
+                  "Lce",
+                  "Inc"
+                ]
               }
             }
           },
@@ -18005,7 +18267,9 @@
             "description": "The number of favorites to return per page.",
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int32",
+              "minimum": 1,
+              "maximum": 100
             }
           },
           {
@@ -20105,6 +20369,9 @@
           },
           "401": {
             "$ref": "#/paths/~1nlp/get/responses/401"
+          },
+          "404": {
+            "description": "No favorite with the supplied favoriteId exists."
           }
         },
         "deprecated": false
@@ -20137,6 +20404,9 @@
           },
           "401": {
             "$ref": "#/paths/~1nlp/get/responses/401"
+          },
+          "404": {
+            "description": "No favorite with the supplied favoriteId exists."
           }
         },
         "deprecated": false
@@ -20347,7 +20617,8 @@
             "in": "path",
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int32",
+              "minimum": 1
             },
             "required": true
           }
@@ -20441,7 +20712,8 @@
             "in": "path",
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int32",
+              "minimum": 1
             },
             "required": true
           }
@@ -20535,7 +20807,8 @@
             "in": "path",
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int32",
+              "minimum": 1
             },
             "required": true
           }
@@ -20566,7 +20839,8 @@
             "in": "path",
             "schema": {
               "type": "integer",
-              "format": "int32"
+              "format": "int32",
+              "minimum": 1
             },
             "required": true
           }
@@ -20874,9 +21148,9 @@
                     "example": "d38a5bfc-3e8f-4a00-b9s7a-49fe545fa72b"
                   },
                   "clientId": {
-                    "type": "string",
-                    "description": "The `clientId` of the client that the NLP prompt is for.",
-                    "example": "12345"
+                    "type": "integer",
+                    "description": "The `clientId` of the client that the NLP prompt is for. Must be an existing client in your account, otherwise a 404 error is returned.",
+                    "example": 12345
                   },
                   "listings": {
                     "type": "boolean",
@@ -20885,6 +21159,7 @@
                   },
                   "boardId": {
                     "type": "integer",
+                    "minimum": 1,
                     "description": "Restricts the prompt to a single board. Only relevant for API keys with access to multiple boards.\n\nThe NLP model uses the acceptable values (aggregates) of the boards available to your API key when translating a prompt. On a multi-board key, values from several boards are combined, which can result in a generated query that uses a value belonging to a different board. Supplying `boardId` narrows the model to that one board, so the values it produces are always valid for it.\n\nIf the supplied `boardId` is not accessible with your API key, a `403` response is returned.\n",
                     "example": 2
                   },
@@ -21067,6 +21342,9 @@
           "403": {
             "description": "Forbidden - returned when either:\n\n- your account does not have access to the NLP feature, or\n- the supplied `boardId` is not accessible with your API key."
           },
+          "404": {
+            "description": "Not Found - the supplied `clientId` does not exist in your account, or the supplied `nlpId` does not match an existing session."
+          },
           "406": {
             "description": "Not accepted - If the input is not relevant to a listings search a 406 response will be returned. For example, \"why is the sky blue\" would return a 406 response."
           },
@@ -21097,7 +21375,7 @@
             "description": "Filter sessions based on the `clientId` to see all NLP sessions associated with a specific client.",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           },
           {
@@ -21234,7 +21512,7 @@
             "description": "Filter sessions based on the `clientId` to see all NLP sessions associated with a specific client.",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           },
           {
@@ -21415,7 +21693,7 @@
           {
             "name": "displayPublic",
             "in": "query",
-            "description": "Filters buildings by public display status. Y returns buildings that may be displayed publicly, N returns buildings that should be password protected.",
+            "description": "Filters buildings by public display status. Y returns buildings that may be displayed publicly, N returns buildings that should be password protected. Note - this parameter is currently validated but has no effect on the results.",
             "schema": {
               "type": "string",
               "enum": [
@@ -21580,7 +21858,7 @@
           {
             "name": "sortBy",
             "in": "query",
-            "description": "Sorts results by the specified field.",
+            "description": "Sorts results by the specified field. Note - this parameter is currently validated but has no effect on the order of the results.",
             "schema": {
               "type": "string",
               "enum": [
@@ -21764,7 +22042,7 @@
           {
             "name": "displayPublic",
             "in": "query",
-            "description": "Filters buildings by public display status. Y returns buildings that may be displayed publicly, N returns buildings that should be password protected.",
+            "description": "Filters buildings by public display status. Y returns buildings that may be displayed publicly, N returns buildings that should be password protected. Note - this parameter is currently validated but has no effect on the results.",
             "schema": {
               "type": "string",
               "enum": [
@@ -21929,7 +22207,7 @@
           {
             "name": "sortBy",
             "in": "query",
-            "description": "Sorts results by the specified field.",
+            "description": "Sorts results by the specified field. Note - this parameter is currently validated but has no effect on the order of the results.",
             "schema": {
               "type": "string",
               "enum": [

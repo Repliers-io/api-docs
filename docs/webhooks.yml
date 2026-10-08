@@ -161,6 +161,7 @@ paths:
           schema:
             type: integer
             format: int32
+            minimum: 1
           required: true
       requestBody: &WebhookUpdateBody
         required: true
@@ -234,6 +235,7 @@ paths:
           schema:
             type: integer
             format: int32
+            minimum: 1
           required: true
       responses:
         "200":
@@ -255,6 +257,7 @@ paths:
           schema:
             type: integer
             format: int32
+            minimum: 1
           required: true
       responses:
         "200":

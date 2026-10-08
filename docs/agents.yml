@@ -71,7 +71,8 @@ paths:
                   type: object
                 externalId:
                   type: string
-                  description: The externalId is intended for storing agent identifiers from external systems (such as CRMs) for reference purposes.
+                  maxLength: 255
+                  description: The externalId is intended for storing agent identifiers from external systems (such as CRMs) for reference purposes. Maximum 255 characters.
       responses:
         "200":
           $ref: components.yml#/components/responses/EmptySuccess
@@ -222,7 +223,8 @@ paths:
                   type: object
                 externalId:
                   type: string
-                  description: The externalId is intended for storing agent identifiers from external systems (such as CRMs) for reference purposes.
+                  maxLength: 255
+                  description: The externalId is intended for storing agent identifiers from external systems (such as CRMs) for reference purposes. Maximum 255 characters.
       responses:
         "200":
           $ref: components.yml#/components/responses/EmptySuccess
@@ -230,6 +232,8 @@ paths:
           $ref: components.yml#/components/responses/BadRequest
         "401":
           $ref: components.yml#/components/responses/Unauthorized
+        "404":
+          description: No agent with the supplied agentId exists in your account.
         "409":
           description: The email or phone number is already in use by another agent or client in your account.
       deprecated: false
@@ -253,6 +257,8 @@ paths:
           $ref: components.yml#/components/responses/Unauthorized
         "403":
           description: Clients are still assigned to this agent. Reassign them before deleting the agent.
+        "404":
+          description: No agent with the supplied agentId exists in your account.
       deprecated: false
     get:
       summary: Get an agent
@@ -276,6 +282,8 @@ paths:
           $ref: components.yml#/components/responses/BadRequest
         "401":
           $ref: components.yml#/components/responses/Unauthorized
+        "404":
+          description: No agent with the supplied agentId exists in your account.
       deprecated: false
   /agents/{agentId}/transfer:
     post:
@@ -312,6 +320,8 @@ paths:
           $ref: components.yml#/components/responses/BadRequest
         "401":
           $ref: components.yml#/components/responses/Unauthorized
+        "404":
+          description: No agent with the supplied agentId exists in your account.
       deprecated: false
 components:
   schemas:

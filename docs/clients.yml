@@ -86,12 +86,14 @@ paths:
           schema:
             type: integer
             format: int32
+            minimum: 1
         - name: clientId
           in: query
           description: Filters clients by their unique ID.
           schema:
             type: integer
             format: int32
+            minimum: 1
         - name: email
           in: query
           description: Filters clients by email address.
@@ -124,15 +126,21 @@ paths:
             type: boolean
         - name: condition
           in: query
-          description: "Determines the search condition applied to the filters. If EXACT, requires that the given value for one or more params is an exact match of the stored value. If CONTAINS, requires that the given value for one or more params is contained within the stored value. <br/><br/> Allowed values: <br/><br/> <code>EXACT</code>, <code>CONTAINS</code>"
+          description: "Determines the search condition applied to the filters. If EXACT, requires that the given value for one or more params is an exact match of the stored value. If CONTAINS, requires that the given value for one or more params is contained within the stored value. Values are case-insensitive. <br/><br/> Allowed values: <br/><br/> <code>EXACT</code>, <code>CONTAINS</code>"
           schema:
             type: string
+            enum:
+              - EXACT
+              - CONTAINS
             default: EXACT
         - name: operator
           in: query
-          description: "Determines the search logic applied to the filters. If OR, requires that one or more params contain/equal the given value. If AND, requires that all params contain/equal the given value. <br/><br/> Allowed values: <br/><br/> <code>OR</code>, <code>AND</code>"
+          description: "Determines the search logic applied to the filters. If OR, requires that one or more params contain/equal the given value. If AND, requires that all params contain/equal the given value. Values are case-insensitive. <br/><br/> Allowed values: <br/><br/> <code>OR</code>, <code>AND</code>"
           schema:
             type: string
+            enum:
+              - OR
+              - AND
             default: OR
         - name: pageNum
           in: query
@@ -140,6 +148,7 @@ paths:
           schema:
             type: integer
             format: int32
+            minimum: 1
             default: 1
         - name: resultsPerPage
           in: query
@@ -147,6 +156,7 @@ paths:
           schema:
             type: integer
             format: int32
+            minimum: 1
             default: 100
         - name: tags
           in: query
@@ -257,6 +267,8 @@ paths:
           $ref: components.yml#/components/responses/BadRequest
         "401":
           $ref: components.yml#/components/responses/Unauthorized
+        "404":
+          description: No client with the supplied clientId exists in your account.
         "409":
           description: The email or phone number is already in use by another client or agent in your account.
       deprecated: false
@@ -281,6 +293,8 @@ paths:
           $ref: components.yml#/components/responses/BadRequest
         "401":
           $ref: components.yml#/components/responses/Unauthorized
+        "404":
+          description: No client with the supplied clientId exists in your account.
       deprecated: false
     get:
       summary: Get a client
@@ -304,6 +318,8 @@ paths:
           $ref: components.yml#/components/responses/BadRequest
         "401":
           $ref: components.yml#/components/responses/Unauthorized
+        "404":
+          description: No client with the supplied clientId exists in your account.
       deprecated: false
   /clients/tags:
     get:
@@ -357,6 +373,8 @@ paths:
           $ref: components.yml#/components/responses/BadRequest
         "401":
           $ref: components.yml#/components/responses/Unauthorized
+        "404":
+          description: No tag with the supplied name exists.
       deprecated: false
 components:
   schemas:

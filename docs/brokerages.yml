@@ -16,11 +16,15 @@ paths:
           description: Page number for paginated results.
           schema:
             type: integer
+            minimum: 1
+            default: 1
         - name: resultsPerPage
           in: query
           description: Number of results to return per page.
           schema:
             type: integer
+            minimum: 1
+            default: 100
         - name: keywords
           in: query
           description: If supplied, filters brokerages by the supplied value.

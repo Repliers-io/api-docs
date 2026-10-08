@@ -91,11 +91,27 @@ paths:
             type: string
         - name: lastStatus
           in: query
-          description: Filters favorites by the last status of the favorited listing. Cannot be combined with <code>standardStatus</code>.
+          description: Filters favorites by the last status of the favorited listing. Cannot be combined with <code>standardStatus</code>. Repeat the parameter to supply multiple values.<br/><br/>Allowed values:<br/><br/><code>Sus</code>, <code>Exp</code>, <code>Sld</code>, <code>Ter</code>, <code>Dft</code>, <code>Lsd</code>, <code>Sc</code>, <code>Lc</code>, <code>Pc</code>, <code>Ext</code>, <code>New</code>, <code>Sce</code>, <code>Cs</code>, <code>Lce</code>, <code>Inc</code>
           schema:
             type: array
             items:
               type: string
+              enum:
+                - Sus
+                - Exp
+                - Sld
+                - Ter
+                - Dft
+                - Lsd
+                - Sc
+                - Lc
+                - Pc
+                - Ext
+                - New
+                - Sce
+                - Cs
+                - Lce
+                - Inc
         - name: pageNum
           in: query
           description: The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200.
@@ -108,6 +124,8 @@ paths:
           schema:
             type: integer
             format: int32
+            minimum: 1
+            maximum: 100
         - name: status
           in: query
           description: Filters favorites by the current status of the favorited listing. Cannot be combined with <code>standardStatus</code>.<br/><br/>Allowed values:<br/><br/><code>A</code>, <code>U</code>
@@ -1255,6 +1273,8 @@ paths:
           $ref: components.yml#/components/responses/BadRequest
         "401":
           $ref: components.yml#/components/responses/Unauthorized
+        "404":
+          description: No favorite with the supplied favoriteId exists.
       deprecated: false
     delete:
       summary: Delete a favorite
@@ -1277,4 +1297,6 @@ paths:
           $ref: components.yml#/components/responses/BadRequest
         "401":
           $ref: components.yml#/components/responses/Unauthorized
+        "404":
+          description: No favorite with the supplied favoriteId exists.
       deprecated: false

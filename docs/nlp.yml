@@ -1,10 +1,10 @@
 openapi: 3.1.0
 info:
-  title: Locations API
+  title: NLP API
   description: |
-    API for searching, filtering, and retrieving location data across multiple geographical hierarchies.
-    Provides endpoints for location querying based on various parameters including geographical boundaries,
-    administrative divisions and location types. Supports filtering, pagination, and custom field selection.
+    API for translating natural language prompts into listing search requests.
+    Provides endpoints for submitting prompts, continuing an existing NLP session,
+    and reviewing prompt and chat history per client.
   version: 1.0.0
 servers:
   - url: https://api.repliers.io
@@ -55,9 +55,9 @@ paths:
                     When you send a prompt to the `/nlp` endpoint, the system returns an `nlpId` in the response. You can include this `nlpId` in subsequent requests to build upon previous interactions and maintain continuity within the same conversation thread.
                   example: "d38a5bfc-3e8f-4a00-b9s7a-49fe545fa72b"
                 clientId:
-                  type: string
-                  description: The `clientId` of the client that the NLP prompt is for.
-                  example: "12345"
+                  type: integer
+                  description: The `clientId` of the client that the NLP prompt is for. Must be an existing client in your account, otherwise a 404 error is returned.
+                  example: 12345
                 listings:
                   type: boolean
                   default: false
@@ -65,6 +65,7 @@ paths:
                     If `true`, the endpoint will return listings according to the generated urlQueryString parameters, the same way as GET /lisitngs endpoint would treat those parameters. Default is `false`.
                 boardId:
                   type: integer
+                  minimum: 1
                   description: |
                     Restricts the prompt to a single board. Only relevant for API keys with access to multiple boards.
 
@@ -114,6 +115,8 @@ paths:
 
             - your account does not have access to the NLP feature, or
             - the supplied `boardId` is not accessible with your API key.
+        "404":
+          description: Not Found - the supplied `clientId` does not exist in your account, or the supplied `nlpId` does not match an existing session.
         "406":
           description: Not accepted - If the input is not relevant to a listings search a 406 response will be returned. For example, "why is the sky blue" would return a 406 response.
         "500":
@@ -136,7 +139,7 @@ paths:
           description: Filter sessions based on the `clientId` to see all NLP sessions associated with a specific client.
           required: false
           schema:
-            type: string
+            type: integer
         - name: pageNum
           in: query
           description: The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200.
@@ -198,7 +201,7 @@ paths:
           description: Filter sessions based on the `clientId` to see all NLP sessions associated with a specific client.
           required: false
           schema:
-            type: string
+            type: integer
 
         - name: resultsPerPage
           in: query

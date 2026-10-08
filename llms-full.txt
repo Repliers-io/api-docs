@@ -353,7 +353,7 @@ Searches for geographical locations such as cities, neighborhoods, and districts
 | maxSize | number (float) | Filters locations by maximum size (in square kilometers). |
 | classification | array[string] | Filters locations by classification. |
 | subType | array[string] enum: village | Filters locations by sub-type. Values are case-insensitive. Allowed values: village |
-| name | string | Filters locations by exact name (case-insensitive). |
+| name | array[string] | Filters locations by exact name. Repeat the parameter to supply multiple names. |
 | schoolType | array[string] | Filters locations by school type. Applies to locations with `type=school`. |
 | schoolLevel | array[string] | Filters locations by school level. Applies to locations with `type=school`. |
 | privateSchoolAffiliation | array[string] | Filters locations by private school affiliation. Applies to locations with `type=school`. |
@@ -418,7 +418,7 @@ Identical to GET /locations and accepts the same query parameters. Use this meth
 | maxSize | number (float) | Filters locations by maximum size (in square kilometers). |
 | classification | array[string] | Filters locations by classification. |
 | subType | array[string] enum: village | Filters locations by sub-type. Values are case-insensitive. Allowed values: village |
-| name | string | Filters locations by exact name (case-insensitive). |
+| name | array[string] | Filters locations by exact name. Repeat the parameter to supply multiple names. |
 | schoolType | array[string] | Filters locations by school type. Applies to locations with `type=school`. |
 | schoolLevel | array[string] | Filters locations by school level. Applies to locations with `type=school`. |
 | privateSchoolAffiliation | array[string] | Filters locations by private school affiliation. Applies to locations with `type=school`. |
@@ -513,7 +513,7 @@ Searches for buildings based on location, price, property type, and other criter
 | buildingName | array[string] | Filters buildings by name. Availability of building names may vary by MLS and is not guaranteed for all buildings. |
 | city | array[string] | Filters buildings by city. |
 | class | array[string] enum: condo, residential, commercial | Filters buildings by property class. |
-| displayPublic | string enum: Y, N | Filters buildings by public display status. Y returns buildings that may be displayed publicly, N returns buildings that should be password protected. |
+| displayPublic | string enum: Y, N | Filters buildings by public display status. Y returns buildings that may be displayed publicly, N returns buildings that should be password protected. Note - this parameter is currently validated but has no effect on the results. |
 | lat | number (float) | Accepts a value for latitude. Must be used together with the long and radius parameters to return buildings within a certain radius of a given latitude and longitude. If any one of lat, long or radius is provided, all three are required. |
 | long | number (float) | Accepts a value for longitude. Must be used together with the lat and radius parameters to return buildings within a certain radius of a given latitude and longitude. If any one of lat, long or radius is provided, all three are required. |
 | map | string (json) | GeoJSON polygon or multi-polygon boundary for geographical filtering. Limits results to buildings within the specified boundaries. For complex polygons or multipolygons that exceed query parameter size limits, use the POST method and include the map data in the request body. Format: Array of coordinate arrays, where each coordinate is [longitude, latitude] in WGS 84 format. The polygon must be closed (first and last points must be identical). For more information refer to the implementation guide Filtering Listings Geo-Spatially Using the "map" Parameter |
@@ -529,7 +529,7 @@ Searches for buildings based on location, price, property type, and other criter
 | radius | integer | Accepts a value for radius, expressed in the unit set by `radiusUnit` (KM by default). Must be used with `lat` and `long` parameters to return buildings within the specified radius of a given latitude and longitude. If any one of lat, long or radius is provided, all three are required. Must be a whole number greater than 0. |
 | radiusUnit | string enum: m, km, mi, yd default: km | Sets the unit of measurement for the `radius` parameter. Can only be used together with `radius`. Allowed values: - `km` — kilometers (default) - `m` — meters - `mi` — miles - `yd` — yards |
 | resultsPerPage | integer default: 100 | The number of buildings to return per page. |
-| sortBy | string enum: numUnitsDesc | Sorts results by the specified field. |
+| sortBy | string enum: numUnitsDesc | Sorts results by the specified field. Note - this parameter is currently validated but has no effect on the order of the results. |
 | streetName | array[string] | Filters buildings by street name. |
 | streetNumber | array[string] | Filters buildings by street number. |
 | type | string enum: sale, lease | Filters buildings by listing type. |
@@ -565,7 +565,7 @@ Identical to POST /buildings and accepts the same query parameters. Use this met
 | buildingName | array[string] | Filters buildings by name. Availability of building names may vary by MLS and is not guaranteed for all buildings. |
 | city | array[string] | Filters buildings by city. |
 | class | array[string] enum: condo, residential, commercial | Filters buildings by property class. |
-| displayPublic | string enum: Y, N | Filters buildings by public display status. Y returns buildings that may be displayed publicly, N returns buildings that should be password protected. |
+| displayPublic | string enum: Y, N | Filters buildings by public display status. Y returns buildings that may be displayed publicly, N returns buildings that should be password protected. Note - this parameter is currently validated but has no effect on the results. |
 | lat | number (float) | Accepts a value for latitude. Must be used together with the long and radius parameters to return buildings within a certain radius of a given latitude and longitude. If any one of lat, long or radius is provided, all three are required. |
 | long | number (float) | Accepts a value for longitude. Must be used together with the lat and radius parameters to return buildings within a certain radius of a given latitude and longitude. If any one of lat, long or radius is provided, all three are required. |
 | map | string (json) | GeoJSON polygon or multi-polygon boundary for geographical filtering. Limits results to buildings within the specified boundaries. For complex polygons or multipolygons that exceed query parameter size limits, use the POST method and include the map data in the request body. Format: Array of coordinate arrays, where each coordinate is [longitude, latitude] in WGS 84 format. The polygon must be closed (first and last points must be identical). For more information refer to the implementation guide Filtering Listings Geo-Spatially Using the "map" Parameter |
@@ -581,7 +581,7 @@ Identical to POST /buildings and accepts the same query parameters. Use this met
 | radius | integer | Accepts a value for radius, expressed in the unit set by `radiusUnit` (KM by default). Must be used with `lat` and `long` parameters to return buildings within the specified radius of a given latitude and longitude. If any one of lat, long or radius is provided, all three are required. Must be a whole number greater than 0. |
 | radiusUnit | string enum: m, km, mi, yd default: km | Sets the unit of measurement for the `radius` parameter. Can only be used together with `radius`. Allowed values: - `km` — kilometers (default) - `m` — meters - `mi` — miles - `yd` — yards |
 | resultsPerPage | integer default: 100 | The number of buildings to return per page. |
-| sortBy | string enum: numUnitsDesc | Sorts results by the specified field. |
+| sortBy | string enum: numUnitsDesc | Sorts results by the specified field. Note - this parameter is currently validated but has no effect on the order of the results. |
 | streetName | array[string] | Filters buildings by street name. |
 | streetNumber | array[string] | Filters buildings by street number. |
 | type | string enum: sale, lease | Filters buildings by listing type. |
@@ -661,7 +661,7 @@ This endpoint translates natural language search queries into structured API req
 |---|---|---|---|
 | prompt | string | yes | The natural language prompt to be processed. |
 | nlpId | string | no | Unique identifier for maintaining context-aware interactions across multiple prompts. - **If omitted or blank:** A new session is created, and the system processes the prompt independently without any prior context. - **If provided:** The prompt is added to the existing session associated with the given `nlpId`, allowing the system to consider the conversation history when generating the API request. When you send a prompt to the `/nlp` endpoint, the system returns an `nlpId` in the response. You can include this `nlpId` in subsequent requests to build upon previous interactions and maintain continuity within the same conversation thread. |
-| clientId | string | no | The `clientId` of the client that the NLP prompt is for. |
+| clientId | integer | no | The `clientId` of the client that the NLP prompt is for. Must be an existing client in your account, otherwise a 404 error is returned. |
 | listings | boolean default: false | no | If `true`, the endpoint will return listings according to the generated urlQueryString parameters, the same way as GET /lisitngs endpoint would treat those parameters. Default is `false`. |
 | boardId | integer | no | Restricts the prompt to a single board. Only relevant for API keys with access to multiple boards. The NLP model uses the acceptable values (aggregates) of the boards available to your API key when translating a prompt. On a multi-board key, values from several boards are combined, which can result in a generated query that uses a value belonging to a different board. Supplying `boardId` narrows the model to that one board, so the values it produces are always valid for it. If the supplied `boardId` is not accessible with your API key, a `403` response is returned. |
 | fields | string | no | Use if you want to limit the `listings` response object to containing certain fields only. For example: `fields=listPrice,soldPrice` would limit the response to contain `listPrice` and `soldPrice` only. You can also specify the amount of images to return, for example if a listing has 40 images total and you specify `fields=images[5]` it will only return the first 5 images. |
@@ -692,7 +692,7 @@ This endpoint allows you to list and filter prompts across all sessions.
 | Name | Type | Description |
 |---|---|---|
 | nlpId | string | Unique identifier for the NLP session. |
-| clientId | string | Filter sessions based on the `clientId` to see all NLP sessions associated with a specific client. |
+| clientId | integer | Filter sessions based on the `clientId` to see all NLP sessions associated with a specific client. |
 | pageNum | integer default: 1 | The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200. |
 | resultsPerPage | integer default: 100 | The number of prompts to return per page. |
 
@@ -717,7 +717,7 @@ This endpoint allows you to list and filter all sessions. Each session has a uni
 | Name | Type | Description |
 |---|---|---|
 | nlpId | string | Unique identifier for the NLP session. |
-| clientId | string | Filter sessions based on the `clientId` to see all NLP sessions associated with a specific client. |
+| clientId | integer | Filter sessions based on the `clientId` to see all NLP sessions associated with a specific client. |
 | resultsPerPage | integer default: 100 | The number of chats to return per page. |
 | pageNum | integer default: 1 | The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200. |
 | prompts | boolean default: null | Fetch all prompts for each of the chats. |
@@ -759,7 +759,7 @@ Use this endpoint to create an agent. Each client that you create needs to be as
 | avatar | string | no | A URL/Path to an avatar/picture of this agent. |
 | status | boolean default: true | no | If false, disables all operations for the agent. |
 | location | object | no |  |
-| externalId | string | no | The externalId is intended for storing agent identifiers from external systems (such as CRMs) for reference purposes. |
+| externalId | string | no | The externalId is intended for storing agent identifiers from external systems (such as CRMs) for reference purposes. Maximum 255 characters. |
 
 ---
 
@@ -813,7 +813,7 @@ Updates one or more fields for an existing agent. Only include the fields you wi
 | avatar | string | no | A URL/Path to an avatar/picture of this agent. |
 | status | boolean default: true | no | If false, disables all operations for the agent. |
 | location | object | no |  |
-| externalId | string | no | The externalId is intended for storing agent identifiers from external systems (such as CRMs) for reference purposes. |
+| externalId | string | no | The externalId is intended for storing agent identifiers from external systems (such as CRMs) for reference purposes. Maximum 255 characters. |
 
 ---
 
@@ -915,8 +915,8 @@ Use this endpoint to get a list of clients that you've created. You can filter f
 | lname | string | Filters clients by last name. |
 | phone | string | Filters clients by phone number. |
 | status | boolean | If false, returns only disabled clients. If true, returns only active clients. |
-| condition | string default: EXACT | Determines the search condition applied to the filters. If EXACT, requires that the given value for one or more params is an exact match of the stored value. If CONTAINS, requires that the given value for one or more params is contained within the stored value. Allowed values: EXACT, CONTAINS |
-| operator | string default: OR | Determines the search logic applied to the filters. If OR, requires that one or more params contain/equal the given value. If AND, requires that all params contain/equal the given value. Allowed values: OR, AND |
+| condition | string enum: EXACT, CONTAINS default: EXACT | Determines the search condition applied to the filters. If EXACT, requires that the given value for one or more params is an exact match of the stored value. If CONTAINS, requires that the given value for one or more params is contained within the stored value. Values are case-insensitive. Allowed values: EXACT, CONTAINS |
+| operator | string enum: OR, AND default: OR | Determines the search logic applied to the filters. If OR, requires that one or more params contain/equal the given value. If AND, requires that all params contain/equal the given value. Values are case-insensitive. Allowed values: OR, AND |
 | pageNum | integer (int32) default: 1 | The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200. |
 | resultsPerPage | integer (int32) default: 100 | The number of clients to return per page. |
 | tags | string | One or more comma separated strings that can be used to filter clients. For example GET /clients?tags=buyer,toronto. The response contains clients that have any of the tags specified. |
@@ -1069,16 +1069,16 @@ Use this endpoint to create a saved search for a client. Important - the filters
 | Field | Type | Required | Description |
 |---|---|---|---|
 | clientId | integer (int32) | yes | The clientId of the client that the search is for. This client will receive notifications from the agent that's assigned to them when listings that match the saved search criteria are listed. |
-| name | string | no | You can specify a name for the saved search. This is useful in cases where users have multiple saved searches, to help them distinguish between saved searches. |
+| name | string | no | You can specify a name for the saved search. This is useful in cases where users have multiple saved searches, to help them distinguish between saved searches. Maximum 50 characters. |
 | amenities | array[string] | no |  |
 | areas | array[string] | no | An array of areas to be used as a filter for this search. Required, together with cities, if neither map nor locationIds is provided. |
 | basement | array[string] | no | If specified, matches only listings whose basement description match all of the supplied values. For a list of supported values, make a GET /listings?listings=false&aggregates=details.basement1,details.basement2 request. |
 | cities | array[string] | no | An array of cities to be used as a filter for this search. Required, together with areas, if neither map nor locationIds is provided. |
-| class | array[string] | yes | Indicates what class of property to search for. Allowed values: residential,condo,commercial |
+| class | array[string] enum: residential, condo, commercial | yes | Indicates what class of property to search for. Allowed values: residential,condo,commercial |
 | heating | array[string] | no | An array of heating values to be used as a filter for this search. |
 | keywords | array[string] | no |  |
 | neighborhoods | array[string] | no | An array of neighborhoods to be used as a filter for this search. Optional. Does not replace the areas and cities requirement when map is not provided. |
-| notificationFrequency | string default: instant | no | Sets the frequency that clients will be notified of listings that match their search criteria. Allowed values: instant, daily, weekly, monthly |
+| notificationFrequency | string enum: instant, daily, weekly, monthly default: instant | no | Sets the frequency that clients will be notified of listings that match their search criteria. Allowed values: instant, daily, weekly, monthly |
 | map | string (json) | no | An array of polygons arrays with arrays of longitude/latitude shapes to be used as a filter for this search. If used, only listings that area geographically located within these shapes will be matched. Required if neither locationIds nor both areas and cities are provided. |
 | maxBaths | integer (int32) | no | The maximum amount of bathrooms to be used as a filter for this search. |
 | maxBeds | integer (int32) | no | The maximum amount of bedrooms to be used as a filter for this search. |
@@ -1098,7 +1098,7 @@ Use this endpoint to create a saved search for a client. Important - the filters
 | minStories | integer (int32) | no |  |
 | minSqft | integer (int32) | no |  |
 | minYearBuilt | integer (int32) | no |  |
-| pets | string | no |  |
+| pets | array[string] | no | An array of pet policy values to be used as a filter for this search. |
 | priceChangeNotifications | boolean default: false | no | If set to true, clients will receive price change notifications for listings that have been matched for them. |
 | propertyTypes | array[string] | no | An array of property types to be used as a filter for this search. |
 | sewer | array[string] | no | An array of sewer values to be used as a filter for this search. |
@@ -1108,7 +1108,7 @@ Use this endpoint to create a saved search for a client. Important - the filters
 | streetNumbers | array[string] | no | An array of street numbers to be used as a filter for this search. |
 | styles | array[string] | no | An array of property styles to be used as a filter for this search. |
 | swimmingPool | array[string] | no | An array of swimming pool values to be used as a filter for this search. |
-| type | string | yes | Indicates whether the search is for a property that's for sale or for lease. Allowed values: sale,lease |
+| type | string enum: sale, lease | yes | Indicates whether the search is for a property that's for sale or for lease. Allowed values: sale,lease |
 | waterSource | array[string] | no | An array of water source values to be used as a filter for this search. |
 | minLotSizeSqft | integer (int32) | no | The minimum lot size in square feet to be used as a filter for this search. |
 | maxLotSizeSqft | integer (int32) | no | The maximum lot size in square feet to be used as a filter for this search. |
@@ -1230,16 +1230,16 @@ Use this endpoint to update a saved search. Important - When a saved search is u
 | Field | Type | Required | Description |
 |---|---|---|---|
 | clientId | integer (int32) | no | The clientId of the client that the search is for. This client will receive notifications from the agent that's assigned to them when listings that match the saved search criteria are listed. |
-| name | string | no | You can specify a name for the saved search. This is useful in cases where users have multiple saved searches, to help them distinguish between saved searches. |
+| name | string | no | You can specify a name for the saved search. This is useful in cases where users have multiple saved searches, to help them distinguish between saved searches. Maximum 50 characters. |
 | amenities | array[string] | no |  |
 | areas | array[string] | no | An array of areas to be used as a filter for this search. Required, together with cities, if neither map nor locationIds is provided. |
 | basement | array[string] | no | If specified, matches only listings whose basement description match all of the supplied values. For a list of supported values, make a GET /listings?listings=false&aggregates=details.basement1,details.basement2 request. |
 | cities | array[string] | no | An array of cities to be used as a filter for this search. Required, together with areas, if neither map nor locationIds is provided. |
-| class | array[string] | no | Indicates what class of property to search for. Allowed values: residential,condo,commercial |
+| class | array[string] enum: residential, condo, commercial | no | Indicates what class of property to search for. Allowed values: residential,condo,commercial |
 | heating | array[string] | no | An array of heating values to be used as a filter for this search. |
 | keywords | array[string] | no |  |
 | neighborhoods | array[string] | no | An array of neighborhoods to be used as a filter for this search. Optional. Does not replace the areas and cities requirement when map is not provided. |
-| notificationFrequency | string | no | Sets the frequency that clients will be notified of listings that match their search criteria. Allowed values: instant, daily, weekly, monthly |
+| notificationFrequency | string enum: instant, daily, weekly, monthly | no | Sets the frequency that clients will be notified of listings that match their search criteria. Allowed values: instant, daily, weekly, monthly |
 | map | string (json) | no | An array of polygons arrays with arrays of longitude/latitude shapes to be used as a filter for this search. If used, only listings that area geographically located within these shapes will be matched. Required if neither locationIds nor both areas and cities are provided. |
 | maxBaths | integer (int32) | no | The maximum amount of bathrooms to be used as a filter for this search. |
 | maxBeds | integer (int32) | no | The maximum amount of bedrooms to be used as a filter for this search. |
@@ -1259,7 +1259,7 @@ Use this endpoint to update a saved search. Important - When a saved search is u
 | minSqft | integer (int32) | no |  |
 | minYearBuilt | integer (int32) | no |  |
 | minStories | integer (int32) | no |  |
-| pets | string | no |  |
+| pets | array[string] | no | An array of pet policy values to be used as a filter for this search. |
 | priceChangeNotifications | boolean | no | If set to true, clients will receive price change notifications for listings that have been matched for them. |
 | propertyTypes | array[string] | no | An array of property types to be used as a filter for this search. |
 | sewer | array[string] | no | An array of sewer values to be used as a filter for this search. |
@@ -1269,7 +1269,7 @@ Use this endpoint to update a saved search. Important - When a saved search is u
 | streetNumbers | array[string] | no | An array of street numbers to be used as a filter for this search. |
 | styles | array[string] | no | An array of property styles to be used as a filter for this search. |
 | swimmingPool | array[string] | no | An array of swimming pool values to be used as a filter for this search. |
-| type | string | no | Indicates whether the search is for a property that's for sale or for lease. Allowed values: sale,lease |
+| type | string enum: sale, lease | no | Indicates whether the search is for a property that's for sale or for lease. Allowed values: sale,lease |
 | waterSource | array[string] | no | An array of water source values to be used as a filter for this search. |
 | minLotSizeSqft | integer (int32) | no | The minimum lot size in square feet to be used as a filter for this search. |
 | maxLotSizeSqft | integer (int32) | no | The maximum lot size in square feet to be used as a filter for this search. |
@@ -1326,11 +1326,11 @@ Use this endpoint to lookup matches for a saved search. Matches are listings tha
 | resultsPerPage | integer (int32) default: 100 | The number of listings to return per page. |
 | endDate | string (date-time) | If specified filters matches whose match date is YYYY-MM-DDTHH:mm:ss.sssZ |
 | startDate | string (date-time) | If specified filters matches whose match date is >= the supplied value. Format: YYYY-MM-DDTHH:mm:ss.sssZ |
-| lastStatus | string | If specified filters matches whose last status is the supplied value. Allowed values: Sus, Exp, Sld, Ter, Dft, Lsd, Sc, Lc, Pc, Ext, New |
+| lastStatus | array[string] enum: Sus, Exp, Sld, Ter, Dft, Lsd, Sc, Lc, Pc, Ext, New, Sce, Cs, Lce, Inc | If specified filters matches whose last status is one of the supplied values. Repeat the parameter to supply multiple values. Allowed values: Sus, Exp, Sld, Ter, Dft, Lsd, Sc, Lc, Pc, Ext, New, Sce, Cs, Lce, Inc |
 | liked | boolean | If true filters search matches that were liked, if false filters search matches that were disliked. If not specified, returns all search matches. |
 | viewed | boolean | If true filters search matches that the client has viewed, if false filters search matches that have not been viewed. If not specified, returns all search matches. |
 | matchId | integer (int32) |  |
-| sortBy | string default: updatedOnDesc | Allowed values: updatedOnDesc,createdOnDesc |
+| sortBy | string enum: createdOnDesc, updatedOnDesc default: createdOnDesc | Sorts the matches by creation or last update date, newest first. Allowed values: createdOnDesc,updatedOnDesc |
 | status | string | If not specified returns both available and unavailable listings. If specified limits results to specified status. Allowed values: A,U |
 
 **Response (200):**
@@ -1424,7 +1424,7 @@ Use this endpoint to lookup matches across all saved searches in your account, o
 | liked | boolean | If true filters search matches that were liked, if false filters search matches that were disliked. If not specified, returns all search matches. |
 | viewed | boolean | If true filters search matches that the client has viewed, if false filters search matches that have not been viewed. If not specified, returns all search matches. |
 | status | string enum: A, U | If not specified returns both available and unavailable listings. If specified limits results to specified status. Allowed values: A,U |
-| lastStatus | array[string] | If specified filters matches whose last status is one of the supplied values. Repeat the parameter to supply multiple values. Allowed values: Sus, Exp, Sld, Ter, Dft, Lsd, Sc, Lc, Pc, Ext, New, Sce, Cs, Lce, Inc |
+| lastStatus | array[string] enum: Sus, Exp, Sld, Ter, Dft, Lsd, Sc, Lc, Pc, Ext, New, Sce, Cs, Lce, Inc | If specified filters matches whose last status is one of the supplied values. Repeat the parameter to supply multiple values. Allowed values: Sus, Exp, Sld, Ter, Dft, Lsd, Sc, Lc, Pc, Ext, New, Sce, Cs, Lce, Inc |
 
 **Response (200):**
 
@@ -1588,7 +1588,7 @@ Use this endpoint to send a message. A message is either sent from an agent to a
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| sender | string | yes | Indicates whether the agent is sending the message or the client. Allowed values: agent,client |
+| sender | string enum: agent, client | yes | Indicates whether the agent is sending the message or the client. Allowed values: agent,client |
 | agentId | integer (int32) | yes | The agentId of the agent that's either receiving or sending the message. |
 | clientId | integer (int32) | yes | The clientId of the client that's either receiving or sending the message. The client must be assigned to the agent specified by agentId, otherwise a 400 error is returned. |
 | content | object | yes |  |
@@ -1611,9 +1611,9 @@ Use this endpoint to list and filter sent messages.
 | messageId | integer (int32) |  |
 | pageNum | integer (int32) default: 1 | The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200. |
 | resultsPerPage | integer (int32) default: 100 | The number of messages to return per page. |
-| sender | string | Allowed values: agent,client |
-| status | string | Allowed values: sent,pending |
-| token | string |  |
+| sender | array[string] enum: agent, client | Filters messages by who sent them. Repeat the parameter to supply both values. Allowed values: agent,client |
+| status | string enum: sent, pending | Allowed values: sent,pending |
+| token | string (uuid) | Filters messages by their token. Must be a valid GUID. |
 
 **Response (200):**
 
@@ -1708,7 +1708,7 @@ Returns a list of properties that a client has favorited. Results can be filtere
 | boardId | array[integer] | Filters favorites to one or more boards. If omitted, all boards your account has access to are included. Repeat the parameter to supply multiple boardIds. |
 | clientId | integer (int32) | The ID of the client whose favorites to retrieve. |
 | fields | string | Use if you want to limit the response to containing certain fields only. For example: fields?listPrice,soldPrice would limit the response to contain listPrice and soldPrice only. You can also specify the amount of images to return, for example if a listing has 40 images total and you specify fields=images[5] it will only return the first 5 images. |
-| lastStatus | array[string] | Filters favorites by the last status of the favorited listing. Cannot be combined with standardStatus. |
+| lastStatus | array[string] enum: Sus, Exp, Sld, Ter, Dft, Lsd, Sc, Lc, Pc, Ext, New, Sce, Cs, Lce, Inc | Filters favorites by the last status of the favorited listing. Cannot be combined with standardStatus. Repeat the parameter to supply multiple values. Allowed values: Sus, Exp, Sld, Ter, Dft, Lsd, Sc, Lc, Pc, Ext, New, Sce, Cs, Lce, Inc |
 | pageNum | integer (int32) | The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200. |
 | resultsPerPage | integer (int32) | The number of favorites to return per page. |
 | status | string enum: A, U | Filters favorites by the current status of the favorited listing. Cannot be combined with standardStatus. Allowed values: A, U |
@@ -1957,15 +1957,15 @@ Use this endpoint to list and filter members (agents) belonging to the MLS.
 
 | Name | Type | Description |
 |---|---|---|
-| agentId | string | Filters members by agent ID using exact match. |
-| agentName | string | Filters members by agent name using exact match. |
+| agentId | array[string] | Filters members by agent ID using exact match. Repeat the parameter to supply multiple values (OR). |
+| agentName | array[string] | Filters members by agent name using exact match. Repeat the parameter to supply multiple values (OR). |
 | boardId | string | Filters members by the MLS board they belong to. Required if your API key has access to more than one MLS board. Find your boardId by visiting https://login.repliers.com/dashboard/data-access |
 | hasEmail | boolean | If supplied, filters members by whether they have an email address on record. |
 | originatingSystemName | string | Filters members by the name of the originating MLS system. |
-| brokerage | string | Filters members by brokerage name using partial match. |
-| officeId | string | Filters members by the ID of the office they belong to. |
-| position | string | Filters members by their position or role. |
-| keywords | string | Searches members by keyword across multiple fields. |
+| brokerage | array[string] | Filters members by brokerage name using partial match. Repeat the parameter to supply multiple values. |
+| officeId | array[string] | Filters members by the ID of the office they belong to. Repeat the parameter to supply multiple values (OR). |
+| position | array[string] | Filters members by their position or role. Repeat the parameter to supply multiple values (OR). |
+| keywords | string | Searches members by keyword across multiple fields. Maximum 100 characters. |
 | pageNum | integer (int32) default: 1 | The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200. |
 | resultsPerPage | integer (int32) default: 100 | The number of members to return per page. |
 
@@ -2009,9 +2009,9 @@ Use this endpoint to list offices belonging to the MLS. A brokerage may have one
 
 | Name | Type | Description |
 |---|---|---|
-| pageNum | integer | Page number for paginated results. |
-| resultsPerPage | integer | Number of results to return per page. |
-| officeId | string | If supplied, finds office by officeId using exact match criteria. |
+| pageNum | integer default: 1 | Page number for paginated results. |
+| resultsPerPage | integer default: 100 | Number of results to return per page. |
+| officeId | array[string] | If supplied, finds offices by officeId using exact (case-insensitive) match criteria. Repeat the parameter to supply multiple values. |
 | keywords | string | If supplied, filters offices by the supplied value. |
 | boardId | string | Filters offices by MLS board. Required if your API key has access to more than one MLS board. Find your boardId by visiting https://login.repliers.com/dashboard/data-access |
 
@@ -2054,8 +2054,8 @@ Returns a list of brokerages registered with the MLS. Useful for building broker
 
 | Name | Type | Description |
 |---|---|---|
-| pageNum | integer | Page number for paginated results. |
-| resultsPerPage | integer | Number of results to return per page. |
+| pageNum | integer default: 1 | Page number for paginated results. |
+| resultsPerPage | integer default: 100 | Number of results to return per page. |
 | keywords | string | If supplied, filters brokerages by the supplied value. |
 | boardId | string | Filters brokerages by MLS board. Required if your API key has access to more than one MLS board. Find your boardId by visiting https://login.repliers.com/dashboard/data-access |
 

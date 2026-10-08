@@ -16,14 +16,20 @@ paths:
       parameters:
         - name: agentId
           in: query
-          description: Filters members by agent ID using exact match.
+          description: Filters members by agent ID using exact match. Repeat the parameter to supply multiple values (OR).
           schema:
-            type: string
+            type: array
+            items:
+              type: string
+              maxLength: 50
         - name: agentName
           in: query
-          description: Filters members by agent name using exact match.
+          description: Filters members by agent name using exact match. Repeat the parameter to supply multiple values (OR).
           schema:
-            type: string
+            type: array
+            items:
+              type: string
+              maxLength: 100
         - name: boardId
           in: query
           description: Filters members by the MLS board they belong to. Required if your API key has access to more than one MLS board. Find your boardId by visiting https://login.repliers.com/dashboard/data-access
@@ -41,24 +47,34 @@ paths:
             type: string
         - name: brokerage
           in: query
-          description: Filters members by brokerage name using partial match.
+          description: Filters members by brokerage name using partial match. Repeat the parameter to supply multiple values.
           schema:
-            type: string
+            type: array
+            items:
+              type: string
+              maxLength: 100
         - name: officeId
           in: query
-          description: Filters members by the ID of the office they belong to.
+          description: Filters members by the ID of the office they belong to. Repeat the parameter to supply multiple values (OR).
           schema:
-            type: string
+            type: array
+            items:
+              type: string
+              maxLength: 100
         - name: position
           in: query
-          description: Filters members by their position or role.
+          description: Filters members by their position or role. Repeat the parameter to supply multiple values (OR).
           schema:
-            type: string
+            type: array
+            items:
+              type: string
+              maxLength: 100
         - name: keywords
           in: query
-          description: Searches members by keyword across multiple fields.
+          description: Searches members by keyword across multiple fields. Maximum 100 characters.
           schema:
             type: string
+            maxLength: 100
         - name: pageNum
           in: query
           description: The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200.
@@ -66,6 +82,7 @@ paths:
             type: integer
             format: int32
             default: 1
+            minimum: 1
             maximum: 10000
         - name: resultsPerPage
           in: query
@@ -74,6 +91,7 @@ paths:
             type: integer
             format: int32
             default: 100
+            minimum: 1
             maximum: 1000
       responses:
         "200":

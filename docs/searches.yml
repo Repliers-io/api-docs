@@ -31,7 +31,8 @@ paths:
                   format: int32
                 name:
                   type: string
-                  description: You can specify a name for the saved search. This is useful in cases where users have multiple saved searches, to help them distinguish between saved searches.
+                  maxLength: 50
+                  description: You can specify a name for the saved search. This is useful in cases where users have multiple saved searches, to help them distinguish between saved searches. Maximum 50 characters.
                 amenities:
                   type: array
                   items:
@@ -56,6 +57,10 @@ paths:
                   description: Indicates what class of property to search for.<br/><br/>Allowed values:<br/><br/><code>residential</code>,<code>condo</code>,<code>commercial</code>
                   items:
                     type: string
+                    enum:
+                      - residential
+                      - condo
+                      - commercial
                 heating:
                   type: array
                   description: An array of heating values to be used as a filter for this search.
@@ -73,6 +78,11 @@ paths:
                 notificationFrequency:
                   type: string
                   description: Sets the frequency that clients will be notified of listings that match their search criteria.<br/><br/>Allowed values:<br/><br/><code>instant</code>, <code>daily</code>, <code>weekly</code>, <code>monthly</code>
+                  enum:
+                    - instant
+                    - daily
+                    - weekly
+                    - monthly
                   default: instant
                 map:
                   type: string
@@ -86,6 +96,8 @@ paths:
                   type: integer
                   description: The maximum amount of bedrooms to be used as a filter for this search.
                   format: int32
+                  minimum: 1
+                  maximum: 32767
                 maxCoveredSpaces:
                   type: integer
                   description: The maximum amount of covered spaces to be used as a filter for this search.
@@ -94,6 +106,8 @@ paths:
                   type: integer
                   description: If specified, matches only listings whose parking space count is >= the supplied value.
                   format: int32
+                  minimum: 1
+                  maximum: 32767
                 maxPrice:
                   type: integer
                   description: The maximum list price to be used as a filter for this search.
@@ -107,6 +121,8 @@ paths:
                 maxYearBuilt:
                   type: integer
                   format: int32
+                  minimum: 1
+                  maximum: 32767
                 minBaths:
                   type: integer
                   description: The minimum amount of bathrooms to be used as a filter for this search.
@@ -115,6 +131,8 @@ paths:
                   type: integer
                   description: The minimum amount of bedrooms to be used as a filter for this search.
                   format: int32
+                  minimum: 1
+                  maximum: 32767
                 minCoveredSpaces:
                   type: integer
                   description: The minimum amount of covered spaces to be used as a filter for this search.
@@ -123,10 +141,14 @@ paths:
                   type: integer
                   description: If specified, matches only listings whose garage space count is >= the supplied value.
                   format: int32
+                  minimum: 1
+                  maximum: 32767
                 minKitchens:
                   type: integer
                   description: If specified, matches only listings whose kitchen count is >= the supplied value.
                   format: int32
+                  minimum: 1
+                  maximum: 32767
                 maxMaintenanceFee:
                   type: integer
                   description: If supplied limits matches to listings where the maintenance fee is <= the supplied value.
@@ -144,8 +166,13 @@ paths:
                 minYearBuilt:
                   type: integer
                   format: int32
+                  minimum: 1
+                  maximum: 32767
                 pets:
-                  type: string
+                  type: array
+                  description: An array of pet policy values to be used as a filter for this search.
+                  items:
+                    type: string
                 priceChangeNotifications:
                   type: boolean
                   description: If set to true, clients will receive price change notifications for listings that have been matched for them.
@@ -191,6 +218,9 @@ paths:
                 type:
                   type: string
                   description: Indicates whether the search is for a property that's for sale or for lease.<br/></br>Allowed values:<br/><br/><code>sale</code>,<code>lease</code>
+                  enum:
+                    - sale
+                    - lease
                 waterSource:
                   type: array
                   description: An array of water source values to be used as a filter for this search.
@@ -335,12 +365,14 @@ paths:
         "401":
           $ref: components.yml#/components/responses/Unauthorized
         "406":
-          description: "406"
+          description: Not accepted. Returned in two cases - the filters are not specific enough and the initial matches exceed 100 listings (the default, configurable per account), or the client has already reached the maximum number of saved searches allowed for your account (5 by default, configurable per account).
           content:
             text/plain:
               examples:
-                Result:
+                Too many matches:
                   value: When a saved search is created the filters must be specific enough so that the initial matches do not exceed 100 listings otherwise a 406 (not accepted) response will be received.
+                Saved search limit:
+                  value: A client can have a maximum of 5 searches.
       deprecated: false
     get:
       summary: Filter saved searches
@@ -370,6 +402,8 @@ paths:
           schema:
             type: integer
             format: int32
+            minimum: 1
+            maximum: 100
             default: 100
         - name: searchId
           in: query
@@ -442,7 +476,8 @@ paths:
                   format: int32
                 name:
                   type: string
-                  description: You can specify a name for the saved search. This is useful in cases where users have multiple saved searches, to help them distinguish between saved searches.
+                  maxLength: 50
+                  description: You can specify a name for the saved search. This is useful in cases where users have multiple saved searches, to help them distinguish between saved searches. Maximum 50 characters.
                 amenities:
                   type: array
                   items:
@@ -467,6 +502,10 @@ paths:
                   description: Indicates what class of property to search for.<br/><br/>Allowed values:<br/><br/><code>residential</code>,<code>condo</code>,<code>commercial</code>
                   items:
                     type: string
+                    enum:
+                      - residential
+                      - condo
+                      - commercial
                 heating:
                   type: array
                   description: An array of heating values to be used as a filter for this search.
@@ -484,6 +523,11 @@ paths:
                 notificationFrequency:
                   type: string
                   description: Sets the frequency that clients will be notified of listings that match their search criteria.<br/><br/>Allowed values:<br/><br/><code>instant</code>, <code>daily</code>, <code>weekly</code>, <code>monthly</code>
+                  enum:
+                    - instant
+                    - daily
+                    - weekly
+                    - monthly
                 map:
                   type: string
                   description: An array of polygons arrays with arrays of longitude/latitude shapes to be used as a filter for this search. If used, only listings that area geographically located within these shapes will be matched. Required if neither locationIds nor both areas and cities are provided.
@@ -496,6 +540,8 @@ paths:
                   type: integer
                   description: The maximum amount of bedrooms to be used as a filter for this search.
                   format: int32
+                  minimum: 1
+                  maximum: 32767
                 maxCoveredSpaces:
                   type: integer
                   format: int32
@@ -503,6 +549,8 @@ paths:
                   type: integer
                   description: If specified, matches only listings whose parking space count is >= the supplied value.
                   format: int32
+                  minimum: 1
+                  maximum: 32767
                 maxPrice:
                   type: integer
                   description: The maximum list price to be used as a filter for this search.
@@ -513,6 +561,8 @@ paths:
                 maxYearBuilt:
                   type: integer
                   format: int32
+                  minimum: 1
+                  maximum: 32767
                 maxStories:
                   type: integer
                   format: int32
@@ -524,6 +574,8 @@ paths:
                   type: integer
                   description: The minimum amount of bedrooms to be used as a filter for this search.
                   format: int32
+                  minimum: 1
+                  maximum: 32767
                 minCoveredSpaces:
                   type: integer
                   format: int32
@@ -531,10 +583,14 @@ paths:
                   type: integer
                   description: If specified, matches only listings whose garage space count is >= the supplied value.
                   format: int32
+                  minimum: 1
+                  maximum: 32767
                 minKitchens:
                   type: integer
                   description: If specified, matches only listings whose kitchen count is >= the supplied value.
                   format: int32
+                  minimum: 1
+                  maximum: 32767
                 maxMaintenanceFee:
                   type: integer
                   description: If supplied limits matches to listings where the maintenance fee is <= the supplied value.
@@ -549,11 +605,16 @@ paths:
                 minYearBuilt:
                   type: integer
                   format: int32
+                  minimum: 1
+                  maximum: 32767
                 minStories:
                   type: integer
                   format: int32
                 pets:
-                  type: string
+                  type: array
+                  description: An array of pet policy values to be used as a filter for this search.
+                  items:
+                    type: string
                 priceChangeNotifications:
                   type: boolean
                   description: If set to true, clients will receive price change notifications for listings that have been matched for them.
@@ -597,6 +658,9 @@ paths:
                 type:
                   type: string
                   description: Indicates whether the search is for a property that's for sale or for lease.<br/></br>Allowed values:<br/><br/><code>sale</code>,<code>lease</code>
+                  enum:
+                    - sale
+                    - lease
                 waterSource:
                   type: array
                   description: An array of water source values to be used as a filter for this search.
@@ -667,6 +731,8 @@ paths:
           $ref: components.yml#/components/responses/BadRequest
         "401":
           $ref: components.yml#/components/responses/Unauthorized
+        "404":
+          description: No saved search with the supplied searchId exists in your account.
       deprecated: false
     delete:
       summary: Delete a saved search
@@ -686,6 +752,8 @@ paths:
           $ref: components.yml#/components/responses/BadRequest
         "401":
           $ref: components.yml#/components/responses/Unauthorized
+        "404":
+          description: No saved search with the supplied searchId exists in your account.
       deprecated: false
     get:
       summary: Get a saved search
@@ -709,6 +777,8 @@ paths:
           $ref: components.yml#/components/responses/BadRequest
         "401":
           $ref: components.yml#/components/responses/Unauthorized
+        "404":
+          description: No saved search with the supplied searchId exists in your account.
       deprecated: false
   /searches/{searchId}/matches:
     get:
@@ -729,6 +799,8 @@ paths:
           schema:
             type: integer
             format: int32
+            minimum: 1
+            maximum: 100
             default: 100
         - name: searchId
           in: path
@@ -752,9 +824,27 @@ paths:
             example: "2024-06-15T00:00:00.000Z"
         - name: lastStatus
           in: query
-          description: If specified filters matches whose last status is the supplied value.<br/><br/>Allowed values:<br/><br/><code>Sus</code>, <code>Exp</code>, <code>Sld</code>, <code>Ter</code>, <code>Dft</code>, <code>Lsd</code>, <code>Sc</code>, <code>Lc</code>, <code>Pc</code>, <code>Ext</code>, <code>New</code>
+          description: If specified filters matches whose last status is one of the supplied values. Repeat the parameter to supply multiple values.<br/><br/>Allowed values:<br/><br/><code>Sus</code>, <code>Exp</code>, <code>Sld</code>, <code>Ter</code>, <code>Dft</code>, <code>Lsd</code>, <code>Sc</code>, <code>Lc</code>, <code>Pc</code>, <code>Ext</code>, <code>New</code>, <code>Sce</code>, <code>Cs</code>, <code>Lce</code>, <code>Inc</code>
           schema:
-            type: string
+            type: array
+            items:
+              type: string
+              enum:
+                - Sus
+                - Exp
+                - Sld
+                - Ter
+                - Dft
+                - Lsd
+                - Sc
+                - Lc
+                - Pc
+                - Ext
+                - New
+                - Sce
+                - Cs
+                - Lce
+                - Inc
         - name: liked
           in: query
           description: If true filters search matches that were liked, if false filters search matches that were disliked. If not specified, returns all search matches.
@@ -772,10 +862,13 @@ paths:
             format: int32
         - name: sortBy
           in: query
-          description: Allowed values:<br/><br/><code>updatedOnDesc</code>,<code>createdOnDesc</code>
+          description: Sorts the matches by creation or last update date, newest first.<br/><br/>Allowed values:<br/><br/><code>createdOnDesc</code>,<code>updatedOnDesc</code>
           schema:
             type: string
-            default: updatedOnDesc
+            enum:
+              - createdOnDesc
+              - updatedOnDesc
+            default: createdOnDesc
         - name: status
           in: query
           description: If not specified returns both available and unavailable listings. If specified limits results to specified status.<br/><br/>Allowed values:<br/><br/><code>A</code>,<code>U</code>
@@ -838,6 +931,8 @@ paths:
           $ref: components.yml#/components/responses/BadRequest
         "401":
           $ref: components.yml#/components/responses/Unauthorized
+        "404":
+          description: No match with the supplied searchId and matchId exists in your account.
       deprecated: false
     patch:
       summary: Update a match
@@ -876,6 +971,8 @@ paths:
           $ref: components.yml#/components/responses/BadRequest
         "401":
           $ref: components.yml#/components/responses/Unauthorized
+        "404":
+          description: No match with the supplied searchId and matchId exists in your account.
       deprecated: false
   /searches/matches:
     get:
@@ -967,6 +1064,22 @@ paths:
             type: array
             items:
               type: string
+              enum:
+                - Sus
+                - Exp
+                - Sld
+                - Ter
+                - Dft
+                - Lsd
+                - Sc
+                - Lc
+                - Pc
+                - Ext
+                - New
+                - Sce
+                - Cs
+                - Lce
+                - Inc
       responses: *MatchesListResponses
       deprecated: false
 components:
