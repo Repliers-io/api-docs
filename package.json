@@ -15,7 +15,8 @@
         "docs-discover-schemas": "set -a && source .env && set +a && node ./scripts/discover-response-schemas.mjs"
     },
     "engines": {
-        "node": ">=22"
+        "node": "^24.21.0",
+        "npm": ">=11.16.0"
     },
     "author": "",
     "license": "ISC",
@@ -23,11 +24,11 @@
     "dependencies": {
         "@readme/openapi-parser": "^5.4.0",
         "picocolors": "^1.1.1",
-        "yargs": "^18.0.0"
+        "yargs": "18.2.0"
     },
     "type": "module",
     "devDependencies": {
-        "js-yaml": "^4.1.1",
-        "rdme": "^10.6.0"
+        "js-yaml": "4.3.2",
+        "rdme": "10.9.6"
     }
 }
