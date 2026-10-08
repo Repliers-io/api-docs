@@ -142,6 +142,18 @@
             }
           },
           {
+            "name": "assignment",
+            "in": "query",
+            "description": "If specified, filters listings by whether they are an assignment sale. Y returns assignment listings only, N excludes them. Values are case-insensitive.<br/><br/>Allowed values: <code>Y</code>, <code>N</code>",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Y",
+                "N"
+              ]
+            }
+          },
+          {
             "name": "balcony",
             "in": "query",
             "description": "Filters listings by one or more values for balcony.",
@@ -160,6 +172,42 @@
               "type": "array",
               "items": {
                 "type": "string"
+              }
+            }
+          },
+          {
+            "name": "bathroomQuality",
+            "in": "query",
+            "description": "Filters listings by the AI-assessed visual quality of the bathroom, derived from the listing photos. <a target=\"_blank\" href=\"https://help.repliers.com/en/article/quality-scores-feature-implementation-guide-1kkedog/\">More info</a>. Values are case-insensitive. Repeat the parameter to match any of several ratings.<br/><br/>Allowed values:<br/><br/><code>poor</code>, <code>below average</code>, <code>average</code>, <code>above average</code>, <code>excellent</code>",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "poor",
+                  "below average",
+                  "average",
+                  "above average",
+                  "excellent"
+                ]
+              }
+            }
+          },
+          {
+            "name": "bedroomQuality",
+            "in": "query",
+            "description": "Filters listings by the AI-assessed visual quality of the bedroom, derived from the listing photos. <a target=\"_blank\" href=\"https://help.repliers.com/en/article/quality-scores-feature-implementation-guide-1kkedog/\">More info</a>. Values are case-insensitive. Repeat the parameter to match any of several ratings.<br/><br/>Allowed values:<br/><br/><code>poor</code>, <code>below average</code>, <code>average</code>, <code>above average</code>, <code>excellent</code>",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "poor",
+                  "below average",
+                  "average",
+                  "above average",
+                  "excellent"
+                ]
               }
             }
           },
@@ -290,6 +338,28 @@
             }
           },
           {
+            "name": "cooling",
+            "in": "query",
+            "description": "Filters listings by one or more values for cooling. Values are case-insensitive.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "coopCompensation",
+            "in": "query",
+            "description": "Filters listings by one or more values for the co-operating brokerage compensation. Use <code>aggregates=coopCompensation</code> to retrieve available values.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
             "name": "coverImage",
             "in": "query",
             "description": "If specified, changes the cover image to the specified feature. <a target=\"_blank\" href=\"https://help.repliers.com/en/article/changing-the-cover-image-of-property-listings-with-ai-powered-coverimage-parameter-40861n/#6-supported-values-for-coverimage\">More info</a>.",
@@ -316,6 +386,24 @@
             "description": "Filters listings by den type. Use the aggregates parameter to retrieve available values.",
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "diningRoomQuality",
+            "in": "query",
+            "description": "Filters listings by the AI-assessed visual quality of the dining room, derived from the listing photos. <a target=\"_blank\" href=\"https://help.repliers.com/en/article/quality-scores-feature-implementation-guide-1kkedog/\">More info</a>. Values are case-insensitive. Repeat the parameter to match any of several ratings.<br/><br/>Allowed values:<br/><br/><code>poor</code>, <code>below average</code>, <code>average</code>, <code>above average</code>, <code>excellent</code>",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "poor",
+                  "below average",
+                  "average",
+                  "above average",
+                  "excellent"
+                ]
+              }
             }
           },
           {
@@ -393,6 +481,24 @@
             }
           },
           {
+            "name": "frontOfStructureQuality",
+            "in": "query",
+            "description": "Filters listings by the AI-assessed visual quality of the front of the structure, derived from the listing photos. <a target=\"_blank\" href=\"https://help.repliers.com/en/article/quality-scores-feature-implementation-guide-1kkedog/\">More info</a>. Values are case-insensitive. Repeat the parameter to match any of several ratings.<br/><br/>Allowed values:<br/><br/><code>poor</code>, <code>below average</code>, <code>average</code>, <code>above average</code>, <code>excellent</code>",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "poor",
+                  "below average",
+                  "average",
+                  "above average",
+                  "excellent"
+                ]
+              }
+            }
+          },
+          {
             "name": "garage",
             "in": "query",
             "description": "Filters listings by garage type. Use the aggregates parameter to retrieve available values.",
@@ -420,6 +526,14 @@
             }
           },
           {
+            "name": "hasVirtualTour",
+            "in": "query",
+            "description": "If true, only returns listings that have a virtual tour. If false, only returns listings that do not have a virtual tour. If not specified, returns both.",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
             "name": "heating",
             "in": "query",
             "description": "Filters listings by one or more values for heating.",
@@ -441,6 +555,24 @@
                 "original"
               ],
               "default": "score"
+            }
+          },
+          {
+            "name": "kitchenQuality",
+            "in": "query",
+            "description": "Filters listings by the AI-assessed visual quality of the kitchen, derived from the listing photos. <a target=\"_blank\" href=\"https://help.repliers.com/en/article/quality-scores-feature-implementation-guide-1kkedog/\">More info</a>. Values are case-insensitive. Repeat the parameter to match any of several ratings.<br/><br/>Allowed values:<br/><br/><code>poor</code>, <code>below average</code>, <code>average</code>, <code>above average</code>, <code>excellent</code>",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "poor",
+                  "below average",
+                  "average",
+                  "above average",
+                  "excellent"
+                ]
+              }
             }
           },
           {
@@ -491,6 +623,24 @@
             "description": "If false, the listings object will be empty. Useful for speeding up responses when statistics and aggregates are requested and listings are not needed. Default is true.",
             "schema": {
               "type": "boolean"
+            }
+          },
+          {
+            "name": "livingRoomQuality",
+            "in": "query",
+            "description": "Filters listings by the AI-assessed visual quality of the living room, derived from the listing photos. <a target=\"_blank\" href=\"https://help.repliers.com/en/article/quality-scores-feature-implementation-guide-1kkedog/\">More info</a>. Values are case-insensitive. Repeat the parameter to match any of several ratings.<br/><br/>Allowed values:<br/><br/><code>poor</code>, <code>below average</code>, <code>average</code>, <code>above average</code>, <code>excellent</code>",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "poor",
+                  "below average",
+                  "average",
+                  "above average",
+                  "excellent"
+                ]
+              }
             }
           },
           {
@@ -601,6 +751,15 @@
             }
           },
           {
+            "name": "maxCoveredSpaces",
+            "in": "query",
+            "description": "Filters listings whose covered parking space count is <= the supplied value. Must be greater than 0.",
+            "schema": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          },
+          {
             "name": "maxDaysOnMarket",
             "in": "query",
             "description": "Filters `status=U` listings that have been on the market for number of days less than or equal to the supplied value.",
@@ -699,6 +858,16 @@
             "schema": {
               "type": "string",
               "format": "date"
+            }
+          },
+          {
+            "name": "maxQuality",
+            "in": "query",
+            "description": "Filters listings whose overall AI image quality score is <= the supplied value. The score is derived from the listing photos and ranges from 0 to 6. <a target=\"_blank\" href=\"https://help.repliers.com/en/article/quality-scores-feature-implementation-guide-1kkedog/\">More info</a>. Must be greater than 0 and at most 6.",
+            "schema": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "maximum": 6
             }
           },
           {
@@ -846,6 +1015,15 @@
             }
           },
           {
+            "name": "minCoveredSpaces",
+            "in": "query",
+            "description": "Filters listings whose covered parking space count is >= the supplied value. Must be greater than 0.",
+            "schema": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          },
+          {
             "name": "minDaysOnMarket",
             "in": "query",
             "description": "Filters `status=U` listings that have been on the market for number of days greater than or equal to the supplied value.",
@@ -947,6 +1125,16 @@
             }
           },
           {
+            "name": "minQuality",
+            "in": "query",
+            "description": "Filters listings whose overall AI image quality score is >= the supplied value. The score is derived from the listing photos and ranges from 0 to 6. <a target=\"_blank\" href=\"https://help.repliers.com/en/article/quality-scores-feature-implementation-guide-1kkedog/\">More info</a>. Must be at least 0 and less than 6.",
+            "schema": {
+              "type": "number",
+              "minimum": 0,
+              "exclusiveMaximum": 6
+            }
+          },
+          {
             "name": "minRepliersUpdatedOn",
             "in": "query",
             "description": "Filters listings whose repliersUpdatedOn is the same or greater than the supplied DateTime. repliersUpdatedOn is an internal timestamp, this may be useful for polling applications to identify listings that have updates in information that's exclusive of MLS updates. For example, if an estimate is recalculated since the estimate is not provided by the MLS.",
@@ -1039,9 +1227,10 @@
           {
             "name": "mlsNumber",
             "in": "query",
-            "description": "Filter listings by one or more MLS numbers.",
+            "description": "Filter listings by one or more MLS numbers. To exclude a listing from the results instead, prefix its MLS number with <code>not:</code>, for example <code>mlsNumber=not:C1234567</code>. The prefix is case-insensitive, and included and excluded values may be mixed in the same request.",
             "schema": {
               "type": "array",
+              "maxItems": 1000,
               "items": {
                 "type": "string"
               }
@@ -1067,6 +1256,28 @@
             }
           },
           {
+            "name": "openHouseStatus",
+            "in": "query",
+            "description": "Filters listings by one or more open house statuses (openHouse.status). Use <code>aggregates=openHouse.status</code> to retrieve available values.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "openHouseType",
+            "in": "query",
+            "description": "Filters listings by one or more open house types (openHouse.type). Use <code>aggregates=openHouse.type</code> to retrieve available values.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
             "name": "operator",
             "in": "query",
             "description": "If set to \"AND\", listings must match all supplied parameters. If set to \"OR\", listings must match at least 1 parameter. Default is \"AND\". <a target=\"_blank\" href=\"https://help.repliers.com/en/article/understanding-operators-in-the-repliers-api-1h2or2x/#2-overview\">More info</a>.",
@@ -1081,12 +1292,52 @@
             }
           },
           {
+            "name": "overallQuality",
+            "in": "query",
+            "description": "Filters listings by the AI-assessed overall visual quality of the property, derived from the listing photos. <a target=\"_blank\" href=\"https://help.repliers.com/en/article/quality-scores-feature-implementation-guide-1kkedog/\">More info</a>. Values are case-insensitive. Repeat the parameter to match any of several ratings.<br/><br/>Allowed values:<br/><br/><code>poor</code>, <code>below average</code>, <code>average</code>, <code>above average</code>, <code>excellent</code>",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "poor",
+                  "below average",
+                  "average",
+                  "above average",
+                  "excellent"
+                ]
+              }
+            }
+          },
+          {
             "name": "pageNum",
             "in": "query",
             "description": "The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200.",
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "parkingType",
+            "in": "query",
+            "description": "Filters listings by one or more values for condominium parking type (condominium.parkingType).",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "pets",
+            "in": "query",
+            "description": "Filters listings by one or more values for the condominium pet policy (condominium.pets). Values are case-insensitive.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           },
           {
@@ -1167,6 +1418,19 @@
             "description": "To be used in conjunction with the \"search\" parameter. If specified, limits the keyword search to specific fields. For example, if search=yonge and you want to limit the search to streetName you would specify searchFields=address.streetName",
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "searchOperator",
+            "in": "query",
+            "description": "Controls how multiple terms in the <code>search</code> parameter are combined. AND requires every term to match, OR requires at least one term to match. Values are case-insensitive. Default is AND.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "AND",
+                "OR"
+              ],
+              "default": "AND"
             }
           },
           {
@@ -1500,6 +1764,7 @@
           }
         ],
         "requestBody": {
+          "description": "Filters may be supplied in the request body as an alternative to the query string, which is useful for large values such as map polygons or long lists of mlsNumbers. When the same filter is supplied in both the query string and the body, the query string value takes precedence.",
           "content": {
             "application/json": {
               "schema": {
@@ -1512,19 +1777,20 @@
                       "properties": {
                         "type": {
                           "type": "string",
-                          "description": "Indicates if the imageSearchItem is an image input or a text input.",
+                          "description": "Indicates if the imageSearchItem is an image input or a text input. Values are case-sensitive and must be lowercase.",
                           "enum": [
-                            "Image",
-                            "Text"
+                            "image",
+                            "text"
                           ]
                         },
                         "url": {
                           "type": "string",
-                          "description": "The url of the image. To be used if type=Image"
+                          "format": "uri",
+                          "description": "The url of the image. Required, and must be a valid URI, when type=image. Ignored otherwise."
                         },
                         "value": {
                           "type": "string",
-                          "description": "The value of the text. To be used if type=Text. Example: White Kitchen"
+                          "description": "The value of the text. Required when type=text. Ignored otherwise. Example: White Kitchen"
                         },
                         "boost": {
                           "type": "integer",
@@ -1542,6 +1808,64 @@
                     "type": "string",
                     "description": "Filters listings within a geoJSON polygon or multi-polygon boundary.<br/><br/>Example boundary:[[[-79.14121,43.79041],[-79.132627,43.773059],[-79.188932,43.886988],[-79.200605,43.877832],[-79.236654,43.869665],[-79.265836,43.860011],[-79.281972,43.856051],[-79.322828,43.84689],[-79.368146,43.839214],[-79.386021,43.836139],[-79.41486,43.838616],[-79.423787,43.836635],[-79.475285,43.82227],[-79.480092,43.813352],[-79.480778,43.803441],[-79.485585,43.79799],[-79.493825,43.794025],[-79.556996,43.779649],[-79.601628,43.761303],[-79.61611,43.758572],[-79.629934,43.750141],[-79.625471,43.728064],[-79.616888,43.713177],[-79.606245,43.695555],[-79.601095,43.685873],[-79.593885,43.681156],[-79.590109,43.672465],[-79.582212,43.671224],[-79.574659,43.670975],[-79.535177,43.58325],[-79.424627,43.619052],[-79.385488,43.602645],[-79.315451,43.612092],[-79.14121,43.79041]]]. <a target=\"_blank\" href=\"https://help.repliers.com/en/article/filtering-listings-geo-spatially-using-the-map-parameter-7sorw0/#3-single-polygon-request\">More info</a>.",
                     "format": "json"
+                  },
+                  "cities": {
+                    "type": "array",
+                    "description": "Body equivalent of the <code>city</code> query parameter. Filters listings by one or more cities. Note the plural spelling; the request body does not accept <code>city</code>.",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "neighborhoods": {
+                    "type": "array",
+                    "description": "Body equivalent of the <code>neighborhood</code> query parameter. Filters listings by one or more neighborhoods. Note the plural spelling; the request body does not accept <code>neighborhood</code>.",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "areaOrCity": {
+                    "type": "array",
+                    "description": "Body equivalent of the <code>areaOrCity</code> query parameter. Filters listings where either the address.area or address.city field matches any of the provided values.",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "cityOrDistrict": {
+                    "type": "array",
+                    "description": "Body equivalent of the <code>cityOrDistrict</code> query parameter. Filters listings where either the address.city or address.district field matches any of the provided values.",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "mlsNumber": {
+                    "type": "array",
+                    "description": "Body equivalent of the <code>mlsNumber</code> query parameter. Filters listings by one or more mlsNumbers. To exclude a listing from the results instead, prefix its MLS number with <code>not:</code>, for example <code>[\"not:C1234567\"]</code>. The prefix is case-insensitive, and included and excluded values may be mixed in the same array. Unlike the query form, the body form must be an array containing at least one value.",
+                    "minItems": 1,
+                    "maxItems": 1000,
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "listings": {
+                    "type": "array",
+                    "description": "Restricts the results to exactly the listings supplied. Each item identifies one listing by its mlsNumber and, when your API key has access to more than one board, by its boardId. An item without an mlsNumber, or with a boardId your API key cannot access, is rejected with a 400 error. This parameter only includes listings; it does not support the <code>not:</code> prefix. To exclude listings from the results, use <code>mlsNumber</code> with the <code>not:</code> prefix instead. This is unrelated to the boolean <code>listings</code> query parameter.",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "mlsNumber"
+                      ],
+                      "properties": {
+                        "mlsNumber": {
+                          "type": "string",
+                          "description": "The mlsNumber of the listing."
+                        },
+                        "boardId": {
+                          "type": "integer",
+                          "format": "int32",
+                          "description": "The boardId the listing belongs to. Required when your API key has access to more than one board."
+                        }
+                      }
+                    }
                   }
                 }
               }
