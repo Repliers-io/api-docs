@@ -54,12 +54,20 @@ paths:
                 location:
                   properties:
                     latitude:
-                      type: string
-                      description: A latitude value representing the location of the agent. Required if a value for longitude is provided.
+                      type: number
+                      format: float
+                      minimum: -90
+                      maximum: 90
+                      description: A latitude value representing the location of the agent. Required if location is provided.
                     longitude:
-                      type: string
-                      description: A longitude value representing the location of the agent. Required if a value for latitude is specified.
-                  required: []
+                      type: number
+                      format: float
+                      minimum: -180
+                      maximum: 180
+                      description: A longitude value representing the location of the agent. Required if location is provided.
+                  required:
+                    - latitude
+                    - longitude
                   type: object
                 externalId:
                   type: string
@@ -118,8 +126,7 @@ paths:
           in: query
           description: Filters agents by phone number.
           schema:
-            type: integer
-            format: int32
+            type: string
         - name: status
           in: query
           description: If false, returns only disabled agents. If true, returns only active agents.
@@ -196,12 +203,20 @@ paths:
                 location:
                   properties:
                     latitude:
-                      type: string
-                      description: A latitude value representing the location of the agent. Required if a value for longitude is provided.
+                      type: number
+                      format: float
+                      minimum: -90
+                      maximum: 90
+                      description: A latitude value representing the location of the agent. Required if location is provided.
                     longitude:
-                      type: string
-                      description: A longitude value representing the location of the agent. Required if a value for latitude is specified.
-                  required: []
+                      type: number
+                      format: float
+                      minimum: -180
+                      maximum: 180
+                      description: A longitude value representing the location of the agent. Required if location is provided.
+                  required:
+                    - latitude
+                    - longitude
                   type: object
                 externalId:
                   type: string
@@ -216,7 +231,7 @@ paths:
       deprecated: false
     delete:
       summary: Delete an agent
-      description: Use this endpoint to delete an agent. You must specify a new agentId to assign the deleted agent's clients to.
+      description: Use this endpoint to delete an agent. The agent must have no clients assigned to them. If clients are still assigned, the request is rejected with a 403 error. Transfer the clients to another agent first using POST /agents/{agentId}/transfer.
       operationId: delete-an-agent
       parameters:
         - name: agentId
@@ -232,6 +247,8 @@ paths:
           $ref: components.yml#/components/responses/BadRequest
         "401":
           $ref: components.yml#/components/responses/Unauthorized
+        "403":
+          description: Clients are still assigned to this agent. Reassign them before deleting the agent.
       deprecated: false
     get:
       summary: Get an agent

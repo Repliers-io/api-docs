@@ -10212,7 +10212,7 @@
           {
             "name": "boardId",
             "in": "query",
-            "description": "Find your boardId by visiting https://login.repliers.com/dashboard/data-access",
+            "description": "Filters brokerages by MLS board. Required if your API key has access to more than one MLS board. Find your boardId by visiting https://login.repliers.com/dashboard/data-access",
             "schema": {
               "type": "string"
             }
@@ -10313,7 +10313,7 @@
           {
             "name": "boardId",
             "in": "query",
-            "description": "Find your boardId by visiting https://login.repliers.com/dashboard/data-access",
+            "description": "Filters offices by MLS board. Required if your API key has access to more than one MLS board. Find your boardId by visiting https://login.repliers.com/dashboard/data-access",
             "schema": {
               "type": "string"
             }
@@ -10564,7 +10564,7 @@
           {
             "name": "boardId",
             "in": "query",
-            "description": "Filters members by the MLS board they belong to.",
+            "description": "Filters members by the MLS board they belong to. Required if your API key has access to more than one MLS board. Find your boardId by visiting https://login.repliers.com/dashboard/data-access",
             "schema": {
               "type": "string"
             }
@@ -10987,7 +10987,10 @@
             "description": "The latitude of the point that you'd like to retrieve places data for.",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "number",
+              "format": "float",
+              "minimum": -90,
+              "maximum": 90
             }
           },
           {
@@ -10996,13 +10999,16 @@
             "description": "The longitude of the point that you'd like to retrieve places data for.",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "number",
+              "format": "float",
+              "minimum": -180,
+              "maximum": 180
             }
           },
           {
             "name": "inputInsidePolygon",
             "in": "query",
-            "description": "When set to `true`, each returned place that has a boundary polygon will include an `inputInsidePolygon` field indicating whether the specified lat/long falls inside that polygon. All places are returned regardless of this parameter; places without boundaries are unaffected and will not include this field.",
+            "description": "Filters places by whether the specified lat/long falls inside their boundary polygon. Every returned place that has a boundary polygon always includes an `inputInsidePolygon` field with this result, regardless of this parameter. When set to `true`, only places whose polygon contains the point are returned. When set to `false`, only places whose polygon does not contain the point are returned. Places without a boundary polygon are always returned and do not include the field.",
             "required": false,
             "schema": {
               "type": "boolean"
@@ -11403,15 +11409,24 @@
                   "location": {
                     "properties": {
                       "latitude": {
-                        "type": "string",
-                        "description": "A latitude value representing the location of the agent. Required if a value for longitude is provided."
+                        "type": "number",
+                        "format": "float",
+                        "minimum": -90,
+                        "maximum": 90,
+                        "description": "A latitude value representing the location of the agent. Required if location is provided."
                       },
                       "longitude": {
-                        "type": "string",
-                        "description": "A longitude value representing the location of the agent. Required if a value for latitude is specified."
+                        "type": "number",
+                        "format": "float",
+                        "minimum": -180,
+                        "maximum": 180,
+                        "description": "A longitude value representing the location of the agent. Required if location is provided."
                       }
                     },
-                    "required": [],
+                    "required": [
+                      "latitude",
+                      "longitude"
+                    ],
                     "type": "object"
                   },
                   "externalId": {
@@ -11517,8 +11532,7 @@
             "in": "query",
             "description": "Filters agents by phone number.",
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
             }
           },
           {
@@ -11629,15 +11643,24 @@
                   "location": {
                     "properties": {
                       "latitude": {
-                        "type": "string",
-                        "description": "A latitude value representing the location of the agent. Required if a value for longitude is provided."
+                        "type": "number",
+                        "format": "float",
+                        "minimum": -90,
+                        "maximum": 90,
+                        "description": "A latitude value representing the location of the agent. Required if location is provided."
                       },
                       "longitude": {
-                        "type": "string",
-                        "description": "A longitude value representing the location of the agent. Required if a value for latitude is specified."
+                        "type": "number",
+                        "format": "float",
+                        "minimum": -180,
+                        "maximum": 180,
+                        "description": "A longitude value representing the location of the agent. Required if location is provided."
                       }
                     },
-                    "required": [],
+                    "required": [
+                      "latitude",
+                      "longitude"
+                    ],
                     "type": "object"
                   },
                   "externalId": {
@@ -11664,7 +11687,7 @@
       },
       "delete": {
         "summary": "Delete an agent",
-        "description": "Use this endpoint to delete an agent. You must specify a new agentId to assign the deleted agent's clients to.",
+        "description": "Use this endpoint to delete an agent. The agent must have no clients assigned to them. If clients are still assigned, the request is rejected with a 403 error. Transfer the clients to another agent first using POST /agents/{agentId}/transfer.",
         "operationId": "delete-an-agent",
         "parameters": [
           {
@@ -11686,6 +11709,9 @@
           },
           "401": {
             "$ref": "#/paths/~1nlp/get/responses/401"
+          },
+          "403": {
+            "description": "Clients are still assigned to this agent. Reassign them before deleting the agent."
           }
         },
         "deprecated": false
@@ -11851,7 +11877,7 @@
     "/clients": {
       "post": {
         "summary": "Create a client",
-        "description": "Use this endpoint to create a client. When creating saved searches, messages or favorites a client needs to be specified.",
+        "description": "Use this endpoint to create a client. When creating saved searches, messages or favorites a client needs to be specified.<br/><br/><strong>Important</strong> - at least one of <code>phone</code> or <code>email</code> must be provided. A request that contains neither is rejected with a 400 error.",
         "externalDocs": {
           "description": "Step 2: Create a Client",
           "url": "https://help.repliers.com/en/article/implementation-guide-for-agents-and-clients-of4k3i/#2-step-2-create-a-client"
@@ -11881,11 +11907,11 @@
                   },
                   "phone": {
                     "type": "string",
-                    "description": "The mobile phone number of this client (May be used to deliver text messages). Must be 11 digits in length.<br/><br/>Regex pattern: <code>^(1)([0-9]{10})$</code>"
+                    "description": "The mobile phone number of this client (May be used to deliver text messages). Must be 11 digits in length. Required if <code>email</code> is not provided.<br/><br/>Regex pattern: <code>^(1)([0-9]{10})$</code>"
                   },
                   "email": {
                     "type": "string",
-                    "description": "The email address of this client (May be used to send emails).<br/><br/>Regex pattern: <code>^(([^<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))</code>"
+                    "description": "The email address of this client (May be used to send emails). Required if <code>phone</code> is not provided.<br/><br/>Regex pattern: <code>^(([^<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))</code>"
                   },
                   "status": {
                     "type": "boolean",
@@ -12014,8 +12040,7 @@
             "in": "query",
             "description": "Filters clients by phone number.",
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
             }
           },
           {
@@ -12134,7 +12159,7 @@
     "/clients/{clientId}": {
       "patch": {
         "summary": "Update a client",
-        "description": "Updates one or more fields for an existing client. Only include the fields you wish to change — omitted fields retain their current values.",
+        "description": "Updates one or more fields for an existing client. Only include the fields you wish to change — omitted fields retain their current values.<br/><br/><strong>Important</strong> - a client must always have at least one of <code>phone</code> or <code>email</code>. Neither can be removed through this endpoint, and an update that would leave the client with neither is rejected with a 400 error.",
         "externalDocs": {
           "description": "Update a Client or Agent",
           "url": "https://help.repliers.com/en/article/implementation-guide-for-agents-and-clients-of4k3i/#2-step-4-update-a-client-or-agent"
@@ -12626,7 +12651,7 @@
                   },
                   "areas": {
                     "type": "array",
-                    "description": "An array of areas to be used as a filter for this search. Required if a value for map is not provided.",
+                    "description": "An array of areas to be used as a filter for this search. Required, together with cities, if a value for map is not provided.",
                     "items": {
                       "type": "string"
                     }
@@ -12640,7 +12665,7 @@
                   },
                   "cities": {
                     "type": "array",
-                    "description": "An array of cities to be used as a filter for this search. Required if a value for map is not provided.",
+                    "description": "An array of cities to be used as a filter for this search. Required, together with areas, if a value for map is not provided.",
                     "items": {
                       "type": "string"
                     }
@@ -12667,7 +12692,7 @@
                   },
                   "neighborhoods": {
                     "type": "array",
-                    "description": "An array of neighborhoods to be used as a filter for this search. Required if a value for map is not provided.",
+                    "description": "An array of neighborhoods to be used as a filter for this search. Optional. Does not replace the areas and cities requirement when map is not provided.",
                     "items": {
                       "type": "string"
                     }
@@ -12679,17 +12704,12 @@
                   },
                   "map": {
                     "type": "string",
-                    "description": "An array of polygons arrays with arrays of longitude/latitude shapes to be used as a filter for this search. If used, only listings that area geographically located within these shapes will be matched. Required if values for areas, cities and neighborhoods are not provided.",
+                    "description": "An array of polygons arrays with arrays of longitude/latitude shapes to be used as a filter for this search. If used, only listings that area geographically located within these shapes will be matched. Required if values for both areas and cities are not provided.",
                     "format": "json"
                   },
                   "maxBaths": {
                     "type": "integer",
                     "description": "The maximum amount of bathrooms to be used as a filter for this search.",
-                    "format": "int32"
-                  },
-                  "maxBathroomsHalf": {
-                    "type": "integer",
-                    "description": "The maximum amount of half bathrooms to be used as a filter for this search.",
                     "format": "int32"
                   },
                   "maxBeds": {
@@ -12727,11 +12747,6 @@
                   "minBaths": {
                     "type": "integer",
                     "description": "The minimum amount of bathrooms to be used as a filter for this search.",
-                    "format": "int32"
-                  },
-                  "minBathroomsHalf": {
-                    "type": "integer",
-                    "description": "The minimum amount of half bathrooms to be used as a filter for this search.",
                     "format": "int32"
                   },
                   "minBeds": {
@@ -13439,7 +13454,7 @@
                   },
                   "areas": {
                     "type": "array",
-                    "description": "An array of areas to be used as a filter for this search. Required if a value for map is not provided.",
+                    "description": "An array of areas to be used as a filter for this search. Required, together with cities, if a value for map is not provided.",
                     "items": {
                       "type": "string"
                     }
@@ -13453,7 +13468,7 @@
                   },
                   "cities": {
                     "type": "array",
-                    "description": "An array of cities to be used as a filter for this search. Required if a value for map is not provided.",
+                    "description": "An array of cities to be used as a filter for this search. Required, together with areas, if a value for map is not provided.",
                     "items": {
                       "type": "string"
                     }
@@ -13480,7 +13495,7 @@
                   },
                   "neighborhoods": {
                     "type": "array",
-                    "description": "An array of neighborhoods to be used as a filter for this search. Required if a value for map is not provided.",
+                    "description": "An array of neighborhoods to be used as a filter for this search. Optional. Does not replace the areas and cities requirement when map is not provided.",
                     "items": {
                       "type": "string"
                     }
@@ -13491,7 +13506,7 @@
                   },
                   "map": {
                     "type": "string",
-                    "description": "An array of polygons arrays with arrays of longitude/latitude shapes to be used as a filter for this search. If used, only listings that area geographically located within these shapes will be matched. Required if values for areas, cities and neighborhoods are not provided.",
+                    "description": "An array of polygons arrays with arrays of longitude/latitude shapes to be used as a filter for this search. If used, only listings that area geographically located within these shapes will be matched. Required if values for both areas and cities are not provided.",
                     "format": "json"
                   },
                   "maxBaths": {
@@ -13636,7 +13651,7 @@
                   },
                   "type": {
                     "type": "string",
-                    "description": "Indicates whether the search is for a property that's for sale or for lease.<br/></br>Allowed values:<br/><br/><code>Sale</code>,<code>Lease</code>"
+                    "description": "Indicates whether the search is for a property that's for sale or for lease.<br/></br>Allowed values:<br/><br/><code>sale</code>,<code>lease</code>"
                   },
                   "waterSource": {
                     "type": "array",
@@ -13826,19 +13841,21 @@
           {
             "name": "endDate",
             "in": "query",
-            "description": "If specified filters matches whose match date is <= the supplied value.",
+            "description": "If specified filters matches whose match date is <= the supplied value. Format: <code>YYYY-MM-DDTHH:mm:ss.sssZ</code>",
             "schema": {
               "type": "string",
-              "format": "date"
+              "format": "date-time",
+              "example": "2024-06-15T23:59:59.000Z"
             }
           },
           {
             "name": "startDate",
             "in": "query",
-            "description": "If specified filters matches whose match date is >= the supplied value.",
+            "description": "If specified filters matches whose match date is >= the supplied value. Format: <code>YYYY-MM-DDTHH:mm:ss.sssZ</code>",
             "schema": {
               "type": "string",
-              "format": "date"
+              "format": "date-time",
+              "example": "2024-06-15T00:00:00.000Z"
             }
           },
           {
@@ -14208,6 +14225,10 @@
             "application/json": {
               "schema": {
                 "type": "object",
+                "required": [
+                  "address",
+                  "details"
+                ],
                 "properties": {
                   "overallQuality": {
                     "type": "string",
@@ -14345,7 +14366,7 @@
                   },
                   "clientId": {
                     "type": "integer",
-                    "description": "Set this to the clientId that the estimate is for if you wish to store the estimate. If sendEmailNow or sendEmailMonthly is used, messages containing estimates will be sent to this clientId.",
+                    "description": "Set this to the clientId that the estimate is for if you wish to store the estimate. If sendEmailNow or sendEmailMonthly is used, messages containing estimates will be sent to this clientId. <strong>Required when sendEmailNow or sendEmailMonthly is true.</strong>",
                     "format": "int32"
                   },
                   "boardId": {
@@ -14632,7 +14653,7 @@
     "/estimates/{estimateId}": {
       "patch": {
         "summary": "Update an estimate",
-        "description": "Updates an existing property value estimate with revised property attributes. Use this if property details have changed and you need a recalculated estimate.",
+        "description": "Updates an existing property value estimate with revised property attributes. Use this if property details have changed and you need a recalculated estimate.<br/><br/><strong>Important</strong> - top-level objects such as <code>address</code>, <code>details</code>, <code>condominium</code> and <code>taxes</code> replace the stored object entirely rather than being merged. When updating any of them, send the full object. Top-level fields that are omitted retain their current values.",
         "operationId": "create-an-estimate-copy",
         "parameters": [
           {
@@ -14676,10 +14697,7 @@
                         "type": "string"
                       }
                     },
-                    "required": [
-                      "streetName",
-                      "streetNumber"
-                    ],
+                    "required": [],
                     "type": "object"
                   },
                   "condominium": {
@@ -14724,40 +14742,7 @@
                       },
                       "propertyType": {
                         "type": "string",
-                        "enum": [
-                          "Att/Row/Twnhouse",
-                          "Co-Op Apt",
-                          "Co-Ownership Apt",
-                          "Comm Element Condo",
-                          "Condo Apt",
-                          "Condo Townhouse",
-                          "Cottage",
-                          "Det Condo",
-                          "Detached",
-                          "Duplex",
-                          "Farm",
-                          "Fourplex",
-                          "Leasehold Condo",
-                          "Link",
-                          "Locker",
-                          "Lower Level",
-                          "Mobile/Trailer",
-                          "Multiplex",
-                          "Other",
-                          "Parking Space",
-                          "Room",
-                          "Rural Resid",
-                          "Semi-Det Condo",
-                          "Semi-Detached",
-                          "Shared Room",
-                          "Store W/Apt/Offc",
-                          "Store W/Apt/Office",
-                          "Time Share",
-                          "Triplex",
-                          "Upper Level",
-                          "Vacant Land",
-                          "Vacant Land Condo"
-                        ]
+                        "description": "Must be a property type value that exists in your MLS data. For a list of supported values, make a GET /listings?listings=false&aggregates=details.propertyType request."
                       },
                       "sqft": {
                         "type": "integer",
@@ -14813,7 +14798,7 @@
                   },
                   "clientId": {
                     "type": "integer",
-                    "description": "Set this to the clientId that the estimate is for if you wish to store the estimate. If sendEmailNow or sendEmailMonthly is used, messages containing estimates will be sent to this clientId.",
+                    "description": "The clientId of an existing estimate cannot be changed. If supplied, this value is ignored and the estimate keeps its original client.",
                     "format": "int32"
                   }
                 }
@@ -14880,7 +14865,8 @@
                 "required": [
                   "sender",
                   "agentId",
-                  "clientId"
+                  "clientId",
+                  "content"
                 ],
                 "properties": {
                   "sender": {
@@ -14937,7 +14923,9 @@
                         }
                       }
                     },
-                    "required": [],
+                    "required": [
+                      "message"
+                    ],
                     "type": "object"
                   }
                 }
@@ -14982,19 +14970,21 @@
           {
             "name": "endTime",
             "in": "query",
-            "description": "If specified, filters messages which were sent  on or before the supplied value.",
+            "description": "If specified, filters messages which were sent on or before the supplied value. Format: <code>YYYY-MM-DDTHH:mm:ss.sssZ</code>",
             "schema": {
               "type": "string",
-              "format": "date"
+              "format": "date-time",
+              "example": "2024-06-15T23:59:59.000Z"
             }
           },
           {
             "name": "startTime",
             "in": "query",
-            "description": "If specified, filters messages which were sent on or after the supplied value.",
+            "description": "If specified, filters messages which were sent on or after the supplied value. Format: <code>YYYY-MM-DDTHH:mm:ss.sssZ</code>",
             "schema": {
               "type": "string",
-              "format": "date"
+              "format": "date-time",
+              "example": "2024-06-15T00:00:00.000Z"
             }
           },
           {
@@ -15322,10 +15312,13 @@
           {
             "name": "boardId",
             "in": "query",
-            "description": "Required if your account has access to multiple MLSes. Filters favorites to a specific board.",
+            "description": "Filters favorites to one or more boards. If omitted, all boards your account has access to are included. Repeat the parameter to supply multiple boardIds.",
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int32"
+              }
             }
           },
           {
@@ -15394,17 +15387,23 @@
           {
             "name": "lat",
             "in": "query",
-            "description": "Accepts a value for latitude. Can be used only for sorting with `distanceAsc` or `distanceDesc`.",
+            "description": "Accepts a value for latitude. Can be used only for sorting with `distanceAsc` or `distanceDesc`. Must be used with `long`.",
             "schema": {
-              "type": "string"
+              "type": "number",
+              "format": "float",
+              "minimum": -90,
+              "maximum": 90
             }
           },
           {
             "name": "long",
             "in": "query",
-            "description": "Accepts a value for longitude. Can be used only for sorting with `distanceAsc` or `distanceDesc`. Must be used with `lat` and `radius` parameters to return listings within a certain radius of a given latitude and longitude.",
+            "description": "Accepts a value for longitude. Can be used only for sorting with `distanceAsc` or `distanceDesc`. Must be used with `lat`.",
             "schema": {
-              "type": "string"
+              "type": "number",
+              "format": "float",
+              "minimum": -180,
+              "maximum": 180
             }
           },
           {
@@ -15441,8 +15440,8 @@
                 "random",
                 "distanceAsc",
                 "distanceDesc",
-                "centroidDistanceAsc",
-                "centroidDistanceDesc",
+                "closedDateAsc",
+                "closedDateDesc",
                 "sqftAsc",
                 "sqftDesc",
                 "repliersUpdatedOnDesc",
@@ -17512,12 +17511,50 @@
                   },
                   "event": {
                     "type": "string",
-                    "description": "Allowed values: <br/><br/> <code>agent.created</code>, <code>agent.updated</code>, <code>agent.deleted</code>, <code>client.created</code>, <code>client.updated</code>, <code>client.deleted</code>, <code>search.created</code>, <code>search.updated</code>, <code>search.deleted</code>, <code>search.match.created</code>, <code>search.match.updated</code>, <code>message.created</code>, <code>message.updated</code>, <code>message.deleted</code>, <code>listing.created</code>, <code>listing.updated</code>, <code>listing.deleted</code>, <code>favorite.created</code>, <code>favorite.deleted</code>"
+                    "description": "Allowed values: <br/><br/> <code>agent.created</code>, <code>agent.updated</code>, <code>agent.deleted</code>, <code>client.created</code>, <code>client.updated</code>, <code>client.deleted</code>, <code>search.created</code>, <code>search.updated</code>, <code>search.deleted</code>, <code>search.match.created</code>, <code>search.match.updated</code>, <code>message.created</code>,<code>listing.created</code>, <code>listing.updated</code>, <code>listing.deleted</code>, <code>favorite.created</code>, <code>favorite.deleted</code>"
                   },
                   "configuration": {
-                    "type": "string",
-                    "description": "Configuration options for the webhook. This object contains webhook-related settings and preferences.",
-                    "format": "json"
+                    "type": "object",
+                    "description": "Configuration options for the webhook. Unknown properties are rejected with a 400 error.",
+                    "additionalProperties": false,
+                    "properties": {
+                      "raw": {
+                        "type": "boolean",
+                        "description": "If true, the event payload includes the raw MLS data."
+                      },
+                      "filters": {
+                        "type": "array",
+                        "description": "Only deliver events whose payload matches all of the supplied filters.",
+                        "items": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "field",
+                            "values"
+                          ],
+                          "properties": {
+                            "field": {
+                              "type": "string",
+                              "description": "The payload field to filter on."
+                            },
+                            "logic": {
+                              "type": "string",
+                              "description": "The comparison to apply. Defaults to an exact match when omitted.",
+                              "enum": [
+                                "contains"
+                              ]
+                            },
+                            "values": {
+                              "type": "array",
+                              "description": "The values to match against.",
+                              "items": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
                   }
                 }
               },
@@ -17662,12 +17699,50 @@
                   },
                   "event": {
                     "type": "string",
-                    "description": "Allowed values: <br/><br/> <code>agent.created</code>, <code>agent.updated</code>, <code>agent.deleted</code>, <code>client.created</code>, <code>client.updated</code>, <code>client.deleted</code>, <code>search.created</code>, <code>search.updated</code>, <code>search.deleted</code>, <code>search.match.created</code>, <code>search.match.updated</code>, <code>message.created</code>, <code>message.updated</code>, <code>message.deleted</code>, <code>listing.created</code>, <code>listing.updated</code>, <code>listing.deleted</code>, <code>favorite.created</code>, <code>favorite.deleted</code>"
+                    "description": "Allowed values: <br/><br/> <code>agent.created</code>, <code>agent.updated</code>, <code>agent.deleted</code>, <code>client.created</code>, <code>client.updated</code>, <code>client.deleted</code>, <code>search.created</code>, <code>search.updated</code>, <code>search.deleted</code>, <code>search.match.created</code>, <code>search.match.updated</code>, <code>message.created</code>,<code>listing.created</code>, <code>listing.updated</code>, <code>listing.deleted</code>, <code>favorite.created</code>, <code>favorite.deleted</code>"
                   },
                   "configuration": {
-                    "type": "string",
-                    "description": "Configuration options for the webhook. This object contains webhook-related settings and preferences.",
-                    "format": "json"
+                    "type": "object",
+                    "description": "Configuration options for the webhook. Unknown properties are rejected with a 400 error.",
+                    "additionalProperties": false,
+                    "properties": {
+                      "raw": {
+                        "type": "boolean",
+                        "description": "If true, the event payload includes the raw MLS data."
+                      },
+                      "filters": {
+                        "type": "array",
+                        "description": "Only deliver events whose payload matches all of the supplied filters.",
+                        "items": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "field",
+                            "values"
+                          ],
+                          "properties": {
+                            "field": {
+                              "type": "string",
+                              "description": "The payload field to filter on."
+                            },
+                            "logic": {
+                              "type": "string",
+                              "description": "The comparison to apply. Defaults to an exact match when omitted.",
+                              "enum": [
+                                "contains"
+                              ]
+                            },
+                            "values": {
+                              "type": "array",
+                              "description": "The values to match against.",
+                              "items": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
                   }
                 }
               }
@@ -17752,7 +17827,7 @@
                     "event": {
                       "type": "string",
                       "example": "listing.created",
-                      "description": "The event this subscription is subscribed to. Allowed values: <br/><br/> <code>agent.created</code>, <code>agent.updated</code>, <code>agent.deleted</code>, <code>client.created</code>, <code>client.updated</code>, <code>client.deleted</code>, <code>search.created</code>, <code>search.updated</code>, <code>search.deleted</code>, <code>search.match.created</code>, <code>search.match.updated</code>, <code>message.created</code>, <code>message.updated</code>, <code>message.deleted</code>, <code>listing.created</code>, <code>listing.updated</code>, <code>listing.deleted</code>, <code>favorite.created</code>, <code>favorite.deleted</code>"
+                      "description": "The event this subscription is subscribed to. Allowed values: <br/><br/> <code>agent.created</code>, <code>agent.updated</code>, <code>agent.deleted</code>, <code>client.created</code>, <code>client.updated</code>, <code>client.deleted</code>, <code>search.created</code>, <code>search.updated</code>, <code>search.deleted</code>, <code>search.match.created</code>, <code>search.match.updated</code>, <code>message.created</code>,<code>listing.created</code>, <code>listing.updated</code>, <code>listing.deleted</code>, <code>favorite.created</code>, <code>favorite.deleted</code>"
                     },
                     "configuration": {
                       "type": "object",
@@ -17915,6 +17990,9 @@
             "application/json": {
               "schema": {
                 "type": "object",
+                "required": [
+                  "prompt"
+                ],
                 "properties": {
                   "prompt": {
                     "type": "string",
@@ -18449,16 +18527,15 @@
             "schema": {
               "type": "string",
               "enum": [
-                "yes",
-                "no"
-              ],
-              "description": "Yes or No value"
+                "Y",
+                "N"
+              ]
             }
           },
           {
             "name": "lat",
             "in": "query",
-            "description": "Accepts a value for latitude. Must be used with radius parameter to return buildings within a certain radius of a given latitude and longitude.",
+            "description": "Accepts a value for latitude. Must be used together with the long and radius parameters to return buildings within a certain radius of a given latitude and longitude. If any one of lat, long or radius is provided, all three are required.",
             "schema": {
               "type": "number",
               "format": "float",
@@ -18469,7 +18546,7 @@
           {
             "name": "long",
             "in": "query",
-            "description": "Accepts a value for longitude. Must be used with radius parameter to return buildings within a certain radius of a given latitude and longitude.",
+            "description": "Accepts a value for longitude. Must be used together with the lat and radius parameters to return buildings within a certain radius of a given latitude and longitude. If any one of lat, long or radius is provided, all three are required.",
             "schema": {
               "type": "number",
               "format": "float",
@@ -18492,7 +18569,7 @@
             "description": "Filters buildings whose listing prices are <= the supplied value.",
             "schema": {
               "type": "integer",
-              "minimum": 0
+              "minimum": 1
             }
           },
           {
@@ -18528,7 +18605,7 @@
             "description": "Filters buildings whose listing prices are >= the supplied value.",
             "schema": {
               "type": "integer",
-              "minimum": 0
+              "minimum": 1
             }
           },
           {
@@ -18575,10 +18652,9 @@
           {
             "name": "radius",
             "in": "query",
-            "description": "Accepts a value for radius, expressed in the unit set by `radiusUnit` (KM by default). Must be used with `lat` and `long` parameters to return buildings within the specified radius of a given latitude and longitude.",
+            "description": "Accepts a value for radius, expressed in the unit set by `radiusUnit` (KM by default). Must be used with `lat` and `long` parameters to return buildings within the specified radius of a given latitude and longitude. If any one of lat, long or radius is provided, all three are required. Must be a whole number greater than 0.",
             "schema": {
-              "type": "number",
-              "format": "float",
+              "type": "integer",
               "minimum": 1
             }
           },
@@ -18605,7 +18681,7 @@
             "schema": {
               "type": "integer",
               "minimum": 1,
-              "maximum": 300,
+              "maximum": 100,
               "default": 100
             }
           },

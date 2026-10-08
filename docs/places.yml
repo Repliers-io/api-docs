@@ -16,16 +16,22 @@ paths:
           description: The latitude of the point that you'd like to retrieve places data for.
           required: true
           schema:
-            type: string
+            type: number
+            format: float
+            minimum: -90
+            maximum: 90
         - name: long
           in: query
           description: The longitude of the point that you'd like to retrieve places data for.
           required: true
           schema:
-            type: string
+            type: number
+            format: float
+            minimum: -180
+            maximum: 180
         - name: inputInsidePolygon
           in: query
-          description: When set to `true`, each returned place that has a boundary polygon will include an `inputInsidePolygon` field indicating whether the specified lat/long falls inside that polygon. All places are returned regardless of this parameter; places without boundaries are unaffected and will not include this field.
+          description: Filters places by whether the specified lat/long falls inside their boundary polygon. Every returned place that has a boundary polygon always includes an `inputInsidePolygon` field with this result, regardless of this parameter. When set to `true`, only places whose polygon contains the point are returned. When set to `false`, only places whose polygon does not contain the point are returned. Places without a boundary polygon are always returned and do not include the field.
           required: false
           schema:
             type: boolean

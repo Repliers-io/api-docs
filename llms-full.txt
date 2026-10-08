@@ -441,9 +441,9 @@ Searches for buildings based on location, price, property type, and other criter
 | buildingName | array[string] | Filters buildings by name. Availability of building names may vary by MLS and is not guaranteed for all buildings. |
 | city | array[string] | Filters buildings by city. |
 | class | array[string] enum: condo, residential, commercial | Filters buildings by property class. |
-| displayPublic | string enum: yes, no | Filters buildings by public display status. Y returns buildings that may be displayed publicly, N returns buildings that should be password protected. |
-| lat | number (float) | Accepts a value for latitude. Must be used with radius parameter to return buildings within a certain radius of a given latitude and longitude. |
-| long | number (float) | Accepts a value for longitude. Must be used with radius parameter to return buildings within a certain radius of a given latitude and longitude. |
+| displayPublic | string enum: Y, N | Filters buildings by public display status. Y returns buildings that may be displayed publicly, N returns buildings that should be password protected. |
+| lat | number (float) | Accepts a value for latitude. Must be used together with the long and radius parameters to return buildings within a certain radius of a given latitude and longitude. If any one of lat, long or radius is provided, all three are required. |
+| long | number (float) | Accepts a value for longitude. Must be used together with the lat and radius parameters to return buildings within a certain radius of a given latitude and longitude. If any one of lat, long or radius is provided, all three are required. |
 | map | string (json) | GeoJSON polygon or multi-polygon boundary for geographical filtering. Limits results to buildings within the specified boundaries. For complex polygons or multipolygons that exceed query parameter size limits, use the POST method and include the map data in the request body. Format: Array of coordinate arrays, where each coordinate is [longitude, latitude] in WGS 84 format. The polygon must be closed (first and last points must be identical). For more information refer to the implementation guide Filtering Listings Geo-Spatially Using the "map" Parameter |
 | maxPrice | integer | Filters buildings whose listing prices are <= the supplied value. |
 | maxStories | integer | Filters buildings whose story count is <= the supplied value. |
@@ -454,7 +454,7 @@ Searches for buildings based on location, price, property type, and other criter
 | neighborhood | array[string] | Filters buildings by neighborhood. |
 | pageNum | integer default: 1 | The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200. |
 | propertyType | array[string] | Filters buildings by property type. |
-| radius | number (float) | Accepts a value for radius, expressed in the unit set by `radiusUnit` (KM by default). Must be used with `lat` and `long` parameters to return buildings within the specified radius of a given latitude and longitude. |
+| radius | integer | Accepts a value for radius, expressed in the unit set by `radiusUnit` (KM by default). Must be used with `lat` and `long` parameters to return buildings within the specified radius of a given latitude and longitude. If any one of lat, long or radius is provided, all three are required. Must be a whole number greater than 0. |
 | radiusUnit | string enum: m, km, mi, yd default: km | Sets the unit of measurement for the `radius` parameter. Can only be used together with `radius`. Allowed values: - `km` — kilometers (default) - `m` — meters - `mi` — miles - `yd` — yards |
 | resultsPerPage | integer default: 100 | The number of buildings to return per page. |
 | sortBy | string enum: numUnitsDesc | Sorts results by the specified field. |
@@ -540,7 +540,7 @@ This endpoint translates natural language search queries into structured API req
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| prompt | string | no | The natural language prompt to be processed. |
+| prompt | string | yes | The natural language prompt to be processed. |
 | nlpId | string | no | Unique identifier for maintaining context-aware interactions across multiple prompts. - **If omitted or blank:** A new session is created, and the system processes the prompt independently without any prior context. - **If provided:** The prompt is added to the existing session associated with the given `nlpId`, allowing the system to consider the conversation history when generating the API request. When you send a prompt to the `/nlp` endpoint, the system returns an `nlpId` in the response. You can include this `nlpId` in subsequent requests to build upon previous interactions and maintain continuity within the same conversation thread. |
 | clientId | string | no | The `clientId` of the client that the NLP prompt is for. |
 | listings | boolean default: false | no | If `true`, the endpoint will return listings according to the generated urlQueryString parameters, the same way as GET /lisitngs endpoint would treat those parameters. Default is `false`. |
@@ -657,7 +657,7 @@ Use this endpoint to get a list of agents that you've created. You can filter fo
 | email | string | Filters agents by email address. |
 | fname | string | Filters agents by first name. |
 | lname | string | Filters agents by last name. |
-| phone | integer (int32) | Filters agents by phone number. |
+| phone | string | Filters agents by phone number. |
 | status | boolean | If false, returns only disabled agents. If true, returns only active agents. |
 | externalId | string | Filters agents by their identifier from an external system (such as a CRM). |
 
@@ -698,7 +698,7 @@ Updates one or more fields for an existing agent. Only include the fields you wi
 
 ### DELETE /agents/{agentId}
 
-Use this endpoint to delete an agent. You must specify a new agentId to assign the deleted agent's clients to.
+Use this endpoint to delete an agent. The agent must have no clients assigned to them. If clients are still assigned, the request is rejected with a 403 error. Transfer the clients to another agent first using POST /agents/{agentId}/transfer.
 
 **Path Parameters:**
 
@@ -792,7 +792,7 @@ Use this endpoint to get a list of clients that you've created. You can filter f
 | fname | string | Filters clients by first name. |
 | keywords | string | One or more keywords may be specified to filter the results by. Useful for searching clients. If specified all other params are ignored. |
 | lname | string | Filters clients by last name. |
-| phone | integer (int32) | Filters clients by phone number. |
+| phone | string | Filters clients by phone number. |
 | status | boolean | If false, returns only disabled clients. If true, returns only active clients. |
 | condition | string default: EXACT | Determines the search condition applied to the filters. If EXACT, requires that the given value for one or more params is an exact match of the stored value. If CONTAINS, requires that the given value for one or more params is contained within the stored value. Allowed values: EXACT, CONTAINS |
 | operator | string default: OR | Determines the search logic applied to the filters. If OR, requires that one or more params contain/equal the given value. If AND, requires that all params contain/equal the given value. Allowed values: OR, AND |
@@ -816,7 +816,7 @@ Use this endpoint to get a list of clients that you've created. You can filter f
 
 ### PATCH /clients/{clientId}
 
-Updates one or more fields for an existing client. Only include the fields you wish to change — omitted fields retain their current values.
+Updates one or more fields for an existing client. Only include the fields you wish to change — omitted fields retain their current values. Important - a client must always have at least one of phone or email. Neither can be removed through this endpoint, and an update that would leave the client with neither is rejected with a 400 error.
 
 **Path Parameters:**
 
@@ -950,17 +950,16 @@ Use this endpoint to create a saved search for a client.Important - When a saved
 | clientId | integer (int32) | yes | The clientId of the client that the search is for. This client will receive notifications from the agent that's assigned to them when listings that match the saved search criteria are listed. |
 | name | string | no | You can specify a name for the saved search. This is useful in cases where users have multiple saved searches, to help them distinguish between saved searches. |
 | amenities | array[string] | no |  |
-| areas | array[string] | no | An array of areas to be used as a filter for this search. Required if a value for map is not provided. |
+| areas | array[string] | no | An array of areas to be used as a filter for this search. Required, together with cities, if a value for map is not provided. |
 | basement | array[string] | no | If specified, matches only listings whose basement description match all of the supplied values. For a list of supported values, make a GET /listings?listings=false&aggregates=details.basement1,details.basement2 request. |
-| cities | array[string] | no | An array of cities to be used as a filter for this search. Required if a value for map is not provided. |
+| cities | array[string] | no | An array of cities to be used as a filter for this search. Required, together with areas, if a value for map is not provided. |
 | class | array[string] | yes | Indicates what class of property to search for. Allowed values: residential,condo,commercial |
 | heating | array[string] | no | An array of heating values to be used as a filter for this search. |
 | keywords | array[string] | no |  |
-| neighborhoods | array[string] | no | An array of neighborhoods to be used as a filter for this search. Required if a value for map is not provided. |
+| neighborhoods | array[string] | no | An array of neighborhoods to be used as a filter for this search. Optional. Does not replace the areas and cities requirement when map is not provided. |
 | notificationFrequency | string default: instant | no | Sets the frequency that clients will be notified of listings that match their search criteria. Allowed values: instant, daily, weekly, monthly |
-| map | string (json) | no | An array of polygons arrays with arrays of longitude/latitude shapes to be used as a filter for this search. If used, only listings that area geographically located within these shapes will be matched. Required if values for areas, cities and neighborhoods are not provided. |
+| map | string (json) | no | An array of polygons arrays with arrays of longitude/latitude shapes to be used as a filter for this search. If used, only listings that area geographically located within these shapes will be matched. Required if values for both areas and cities are not provided. |
 | maxBaths | integer (int32) | no | The maximum amount of bathrooms to be used as a filter for this search. |
-| maxBathroomsHalf | integer (int32) | no | The maximum amount of half bathrooms to be used as a filter for this search. |
 | maxBeds | integer (int32) | no | The maximum amount of bedrooms to be used as a filter for this search. |
 | maxCoveredSpaces | integer (int32) | no | The maximum amount of covered spaces to be used as a filter for this search. |
 | minParkingSpaces | integer (int32) | no | If specified, matches only listings whose parking space count is >= the supplied value. |
@@ -969,7 +968,6 @@ Use this endpoint to create a saved search for a client.Important - When a saved
 | maxSqft | integer (int32) | no |  |
 | maxYearBuilt | integer (int32) | no |  |
 | minBaths | integer (int32) | no | The minimum amount of bathrooms to be used as a filter for this search. |
-| minBathroomsHalf | integer (int32) | no | The minimum amount of half bathrooms to be used as a filter for this search. |
 | minBeds | integer (int32) | no | The minimum amount of bedrooms to be used as a filter for this search. |
 | minCoveredSpaces | integer (int32) | no | The minimum amount of covered spaces to be used as a filter for this search. |
 | minGarageSpaces | integer (int32) | no | If specified, matches only listings whose garage space count is >= the supplied value. |
@@ -1110,15 +1108,15 @@ Use this endpoint to update a saved search. Important - When a saved search is u
 | clientId | integer (int32) | no | The clientId of the client that the search is for. This client will receive notifications from the agent that's assigned to them when listings that match the saved search criteria are listed. |
 | name | string | no | You can specify a name for the saved search. This is useful in cases where users have multiple saved searches, to help them distinguish between saved searches. |
 | amenities | array[string] | no |  |
-| areas | array[string] | no | An array of areas to be used as a filter for this search. Required if a value for map is not provided. |
+| areas | array[string] | no | An array of areas to be used as a filter for this search. Required, together with cities, if a value for map is not provided. |
 | basement | array[string] | no | If specified, matches only listings whose basement description match all of the supplied values. For a list of supported values, make a GET /listings?listings=false&aggregates=details.basement1,details.basement2 request. |
-| cities | array[string] | no | An array of cities to be used as a filter for this search. Required if a value for map is not provided. |
+| cities | array[string] | no | An array of cities to be used as a filter for this search. Required, together with areas, if a value for map is not provided. |
 | class | array[string] | no | Indicates what class of property to search for. Allowed values: residential,condo,commercial |
 | heating | array[string] | no | An array of heating values to be used as a filter for this search. |
 | keywords | array[string] | no |  |
-| neighborhoods | array[string] | no | An array of neighborhoods to be used as a filter for this search. Required if a value for map is not provided. |
+| neighborhoods | array[string] | no | An array of neighborhoods to be used as a filter for this search. Optional. Does not replace the areas and cities requirement when map is not provided. |
 | notificationFrequency | string | no | Sets the frequency that clients will be notified of listings that match their search criteria. Allowed values: instant, daily, weekly, monthly |
-| map | string (json) | no | An array of polygons arrays with arrays of longitude/latitude shapes to be used as a filter for this search. If used, only listings that area geographically located within these shapes will be matched. Required if values for areas, cities and neighborhoods are not provided. |
+| map | string (json) | no | An array of polygons arrays with arrays of longitude/latitude shapes to be used as a filter for this search. If used, only listings that area geographically located within these shapes will be matched. Required if values for both areas and cities are not provided. |
 | maxBaths | integer (int32) | no | The maximum amount of bathrooms to be used as a filter for this search. |
 | maxBeds | integer (int32) | no | The maximum amount of bedrooms to be used as a filter for this search. |
 | maxCoveredSpaces | integer (int32) | no |  |
@@ -1147,7 +1145,7 @@ Use this endpoint to update a saved search. Important - When a saved search is u
 | streetNumbers | array[string] | no | An array of street numbers to be used as a filter for this search. |
 | styles | array[string] | no | An array of property styles to be used as a filter for this search. |
 | swimmingPool | array[string] | no | An array of swimming pool values to be used as a filter for this search. |
-| type | string | no | Indicates whether the search is for a property that's for sale or for lease. Allowed values: Sale,Lease |
+| type | string | no | Indicates whether the search is for a property that's for sale or for lease. Allowed values: sale,lease |
 | waterSource | array[string] | no | An array of water source values to be used as a filter for this search. |
 | minLotSizeSqft | integer (int32) | no | The minimum lot size in square feet to be used as a filter for this search. |
 | maxLotSizeSqft | integer (int32) | no | The maximum lot size in square feet to be used as a filter for this search. |
@@ -1200,8 +1198,8 @@ Use this endpoint to lookup matches for a saved search. Matches are listings tha
 |---|---|---|
 | pageNum | integer (int32) default: 1 | The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200. |
 | resultsPerPage | integer (int32) default: 100 | The number of listings to return per page. |
-| endDate | string (date) | If specified filters matches whose match date is <= the supplied value. |
-| startDate | string (date) | If specified filters matches whose match date is >= the supplied value. |
+| endDate | string (date-time) | If specified filters matches whose match date is YYYY-MM-DDTHH:mm:ss.sssZ |
+| startDate | string (date-time) | If specified filters matches whose match date is >= the supplied value. Format: YYYY-MM-DDTHH:mm:ss.sssZ |
 | lastStatus | string | If specified filters matches whose last status is the supplied value. Allowed values: Sus, Exp, Sld, Ter, Dft, Lsd, Sc, Lc, Pc, Ext, New |
 | liked | boolean | If true filters search matches that were liked, if false filters search matches that were disliked. If not specified, returns all search matches. |
 | matchId | integer (int32) |  |
@@ -1291,14 +1289,14 @@ Use this endpoint to estimate a property's value by providing us with the proper
 | Field | Type | Required | Description |
 |---|---|---|---|
 | overallQuality | string | no | An indication of the overall renovation quality of the property. You may use a numeric value between 1.0 and 6.0 or one of these strings: poor, below average, average, above average, excellent. If not specified, defaults to average. |
-| address | object | no |  |
+| address | object | yes |  |
 | condominium | object | no |  |
-| details | object | no |  |
+| details | object | yes |  |
 | lot | object | no |  |
 | sendEmailNow | boolean default: false | no | If set to true and there's a clientId specified, the client will receive a message immediately with a link that will allow them to access their estimate. Note - your account must have the Repliers messaging addon to use this feature. |
 | sendEmailMonthly | boolean default: false | no | If set to true and there's a clientId specified, the client will receive a message on a monthly basis with a link to a current estimate. Note - your account must have the Repliers messaging addon to use this feature. |
 | taxes | object | no |  |
-| clientId | integer (int32) | no | Set this to the clientId that the estimate is for if you wish to store the estimate. If sendEmailNow or sendEmailMonthly is used, messages containing estimates will be sent to this clientId. |
+| clientId | integer (int32) | no | Set this to the clientId that the estimate is for if you wish to store the estimate. If sendEmailNow or sendEmailMonthly is used, messages containing estimates will be sent to this clientId. Required when sendEmailNow or sendEmailMonthly is true. |
 | boardId | integer (int32) | no | Required when using an API key that has access to multiple boards. |
 
 ---
@@ -1342,7 +1340,7 @@ Returns a list of property value estimates you've created. Useful for managing a
 
 ### PATCH /estimates/{estimateId}
 
-Updates an existing property value estimate with revised property attributes. Use this if property details have changed and you need a recalculated estimate.
+Updates an existing property value estimate with revised property attributes. Use this if property details have changed and you need a recalculated estimate. Important - top-level objects such as address, details, condominium and taxes replace the stored object entirely rather than being merged. When updating any of them, send the full object. Top-level fields that are omitted retain their current values.
 
 **Path Parameters:**
 
@@ -1362,7 +1360,7 @@ Updates an existing property value estimate with revised property attributes. Us
 | sendEmailNow | boolean default: false | no | If set to true and there's a clientId specified, the client will receive a message immediately with a link that will allow them to access their estimate. Note - your account must have the Repliers messaging addon to use this feature. |
 | sendEmailMonthly | boolean default: false | no | If set to true and there's a clientId specified, the client will receive a message on a monthly basis with a link to a current estimate. Note - your account must have the Repliers messaging addon to use this feature. |
 | taxes | object | no |  |
-| clientId | integer (int32) | no | Set this to the clientId that the estimate is for if you wish to store the estimate. If sendEmailNow or sendEmailMonthly is used, messages containing estimates will be sent to this clientId. |
+| clientId | integer (int32) | no | The clientId of an existing estimate cannot be changed. If supplied, this value is ignored and the estimate keeps its original client. |
 
 ---
 
@@ -1391,7 +1389,7 @@ Use this endpoint to send a message. A message is either sent from an agent to a
 | sender | string | yes | Indicates whether the agent is sending the message or the client. Allowed values: agent,client |
 | agentId | integer (int32) | yes | The agentId of the agent that's either receiving or sending the message. |
 | clientId | integer (int32) | yes | The clientId of the client that's either receiving or sending the message. |
-| content | object | no |  |
+| content | object | yes |  |
 
 ---
 
@@ -1405,8 +1403,8 @@ Use this endpoint to list and filter sent messages.
 |---|---|---|
 | agentId | integer (int32) |  |
 | clientId | integer (int32) |  |
-| endTime | string (date) | If specified, filters messages which were sent on or before the supplied value. |
-| startTime | string (date) | If specified, filters messages which were sent on or after the supplied value. |
+| endTime | string (date-time) | If specified, filters messages which were sent on or before the supplied value. Format: YYYY-MM-DDTHH:mm:ss.sssZ |
+| startTime | string (date-time) | If specified, filters messages which were sent on or after the supplied value. Format: YYYY-MM-DDTHH:mm:ss.sssZ |
 | message | string |  |
 | messageId | integer (int32) |  |
 | pageNum | integer (int32) default: 1 | The page number to return. For example, with 100 results per page, specifying pageNum=2 returns results 101–200. |
@@ -1493,7 +1491,7 @@ Returns a list of properties that a client has favorited. Results can be filtere
 
 | Name | Type | Description |
 |---|---|---|
-| boardId | integer (int32) | Required if your account has access to multiple MLSes. Filters favorites to a specific board. |
+| boardId | array[integer] | Filters favorites to one or more boards. If omitted, all boards your account has access to are included. Repeat the parameter to supply multiple boardIds. |
 | clientId | integer (int32) | The ID of the client whose favorites to retrieve. |
 | fields | string | Use if you want to limit the response to containing certain fields only. For example: fields?listPrice,soldPrice would limit the response to contain listPrice and soldPrice only. You can also specify the amount of images to return, for example if a listing has 40 images total and you specify fields=images[5] it will only return the first 5 images. |
 | lastStatus | array[string] | Filters favorites by the last status of the favorited listing. |
@@ -1501,10 +1499,10 @@ Returns a list of properties that a client has favorited. Results can be filtere
 | resultsPerPage | integer (int32) | The number of favorites to return per page. |
 | status | string | Filters favorites by the current status of the favorited listing. |
 | tags | string | Allows you to search tags within favorites, accepts a comma-separated string, for example "needs work, turn-key" |
-| lat | string | Accepts a value for latitude. Can be used only for sorting with `distanceAsc` or `distanceDesc`. |
-| long | string | Accepts a value for longitude. Can be used only for sorting with `distanceAsc` or `distanceDesc`. Must be used with `lat` and `radius` parameters to return listings within a certain radius of a given latitude and longitude. |
+| lat | number (float) | Accepts a value for latitude. Can be used only for sorting with `distanceAsc` or `distanceDesc`. Must be used with `long`. |
+| long | number (float) | Accepts a value for longitude. Can be used only for sorting with `distanceAsc` or `distanceDesc`. Must be used with `lat`. |
 | pretty | boolean | If true, returns the response in a human-readable formatted JSON. |
-| sortBy | string enum: createdOnDesc, updatedOnDesc, createdOnAsc, updatedOnAsc, soldDateAsc, soldDateDesc, soldPriceAsc, soldPriceDesc, listPriceAsc, listPriceDesc, bedsAsc, bedsDesc, bathsDesc, bathsAsc, yearBuiltDesc, yearBuiltAsc, random, distanceAsc, distanceDesc, centroidDistanceAsc, centroidDistanceDesc, sqftAsc, sqftDesc, repliersUpdatedOnDesc, repliersUpdatedOnAsc, statusAscListDateAsc, statusAscListDateDesc, statusAscListPriceAsc, statusAscListPriceDesc, qualityAsc, qualityDesc, listPricePerSqFtAsc, listPricePerSqFtDesc, soldPricePerSqFtAsc, soldPricePerSqFtDesc | The attribute that the favorites will be sorted by. Note, `distanceAsc` and `distanceDesc` must be used in combination with `lat`, `long` parameters. Default is `updatedOnDesc`. |
+| sortBy | string enum: createdOnDesc, updatedOnDesc, createdOnAsc, updatedOnAsc, soldDateAsc, soldDateDesc, soldPriceAsc, soldPriceDesc, listPriceAsc, listPriceDesc, bedsAsc, bedsDesc, bathsDesc, bathsAsc, yearBuiltDesc, yearBuiltAsc, random, distanceAsc, distanceDesc, closedDateAsc, closedDateDesc, sqftAsc, sqftDesc, repliersUpdatedOnDesc, repliersUpdatedOnAsc, statusAscListDateAsc, statusAscListDateDesc, statusAscListPriceAsc, statusAscListPriceDesc, qualityAsc, qualityDesc, listPricePerSqFtAsc, listPricePerSqFtDesc, soldPricePerSqFtAsc, soldPricePerSqFtDesc | The attribute that the favorites will be sorted by. Note, `distanceAsc` and `distanceDesc` must be used in combination with `lat`, `long` parameters. Default is `updatedOnDesc`. |
 
 **Response (200):**
 
@@ -1611,8 +1609,8 @@ Use this endpoint to subscribe to a webhook.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | target_url | string | yes | This value must be unique, you may not specify the same target url for more than one webhook. |
-| event | string | yes | Allowed values: agent.created, agent.updated, agent.deleted, client.created, client.updated, client.deleted, search.created, search.updated, search.deleted, search.match.created, search.match.updated, message.created, message.updated, message.deleted, listing.created, listing.updated, listing.deleted, favorite.created, favorite.deleted |
-| configuration | string (json) | no | Configuration options for the webhook. This object contains webhook-related settings and preferences. |
+| event | string | yes | Allowed values: agent.created, agent.updated, agent.deleted, client.created, client.updated, client.deleted, search.created, search.updated, search.deleted, search.match.created, search.match.updated, message.created,listing.created, listing.updated, listing.deleted, favorite.created, favorite.deleted |
+| configuration | object | no | Configuration options for the webhook. Unknown properties are rejected with a 400 error. |
 
 **Response (200):**
 
@@ -1647,8 +1645,8 @@ Use this endpoint to update an existing webhook subscription.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | target_url | string | no | This value must be unique, you may not specify the same target url for more than one webhook. |
-| event | string | no | Allowed values: agent.created, agent.updated, agent.deleted, client.created, client.updated, client.deleted, search.created, search.updated, search.deleted, search.match.created, search.match.updated, message.created, message.updated, message.deleted, listing.created, listing.updated, listing.deleted, favorite.created, favorite.deleted |
-| configuration | string (json) | no | Configuration options for the webhook. This object contains webhook-related settings and preferences. |
+| event | string | no | Allowed values: agent.created, agent.updated, agent.deleted, client.created, client.updated, client.deleted, search.created, search.updated, search.deleted, search.match.created, search.match.updated, message.created,listing.created, listing.updated, listing.deleted, favorite.created, favorite.deleted |
+| configuration | object | no | Configuration options for the webhook. Unknown properties are rejected with a 400 error. |
 
 ---
 
@@ -1680,7 +1678,7 @@ Use this endpoint to get details associated with a specific webhook subscription
 |---|---|---|
 | id | integer (int32) | The unique identifier of the webhook subscription (webhookId). |
 | target_url | string | The URL that event notifications are delivered to. |
-| event | string | The event this subscription is subscribed to. Allowed values: agent.created, agent.updated, agent.deleted, client.created, client.updated, client.deleted, search.created, search.updated, search.deleted, search.match.created, search.match.updated, message.created, message.updated, message.deleted, listing.created, listing.updated, listing.deleted, favorite.created, favorite.deleted |
+| event | string | The event this subscription is subscribed to. Allowed values: agent.created, agent.updated, agent.deleted, client.created, client.updated, client.deleted, search.created, search.updated, search.deleted, search.match.created, search.match.updated, message.created,listing.created, listing.updated, listing.deleted, favorite.created, favorite.deleted |
 | configuration | object | Configuration options for the webhook, such as delivery filters. |
 | configuration.filters | array[object] |  |
 
@@ -1704,7 +1702,7 @@ Use this endpoint to list and filter members (agents) belonging to the MLS.
 |---|---|---|
 | agentId | string | Filters members by agent ID using exact match. |
 | agentName | string | Filters members by agent name using exact match. |
-| boardId | string | Filters members by the MLS board they belong to. |
+| boardId | string | Filters members by the MLS board they belong to. Required if your API key has access to more than one MLS board. Find your boardId by visiting https://login.repliers.com/dashboard/data-access |
 | hasEmail | boolean | If supplied, filters members by whether they have an email address on record. |
 | originatingSystemName | string | Filters members by the name of the originating MLS system. |
 | brokerage | string | Filters members by brokerage name using partial match. |
@@ -1758,7 +1756,7 @@ Use this endpoint to list offices belonging to the MLS. A brokerage may have one
 | resultsPerPage | integer | Number of results to return per page. |
 | officeId | string | If supplied, finds office by officeId using exact match criteria. |
 | keywords | string | If supplied, filters offices by the supplied value. |
-| boardId | string | Find your boardId by visiting https://login.repliers.com/dashboard/data-access |
+| boardId | string | Filters offices by MLS board. Required if your API key has access to more than one MLS board. Find your boardId by visiting https://login.repliers.com/dashboard/data-access |
 
 **Response (200):**
 
@@ -1802,7 +1800,7 @@ Returns a list of brokerages registered with the MLS. Useful for building broker
 | pageNum | integer | Page number for paginated results. |
 | resultsPerPage | integer | Number of results to return per page. |
 | keywords | string | If supplied, filters brokerages by the supplied value. |
-| boardId | string | Find your boardId by visiting https://login.repliers.com/dashboard/data-access |
+| boardId | string | Filters brokerages by MLS board. Required if your API key has access to more than one MLS board. Find your boardId by visiting https://login.repliers.com/dashboard/data-access |
 
 **Response (200):**
 
@@ -1829,9 +1827,9 @@ Use this endpoint to retrieve relevant schools, parks, transit stops and safety 
 
 | Name | Type | Description |
 |---|---|---|
-| lat | string | The latitude of the point that you'd like to retrieve places data for. |
-| long | string | The longitude of the point that you'd like to retrieve places data for. |
-| inputInsidePolygon | boolean | When set to `true`, each returned place that has a boundary polygon will include an `inputInsidePolygon` field indicating whether the specified lat/long falls inside that polygon. All places are returned regardless of this parameter; places without boundaries are unaffected and will not include this field. |
+| lat | number (float) | The latitude of the point that you'd like to retrieve places data for. |
+| long | number (float) | The longitude of the point that you'd like to retrieve places data for. |
+| inputInsidePolygon | boolean | Filters places by whether the specified lat/long falls inside their boundary polygon. Every returned place that has a boundary polygon always includes an `inputInsidePolygon` field with this result, regardless of this parameter. When set to `true`, only places whose polygon contains the point are returned. When set to `false`, only places whose polygon does not contain the point are returned. Places without a boundary polygon are always returned and do not include the field. |
 
 **Response (200):**
 

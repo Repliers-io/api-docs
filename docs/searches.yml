@@ -38,7 +38,7 @@ paths:
                     type: string
                 areas:
                   type: array
-                  description: An array of areas to be used as a filter for this search. Required if a value for map is not provided.
+                  description: An array of areas to be used as a filter for this search. Required, together with cities, if a value for map is not provided.
                   items:
                     type: string
                 basement:
@@ -48,7 +48,7 @@ paths:
                     type: string
                 cities:
                   type: array
-                  description: An array of cities to be used as a filter for this search. Required if a value for map is not provided.
+                  description: An array of cities to be used as a filter for this search. Required, together with areas, if a value for map is not provided.
                   items:
                     type: string
                 class:
@@ -67,7 +67,7 @@ paths:
                     type: string
                 neighborhoods:
                   type: array
-                  description: An array of neighborhoods to be used as a filter for this search. Required if a value for map is not provided.
+                  description: An array of neighborhoods to be used as a filter for this search. Optional. Does not replace the areas and cities requirement when map is not provided.
                   items:
                     type: string
                 notificationFrequency:
@@ -76,15 +76,11 @@ paths:
                   default: instant
                 map:
                   type: string
-                  description: An array of polygons arrays with arrays of longitude/latitude shapes to be used as a filter for this search. If used, only listings that area geographically located within these shapes will be matched. Required if values for areas, cities and neighborhoods are not provided.
+                  description: An array of polygons arrays with arrays of longitude/latitude shapes to be used as a filter for this search. If used, only listings that area geographically located within these shapes will be matched. Required if values for both areas and cities are not provided.
                   format: json
                 maxBaths:
                   type: integer
                   description: The maximum amount of bathrooms to be used as a filter for this search.
-                  format: int32
-                maxBathroomsHalf:
-                  type: integer
-                  description: The maximum amount of half bathrooms to be used as a filter for this search.
                   format: int32
                 maxBeds:
                   type: integer
@@ -114,10 +110,6 @@ paths:
                 minBaths:
                   type: integer
                   description: The minimum amount of bathrooms to be used as a filter for this search.
-                  format: int32
-                minBathroomsHalf:
-                  type: integer
-                  description: The minimum amount of half bathrooms to be used as a filter for this search.
                   format: int32
                 minBeds:
                   type: integer
@@ -436,7 +428,7 @@ paths:
                     type: string
                 areas:
                   type: array
-                  description: An array of areas to be used as a filter for this search. Required if a value for map is not provided.
+                  description: An array of areas to be used as a filter for this search. Required, together with cities, if a value for map is not provided.
                   items:
                     type: string
                 basement:
@@ -446,7 +438,7 @@ paths:
                     type: string
                 cities:
                   type: array
-                  description: An array of cities to be used as a filter for this search. Required if a value for map is not provided.
+                  description: An array of cities to be used as a filter for this search. Required, together with areas, if a value for map is not provided.
                   items:
                     type: string
                 class:
@@ -465,7 +457,7 @@ paths:
                     type: string
                 neighborhoods:
                   type: array
-                  description: An array of neighborhoods to be used as a filter for this search. Required if a value for map is not provided.
+                  description: An array of neighborhoods to be used as a filter for this search. Optional. Does not replace the areas and cities requirement when map is not provided.
                   items:
                     type: string
                 notificationFrequency:
@@ -473,7 +465,7 @@ paths:
                   description: Sets the frequency that clients will be notified of listings that match their search criteria.<br/><br/>Allowed values:<br/><br/><code>instant</code>, <code>daily</code>, <code>weekly</code>, <code>monthly</code>
                 map:
                   type: string
-                  description: An array of polygons arrays with arrays of longitude/latitude shapes to be used as a filter for this search. If used, only listings that area geographically located within these shapes will be matched. Required if values for areas, cities and neighborhoods are not provided.
+                  description: An array of polygons arrays with arrays of longitude/latitude shapes to be used as a filter for this search. If used, only listings that area geographically located within these shapes will be matched. Required if values for both areas and cities are not provided.
                   format: json
                 maxBaths:
                   type: integer
@@ -583,7 +575,7 @@ paths:
                     type: string
                 type:
                   type: string
-                  description: Indicates whether the search is for a property that's for sale or for lease.<br/></br>Allowed values:<br/><br/><code>Sale</code>,<code>Lease</code>
+                  description: Indicates whether the search is for a property that's for sale or for lease.<br/></br>Allowed values:<br/><br/><code>sale</code>,<code>lease</code>
                 waterSource:
                   type: array
                   description: An array of water source values to be used as a filter for this search.
@@ -714,16 +706,18 @@ paths:
           required: true
         - name: endDate
           in: query
-          description: If specified filters matches whose match date is <= the supplied value.
+          description: "If specified filters matches whose match date is <= the supplied value. Format: <code>YYYY-MM-DDTHH:mm:ss.sssZ</code>"
           schema:
             type: string
-            format: date
+            format: date-time
+            example: "2024-06-15T23:59:59.000Z"
         - name: startDate
           in: query
-          description: If specified filters matches whose match date is >= the supplied value.
+          description: "If specified filters matches whose match date is >= the supplied value. Format: <code>YYYY-MM-DDTHH:mm:ss.sssZ</code>"
           schema:
             type: string
-            format: date
+            format: date-time
+            example: "2024-06-15T00:00:00.000Z"
         - name: lastStatus
           in: query
           description: If specified filters matches whose last status is the supplied value.<br/><br/>Allowed values:<br/><br/><code>Sus</code>, <code>Exp</code>, <code>Sld</code>, <code>Ter</code>, <code>Dft</code>, <code>Lsd</code>, <code>Sc</code>, <code>Lc</code>, <code>Pc</code>, <code>Ext</code>, <code>New</code>

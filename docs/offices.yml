@@ -33,7 +33,7 @@ paths:
             type: string
         - name: boardId
           in: query
-          description: Find your boardId by visiting https://login.repliers.com/dashboard/data-access
+          description: Filters offices by MLS board. Required if your API key has access to more than one MLS board. Find your boardId by visiting https://login.repliers.com/dashboard/data-access
           schema:
             type: string
       responses:

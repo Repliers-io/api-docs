@@ -29,6 +29,7 @@ paths:
                 - sender
                 - agentId
                 - clientId
+                - content
               properties:
                 sender:
                   type: string
@@ -70,7 +71,8 @@ paths:
                       description: An array of pictures (URLs) to be sent in this message.
                       items:
                         type: string
-                  required: []
+                  required:
+                    - message
                   type: object
       responses:
         "200":
@@ -97,16 +99,18 @@ paths:
             format: int32
         - name: endTime
           in: query
-          description: If specified, filters messages which were sent  on or before the supplied value.
+          description: "If specified, filters messages which were sent on or before the supplied value. Format: <code>YYYY-MM-DDTHH:mm:ss.sssZ</code>"
           schema:
             type: string
-            format: date
+            format: date-time
+            example: "2024-06-15T23:59:59.000Z"
         - name: startTime
           in: query
-          description: If specified, filters messages which were sent on or after the supplied value.
+          description: "If specified, filters messages which were sent on or after the supplied value. Format: <code>YYYY-MM-DDTHH:mm:ss.sssZ</code>"
           schema:
             type: string
-            format: date
+            format: date-time
+            example: "2024-06-15T00:00:00.000Z"
         - name: message
           in: query
           schema:

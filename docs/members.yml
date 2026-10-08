@@ -26,7 +26,7 @@ paths:
             type: string
         - name: boardId
           in: query
-          description: Filters members by the MLS board they belong to.
+          description: Filters members by the MLS board they belong to. Required if your API key has access to more than one MLS board. Find your boardId by visiting https://login.repliers.com/dashboard/data-access
           schema:
             type: string
         - name: hasEmail

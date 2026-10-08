@@ -27,11 +27,38 @@ paths:
                   description: This value must be unique, you may not specify the same target url for more than one webhook.
                 event:
                   type: string
-                  description: "Allowed values: <br/><br/> <code>agent.created</code>, <code>agent.updated</code>, <code>agent.deleted</code>, <code>client.created</code>, <code>client.updated</code>, <code>client.deleted</code>, <code>search.created</code>, <code>search.updated</code>, <code>search.deleted</code>, <code>search.match.created</code>, <code>search.match.updated</code>, <code>message.created</code>, <code>message.updated</code>, <code>message.deleted</code>, <code>listing.created</code>, <code>listing.updated</code>, <code>listing.deleted</code>, <code>favorite.created</code>, <code>favorite.deleted</code>"
+                  description: "Allowed values: <br/><br/> <code>agent.created</code>, <code>agent.updated</code>, <code>agent.deleted</code>, <code>client.created</code>, <code>client.updated</code>, <code>client.deleted</code>, <code>search.created</code>, <code>search.updated</code>, <code>search.deleted</code>, <code>search.match.created</code>, <code>search.match.updated</code>, <code>message.created</code>,<code>listing.created</code>, <code>listing.updated</code>, <code>listing.deleted</code>, <code>favorite.created</code>, <code>favorite.deleted</code>"
                 configuration:
-                  type: string
-                  description: Configuration options for the webhook. This object contains webhook-related settings and preferences.
-                  format: json
+                  type: object
+                  description: Configuration options for the webhook. Unknown properties are rejected with a 400 error.
+                  additionalProperties: false
+                  properties:
+                    raw:
+                      type: boolean
+                      description: If true, the event payload includes the raw MLS data.
+                    filters:
+                      type: array
+                      description: Only deliver events whose payload matches all of the supplied filters.
+                      items:
+                        type: object
+                        additionalProperties: false
+                        required:
+                          - field
+                          - values
+                        properties:
+                          field:
+                            type: string
+                            description: The payload field to filter on.
+                          logic:
+                            type: string
+                            description: The comparison to apply. Defaults to an exact match when omitted.
+                            enum:
+                              - contains
+                          values:
+                            type: array
+                            description: The values to match against.
+                            items:
+                              type: string
             examples:
               Request Example:
                 value:
@@ -140,11 +167,38 @@ paths:
                   description: This value must be unique, you may not specify the same target url for more than one webhook.
                 event:
                   type: string
-                  description: "Allowed values: <br/><br/> <code>agent.created</code>, <code>agent.updated</code>, <code>agent.deleted</code>, <code>client.created</code>, <code>client.updated</code>, <code>client.deleted</code>, <code>search.created</code>, <code>search.updated</code>, <code>search.deleted</code>, <code>search.match.created</code>, <code>search.match.updated</code>, <code>message.created</code>, <code>message.updated</code>, <code>message.deleted</code>, <code>listing.created</code>, <code>listing.updated</code>, <code>listing.deleted</code>, <code>favorite.created</code>, <code>favorite.deleted</code>"
+                  description: "Allowed values: <br/><br/> <code>agent.created</code>, <code>agent.updated</code>, <code>agent.deleted</code>, <code>client.created</code>, <code>client.updated</code>, <code>client.deleted</code>, <code>search.created</code>, <code>search.updated</code>, <code>search.deleted</code>, <code>search.match.created</code>, <code>search.match.updated</code>, <code>message.created</code>,<code>listing.created</code>, <code>listing.updated</code>, <code>listing.deleted</code>, <code>favorite.created</code>, <code>favorite.deleted</code>"
                 configuration:
-                  type: string
-                  description: Configuration options for the webhook. This object contains webhook-related settings and preferences.
-                  format: json
+                  type: object
+                  description: Configuration options for the webhook. Unknown properties are rejected with a 400 error.
+                  additionalProperties: false
+                  properties:
+                    raw:
+                      type: boolean
+                      description: If true, the event payload includes the raw MLS data.
+                    filters:
+                      type: array
+                      description: Only deliver events whose payload matches all of the supplied filters.
+                      items:
+                        type: object
+                        additionalProperties: false
+                        required:
+                          - field
+                          - values
+                        properties:
+                          field:
+                            type: string
+                            description: The payload field to filter on.
+                          logic:
+                            type: string
+                            description: The comparison to apply. Defaults to an exact match when omitted.
+                            enum:
+                              - contains
+                          values:
+                            type: array
+                            description: The values to match against.
+                            items:
+                              type: string
       responses:
         "200":
           $ref: components.yml#/components/responses/EmptySuccess
@@ -275,7 +329,7 @@ components:
         event:
           type: string
           example: listing.created
-          description: "The event this subscription is subscribed to. Allowed values: <br/><br/> <code>agent.created</code>, <code>agent.updated</code>, <code>agent.deleted</code>, <code>client.created</code>, <code>client.updated</code>, <code>client.deleted</code>, <code>search.created</code>, <code>search.updated</code>, <code>search.deleted</code>, <code>search.match.created</code>, <code>search.match.updated</code>, <code>message.created</code>, <code>message.updated</code>, <code>message.deleted</code>, <code>listing.created</code>, <code>listing.updated</code>, <code>listing.deleted</code>, <code>favorite.created</code>, <code>favorite.deleted</code>"
+          description: "The event this subscription is subscribed to. Allowed values: <br/><br/> <code>agent.created</code>, <code>agent.updated</code>, <code>agent.deleted</code>, <code>client.created</code>, <code>client.updated</code>, <code>client.deleted</code>, <code>search.created</code>, <code>search.updated</code>, <code>search.deleted</code>, <code>search.match.created</code>, <code>search.match.updated</code>, <code>message.created</code>,<code>listing.created</code>, <code>listing.updated</code>, <code>listing.deleted</code>, <code>favorite.created</code>, <code>favorite.deleted</code>"
         configuration:
           type: object
           description: Configuration options for the webhook, such as delivery filters.

@@ -121,8 +121,7 @@ paths:
           in: query
           description: Filters clients by phone number.
           schema:
-            type: integer
-            format: int32
+            type: string
         - name: status
           in: query
           description: If false, returns only disabled clients. If true, returns only active clients.
@@ -198,7 +197,7 @@ paths:
   /clients/{clientId}:
     patch:
       summary: Update a client
-      description: Updates one or more fields for an existing client. Only include the fields you wish to change — omitted fields retain their current values.
+      description: Updates one or more fields for an existing client. Only include the fields you wish to change — omitted fields retain their current values.<br/><br/><strong>Important</strong> - a client must always have at least one of <code>phone</code> or <code>email</code>. Neither can be removed through this endpoint, and an update that would leave the client with neither is rejected with a 400 error.
       externalDocs:
         description: Update a Client or Agent
         url: https://help.repliers.com/en/article/implementation-guide-for-agents-and-clients-of4k3i/#2-step-4-update-a-client-or-agent

@@ -66,10 +66,12 @@ paths:
       parameters:
         - name: boardId
           in: query
-          description: Required if your account has access to multiple MLSes. Filters favorites to a specific board.
+          description: Filters favorites to one or more boards. If omitted, all boards your account has access to are included. Repeat the parameter to supply multiple boardIds.
           schema:
-            type: integer
-            format: int32
+            type: array
+            items:
+              type: integer
+              format: int32
         - name: clientId
           in: query
           description: The ID of the client whose favorites to retrieve.
@@ -113,14 +115,20 @@ paths:
             type: string
         - name: lat
           in: query
-          description: Accepts a value for latitude. Can be used only for sorting with `distanceAsc` or `distanceDesc`.
+          description: Accepts a value for latitude. Can be used only for sorting with `distanceAsc` or `distanceDesc`. Must be used with `long`.
           schema:
-            type: string
+            type: number
+            format: float
+            minimum: -90
+            maximum: 90
         - name: long
           in: query
-          description: Accepts a value for longitude. Can be used only for sorting with `distanceAsc` or `distanceDesc`. Must be used with `lat` and `radius` parameters to return listings within a certain radius of a given latitude and longitude.
+          description: Accepts a value for longitude. Can be used only for sorting with `distanceAsc` or `distanceDesc`. Must be used with `lat`.
           schema:
-            type: string
+            type: number
+            format: float
+            minimum: -180
+            maximum: 180
         - name: pretty
           in: query
           description: If true, returns the response in a human-readable formatted JSON.
@@ -151,8 +159,8 @@ paths:
               - random
               - distanceAsc
               - distanceDesc
-              - centroidDistanceAsc
-              - centroidDistanceDesc
+              - closedDateAsc
+              - closedDateDesc
               - sqftAsc
               - sqftDesc
               - repliersUpdatedOnDesc
