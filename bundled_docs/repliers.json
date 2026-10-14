@@ -8548,6 +8548,23 @@
                 "maxLength": 100
               }
             }
+          },
+          {
+            "name": "apn",
+            "in": "query",
+            "description": "Filters locations by Assessor's Parcel Number (APN). Applies to public-record property locations (`type=property`, `source=PublicRecord`) and matches against the `publicRecord.apn` field in the response.\n\nMatching is exact and case-sensitive: the value must be supplied exactly as it appears in `publicRecord.apn`, including any dashes, spaces or leading zeros. No normalization is applied.\n\nRepeat the parameter to supply multiple APNs, up to 50. A location is returned if its APN matches any of the supplied values.\n",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "maxItems": 50,
+              "items": {
+                "type": "string",
+                "maxLength": 50
+              }
+            },
+            "example": [
+              "0212380530003"
+            ]
           }
         ],
         "responses": {
@@ -10591,6 +10608,23 @@
                 "maxLength": 100
               }
             }
+          },
+          {
+            "name": "apn",
+            "in": "query",
+            "description": "Filters locations by Assessor's Parcel Number (APN). Applies to public-record property locations (`type=property`, `source=PublicRecord`) and matches against the `publicRecord.apn` field in the response.\n\nMatching is exact and case-sensitive: the value must be supplied exactly as it appears in `publicRecord.apn`, including any dashes, spaces or leading zeros. No normalization is applied.\n\nRepeat the parameter to supply multiple APNs, up to 50. A location is returned if its APN matches any of the supplied values.\n",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "maxItems": 50,
+              "items": {
+                "type": "string",
+                "maxLength": 50
+              }
+            },
+            "example": [
+              "0212380530003"
+            ]
           }
         ],
         "requestBody": {

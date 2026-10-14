@@ -384,6 +384,7 @@ Searches for geographical locations such as cities, neighborhoods, and districts
 | schoolLevel | array[string] | Filters locations by school level. Applies to locations with `type=school`. |
 | privateSchoolAffiliation | array[string] | Filters locations by private school affiliation. Applies to locations with `type=school`. |
 | schoolDistrictName | array[string] | Filters locations by school district name. Applies to locations with `type=school`. |
+| apn | array[string] | Filters locations by Assessor's Parcel Number (APN). Applies to public-record property locations (`type=property`, `source=PublicRecord`) and matches against the `publicRecord.apn` field in the response. Matching is exact and case-sensitive: the value must be supplied exactly as it appears in `publicRecord.apn`, including any dashes, spaces or leading zeros. No normalization is applied. Repeat the parameter to supply multiple APNs, up to 50. A location is returned if its APN matches any of the supplied values. |
 
 **Response (200):**
 
@@ -449,6 +450,7 @@ Identical to GET /locations and accepts the same query parameters. Use this meth
 | schoolLevel | array[string] | Filters locations by school level. Applies to locations with `type=school`. |
 | privateSchoolAffiliation | array[string] | Filters locations by private school affiliation. Applies to locations with `type=school`. |
 | schoolDistrictName | array[string] | Filters locations by school district name. Applies to locations with `type=school`. |
+| apn | array[string] | Filters locations by Assessor's Parcel Number (APN). Applies to public-record property locations (`type=property`, `source=PublicRecord`) and matches against the `publicRecord.apn` field in the response. Matching is exact and case-sensitive: the value must be supplied exactly as it appears in `publicRecord.apn`, including any dashes, spaces or leading zeros. No normalization is applied. Repeat the parameter to supply multiple APNs, up to 50. A location is returned if its APN matches any of the supplied values. |
 
 **Request Body:**
 
