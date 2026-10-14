@@ -8087,6 +8087,16 @@
             }
           },
           {
+            "name": "deduplicate",
+            "in": "query",
+            "description": "Controls deduplication of MLS locations for API keys that have access to multiple boards. Only affects locations with `source=MLS`.\n\nWhen an API key spans several boards, the same location (for example, a city) may exist in more than one of them. By default (`true`), such shared locations are deduplicated so that each location appears once in the results. If a `duplicates` configuration is set at the account level, it takes priority over the automatic deduplication.\n\nSet to `false` to disable deduplication for the request, including any account-level `duplicates` configuration. Each board's copy of a shared location is then returned.\n\nHas no effect for single-board API keys.\n",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          {
             "name": "state",
             "in": "query",
             "description": "Filters locations by 2-letter State/Province/Territory codes. Returns locations within the specified states.\n",
@@ -10127,6 +10137,16 @@
               "items": {
                 "$ref": "#/paths/~1listings~1%7BmlsNumber%7D/get/parameters/5/schema/items"
               }
+            }
+          },
+          {
+            "name": "deduplicate",
+            "in": "query",
+            "description": "Controls deduplication of MLS locations for API keys that have access to multiple boards. Only affects locations with `source=MLS`.\n\nWhen an API key spans several boards, the same location (for example, a city) may exist in more than one of them. By default (`true`), such shared locations are deduplicated so that each location appears once in the results. If a `duplicates` configuration is set at the account level, it takes priority over the automatic deduplication.\n\nSet to `false` to disable deduplication for the request, including any account-level `duplicates` configuration. Each board's copy of a shared location is then returned.\n\nHas no effect for single-board API keys.\n",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true
             }
           },
           {
@@ -12224,6 +12244,16 @@
           },
           {
             "$ref": "#/paths/~1locations/get/parameters/1"
+          },
+          {
+            "name": "deduplicate",
+            "in": "query",
+            "description": "Controls deduplication of MLS locations for API keys that have access to multiple boards. Only affects locations with `source=MLS`.\n\nWhen an API key spans several boards, the same location (for example, a city) may exist in more than one of them. By default (`true`), such shared locations are deduplicated so that each location appears once in the results. If a `duplicates` configuration is set at the account level, it takes priority over the automatic deduplication.\n\nSet to `false` to disable deduplication for the request, including any account-level `duplicates` configuration. Each board's copy of a shared location is then returned.\n\nHas no effect for single-board API keys.\n",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           },
           {
             "name": "fields",

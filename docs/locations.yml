@@ -26,6 +26,21 @@ paths:
 
         - $ref: "components.yml#/components/parameters/LocationTypeFilter"
 
+        - name: deduplicate
+          in: query
+          description: |
+            Controls deduplication of MLS locations for API keys that have access to multiple boards. Only affects locations with `source=MLS`.
+
+            When an API key spans several boards, the same location (for example, a city) may exist in more than one of them. By default (`true`), such shared locations are deduplicated so that each location appears once in the results. If a `duplicates` configuration is set at the account level, it takes priority over the automatic deduplication.
+
+            Set to `false` to disable deduplication for the request, including any account-level `duplicates` configuration. Each board's copy of a shared location is then returned.
+
+            Has no effect for single-board API keys.
+          required: false
+          schema:
+            type: boolean
+            default: true
+
         - name: state
           in: query
           description: |
@@ -434,6 +449,21 @@ paths:
         - $ref: "components.yml#/components/parameters/LocationSourceFilter"
 
         - $ref: "components.yml#/components/parameters/LocationTypeFilter"
+
+        - name: deduplicate
+          in: query
+          description: |
+            Controls deduplication of MLS locations for API keys that have access to multiple boards. Only affects locations with `source=MLS`.
+
+            When an API key spans several boards, the same location (for example, a city) may exist in more than one of them. By default (`true`), such shared locations are deduplicated so that each location appears once in the results. If a `duplicates` configuration is set at the account level, it takes priority over the automatic deduplication.
+
+            Set to `false` to disable deduplication for the request, including any account-level `duplicates` configuration. Each board's copy of a shared location is then returned.
+
+            Has no effect for single-board API keys.
+          required: false
+          schema:
+            type: boolean
+            default: true
 
         - name: fields
           in: query
