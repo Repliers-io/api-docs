@@ -8186,6 +8186,7 @@
             "schema": {
               "type": "integer",
               "minimum": 1,
+              "maximum": 300,
               "default": 100
             }
           },
@@ -8197,6 +8198,7 @@
             "schema": {
               "type": "integer",
               "minimum": 1,
+              "maximum": 100000,
               "default": 1
             }
           },
@@ -10246,6 +10248,7 @@
             "schema": {
               "type": "integer",
               "minimum": 1,
+              "maximum": 300,
               "default": 100
             }
           },
@@ -10257,6 +10260,7 @@
             "schema": {
               "type": "integer",
               "minimum": 1,
+              "maximum": 100000,
               "default": 1
             }
           },
