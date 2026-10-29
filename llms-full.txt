@@ -1354,12 +1354,10 @@ Use this endpoint to lookup matches for a saved search. Matches are listings tha
 | resultsPerPage | integer (int32) default: 100 | The number of listings to return per page. |
 | endDate | string (date-time) | If specified filters matches whose match date is YYYY-MM-DDTHH:mm:ss.sssZ |
 | startDate | string (date-time) | If specified filters matches whose match date is >= the supplied value. Format: YYYY-MM-DDTHH:mm:ss.sssZ |
-| lastStatus | array[string] enum: Sus, Exp, Sld, Ter, Dft, Lsd, Sc, Lc, Pc, Ext, New, Sce, Cs, Lce, Inc | If specified filters matches whose last status is one of the supplied values. Repeat the parameter to supply multiple values. Allowed values: Sus, Exp, Sld, Ter, Dft, Lsd, Sc, Lc, Pc, Ext, New, Sce, Cs, Lce, Inc |
 | liked | boolean | If true filters search matches that were liked, if false filters search matches that were disliked. If not specified, returns all search matches. |
 | viewed | boolean | If true filters search matches that the client has viewed, if false filters search matches that have not been viewed. If not specified, returns all search matches. |
 | matchId | integer (int32) |  |
 | sortBy | string enum: createdOnDesc, updatedOnDesc default: createdOnDesc | Sorts the matches by creation or last update date, newest first. Allowed values: createdOnDesc,updatedOnDesc |
-| status | string | If not specified returns both available and unavailable listings. If specified limits results to specified status. Allowed values: A,U |
 
 **Response (200):**
 
@@ -1451,8 +1449,6 @@ Use this endpoint to lookup matches across all saved searches in your account, o
 | mlsNumber | string | If specified, returns only matches for the listing with this mlsNumber. |
 | liked | boolean | If true filters search matches that were liked, if false filters search matches that were disliked. If not specified, returns all search matches. |
 | viewed | boolean | If true filters search matches that the client has viewed, if false filters search matches that have not been viewed. If not specified, returns all search matches. |
-| status | string enum: A, U | If not specified returns both available and unavailable listings. If specified limits results to specified status. Allowed values: A,U |
-| lastStatus | array[string] enum: Sus, Exp, Sld, Ter, Dft, Lsd, Sc, Lc, Pc, Ext, New, Sce, Cs, Lce, Inc | If specified filters matches whose last status is one of the supplied values. Repeat the parameter to supply multiple values. Allowed values: Sus, Exp, Sld, Ter, Dft, Lsd, Sc, Lc, Pc, Ext, New, Sce, Cs, Lce, Inc |
 
 **Response (200):**
 

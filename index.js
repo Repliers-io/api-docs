@@ -396,7 +396,8 @@ function generateFull(bundled) {
       if (desc) content += `${desc}\n`;
 
       // Path parameters
-      const resolvedParams = resolveParams(op.parameters, bundled);
+      // Deprecated params are omitted so LLMs don't use them in new code
+      const resolvedParams = resolveParams(op.parameters, bundled).filter(p => !p.deprecated);
       const pathParams = resolvedParams.filter(p => p.in === 'path');
       if (pathParams.length > 0) {
         content += `\n**Path Parameters:**\n\n`;

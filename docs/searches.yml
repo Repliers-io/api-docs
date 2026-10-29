@@ -824,6 +824,7 @@ paths:
             example: "2024-06-15T00:00:00.000Z"
         - name: lastStatus
           in: query
+          deprecated: true
           description: If specified filters matches whose last status is one of the supplied values. Repeat the parameter to supply multiple values.<br/><br/>Allowed values:<br/><br/><code>Sus</code>, <code>Exp</code>, <code>Sld</code>, <code>Ter</code>, <code>Dft</code>, <code>Lsd</code>, <code>Sc</code>, <code>Lc</code>, <code>Pc</code>, <code>Ext</code>, <code>New</code>, <code>Sce</code>, <code>Cs</code>, <code>Lce</code>, <code>Inc</code>
           schema:
             type: array
@@ -871,6 +872,7 @@ paths:
             default: createdOnDesc
         - name: status
           in: query
+          deprecated: true
           description: If not specified returns both available and unavailable listings. If specified limits results to specified status.<br/><br/>Allowed values:<br/><br/><code>A</code>,<code>U</code>
           schema:
             type: string
@@ -1051,6 +1053,7 @@ paths:
             type: boolean
         - name: status
           in: query
+          deprecated: true
           description: If not specified returns both available and unavailable listings. If specified limits results to specified status.<br/><br/>Allowed values:<br/><br/><code>A</code>,<code>U</code>
           schema:
             type: string
@@ -1059,6 +1062,7 @@ paths:
               - U
         - name: lastStatus
           in: query
+          deprecated: true
           description: If specified filters matches whose last status is one of the supplied values. Repeat the parameter to supply multiple values.<br/><br/>Allowed values:<br/><br/><code>Sus</code>, <code>Exp</code>, <code>Sld</code>, <code>Ter</code>, <code>Dft</code>, <code>Lsd</code>, <code>Sc</code>, <code>Lc</code>, <code>Pc</code>, <code>Ext</code>, <code>New</code>, <code>Sce</code>, <code>Cs</code>, <code>Lce</code>, <code>Inc</code>
           schema:
             type: array
